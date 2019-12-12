@@ -1,0 +1,31 @@
+plugins {
+	id 'java'
+}
+
+repositories {
+	mavenLocal()
+	maven {
+		url = 'http://repo.runelite.net'
+	}
+	mavenCentral()
+}
+
+dependencies {
+	compileOnly 'net.runelite:client:${runelite_version}'
+	compileOnly 'org.slf4j:slf4j-api:1.7.25'
+
+	compileOnly 'org.projectlombok:lombok:1.18.4'
+	annotationProcessor 'org.projectlombok:lombok:1.18.4'
+
+	testImplementation 'junit:junit:4.12'
+	testImplementation 'org.slf4j:slf4j-simple:1.7.12'
+	testImplementation 'net.runelite:client:${runelite_version}'
+}
+
+group = '${group_id}'
+version = '${version}'
+sourceCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
