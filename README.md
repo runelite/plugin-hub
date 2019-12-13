@@ -75,6 +75,12 @@ plugins=com.example.HelmetCheckPlugin
 
  7. When you have your plugin working. Commit your changes and push them to your repository.
 
+### Licensing your repository
+ 1. Go to your repository on GitHub and select *Insights* from the top bar. Then choose *Community* in the list to the left.
+ 2. In the license section of the list press *Add*.
+ 3. Select `BSD 2-Clause "Simplified" License` from the list to the left. Fill in your details and press *Review and submit*.
+ 4. Commit your changes by clicking *Create new file* in the bottom of the page. Make sure you check the button to directly commit to the master branch.
+
 ## Submitting a plugin
  1. Fork the [plugin-hub repository](https://github.com/runelite/plugin-hub).
  2. Create a new branch for your plugin. 
