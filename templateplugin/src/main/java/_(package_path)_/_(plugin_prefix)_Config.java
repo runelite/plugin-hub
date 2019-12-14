@@ -1,4 +1,3 @@
-
 package ${package};
 
 import net.runelite.client.config.Config;
