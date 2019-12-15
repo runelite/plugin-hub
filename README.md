@@ -7,9 +7,6 @@ provided "as is"; we make no guarantees about any plugin in this repo.
 
 
 ## Creating new plugins
-
-Before creating any external plugins, you must have followed the [building guide](https://github.com/runelite/runelite/wiki/Building-with-IntelliJ-IDEA) at least once.
-
 There are two methods to create an external plugin, you can either:
  - Use [this](https://github.com/runelite/example-plugin/) plugin template.
 
@@ -47,7 +44,7 @@ description=Alerts you when you have nothing equipped in your head slot
 tags=hint,gear,head
 plugins=com.example.HelmetCheckPlugin
  ```
- `support` is the URL you want players to use to leave feedback for your plugin0; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words.
+ `support` is the URL you want players to use to leave feedback for your plugin; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words.
 
  10. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
