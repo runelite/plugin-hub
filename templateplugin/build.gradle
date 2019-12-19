@@ -10,8 +10,10 @@ repositories {
 	mavenCentral()
 }
 
+def runeLiteVersion = '${runelite_version}'
+
 dependencies {
-	compileOnly 'net.runelite:client:${runelite_version}'
+	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
 	compileOnly 'org.slf4j:slf4j-api:1.7.25'
 
 	compileOnly 'org.projectlombok:lombok:1.18.4'
@@ -19,7 +21,7 @@ dependencies {
 
 	testImplementation 'junit:junit:4.12'
 	testImplementation 'org.slf4j:slf4j-simple:1.7.12'
-	testImplementation 'net.runelite:client:${runelite_version}'
+	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
 }
 
 group = '${group_id}'
