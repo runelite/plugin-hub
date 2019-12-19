@@ -20,7 +20,9 @@ dependencies {
 
 	testImplementation 'junit:junit:4.12'
 	testImplementation 'org.slf4j:slf4j-simple:1.7.12'
-	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion, {
+		exclude group: 'ch.qos.logback', module: 'logback-classic'
+	}
 }
 
 group = '${group_id}'
