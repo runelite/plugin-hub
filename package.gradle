@@ -26,6 +26,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import com.google.common.hash.Hashing
 import com.google.common.io.Files
 import com.google.gson.Gson
+import java.util.jar.JarFile
 
 initscript {
 	repositories {
@@ -73,7 +74,15 @@ allprojects {
 			new FileInputStream(file("runelite-plugin.properties")).withCloseable { is ->
 				props.load(is)
 			}
+
 			manifest.plugins = props["plugins"].split(/[,:;]/)*.trim()
+			new JarFile(pluginJar).withCloseable{ jf ->
+				manifest.plugins.each { plugin ->
+					if (jf.getEntry(plugin.replaceAll(~/\./, "/") + ".class") == null) {
+						throw new RuntimeException("Plugin class \"" + plugin + "\" is not in the output jar")
+					}
+				}
+			}
 
 			manifest.displayName = props["displayName"]
 			if (!manifest.displayName) {
