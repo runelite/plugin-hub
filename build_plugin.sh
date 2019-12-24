@@ -59,7 +59,7 @@ pushd "$BUILDDIR"
 
 git clone "$repository" "repo"
 pushd "repo"
-git checkout "$commit"
+git checkout "$commit^{commit}"
 
 SIGNING_KEY="" REPO_CREDS="" gradle \
 	--no-build-cache \
