@@ -71,7 +71,7 @@ subs = OrderedDict([
 	("package", {
 		"ask": True,
 		"desc": "The java package your plugin will be in. Typically a reversed domain name",
-		"value": "com.examaple.foobazzer",
+		"value": "com.example.foobazzer",
 		"strip_plugin": True,
 	}),
 	("author", {
