@@ -57,7 +57,7 @@ BUILDDIR="$(mktemp -d /tmp/external-plugin.XXXXXXXX)"
 trap "rm -rf ""$BUILDDIR""" EXIT
 pushd "$BUILDDIR"
 
-git clone "$repository" "repo"
+git clone -c 'advice.detachedHead=false' "$repository" "repo"
 pushd "repo"
 git checkout "$commit^{commit}"
 
