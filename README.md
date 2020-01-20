@@ -111,3 +111,35 @@ We will review your plugin to ensure it isn't malicious or [breaking
 jagex's rules](https://secure.runescape.com/m=news/another-message-about-unofficial-clients?oldschool=1).
 __If it is difficult for us to ensure the plugin isn't against the rules we
 will not merge it__. 
+
+## Third party dependencies
+We require any dependencies that are not a transitive dependency of runelite-client to
+be have their cryptographic hash verified during the build to prevent [supply chain attacks]
+(https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
+To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html),
+which is currently only available in nightly builds. To enable this you must first run:
+```
+./gradlew wrapper --gradle-version=6.2-20200117230024+0000
+```
+
+Then create `gradle/verification-metadata.xml` with the following contents
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<verification-metadata xmlns="https://schema.gradle.org/dependency-verification" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://schema.gradle.org/dependency-verification https://schema.gradle.org/dependency-verification/dependency-verification-1.0.xsd">
+  <configuration>
+    <verify-metadata>true</verify-metadata>
+    <verify-signatures>false</verify-signatures>
+    <trusted-artifacts>
+      <trust group="net.runelite"/>
+    </trusted-artifacts>
+  </configuration>
+</verification-metadata>
+```
+
+And finally run: 
+```
+./gradlew --write-verification-metadata sha256
+```
+Then commit the files to your repository. You will have to run this final command anytime you
+add/remove/update dependencies that are not part of RuneLite.

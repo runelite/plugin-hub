@@ -53,6 +53,17 @@ done < "$PLUGINFILE"
 # we must have a full 40 char sha1sum
 [[ $commit =~ ^[a-fA-F0-9]{40}+$ ]]
 
+# we need gradle 6.2 for dependency verification
+GRADLE_VER=gradle-6.2-20200117230024+0000
+if [[ ! -e "/tmp/$GRADLE_VER/bin/gradle" ]]; then
+	wget -q -O/tmp/gradle.zip "https://services.gradle.org/distributions-snapshots/$GRADLE_VER-bin.zip"
+	echo 'b684259e5a0fcce1ed183929c6dcecab8a9613e7b73d7fbc664807b751822323 */tmp/gradle.zip' | shasum -a256 -c
+	unzip -q /tmp/gradle.zip -d /tmp/
+	[[ -e "/tmp/$GRADLE_VER/bin/gradle" ]]
+fi
+export GRADLE_HOME="/tmp/$GRADLE_VER/"
+export PATH="$GRADLE_HOME/bin:$PATH"
+
 BUILDDIR="$(mktemp -d /tmp/external-plugin.XXXXXXXX)"
 trap "rm -rf ""$BUILDDIR""" EXIT
 pushd "$BUILDDIR"
