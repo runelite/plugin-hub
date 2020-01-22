@@ -24,17 +24,19 @@ There are two methods to create an external plugin, you can either:
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test.
+ 5. Open `build.gradle` and edit `runeLiteVersion` from `1.5.44-SNAPSHOT` to the latest release. If you are unsure about the current version it's specified on [runelite.net](https://runelite.net/).
+
+ 6. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test.
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
+ 7. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
 
- 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
+ 8. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
  
- 8. Go to your plugin file and set it's name in the `PluginDescriptor`, this can have spaces.
+ 9. Go to your plugin file and set it's name in the `PluginDescriptor`, this can have spaces.
 
- 9. Open the `runelite-plugin.properties` file and add info to each row. 
+ 10. Open the `runelite-plugin.properties` file and add info to each row. 
  ```
  displayName=Helmet check
  author=dekvall
@@ -45,11 +47,11 @@ There are two methods to create an external plugin, you can either:
  ```
  `support` is the URL you want players to use to leave feedback for your plugin; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
- 10. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
+ 11. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
- 11. Write a nice README so your users can see the features of your plugin.
+ 12. Write a nice README so your users can see the features of your plugin.
 
- 12. When you have your plugin working. Commit your changes and push them to your repository. 
+ 13. When you have your plugin working. Commit your changes and push them to your repository. 
 
 
 ### Using the script
@@ -67,7 +69,7 @@ There are two methods to create an external plugin, you can either:
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 5. Edit `runelite-plugin.properties` with a support link and tags. `support` is the URL you want players to use to leave feedback for your plugin; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words.
+ 5. Edit `runelite-plugin.properties` with a support link and tags. `support` is the URL you want players to use to leave feedback for your plugin; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  6. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
@@ -114,8 +116,7 @@ will not merge it__.
 
 ## Third party dependencies
 We require any dependencies that are not a transitive dependency of runelite-client to
-be have their cryptographic hash verified during the build to prevent [supply chain attacks]
-(https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
+be have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
 To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html),
 which is currently only available in nightly builds. To enable this you must first run:
 ```
