@@ -31,7 +31,7 @@ env:
 '
 
 if [[ "$FORCE_BUILD" == "ALL" ]]; then
-	./rebuild_all
+	./rebuild_all.sh
 	exit
 elif [[ -n "${FORCE_BUILD+x}" ]]; then
 	for FI in "${FORCE_BUILD[@]}"; do

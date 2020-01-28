@@ -38,6 +38,11 @@ initscript {
 		classpath "com.google.code.gson:gson:2.8.5"
 		classpath "com.google.guava:guava:23.2-jre"
 	}
+	configurations.classpath.resolutionStrategy {
+		// We don't have a way to add our direct deps to the metadata file,
+		// so we disable it for the initscript's configuration
+		disableDependencyVerification()
+	}
 }
 
 allprojects {
