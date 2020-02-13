@@ -119,7 +119,7 @@ allprojects {
 
 	task configured {
 		def runeLiteDeps = [
-			"runelite-client",
+			"client",
 			"runelite-api",
 			"http-api",
 		]
