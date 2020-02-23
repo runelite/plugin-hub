@@ -34,9 +34,10 @@ if [[ "$FORCE_BUILD" == "ALL" ]]; then
 	./rebuild_all.sh
 	exit
 elif [[ -n "${FORCE_BUILD+x}" ]]; then
-	for FI in "${FORCE_BUILD[@]}"; do
-		./build_plugin.sh "plugins/$FORCE_BUILD"
+	for FI in $(echo "$FORCE_BUILD" | tr ',' '\n'); do
+		./build_plugin.sh "plugins/$FI"
 	done
+	./build_manifest.sh
 	exit
 fi
 
