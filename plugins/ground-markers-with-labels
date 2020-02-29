@@ -1,2 +1,6 @@
 repository=https://github.com/Stevester118/Ground-Markers-With-Labels.git
+<<<<<<< HEAD
 commit=a62aefbb4e8d8db3400ced2d683caf3b8cbd4448
+=======
+commit=f911c0e712e3be6b32ce2595ff22044513505c8b
+>>>>>>> Create Ground Markers With Labels plugin (#128)
