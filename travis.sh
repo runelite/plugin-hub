@@ -44,7 +44,7 @@ fi
 PLUGIN_CHANGE=
 while read -r FI ; do
 	if [[ $FI =~ ^plugins/.*$ ]]; then
-		./build_plugin.sh "$FI" < /dev/null
+		[ -e "$FI" ] && ./build_plugin.sh "$FI" < /dev/null
 		PLUGIN_CHANGE=true
 	elif [[ "$FI" == "runelite.version" ]]; then
 		./rebuild_all.sh < /dev/null
