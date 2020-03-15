@@ -42,7 +42,7 @@ RUNELITE_VERSION="$(cat "$SCRIPT_HOME/runelite.version")"
 disabled=
 # shellcheck disable=SC2162
 while read LINE || [[ -n "$LINE" ]]; do
-	[[ $LINE =~ ^(repository|commit|disabled)=(.*)$ ]]
+	[[ $LINE =~ ^(repository|commit|disabled|warning)=(.*)$ ]]
 	eval "${BASH_REMATCH[1]}=\"${BASH_REMATCH[2]}\""
 done < "$PLUGINFILE"
 [ -z "$disabled" ] || exit 0
@@ -81,6 +81,7 @@ SIGNING_KEY="" REPO_CREDS="" gradle \
 	-DrlpluginOutputDirectory="$BUILDDIR" \
 	-DrlpluginPluginID="$PLUGIN_ID" \
 	-DrlpluginCommit="$commit" \
+	-DrlpluginWarning="$warning" \
 	rlpluginPackageJar rlpluginEmitManifest
 
 [ -s "$BUILDDIR/plugin.jar" ]
