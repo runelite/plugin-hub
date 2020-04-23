@@ -117,13 +117,9 @@ will not merge it__.
 ## Third party dependencies
 We require any dependencies that are not a transitive dependency of runelite-client to
 be have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
-To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html),
-which is currently only available in nightly builds. To enable this you must first run:
-```
-./gradlew wrapper --gradle-version=6.2-20200117230024+0000
-```
+To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html).
 
-Then create `gradle/verification-metadata.xml` with the following contents
+Create `gradle/verification-metadata.xml` with the following contents
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

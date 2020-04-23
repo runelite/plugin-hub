@@ -101,7 +101,9 @@ allprojects {
 				manifest.support = new URL(props["support"])
 			}
 			manifest.description = props["description"] ?: null
-			manifest.tags = props["tags"]?.split() ?: null
+			if (props["tags"]) {
+				manifest.tags = props["tags"].split(",")*.trim()
+			}
 
 			manifest.version = project.version
 			if (!(manifest.version ==~ /^[a-zA-Z0-9.-]+$/)) {
