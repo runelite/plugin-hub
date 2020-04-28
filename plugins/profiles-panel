@@ -1,2 +1,3 @@
 repository=https://github.com/Spedwards/runelite-plugins.git
-commit=c2dd59dcdf324df01c54aeba4cce4577c645f642
+commit=169f26f0d116f8dc56bc2bec0ef7d68ee20e46dd
+warning=This plugin optionally can save your password, encrypted using a key of your choice, to a file on your computer.
