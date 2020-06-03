@@ -1,0 +1,3 @@
+repository=https://github.com/dekvall/runelite-external-plugins.git
+commit=26277350febe4def808459a74a5344628117dbb6
+warning=This plugin will most likely break your runelite installation, especially if you are playing on Windows. Proceed with caution!

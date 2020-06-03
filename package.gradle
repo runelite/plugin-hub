@@ -68,6 +68,9 @@ allprojects {
 			def manifest = new ExternalPluginManifest()
 			manifest.internalName = System.properties["rlpluginPluginID"]
 			manifest.commit = System.properties["rlpluginCommit"]
+			if (System.properties["rlpluginWarning"]) {
+				manifest.warning = System.properties["rlpluginWarning"];
+			}
 
 			def pluginJar = new File(System.properties["rlpluginOutputDirectory"], "plugin.jar");
 			manifest.hash = Files.asByteSource(pluginJar)
@@ -101,7 +104,9 @@ allprojects {
 				manifest.support = new URL(props["support"])
 			}
 			manifest.description = props["description"] ?: null
-			manifest.tags = props["tags"]?.split() ?: null
+			if (props["tags"]) {
+				manifest.tags = props["tags"].split(",")*.trim()
+			}
 
 			manifest.version = project.version
 			if (!(manifest.version ==~ /^[a-zA-Z0-9.-]+$/)) {
@@ -145,6 +150,7 @@ class ExternalPluginManifest {
 	String version;
 	String author;
 	String description;
+	String warning;
 	String[] tags;
 	URL support;
 	boolean hasIcon;

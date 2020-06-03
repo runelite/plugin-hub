@@ -42,7 +42,7 @@ RUNELITE_VERSION="$(cat "$SCRIPT_HOME/runelite.version")"
 disabled=
 # shellcheck disable=SC2162
 while read LINE || [[ -n "$LINE" ]]; do
-	[[ $LINE =~ ^(repository|commit|disabled)=(.*)$ ]]
+	[[ $LINE =~ ^(repository|commit|disabled|warning)=(.*)$ ]]
 	eval "${BASH_REMATCH[1]}=\"${BASH_REMATCH[2]}\""
 done < "$PLUGINFILE"
 [ -z "$disabled" ] || exit 0
@@ -54,10 +54,10 @@ done < "$PLUGINFILE"
 [[ $commit =~ ^[a-fA-F0-9]{40}+$ ]]
 
 # we need gradle 6.2 for dependency verification
-GRADLE_VER=gradle-6.2-20200117230024+0000
+GRADLE_VER=gradle-6.2
 if [[ ! -e "/tmp/$GRADLE_VER/bin/gradle" ]]; then
-	wget -q -O/tmp/gradle.zip "https://services.gradle.org/distributions-snapshots/$GRADLE_VER-bin.zip"
-	echo 'b684259e5a0fcce1ed183929c6dcecab8a9613e7b73d7fbc664807b751822323 */tmp/gradle.zip' | shasum -a256 -c
+	wget -q -O/tmp/gradle.zip "https://services.gradle.org/distributions/$GRADLE_VER-bin.zip"
+	echo 'b93a5f30d01195ec201e240f029c8b42d59c24086b8d1864112c83558e23cf8a */tmp/gradle.zip' | shasum -a256 -c
 	unzip -q /tmp/gradle.zip -d /tmp/
 	[[ -e "/tmp/$GRADLE_VER/bin/gradle" ]]
 fi
@@ -81,6 +81,7 @@ SIGNING_KEY="" REPO_CREDS="" gradle \
 	-DrlpluginOutputDirectory="$BUILDDIR" \
 	-DrlpluginPluginID="$PLUGIN_ID" \
 	-DrlpluginCommit="$commit" \
+	-DrlpluginWarning="$warning" \
 	rlpluginPackageJar rlpluginEmitManifest
 
 [ -s "$BUILDDIR/plugin.jar" ]
