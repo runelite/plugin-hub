@@ -32,11 +32,12 @@ set -e -x
 RUNELITE_VERSION="$(cat "runelite.version")"
 
 MANIFEST="$(mktemp /tmp/manifest.XXXXXXXX)"
-trap "rm -f ""$MANIFEST*""" EXIT
+trap "rm -rf ""$MANIFEST*""" EXIT
+MANIFEST_DIR="$MANIFEST.sub/"
+mkdir "$MANIFEST_DIR"
 
-echo "[" > "$MANIFEST"
+MANIFEST_CHUNK_DOWNLOAD=()
 
-IS_FIRST=true
 for PLUGINFILE in plugins/*; do
 	# read in the plugin descriptor
 	disabled=
@@ -49,18 +50,22 @@ for PLUGINFILE in plugins/*; do
 
 	PLUGIN_ID=$(basename "$PLUGINFILE")
 	LOCATION="$REPO_ROOT/$RUNELITE_VERSION/$PLUGIN_ID/$commit"
+	MANIFEST_CHUNK_DOWNLOAD+=('--output' "$MANIFEST_DIR/$PLUGIN_ID" "$LOCATION.manifest")
+done
 
-	RET=0
-	curl --fail "$LOCATION.manifest" > "$MANIFEST.sub" || RET=$?
-	[ $RET -ne 0 ] && continue
+curl --fail --retry 5 --retry-connrefused \
+	--parallel \
+	"${MANIFEST_CHUNK_DOWNLOAD[@]}"
 
+IS_FIRST=true
+echo "[" > "$MANIFEST"
+for MANIFEST_CHUNK in "$MANIFEST_DIR"/*; do
 	if [[ "$IS_FIRST" != true ]]; then
 		echo "," >> "$MANIFEST"
 	fi
 	IS_FIRST=
-	cat "$MANIFEST.sub" >> "$MANIFEST"
+	cat "$MANIFEST_CHUNK" >> "$MANIFEST"
 done
-
 echo "]" >> "$MANIFEST"
 
 # shellcheck disable=SC2059
