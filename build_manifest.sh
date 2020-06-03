@@ -70,7 +70,7 @@ perl -e "print pack('N', -s \"$MANIFEST.sig\")" > "$MANIFEST.out"
 cat "$MANIFEST.sig" >> "$MANIFEST.out"
 cat "$MANIFEST" >> "$MANIFEST.out"
 
-curl --fail \
+curl --fail --retry 5 --retry-connrefused \
 	--user "$REPO_CREDS" \
 	--upload-file "$MANIFEST.out" "$REPO_ROOT/$RUNELITE_VERSION/manifest.js"
 
