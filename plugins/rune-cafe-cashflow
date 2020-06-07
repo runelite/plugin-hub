@@ -1,3 +1,3 @@
 repository=https://github.com/rune-cafe/rc-plugin-cashflow.git
-commit=95ca78ae5d7647a650a12032ddb0b072124ff0e8
+commit=78176516d25a4a92478cc2f2d3cb11e1f33489d3
 warning=This plugin submits your username, GE history, GE trades and IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
