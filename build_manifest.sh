@@ -42,7 +42,7 @@ for PLUGINFILE in plugins/*; do
 	disabled=
 	# shellcheck disable=SC2162
 	while read LINE || [[ -n "$LINE" ]]; do
-		[[ $LINE =~ ^(repository|commit|disabled)=(.*)$ ]]
+		[[ $LINE =~ ^(repository|commit|disabled|warning)=(.*)$ ]]
 		eval "${BASH_REMATCH[1]}=\"${BASH_REMATCH[2]}\""
 	done < "$PLUGINFILE"
 	[ -z "$disabled" ] || continue
