@@ -31,22 +31,23 @@ env:
 '
 
 if [[ "$FORCE_BUILD" == "ALL" ]]; then
-	./rebuild_all
+	./rebuild_all.sh
 	exit
 elif [[ -n "${FORCE_BUILD+x}" ]]; then
-	for FI in "${FORCE_BUILD[@]}"; do
-		./build_plugin.sh "plugins/$FORCE_BUILD"
+	for FI in $(echo "$FORCE_BUILD" | tr ',' '\n'); do
+		./build_plugin.sh "plugins/$FI"
 	done
+	./build_manifest.sh
 	exit
 fi
 
 PLUGIN_CHANGE=
 while read -r FI ; do
 	if [[ $FI =~ ^plugins/.*$ ]]; then
-		./build_plugin.sh "$FI"
+		[ -e "$FI" ] && ./build_plugin.sh "$FI" < /dev/null
 		PLUGIN_CHANGE=true
 	elif [[ "$FI" == "runelite.version" ]]; then
-		./rebuild_all.sh
+		./rebuild_all.sh < /dev/null
 	fi
 done < <(git diff --name-only "$TRAVIS_COMMIT_RANGE")
 

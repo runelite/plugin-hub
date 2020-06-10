@@ -42,7 +42,7 @@ RUNELITE_VERSION="$(cat "$SCRIPT_HOME/runelite.version")"
 disabled=
 # shellcheck disable=SC2162
 while read LINE || [[ -n "$LINE" ]]; do
-	[[ $LINE =~ ^(repository|commit|disabled)=(.*)$ ]]
+	[[ $LINE =~ ^(repository|commit|disabled|warning)=(.*)$ ]]
 	eval "${BASH_REMATCH[1]}=\"${BASH_REMATCH[2]}\""
 done < "$PLUGINFILE"
 [ -z "$disabled" ] || exit 0
@@ -53,11 +53,22 @@ done < "$PLUGINFILE"
 # we must have a full 40 char sha1sum
 [[ $commit =~ ^[a-fA-F0-9]{40}+$ ]]
 
+# we need gradle 6.2 for dependency verification
+GRADLE_VER=gradle-6.2
+if [[ ! -e "/tmp/$GRADLE_VER/bin/gradle" ]]; then
+	wget -q -O/tmp/gradle.zip "https://services.gradle.org/distributions/$GRADLE_VER-bin.zip"
+	echo 'b93a5f30d01195ec201e240f029c8b42d59c24086b8d1864112c83558e23cf8a */tmp/gradle.zip' | shasum -a256 -c
+	unzip -q /tmp/gradle.zip -d /tmp/
+	[[ -e "/tmp/$GRADLE_VER/bin/gradle" ]]
+fi
+export GRADLE_HOME="/tmp/$GRADLE_VER/"
+export PATH="$GRADLE_HOME/bin:$PATH"
+
 BUILDDIR="$(mktemp -d /tmp/external-plugin.XXXXXXXX)"
 trap "rm -rf ""$BUILDDIR""" EXIT
 pushd "$BUILDDIR"
 
-git clone "$repository" "repo"
+git clone -c 'advice.detachedHead=false' "$repository" "repo"
 pushd "repo"
 git checkout "$commit^{commit}"
 
@@ -70,6 +81,7 @@ SIGNING_KEY="" REPO_CREDS="" gradle \
 	-DrlpluginOutputDirectory="$BUILDDIR" \
 	-DrlpluginPluginID="$PLUGIN_ID" \
 	-DrlpluginCommit="$commit" \
+	-DrlpluginWarning="$warning" \
 	rlpluginPackageJar rlpluginEmitManifest
 
 [ -s "$BUILDDIR/plugin.jar" ]

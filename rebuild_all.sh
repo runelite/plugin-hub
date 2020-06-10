@@ -29,13 +29,17 @@ SECONDS=0
 
 for PLUGIN in plugins/* ; do 
 	if [ $SECONDS -gt 60 ]; then
+		echo "travis_fold:start:intermediate_manifest"
 		./build_manifest.sh
 		SECONDS=0
+		echo "travis_fold:end:intermediate_manifest"
 	fi
-	PLUGIN_ID=$(basename "$PLUGINFILE")
-	echo "travis_fold:start:$PLUGIN_ID]"
-	./build_plugin.sh "$PLUGIN"
-	echo "travis_font:end:[$PLUGIN_ID]"
+	PLUGIN_ID=$(basename "$PLUGIN")
+	echo "travis_fold:start:$PLUGIN_ID"
+	./build_plugin.sh "$PLUGIN" || echo "Build failed for $PLUGIN_ID"
+	echo "travis_fold:end:$PLUGIN_ID"
 done
 
+echo "travis_fold:start:final_manifest"
 ./build_manifest.sh
+echo "travis_fold:end:final_manifest"

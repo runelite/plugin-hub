@@ -1,0 +1,3 @@
+repository=https://github.com/raiyni/bitwarden-plugin.git
+commit=c1dec94bc0948cc140f3a914a52cbfd3d8ce1b08
+warning=You are required to use a CLI application in conjunction with this plugin.<br>Read the support information and additional documentation for usage.
