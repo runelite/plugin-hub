@@ -53,8 +53,7 @@ for PLUGINFILE in plugins/*; do
 	MANIFEST_CHUNK_DOWNLOAD+=('--output' "$MANIFEST_DIR/$PLUGIN_ID" "$LOCATION.manifest")
 done
 
-curl --fail --retry 5 --retry-connrefused \
-	--parallel \
+curl --fail --retry 5 \
 	"${MANIFEST_CHUNK_DOWNLOAD[@]}"
 
 IS_FIRST=true
@@ -75,7 +74,7 @@ perl -e "print pack('N', -s \"$MANIFEST.sig\")" > "$MANIFEST.out"
 cat "$MANIFEST.sig" >> "$MANIFEST.out"
 cat "$MANIFEST" >> "$MANIFEST.out"
 
-curl --fail --retry 5 --retry-connrefused \
+curl --fail --retry 5 \
 	--user "$REPO_CREDS" \
 	--upload-file "$MANIFEST.out" "$REPO_ROOT/$RUNELITE_VERSION/manifest.js"
 
