@@ -54,7 +54,7 @@ for PLUGINFILE in plugins/*; do
 done
 
 curl --fail --retry 5 \
-	"${MANIFEST_CHUNK_DOWNLOAD[@]}"
+	"${MANIFEST_CHUNK_DOWNLOAD[@]}" || true
 
 IS_FIRST=true
 echo "[" > "$MANIFEST"
