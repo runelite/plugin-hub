@@ -98,7 +98,7 @@ if [ -e "icon.png" ]; then
 	ICON_UPLOAD=("--upload-file" "icon.png" "$LOCATION.png")
 fi
 
-curl --fail --retry 5 --retry-connrefused \
+curl --fail --retry 5 \
 	--user "$REPO_CREDS" \
 	--upload-file "$BUILDDIR/plugin.manifest" "$LOCATION.manifest" \
 	--upload-file "$BUILDDIR/plugin.jar" "$LOCATION.jar" \
