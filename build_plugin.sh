@@ -42,7 +42,7 @@ RUNELITE_VERSION="$(cat "$SCRIPT_HOME/runelite.version")"
 disabled=
 # shellcheck disable=SC2162
 while read LINE || [[ -n "$LINE" ]]; do
-	[[ $LINE =~ ^(repository|commit|disabled)=(.*)$ ]]
+	[[ $LINE =~ ^(repository|commit|disabled|warning)=(.*)$ ]]
 	eval "${BASH_REMATCH[1]}=\"${BASH_REMATCH[2]}\""
 done < "$PLUGINFILE"
 [ -z "$disabled" ] || exit 0
@@ -81,6 +81,7 @@ SIGNING_KEY="" REPO_CREDS="" gradle \
 	-DrlpluginOutputDirectory="$BUILDDIR" \
 	-DrlpluginPluginID="$PLUGIN_ID" \
 	-DrlpluginCommit="$commit" \
+	-DrlpluginWarning="$warning" \
 	rlpluginPackageJar rlpluginEmitManifest
 
 [ -s "$BUILDDIR/plugin.jar" ]
@@ -97,7 +98,7 @@ if [ -e "icon.png" ]; then
 	ICON_UPLOAD=("--upload-file" "icon.png" "$LOCATION.png")
 fi
 
-curl --fail \
+curl --fail --retry 5 \
 	--user "$REPO_CREDS" \
 	--upload-file "$BUILDDIR/plugin.manifest" "$LOCATION.manifest" \
 	--upload-file "$BUILDDIR/plugin.jar" "$LOCATION.jar" \

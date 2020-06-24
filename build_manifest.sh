@@ -32,35 +32,39 @@ set -e -x
 RUNELITE_VERSION="$(cat "runelite.version")"
 
 MANIFEST="$(mktemp /tmp/manifest.XXXXXXXX)"
-trap "rm -f ""$MANIFEST*""" EXIT
+trap "rm -rf ""$MANIFEST*""" EXIT
+MANIFEST_DIR="$MANIFEST.sub/"
+mkdir "$MANIFEST_DIR"
 
-echo "[" > "$MANIFEST"
+MANIFEST_CHUNK_DOWNLOAD=()
 
-IS_FIRST=true
 for PLUGINFILE in plugins/*; do
 	# read in the plugin descriptor
 	disabled=
 	# shellcheck disable=SC2162
 	while read LINE || [[ -n "$LINE" ]]; do
-		[[ $LINE =~ ^(repository|commit|disabled)=(.*)$ ]]
+		[[ $LINE =~ ^(repository|commit|disabled|warning)=(.*)$ ]]
 		eval "${BASH_REMATCH[1]}=\"${BASH_REMATCH[2]}\""
 	done < "$PLUGINFILE"
 	[ -z "$disabled" ] || continue
 
 	PLUGIN_ID=$(basename "$PLUGINFILE")
 	LOCATION="$REPO_ROOT/$RUNELITE_VERSION/$PLUGIN_ID/$commit"
+	MANIFEST_CHUNK_DOWNLOAD+=('--output' "$MANIFEST_DIR/$PLUGIN_ID" "$LOCATION.manifest")
+done
 
-	RET=0
-	curl --fail "$LOCATION.manifest" > "$MANIFEST.sub" || RET=$?
-	[ $RET -ne 0 ] && continue
+curl --fail --retry 5 \
+	"${MANIFEST_CHUNK_DOWNLOAD[@]}" || true
 
+IS_FIRST=true
+echo "[" > "$MANIFEST"
+for MANIFEST_CHUNK in "$MANIFEST_DIR"/*; do
 	if [[ "$IS_FIRST" != true ]]; then
 		echo "," >> "$MANIFEST"
 	fi
 	IS_FIRST=
-	cat "$MANIFEST.sub" >> "$MANIFEST"
+	cat "$MANIFEST_CHUNK" >> "$MANIFEST"
 done
-
 echo "]" >> "$MANIFEST"
 
 # shellcheck disable=SC2059
@@ -70,7 +74,7 @@ perl -e "print pack('N', -s \"$MANIFEST.sig\")" > "$MANIFEST.out"
 cat "$MANIFEST.sig" >> "$MANIFEST.out"
 cat "$MANIFEST" >> "$MANIFEST.out"
 
-curl --fail \
+curl --fail --retry 5 \
 	--user "$REPO_CREDS" \
 	--upload-file "$MANIFEST.out" "$REPO_ROOT/$RUNELITE_VERSION/manifest.js"
 
