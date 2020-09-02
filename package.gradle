@@ -34,7 +34,7 @@ initscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath "com.github.jengelman.gradle.plugins:shadow:5.2.0"
+		classpath "com.github.jengelman.gradle.plugins:shadow:6.0.0"
 		classpath "com.google.code.gson:gson:2.8.5"
 		classpath "com.google.guava:guava:23.2-jre"
 	}
