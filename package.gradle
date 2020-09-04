@@ -78,6 +78,10 @@ allprojects {
 				.toString()
 			manifest.size = pluginJar.length()
 
+			if (manifest.size > 10 * 1024 * 1024) {
+				throw new RuntimeException("The output jar is ${manifest.size.intdiv(1024 * 1024)}MiB, which is above our limit of 10MiB")
+			}
+
 			def props = new Properties()
 			new FileInputStream(file("runelite-plugin.properties")).withCloseable { is ->
 				props.load(is)
