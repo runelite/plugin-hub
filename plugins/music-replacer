@@ -1,2 +1,3 @@
 repository=https://github.com/alowaniak/music-replacer.git
 commit=d57804e816b798bc903d47236dd70fb60ea7d49b
+warning=This plugin will (when using the YouTube functionality) download .wav files from (and send your IP address in the process, to) a 3rd party website not controlled or verified by the RuneLite Developers.
