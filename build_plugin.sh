@@ -53,11 +53,11 @@ done < "$PLUGINFILE"
 # we must have a full 40 char sha1sum
 [[ $commit =~ ^[a-fA-F0-9]{40}+$ ]]
 
-# we need gradle 6.2 for dependency verification
-GRADLE_VER=gradle-6.2
+# we need gradle 6.2+ for dependency verification
+GRADLE_VER=gradle-6.6.1
 if [[ ! -e "/tmp/$GRADLE_VER/bin/gradle" ]]; then
 	wget -q -O/tmp/gradle.zip "https://services.gradle.org/distributions/$GRADLE_VER-bin.zip"
-	echo 'b93a5f30d01195ec201e240f029c8b42d59c24086b8d1864112c83558e23cf8a */tmp/gradle.zip' | shasum -a256 -c
+	echo '7873ed5287f47ca03549ab8dcb6dc877ac7f0e3d7b1eb12685161d10080910ac */tmp/gradle.zip' | shasum -a256 -c
 	unzip -q /tmp/gradle.zip -d /tmp/
 	[[ -e "/tmp/$GRADLE_VER/bin/gradle" ]]
 fi
@@ -98,7 +98,7 @@ if [ -e "icon.png" ]; then
 	ICON_UPLOAD=("--upload-file" "icon.png" "$LOCATION.png")
 fi
 
-curl --fail \
+curl --fail --retry 5 \
 	--user "$REPO_CREDS" \
 	--upload-file "$BUILDDIR/plugin.manifest" "$LOCATION.manifest" \
 	--upload-file "$BUILDDIR/plugin.jar" "$LOCATION.jar" \
