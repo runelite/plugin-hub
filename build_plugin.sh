@@ -86,6 +86,7 @@ SIGNING_KEY="" REPO_CREDS="" gradle \
 
 [ -s "$BUILDDIR/plugin.jar" ]
 [ -s "$BUILDDIR/plugin.manifest" ]
+[ -f "$BUILDDIR/LICENSE" ]
 
 cat "$BUILDDIR/plugin.manifest"
 
