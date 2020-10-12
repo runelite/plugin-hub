@@ -34,7 +34,7 @@ initscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath "com.github.jengelman.gradle.plugins:shadow:5.2.0"
+		classpath "com.github.jengelman.gradle.plugins:shadow:6.0.0"
 		classpath "com.google.code.gson:gson:2.8.5"
 		classpath "com.google.guava:guava:23.2-jre"
 	}
@@ -77,6 +77,10 @@ allprojects {
 				.hash(Hashing.sha256())
 				.toString()
 			manifest.size = pluginJar.length()
+
+			if (manifest.size > 10 * 1024 * 1024) {
+				throw new RuntimeException("The output jar is ${manifest.size.intdiv(1024 * 1024)}MiB, which is above our limit of 10MiB")
+			}
 
 			def props = new Properties()
 			new FileInputStream(file("runelite-plugin.properties")).withCloseable { is ->
