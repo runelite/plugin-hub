@@ -1,0 +1,23 @@
+name: plugin-hub builder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+    - name: Install openjdk8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Run build
+      env:
+        REPO_CREDS: ${{ secrets.REPO_CREDS }}
+        REPO_ROOT: ${{ secrets.REPO_ROOT }}
+        SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      run: 'TRAVIS_COMMIT_RANGE="$(git rev-parse @~)..$(git rev-parse @)" ./travis.sh'
