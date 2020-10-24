@@ -1,0 +1,4 @@
+rootProject.name = "package-root"
+
+include "initLib"
+include "package"
