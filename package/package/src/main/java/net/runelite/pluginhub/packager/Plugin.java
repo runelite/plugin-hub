@@ -585,6 +585,20 @@ public class Plugin implements Closeable
 			}
 			waitAndCheck(gitlog, "git log ", 30, TimeUnit.SECONDS);
 		}
+
+		if (!new File(repositoryDirectory, "LICENSE").exists())
+		{
+			if (manifest.getLastUpdatedAt() < 1604534400)
+			{
+				writeLog("Missing LICENSE file. This will become fatal in the future\n");
+			}
+			else
+			{
+				throw PluginBuildException.of(this, "Missing LICENSE file")
+					.withHelp("All plugins must be licensed under a license that allows us to freely distribute the plugin jar standalone.\n" +
+					 "We recommend the BSD 2 Clause license.");
+			}
+		}
 	}
 
 	public void upload(UploadConfiguration uploadConfig) throws IOException
