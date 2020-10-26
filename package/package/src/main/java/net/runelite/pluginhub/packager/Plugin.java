@@ -33,11 +33,13 @@ import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
+import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
@@ -108,6 +110,8 @@ public class Plugin implements Closeable
 		}
 	}
 
+	private final File pluginCommitDescriptor;
+
 	@Getter
 	private final String internalName;
 
@@ -140,6 +144,7 @@ public class Plugin implements Closeable
 
 	public Plugin(File pluginCommitDescriptor) throws IOException, DisabledPluginException, PluginBuildException
 	{
+		this.pluginCommitDescriptor = pluginCommitDescriptor;
 		internalName = pluginCommitDescriptor.getName();
 		if (!PLUGIN_INTERNAL_NAME_TEST.matcher(internalName).matches())
 		{
@@ -551,6 +556,34 @@ public class Plugin implements Closeable
 			{
 				writeLog("warning: unused props in runelite-plugin.properties: {}\n", props.keySet());
 			}
+		}
+
+		realPluginChecks();
+	}
+
+	// Tests don't run this as the example plugin will fail these on purpose
+	protected void realPluginChecks() throws IOException, PluginBuildException
+	{
+		{
+			Process gitlog = new ProcessBuilder("git", "log", "--follow", "--format=%ct", "--", pluginCommitDescriptor.getAbsolutePath())
+				.redirectOutput(ProcessBuilder.Redirect.PIPE)
+				.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
+				.directory(pluginCommitDescriptor.getParentFile())
+				.start();
+
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(gitlog.getInputStream())))
+			{
+				String line = br.readLine();
+				manifest.setLastUpdatedAt(Long.parseLong(line));
+
+				String lastLine = line;
+				for (; (line = br.readLine()) != null; )
+				{
+					lastLine = line;
+				}
+				manifest.setCreatedAt(Long.parseLong(lastLine));
+			}
+			waitAndCheck(gitlog, "git log ", 30, TimeUnit.SECONDS);
 		}
 	}
 
