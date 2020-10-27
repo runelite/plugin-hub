@@ -1,0 +1,81 @@
+/*
+ * Copyright (c) 2020 Abex
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+initscript {
+	dependencies {
+		classpath files(System.getenv("runelite.pluginhub.package.lib"))
+	}
+}
+
+allprojects {
+	apply plugin: "java"
+	apply plugin: ShadowPlugin
+
+	compileJava {
+		options.release.set(8)
+	}
+
+	tasks.withType(AbstractArchiveTask) {
+		preserveFileTimestamps = false
+		reproducibleFileOrder = true
+	}
+
+	def buildDir = new File(System.getenv("runelite.pluginhub.package.buildDir"));
+
+	task runelitePluginHubPackage(type: ShadowJar) {
+		destinationDir = buildDir
+		archiveName = "plugin.jar"
+		configurations = [project.configurations.runtimeClasspath]
+		from sourceSets.main.output
+	}
+
+	task runelitePluginHubManifest {
+		doLast {
+			def props = new Properties()
+			props["version"] = project.version
+			new File(buildDir, "chunk.properties").withOutputStream {
+				props.store(it, "")
+			}
+		}
+	}
+
+	task configured {
+		def runeLiteDeps = [
+			"client",
+			"runelite-api",
+			"http-api",
+		]
+		def version = System.getenv("runelite.pluginhub.package.runeliteVersion")
+		configurations.all {
+			resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+				if (details.requested.group == "net.runelite" && details.requested.name in runeLiteDeps) {
+					details.useVersion version
+				}
+			}
+		}
+	}
+}
