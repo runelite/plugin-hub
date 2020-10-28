@@ -94,6 +94,9 @@ public class Packager
 	@Setter
 	private boolean alwaysPrintLog;
 
+	@Getter
+	private boolean failed;
+
 	public Packager(List<File> buildList) throws IOException
 	{
 		this.buildList = buildList;
@@ -247,6 +250,7 @@ public class Packager
 			}
 			catch (PluginBuildException e)
 			{
+				failed = true;
 				p.writeLog("package failed\n", e);
 				if (!alwaysPrintLog)
 				{
@@ -268,14 +272,17 @@ public class Packager
 		}
 		catch (DisabledPluginException e)
 		{
+			failed = true;
 			log.info("{}", e.getMessage());
 		}
 		catch (PluginBuildException e)
 		{
+			failed = true;
 			log.info("", e);
 		}
 		catch (Exception e)
 		{
+			failed = true;
 			log.warn("{}: crashed the build script: ", plugin.getName(), e);
 		}
 		finally
@@ -329,6 +336,7 @@ public class Packager
 	public static void main(String... args) throws Exception
 	{
 		boolean isBuildingAll = false;
+		boolean testFailure = false;
 		List<File> buildList;
 		if (args.length != 0)
 		{
@@ -381,11 +389,11 @@ public class Packager
 
 			if (doPackageTests)
 			{
-				new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", "test")
+				testFailure = new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", "test")
 					.directory(PACKAGE_ROOT)
 					.inheritIO()
 					.start()
-					.waitFor();
+					.waitFor() != 0;
 			}
 
 			if (doAll)
@@ -410,6 +418,11 @@ public class Packager
 		pkg.setAlwaysPrintLog(!pkg.getUploadConfig().isComplete());
 		pkg.setIgnoreOldManifest(isBuildingAll);
 		pkg.buildPlugins();
+
+		if (testFailure || pkg.isFailed() && !isBuildingAll)
+		{
+			System.exit(1);
+		}
 	}
 
 	static List<File> listAllPlugins()
