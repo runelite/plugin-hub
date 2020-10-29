@@ -22,19 +22,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.pluginhub.packager;
+package net.runelite.pluginhub.uploader;
 
 import com.google.common.base.Strings;
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.interfaces.RSAPrivateCrtKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,10 +41,8 @@ import okhttp3.Response;
 
 @Getter
 @Accessors(chain = true)
-public class UploadConfiguration
+public class UploadConfiguration implements Closeable
 {
-	private RSAPrivateCrtKey key;
-	private PublicKey cert;
 	private OkHttpClient client;
 
 	@Setter
@@ -64,7 +56,6 @@ public class UploadConfiguration
 			return this;
 		}
 
-		setKey(System.getenv("SIGNING_KEY"));
 		setClient(System.getenv("REPO_CREDS"));
 
 		String uploadRepoRootStr = System.getenv("REPO_ROOT");
@@ -81,34 +72,7 @@ public class UploadConfiguration
 
 	public boolean isComplete()
 	{
-		return key != null && cert != null && client != null && uploadRepoRoot != null;
-	}
-
-	public UploadConfiguration setKey(String keyStr)
-	{
-		if (keyStr == null)
-		{
-			key = null;
-			cert = null;
-			return this;
-		}
-
-		try
-		{
-			KeyFactory kf = KeyFactory.getInstance("RSA");
-
-			byte[] pkcs8 = Base64.getMimeDecoder().decode(keyStr
-				.replace("\\n", "\n")
-				.replaceAll(" |-----(BEGIN|END) PRIVATE KEY-----(\n?)", ""));
-			key = (RSAPrivateCrtKey) kf.generatePrivate(new PKCS8EncodedKeySpec(pkcs8));
-			cert = kf.generatePublic(new RSAPublicKeySpec(key.getModulus(), key.getPublicExponent()));
-		}
-		catch (NoSuchAlgorithmException | InvalidKeySpecException e)
-		{
-			throw new RuntimeException(e);
-		}
-
-		return this;
+		return client != null && uploadRepoRoot != null;
 	}
 
 	public UploadConfiguration setClient(String credentials)
@@ -152,6 +116,15 @@ public class UploadConfiguration
 			.execute())
 		{
 			Util.check(res);
+		}
+	}
+
+	@Override
+	public void close()
+	{
+		if (client != null)
+		{
+			client.connectionPool().evictAll();
 		}
 	}
 }

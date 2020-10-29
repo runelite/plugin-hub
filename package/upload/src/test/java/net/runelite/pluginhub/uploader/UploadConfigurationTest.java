@@ -22,44 +22,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.pluginhub.packager;
+package net.runelite.pluginhub.uploader;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class Util
+public class UploadConfigurationTest
 {
-	private Util()
+	@Test
+	public void createClientWithCredentials() throws IOException, InterruptedException
 	{
-	}
+		MockWebServer server = new MockWebServer();
 
-	public static void waitAndCheck(Plugin plugin, Process process, String name, long timeout, TimeUnit timeoutUnit) throws PluginBuildException
-	{
-		try
+		server.enqueue(new MockResponse().setResponseCode(520).setBody("some cloudflare html"));
+		server.enqueue(new MockResponse().setResponseCode(200).setBody("ok"));
+
+		OkHttpClient client = new UploadConfiguration()
+			.setClient("Aladdin:open sesame")
+			.getClient();
+
+		try (Response res = client.newCall(new Request.Builder()
+			.put(RequestBody.create(null, "foo"))
+			.url(server.url("/"))
+			.build())
+			.execute())
 		{
-			if (!process.waitFor(timeout, timeoutUnit))
-			{
-				process.destroy();
-				throw PluginBuildException.of(plugin, name + " failed to complete in a reasonable time");
-			}
-		}
-		catch (InterruptedException e)
-		{
-			throw new RuntimeException(e);
+			Assert.assertEquals(res.code(), 200);
+			Assert.assertEquals(res.body().string(), "ok");
 		}
 
-		if (process.exitValue() != 0)
-		{
-			throw PluginBuildException.of(plugin, name + " exited with " + process.exitValue());
-		}
-	}
-
-	public static void check(Response res) throws IOException
-	{
-		if ((res.code() / 100) != 2)
-		{
-			throw new IOException(res.request().url() + ": " + res.code() + " " + res.message());
-		}
+		RecordedRequest r2 = server.takeRequest();
+		Assert.assertEquals(r2.getHeader("Authorization"), "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==");
 	}
 }

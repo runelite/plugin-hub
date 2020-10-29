@@ -63,6 +63,8 @@ import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.runelite.pluginhub.uploader.ExternalPluginManifest;
+import net.runelite.pluginhub.uploader.UploadConfiguration;
 import okhttp3.HttpUrl;
 import org.gradle.tooling.CancellationTokenSource;
 import org.gradle.tooling.GradleConnectionException;
@@ -211,13 +213,34 @@ public class Plugin implements Closeable
 		iconFile = new File(repositoryDirectory, "icon.png");
 	}
 
+	private void waitAndCheck(Process process, String name, long timeout, TimeUnit timeoutUnit) throws PluginBuildException
+	{
+		try
+		{
+			if (!process.waitFor(timeout, timeoutUnit))
+			{
+				process.destroy();
+				throw PluginBuildException.of(this, name + " failed to complete in a reasonable time");
+			}
+		}
+		catch (InterruptedException e)
+		{
+			throw new RuntimeException(e);
+		}
+
+		if (process.exitValue() != 0)
+		{
+			throw PluginBuildException.of(this, name + " exited with " + process.exitValue());
+		}
+	}
+
 	public void download() throws IOException, PluginBuildException
 	{
 		Process gitclone = new ProcessBuilder("git", "clone", "--config", "advice.detachedHead=false", this.repositoryURL, repositoryDirectory.getAbsolutePath())
 			.redirectOutput(ProcessBuilder.Redirect.appendTo(logFile))
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.start();
-		Util.waitAndCheck(this, gitclone, "git clone", 2, TimeUnit.MINUTES);
+		waitAndCheck(gitclone, "git clone", 2, TimeUnit.MINUTES);
 
 
 		Process gitcheckout = new ProcessBuilder("git", "checkout", commit + "^{commit}")
@@ -225,7 +248,7 @@ public class Plugin implements Closeable
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.directory(repositoryDirectory)
 			.start();
-		Util.waitAndCheck(this, gitcheckout, "git checkout", 2, TimeUnit.MINUTES);
+		waitAndCheck(gitcheckout, "git checkout", 2, TimeUnit.MINUTES);
 	}
 
 	public void build(String runeliteVersion) throws IOException, PluginBuildException

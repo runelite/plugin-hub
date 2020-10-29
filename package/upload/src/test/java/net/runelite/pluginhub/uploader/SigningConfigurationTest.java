@@ -22,25 +22,16 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.pluginhub.packager;
+package net.runelite.pluginhub.uploader;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.Signature;
 import java.security.SignatureException;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class UploadConfigurationTest
+public class SigningConfigurationTest
 {
 	public static final String TEST_SIGNING_KEY = "-----BEGIN PRIVATE KEY-----\n" +
 		"MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDw78Jgex/z/Wqp\n" +
@@ -71,59 +62,15 @@ public class UploadConfigurationTest
 		"PTrpFFdp8oDxvgezLBFzqd8=\n" +
 		"-----END PRIVATE KEY-----";
 
-	@Test
-	public void createClientWithCredentials() throws IOException, InterruptedException
-	{
-		MockWebServer server = new MockWebServer();
-
-		server.enqueue(new MockResponse().setResponseCode(520).setBody("some cloudflare html"));
-		server.enqueue(new MockResponse().setResponseCode(200).setBody("ok"));
-
-		OkHttpClient client = new UploadConfiguration()
-			.setClient("Aladdin:open sesame")
-			.getClient();
-
-		try (Response res = client.newCall(new Request.Builder()
-			.put(RequestBody.create(null, "foo"))
-			.url(server.url("/"))
-			.build())
-			.execute())
-		{
-			Assert.assertEquals(res.code(), 200);
-			Assert.assertEquals(res.body().string(), "ok");
-		}
-
-		RecordedRequest r2 = server.takeRequest();
-		Assert.assertEquals(r2.getHeader("Authorization"), "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==");
-	}
 
 	@Test
 	public void testSigning() throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
 	{
-		UploadConfiguration cfg = new UploadConfiguration()
-			.setKey(TEST_SIGNING_KEY);
+		SigningConfiguration cfg = new SigningConfiguration(TEST_SIGNING_KEY);
 
 		byte[] data = "Hello World".getBytes(StandardCharsets.UTF_8);
-		byte[] sig;
-		{
-			Signature s = Signature.getInstance("SHA256withRSA");
-			s.initSign(cfg.getKey());
-			s.update(data);
-			sig = s.sign();
-		}
-
-		{
-			Signature s = Signature.getInstance("SHA256withRSA");
-			s.initVerify(cfg.getCert());
-			s.update(data);
-			Assert.assertTrue(s.verify(sig));
-		}
-
-		{
-			Signature s = Signature.getInstance("SHA256withRSA");
-			s.initVerify(cfg.getCert());
-			s.update("moo".getBytes(StandardCharsets.UTF_8));
-			Assert.assertFalse(s.verify(sig));
-		}
+		byte[] sig = cfg.sign(data);
+		Assert.assertTrue(cfg.verify(sig, data));
+		Assert.assertFalse(cfg.verify(sig, "moo".getBytes(StandardCharsets.UTF_8)));
 	}
 }
