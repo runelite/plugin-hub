@@ -43,7 +43,9 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -228,6 +230,35 @@ public class Plugin implements Closeable
 
 	public void build(String runeliteVersion) throws IOException, PluginBuildException
 	{
+		try (DirectoryStream<Path> ds = Files.newDirectoryStream(repositoryDirectory.toPath(), "**.{gradle,gradle.kts}"))
+		{
+			for (Path path : ds)
+			{
+				String badLine = MoreFiles.asCharSource(path, StandardCharsets.UTF_8)
+					.lines()
+					.filter(l -> l.codePoints().map(cp ->
+					{
+						if (cp == '\t')
+						{
+							return 8;
+						}
+						else if (cp > 127)
+						{
+							// any special char is counted as 4 because there are some very wide special characters
+							return 4;
+						}
+						return 1;
+					}).sum() > 100)
+					.findAny()
+					.orElse(null);
+				if (badLine != null)
+				{
+					throw PluginBuildException.of(this, "All gradle files must wrap at 100 characters or less")
+						.withFileLine(path.toFile(), badLine);
+				}
+			}
+		}
+
 		try (ProjectConnection con = GradleConnector.newConnector()
 			.forProjectDirectory(repositoryDirectory)
 			.useInstallation(GRADLE_HOME)
