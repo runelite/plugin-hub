@@ -28,7 +28,7 @@ jobs:
         path: |
           ~/.gradle/caches/
           ~/.gradle/wrapper/
-        key: package-2.0.0
+        key: package-2.0.1
     - name: prepare
       run: |
         pushd package
