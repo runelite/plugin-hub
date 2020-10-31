@@ -5,7 +5,7 @@ on:
         description: "List of plugins to build, or 'ALL'"
         required: false
       COMMIT_RANGE:
-        description: "Commit range to build 1234abc..5689def"
+        description: "Commit range to build 1234abc...5689def"
         required: false
   push:
   pull_request:
@@ -51,8 +51,8 @@ jobs:
         PACKAGE_IS_PR: ${{ github.event_name == 'pull_request' }}
       run: |
         if $PACKAGE_IS_PR; then
-          export PACKAGE_COMMIT_RANGE="$PR_BEFORE..$PR_AFTER"
+          export PACKAGE_COMMIT_RANGE="$PR_BEFORE...$PR_AFTER"
         else
-          export PACKAGE_COMMIT_RANGE="${COMMIT_RANGE:-${COMMIT_BEFORE:+$COMMIT_BEFORE..$COMMIT_AFTER}}"
+          export PACKAGE_COMMIT_RANGE="${COMMIT_RANGE:-${COMMIT_BEFORE:+$COMMIT_BEFORE...$COMMIT_AFTER}}"
         fi
         java -XX:+UseParallelGC -jar package/package/build/libs/package.jar
