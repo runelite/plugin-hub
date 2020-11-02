@@ -66,7 +66,9 @@ public class Uploader
 			if (!diff.isIgnoreOldManifest())
 			{
 				try (Response res = uploadConfig.getClient().newCall(new Request.Builder()
-					.url(manifestURL)
+					.url(manifestURL.newBuilder()
+						.addQueryParameter("c", System.nanoTime() + "")
+						.build())
 					.get()
 					.build())
 					.execute())
