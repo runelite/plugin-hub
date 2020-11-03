@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.pluginhub.uploader.Util;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -74,7 +75,7 @@ public class PluginTest
 	{
 		try (Plugin p = createExamplePlugin("example"))
 		{
-			p.build(Packager.readRLVersion());
+			p.build(Util.readRLVersion());
 			p.assembleManifest();
 		}
 	}
@@ -88,7 +89,7 @@ public class PluginTest
 			Properties props = Plugin.loadProperties(propFile);
 			props.setProperty("plugins", "com.nonexistent");
 			writeProperties(props, propFile);
-			p.build(Packager.readRLVersion());
+			p.build(Util.readRLVersion());
 			p.assembleManifest();
 			Assert.fail();
 		}

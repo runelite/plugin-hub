@@ -22,40 +22,30 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-repositories {
-	maven {
-		url "https://repo.gradle.org/gradle/libs-releases-local/"
+package net.runelite.pluginhub.uploader;
+
+import com.google.common.io.Files;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import okhttp3.Response;
+
+public class Util
+{
+	private Util()
+	{
 	}
-	mavenCentral()
-}
 
-dependencies {
-	implementation "org.gradle:gradle-tooling-api:6.6.1"
-	implementation "org.slf4j:slf4j-simple:1.7.10"
-	implementation "com.google.code.findbugs:jsr305:3.0.2"
-	implementation "com.google.guava:guava:23.2-jre"
-	implementation "org.ow2.asm:asm:7.0"
-	implementation "com.squareup.okhttp3:okhttp:3.14.9"
-	implementation "com.google.code.gson:gson:2.8.5"
-	implementation project(":upload")
-
-	def lombok = "org.projectlombok:lombok:1.18.4";
-	compileOnly lombok
-	annotationProcessor lombok
-	testCompileOnly lombok
-	testAnnotationProcessor lombok
-
-	testImplementation "junit:junit:4.12"
-	testImplementation "com.squareup.okhttp3:mockwebserver:3.14.9"
-}
-
-jar {
-	manifest {
-		attributes "Main-Class": "net.runelite.pluginhub.packager.Packager"
+	public static void check(Response res) throws IOException
+	{
+		if ((res.code() / 100) != 2)
+		{
+			throw new IOException(res.request().url() + ": " + res.code() + " " + res.message());
+		}
 	}
-}
 
-test {
-	dependsOn ":initLib:shadowJar"
-	workingDir new File(project.rootDir, "../")
+	public static String readRLVersion() throws IOException
+	{
+		return Files.asCharSource(new File("./runelite.version"), StandardCharsets.UTF_8).read().trim();
+	}
 }

@@ -22,40 +22,22 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-repositories {
-	maven {
-		url "https://repo.gradle.org/gradle/libs-releases-local/"
-	}
-	mavenCentral()
-}
+package net.runelite.pluginhub.uploader;
 
-dependencies {
-	implementation "org.gradle:gradle-tooling-api:6.6.1"
-	implementation "org.slf4j:slf4j-simple:1.7.10"
-	implementation "com.google.code.findbugs:jsr305:3.0.2"
-	implementation "com.google.guava:guava:23.2-jre"
-	implementation "org.ow2.asm:asm:7.0"
-	implementation "com.squareup.okhttp3:okhttp:3.14.9"
-	implementation "com.google.code.gson:gson:2.8.5"
-	implementation project(":upload")
+import com.google.common.collect.Sets;
+import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 
-	def lombok = "org.projectlombok:lombok:1.18.4";
-	compileOnly lombok
-	annotationProcessor lombok
-	testCompileOnly lombok
-	testAnnotationProcessor lombok
+public class ManifestDiff
+{
+	@Getter
+	private Set<String> remove = Sets.newConcurrentHashSet();
 
-	testImplementation "junit:junit:4.12"
-	testImplementation "com.squareup.okhttp3:mockwebserver:3.14.9"
-}
+	@Getter
+	private Set<ExternalPluginManifest> add = Sets.newConcurrentHashSet();
 
-jar {
-	manifest {
-		attributes "Main-Class": "net.runelite.pluginhub.packager.Packager"
-	}
-}
-
-test {
-	dependsOn ":initLib:shadowJar"
-	workingDir new File(project.rootDir, "../")
+	@Getter
+	@Setter
+	private boolean ignoreOldManifest;
 }

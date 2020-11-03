@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Abex
+ * Copyright (c) 2019 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,40 +22,32 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-repositories {
-	maven {
-		url "https://repo.gradle.org/gradle/libs-releases-local/"
-	}
-	mavenCentral()
-}
+package net.runelite.pluginhub.uploader;
 
-dependencies {
-	implementation "org.gradle:gradle-tooling-api:6.6.1"
-	implementation "org.slf4j:slf4j-simple:1.7.10"
-	implementation "com.google.code.findbugs:jsr305:3.0.2"
-	implementation "com.google.guava:guava:23.2-jre"
-	implementation "org.ow2.asm:asm:7.0"
-	implementation "com.squareup.okhttp3:okhttp:3.14.9"
-	implementation "com.google.code.gson:gson:2.8.5"
-	implementation project(":upload")
+import java.net.URL;
+import javax.annotation.Nullable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-	def lombok = "org.projectlombok:lombok:1.18.4";
-	compileOnly lombok
-	annotationProcessor lombok
-	testCompileOnly lombok
-	testAnnotationProcessor lombok
+@Data
+public class ExternalPluginManifest
+{
+	private String internalName;
+	private String commit;
+	private String hash;
+	private int size;
+	private String[] plugins;
 
-	testImplementation "junit:junit:4.12"
-	testImplementation "com.squareup.okhttp3:mockwebserver:3.14.9"
-}
-
-jar {
-	manifest {
-		attributes "Main-Class": "net.runelite.pluginhub.packager.Packager"
-	}
-}
-
-test {
-	dependsOn ":initLib:shadowJar"
-	workingDir new File(project.rootDir, "../")
+	private String displayName;
+	private String version;
+	private String author;
+	@Nullable
+	private String description;
+	@Nullable
+	private String warning;
+	@Nullable
+	private String[] tags;
+	@EqualsAndHashCode.Exclude
+	private URL support;
+	private boolean hasIcon;
 }

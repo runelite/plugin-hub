@@ -43,7 +43,9 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +63,8 @@ import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import net.runelite.pluginhub.uploader.ExternalPluginManifest;
+import net.runelite.pluginhub.uploader.UploadConfiguration;
 import okhttp3.HttpUrl;
 import org.gradle.tooling.CancellationTokenSource;
 import org.gradle.tooling.GradleConnectionException;
@@ -209,13 +213,34 @@ public class Plugin implements Closeable
 		iconFile = new File(repositoryDirectory, "icon.png");
 	}
 
+	private void waitAndCheck(Process process, String name, long timeout, TimeUnit timeoutUnit) throws PluginBuildException
+	{
+		try
+		{
+			if (!process.waitFor(timeout, timeoutUnit))
+			{
+				process.destroy();
+				throw PluginBuildException.of(this, name + " failed to complete in a reasonable time");
+			}
+		}
+		catch (InterruptedException e)
+		{
+			throw new RuntimeException(e);
+		}
+
+		if (process.exitValue() != 0)
+		{
+			throw PluginBuildException.of(this, name + " exited with " + process.exitValue());
+		}
+	}
+
 	public void download() throws IOException, PluginBuildException
 	{
 		Process gitclone = new ProcessBuilder("git", "clone", "--config", "advice.detachedHead=false", this.repositoryURL, repositoryDirectory.getAbsolutePath())
 			.redirectOutput(ProcessBuilder.Redirect.appendTo(logFile))
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.start();
-		Util.waitAndCheck(this, gitclone, "git clone", 2, TimeUnit.MINUTES);
+		waitAndCheck(gitclone, "git clone", 2, TimeUnit.MINUTES);
 
 
 		Process gitcheckout = new ProcessBuilder("git", "checkout", commit + "^{commit}")
@@ -223,11 +248,40 @@ public class Plugin implements Closeable
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.directory(repositoryDirectory)
 			.start();
-		Util.waitAndCheck(this, gitcheckout, "git checkout", 2, TimeUnit.MINUTES);
+		waitAndCheck(gitcheckout, "git checkout", 2, TimeUnit.MINUTES);
 	}
 
 	public void build(String runeliteVersion) throws IOException, PluginBuildException
 	{
+		try (DirectoryStream<Path> ds = Files.newDirectoryStream(repositoryDirectory.toPath(), "**.{gradle,gradle.kts}"))
+		{
+			for (Path path : ds)
+			{
+				String badLine = MoreFiles.asCharSource(path, StandardCharsets.UTF_8)
+					.lines()
+					.filter(l -> l.codePoints().map(cp ->
+					{
+						if (cp == '\t')
+						{
+							return 8;
+						}
+						else if (cp > 127)
+						{
+							// any special char is counted as 4 because there are some very wide special characters
+							return 4;
+						}
+						return 1;
+					}).sum() > 100)
+					.findAny()
+					.orElse(null);
+				if (badLine != null)
+				{
+					throw PluginBuildException.of(this, "All gradle files must wrap at 100 characters or less")
+						.withFileLine(path.toFile(), badLine);
+				}
+			}
+		}
+
 		try (ProjectConnection con = GradleConnector.newConnector()
 			.forProjectDirectory(repositoryDirectory)
 			.useInstallation(GRADLE_HOME)
