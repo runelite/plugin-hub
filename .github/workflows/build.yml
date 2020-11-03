@@ -49,6 +49,9 @@ jobs:
         PR_AFTER: ${{ github.event.pull_request.head.sha }}
         PACKAGE_IS_PR: ${{ github.event_name == 'pull_request' }}
       run: |
+        COMMAND_SECRET="$(openssl rand -hex 32)"
+        echo "::add-mask::$COMMAND_SECRET"
+        echo "::stop-commands::$COMMAND_SECRET"
         if $PACKAGE_IS_PR; then
           export PACKAGE_COMMIT_RANGE="$PR_BEFORE...$PR_AFTER"
         else
