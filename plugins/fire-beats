@@ -1,2 +1,3 @@
 repository=https://github.com/RKGman/fire-beats.git
-commit=b8299ee6c7b69591eb128a892cea4b89b759ee1f
+commit=f51929b4764d44a28c2b4719846e69176447bc70
+warning=This plugin downloads music on demand from anonfiles.com, a 3rd party website not controlled or verified by the RuneLite Developers.
