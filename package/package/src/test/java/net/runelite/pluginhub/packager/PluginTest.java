@@ -115,7 +115,13 @@ public class PluginTest
 		try
 		{
 			Files.asCharSink(f, StandardCharsets.UTF_8).write(desc);
-			return new Plugin(f);
+			return new Plugin(f)
+			{
+				@Override
+				protected void realPluginChecks()
+				{
+				}
+			};
 		}
 		finally
 		{

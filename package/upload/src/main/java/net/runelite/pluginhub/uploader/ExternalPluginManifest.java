@@ -38,6 +38,9 @@ public class ExternalPluginManifest
 	private int size;
 	private String[] plugins;
 
+	private long createdAt;
+	private long lastUpdatedAt;
+
 	private String displayName;
 	private String version;
 	private String author;
