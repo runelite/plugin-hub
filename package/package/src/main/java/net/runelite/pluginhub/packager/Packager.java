@@ -123,7 +123,7 @@ public class Packager implements Closeable
 
 		Gson gson = new Gson();
 		String diffJSON = gson.toJson(diff);
-		log.info("manifest change: {}", diffJSON);
+		log.debug("manifest change: {}", diffJSON);
 
 		try (FileOutputStream fos = new FileOutputStream("/tmp/manifest_diff"))
 		{
