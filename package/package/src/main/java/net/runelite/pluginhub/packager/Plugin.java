@@ -707,7 +707,7 @@ public class Plugin implements Closeable
 		}
 	}
 
-	public void uploadLog(UploadConfiguration uploadConfig) throws IOException
+	public String uploadLog(UploadConfiguration uploadConfig) throws IOException
 	{
 		try
 		{
@@ -718,12 +718,14 @@ public class Plugin implements Closeable
 		{
 		}
 
-		uploadConfig.put(uploadConfig.getUploadRepoRoot()
-				.newBuilder()
-				.addPathSegment(internalName)
-				.addPathSegment(commit + ".log")
-				.build(),
-			logFile);
+		HttpUrl url = uploadConfig.getUploadRepoRoot()
+			.newBuilder()
+			.addPathSegment(internalName)
+			.addPathSegment(commit + ".log")
+			.build();
+		uploadConfig.put(url, logFile);
+
+		return url.toString();
 	}
 
 	public void writeLog(String format, Object... args) throws IOException
