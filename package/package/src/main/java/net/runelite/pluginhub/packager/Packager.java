@@ -55,6 +55,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.pluginhub.uploader.ManifestDiff;
 import net.runelite.pluginhub.uploader.UploadConfiguration;
 import net.runelite.pluginhub.uploader.Util;
+import org.slf4j.helpers.FormattingTuple;
+import org.slf4j.helpers.MessageFormatter;
 
 @Slf4j
 public class Packager implements Closeable
@@ -82,6 +84,8 @@ public class Packager implements Closeable
 
 	@Getter
 	private boolean failed;
+
+	private final StringBuilder buildSummary = new StringBuilder();
 
 	private ManifestDiff diff = new ManifestDiff();
 
@@ -123,14 +127,13 @@ public class Packager implements Closeable
 
 		Gson gson = new Gson();
 		String diffJSON = gson.toJson(diff);
-		log.info("manifest change: {}", diffJSON);
+		log.debug("manifest change: {}", diffJSON);
 
 		try (FileOutputStream fos = new FileOutputStream("/tmp/manifest_diff"))
 		{
 			fos.write(diffJSON.getBytes(StandardCharsets.UTF_8));
 		}
 	}
-
 
 	private void buildPlugin(File plugin)
 	{
@@ -179,7 +182,12 @@ public class Packager implements Closeable
 
 				if (uploadConfig.isComplete())
 				{
-					p.uploadLog(uploadConfig);
+					String logURL = p.uploadLog(uploadConfig);
+					logToSummary("{} failed: {}", p.getInternalName(), logURL);
+				}
+				else
+				{
+					logToSummary("{} failed", p.getInternalName());
 				}
 			}
 			finally
@@ -192,23 +200,37 @@ public class Packager implements Closeable
 		}
 		catch (DisabledPluginException e)
 		{
-			failed = true;
 			log.info("{}", e.getMessage());
 		}
 		catch (PluginBuildException e)
 		{
 			failed = true;
-			log.info("", e);
+			logToSummary("", e);
 		}
 		catch (Exception e)
 		{
 			failed = true;
-			log.warn("{}: crashed the build script: ", plugin.getName(), e);
+			logToSummary("{}: crashed the build script: ", plugin.getName(), e);
 		}
 		finally
 		{
 			numDone.addAndGet(1);
 		}
+	}
+
+	private void logToSummary(String message, Object... args)
+	{
+		log.info(message, args);
+		FormattingTuple fmt = MessageFormatter.arrayFormat(message, args);
+		synchronized (buildSummary)
+		{
+			buildSummary.append(fmt.getMessage()).append('\n');
+		}
+	}
+
+	public String getBuildSummary()
+	{
+		return buildSummary.toString();
 	}
 
 	private Closeable acquireDownload(Plugin plugin)
@@ -347,6 +369,18 @@ public class Packager implements Closeable
 			pkg.setIgnoreOldManifest(isBuildingAll);
 			pkg.buildPlugins();
 			failed = pkg.isFailed();
+			if (isBuildingAll)
+			{
+				String summary = pkg.getBuildSummary();
+				if (!summary.isEmpty())
+				{
+					log.info("Failures:\n{}", summary);
+				}
+				if (!failed)
+				{
+					log.info("All plugins succeeded");
+				}
+			}
 		}
 
 		if (testFailure || (failed && !isBuildingAll))
