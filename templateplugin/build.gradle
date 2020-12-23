@@ -19,10 +19,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.4'
 
 	testImplementation 'junit:junit:4.12'
-	testImplementation 'org.slf4j:slf4j-simple:1.7.12'
-	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion, {
-		exclude group: 'ch.qos.logback', module: 'logback-classic'
-	}
+	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
 }
 
 group = '${group_id}'
