@@ -31,19 +31,29 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.hash.Hashing;
 import com.google.common.io.ByteStreams;
+import com.google.common.io.CountingOutputStream;
 import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
+import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -56,11 +66,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.Value;
+import net.runelite.pluginhub.uploader.ExternalPluginManifest;
+import net.runelite.pluginhub.uploader.UploadConfiguration;
 import okhttp3.HttpUrl;
 import org.gradle.tooling.CancellationTokenSource;
 import org.gradle.tooling.GradleConnectionException;
@@ -76,6 +91,10 @@ import org.slf4j.helpers.MessageFormatter;
 
 public class Plugin implements Closeable
 {
+	private static final long MIB = 1024 * 1024;
+	private static final long MAX_JAR_SIZE = 10 * MIB;
+	private static final long MAX_SRC_SIZE = 10 * MIB;
+
 	private static final Pattern PLUGIN_INTERNAL_NAME_TEST = Pattern.compile("^[a-z0-9-]+$");
 	private static final Pattern REPOSITORY_TEST = Pattern.compile("^https://github\\.com/.*\\.git$");
 	private static final Pattern COMMIT_TEST = Pattern.compile("^[a-fA-F0-9]{40}$");
@@ -104,6 +123,8 @@ public class Plugin implements Closeable
 		}
 	}
 
+	private final File pluginCommitDescriptor;
+
 	@Getter
 	private final String internalName;
 
@@ -113,6 +134,7 @@ public class Plugin implements Closeable
 	final File repositoryDirectory;
 
 	private final File jarFile;
+	private final File srcZipFile;
 	private final File iconFile;
 
 	@Getter
@@ -136,6 +158,7 @@ public class Plugin implements Closeable
 
 	public Plugin(File pluginCommitDescriptor) throws IOException, DisabledPluginException, PluginBuildException
 	{
+		this.pluginCommitDescriptor = pluginCommitDescriptor;
 		internalName = pluginCommitDescriptor.getName();
 		if (!PLUGIN_INTERNAL_NAME_TEST.matcher(internalName).matches())
 		{
@@ -206,7 +229,29 @@ public class Plugin implements Closeable
 		logFile = new File(buildDirectory, "log");
 		log = new FileOutputStream(logFile, true);
 		jarFile = new File(buildDirectory, "plugin.jar");
+		srcZipFile = new File(buildDirectory, "source.zip");
 		iconFile = new File(repositoryDirectory, "icon.png");
+	}
+
+	private void waitAndCheck(Process process, String name, long timeout, TimeUnit timeoutUnit) throws PluginBuildException
+	{
+		try
+		{
+			if (!process.waitFor(timeout, timeoutUnit))
+			{
+				process.destroy();
+				throw PluginBuildException.of(this, name + " failed to complete in a reasonable time");
+			}
+		}
+		catch (InterruptedException e)
+		{
+			throw new RuntimeException(e);
+		}
+
+		if (process.exitValue() != 0)
+		{
+			throw PluginBuildException.of(this, name + " exited with " + process.exitValue());
+		}
 	}
 
 	public void download() throws IOException, PluginBuildException
@@ -215,7 +260,7 @@ public class Plugin implements Closeable
 			.redirectOutput(ProcessBuilder.Redirect.appendTo(logFile))
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.start();
-		Util.waitAndCheck(this, gitclone, "git clone", 2, TimeUnit.MINUTES);
+		waitAndCheck(gitclone, "git clone", 2, TimeUnit.MINUTES);
 
 
 		Process gitcheckout = new ProcessBuilder("git", "checkout", commit + "^{commit}")
@@ -223,11 +268,101 @@ public class Plugin implements Closeable
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.directory(repositoryDirectory)
 			.start();
-		Util.waitAndCheck(this, gitcheckout, "git checkout", 2, TimeUnit.MINUTES);
+		waitAndCheck(gitcheckout, "git checkout", 2, TimeUnit.MINUTES);
 	}
 
 	public void build(String runeliteVersion) throws IOException, PluginBuildException
 	{
+		try (DirectoryStream<Path> ds = Files.newDirectoryStream(repositoryDirectory.toPath(), "**.{gradle,gradle.kts}"))
+		{
+			for (Path path : ds)
+			{
+				String badLine = MoreFiles.asCharSource(path, StandardCharsets.UTF_8)
+					.lines()
+					.filter(l -> l.codePoints().map(cp ->
+					{
+						if (cp == '\t')
+						{
+							return 8;
+						}
+						else if (cp > 127)
+						{
+							// any special char is counted as 4 because there are some very wide special characters
+							return 4;
+						}
+						return 1;
+					}).sum() > 100)
+					.findAny()
+					.orElse(null);
+				if (badLine != null)
+				{
+					throw PluginBuildException.of(this, "All gradle files must wrap at 100 characters or less")
+						.withFileLine(path.toFile(), badLine);
+				}
+			}
+		}
+
+		try (
+			CountingOutputStream cos = new CountingOutputStream(new FileOutputStream(srcZipFile));
+			ZipOutputStream zos = new ZipOutputStream(cos))
+		{
+			@Value
+			class Entry
+			{
+				Path path;
+				String zipPath;
+				long length;
+			}
+
+			List<Entry> core = new ArrayList<>();
+			List<Entry> extras = new ArrayList<>();
+			Files.walkFileTree(repositoryDirectory.toPath(), new SimpleFileVisitor<Path>()
+			{
+				@Override
+				public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
+				{
+					if (dir.toString().contains(".git"))
+					{
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException
+				{
+					String zipPath = repositoryDirectory.toPath().relativize(path).toString().replace('\\', '/');
+					(zipPath.contains(".gradle") || zipPath.startsWith("src/main/") ? core : extras)
+						.add(new Entry(path, zipPath, path.toFile().length()));
+					return FileVisitResult.CONTINUE;
+				}
+			});
+
+			core.sort(Comparator.comparing(Entry::getZipPath));
+			for (Entry e : core)
+			{
+				ZipEntry ze = new ZipEntry(e.zipPath);
+				zos.putNextEntry(ze);
+				Files.copy(e.path, zos);
+				zos.closeEntry();
+			}
+
+			extras.sort(Comparator.comparing(Entry::getLength).thenComparing(Entry::getZipPath));
+			for (Entry e : extras)
+			{
+				if (cos.getCount() + e.length > MAX_SRC_SIZE)
+				{
+					writeLog("File \"{}\" is skipped from the source archive as it would make it too big ({} MiB)\n", e.zipPath, e.length / MIB);
+					continue;
+				}
+
+				ZipEntry ze = new ZipEntry(e.zipPath);
+				zos.putNextEntry(ze);
+				Files.copy(e.path, zos);
+				zos.closeEntry();
+			}
+		}
+
 		try (ProjectConnection con = GradleConnector.newConnector()
 			.forProjectDirectory(repositoryDirectory)
 			.useInstallation(GRADLE_HOME)
@@ -307,11 +442,19 @@ public class Plugin implements Closeable
 
 		{
 			long size = jarFile.length();
-			if (size > 10 * 1024 * 1024)
+			if (size > MAX_JAR_SIZE)
 			{
-				throw PluginBuildException.of(this, "the output jar is {}MiB, which is above our limit of 10MiB", size / (1024 * 1024));
+				throw PluginBuildException.of(this, "the output jar is {}MiB, which is above our limit of 10MiB", size / MIB);
 			}
 			manifest.setSize((int) size);
+		}
+
+		{
+			long size = srcZipFile.length();
+			if (size > MAX_SRC_SIZE + MIB) // allow the header to be a bit bigger
+			{
+				throw PluginBuildException.of(this, "the source archive is {}MiB, which is above our limit of 10MiB", size / MIB);
+			}
 		}
 
 		manifest.setHash(com.google.common.io.Files.asByteSource(jarFile)
@@ -498,6 +641,48 @@ public class Plugin implements Closeable
 				writeLog("warning: unused props in runelite-plugin.properties: {}\n", props.keySet());
 			}
 		}
+
+		realPluginChecks();
+	}
+
+	// Tests don't run this as the example plugin will fail these on purpose
+	protected void realPluginChecks() throws IOException, PluginBuildException
+	{
+		{
+			Process gitlog = new ProcessBuilder("git", "log", "--follow", "--format=%ct", "--", pluginCommitDescriptor.getAbsolutePath())
+				.redirectOutput(ProcessBuilder.Redirect.PIPE)
+				.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
+				.directory(pluginCommitDescriptor.getParentFile())
+				.start();
+
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(gitlog.getInputStream())))
+			{
+				String line = br.readLine();
+				manifest.setLastUpdatedAt(Long.parseLong(line));
+
+				String lastLine = line;
+				for (; (line = br.readLine()) != null; )
+				{
+					lastLine = line;
+				}
+				manifest.setCreatedAt(Long.parseLong(lastLine));
+			}
+			waitAndCheck(gitlog, "git log ", 30, TimeUnit.SECONDS);
+		}
+
+		if (!new File(repositoryDirectory, "LICENSE").exists())
+		{
+			if (manifest.getLastUpdatedAt() < 1604534400)
+			{
+				writeLog("Missing LICENSE file. This will become fatal in the future\n");
+			}
+			else
+			{
+				throw PluginBuildException.of(this, "Missing LICENSE file")
+					.withHelp("All plugins must be licensed under a license that allows us to freely distribute the plugin jar standalone.\n" +
+						"We recommend the BSD 2 Clause license.");
+			}
+		}
 	}
 
 	public void upload(UploadConfiguration uploadConfig) throws IOException
@@ -510,6 +695,10 @@ public class Plugin implements Closeable
 			pluginRoot.newBuilder().addPathSegment(commit + ".jar").build(),
 			jarFile);
 
+		uploadConfig.put(
+			pluginRoot.newBuilder().addPathSegment(commit + "-sources.zip").build(),
+			srcZipFile);
+
 		if (manifest.isHasIcon())
 		{
 			uploadConfig.put(
@@ -518,7 +707,7 @@ public class Plugin implements Closeable
 		}
 	}
 
-	public void uploadLog(UploadConfiguration uploadConfig) throws IOException
+	public String uploadLog(UploadConfiguration uploadConfig) throws IOException
 	{
 		try
 		{
@@ -529,12 +718,14 @@ public class Plugin implements Closeable
 		{
 		}
 
-		uploadConfig.put(uploadConfig.getUploadRepoRoot()
-				.newBuilder()
-				.addPathSegment(internalName)
-				.addPathSegment(commit + ".log")
-				.build(),
-			logFile);
+		HttpUrl url = uploadConfig.getUploadRepoRoot()
+			.newBuilder()
+			.addPathSegment(internalName)
+			.addPathSegment(commit + ".log")
+			.build();
+		uploadConfig.put(url, logFile);
+
+		return url.toString();
 	}
 
 	public void writeLog(String format, Object... args) throws IOException
