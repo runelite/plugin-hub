@@ -1,0 +1,3 @@
+repository=https://github.com/dekvall/runelite-external-plugins.git
+commit=f89e3ee2755ad44aa7a1b2127ed05372095182ad
+warning=This plugin submits the names of you, your friends and members of your clan chat to wiseoldman.net.
