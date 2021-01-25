@@ -1,3 +1,3 @@
 repository=https://github.com/0anth/osrs-logger.git
-commit=23aacf32c895f1daf18ddc46f26669851fbfefbb
+commit=4a47c09b292ceee1a83819c4b24e6e01e471072c
 warning=This plugin is in ALPHA and still being developed. An authorization code is required to use the features of this plugin.<br>This plugin submits your display name and loot drops to a 3rd party website not controlled or verified by the RuneLite developers.
