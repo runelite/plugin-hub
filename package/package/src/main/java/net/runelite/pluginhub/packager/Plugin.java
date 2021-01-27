@@ -65,6 +65,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -96,7 +97,7 @@ public class Plugin implements Closeable
 	private static final long MAX_SRC_SIZE = 10 * MIB;
 
 	private static final Pattern PLUGIN_INTERNAL_NAME_TEST = Pattern.compile("^[a-z0-9-]+$");
-	private static final Pattern REPOSITORY_TEST = Pattern.compile("^https://github\\.com/.*\\.git$");
+	private static final Pattern REPOSITORY_TEST = Pattern.compile("^(https://github\\.com/.*)\\.git$");
 	private static final Pattern COMMIT_TEST = Pattern.compile("^[a-fA-F0-9]{40}$");
 
 	private static final File TMP_ROOT;
@@ -148,6 +149,7 @@ public class Plugin implements Closeable
 
 	private final String repositoryURL;
 	private final String commit;
+	private final String defaultSupportURL;
 
 	@Getter
 	private final ExternalPluginManifest manifest = new ExternalPluginManifest();
@@ -183,7 +185,8 @@ public class Plugin implements Closeable
 				.withFile(pluginCommitDescriptor);
 		}
 
-		if (!REPOSITORY_TEST.matcher(repositoryURL).matches())
+		Matcher repoMatcher = REPOSITORY_TEST.matcher(repositoryURL);
+		if (!repoMatcher.matches())
 		{
 			throw PluginBuildException.of(internalName, "repository is not an accepted url")
 				.withFileLine(pluginCommitDescriptor, "repository=" + repositoryURL)
@@ -204,6 +207,7 @@ public class Plugin implements Closeable
 					return null;
 				});
 		}
+		String repoRoot = repoMatcher.group(1);
 
 		commit = (String) cd.remove("commit");
 		if (!COMMIT_TEST.matcher(commit).matches())
@@ -211,6 +215,8 @@ public class Plugin implements Closeable
 			throw PluginBuildException.of(internalName, "commit must be a full 40 character sha1sum")
 				.withFileLine(pluginCommitDescriptor, "commit=" + commit);
 		}
+
+		defaultSupportURL = repoRoot + "/tree/" + commit;
 
 		warning = (String) cd.remove("warning");
 
@@ -567,17 +573,19 @@ public class Plugin implements Closeable
 
 			{
 				String supportStr = (String) props.remove("support");
-				if (!Strings.isNullOrEmpty(supportStr))
+				if (Strings.isNullOrEmpty(supportStr))
 				{
-					try
-					{
-						manifest.setSupport(new URL(supportStr));
-					}
-					catch (MalformedURLException e)
-					{
-						throw PluginBuildException.of(this, "support url is malformed", e)
-							.withFileLine(propFile, "support=" + supportStr);
-					}
+					supportStr = this.defaultSupportURL;
+				}
+
+				try
+				{
+					manifest.setSupport(new URL(supportStr));
+				}
+				catch (MalformedURLException e)
+				{
+					throw PluginBuildException.of(this, "support url is malformed", e)
+						.withFileLine(propFile, "support=" + supportStr);
 				}
 			}
 
