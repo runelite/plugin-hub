@@ -1,3 +1,3 @@
 repository=https://github.com/Osrskillboard/OSRSKillboard-plugin.git
-commit=28c2ac5e62dddf60472f388cee0b362b52b91642
+commit=70392b3da5778ca15ca8b9f5e7e9f10609bf63de
 warning=This plugin submits your username, Gear, PvP Kills, PvP Loot and IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
