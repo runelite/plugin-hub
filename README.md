@@ -129,6 +129,10 @@ Create `gradle/verification-metadata.xml` with the following contents
     <verify-signatures>false</verify-signatures>
     <trusted-artifacts>
       <trust group="net.runelite"/>
+      <trust group="net.runelite.gluegen"/>
+      <trust group="net.runelite.jocl"/>
+      <trust group="net.runelite.jogl"/>
+      <trust group="net.runelite.pushingpixels"/>
     </trusted-artifacts>
   </configuration>
 </verification-metadata>
