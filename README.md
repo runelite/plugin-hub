@@ -40,12 +40,12 @@ There are two methods to create an external plugin, you can either:
  ```
  displayName=Helmet check
  author=dekvall
- support=https://github.com/dekvall/helmet-check
+ support=
  description=Alerts you when you have nothing equipped in your head slot
  tags=hint,gear,head
  plugins=com.helmetcheck.HelmetCheckPlugin
  ```
- `support` is the URL you want players to use to leave feedback for your plugin; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ `support` is the URL you want players to use to leave feedback for your plugin; by default this links to your repository. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  11. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
@@ -69,7 +69,7 @@ There are two methods to create an external plugin, you can either:
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 5. Edit `runelite-plugin.properties` with a support link and tags. `support` is the URL you want players to use to leave feedback for your plugin; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ 5. Edit `runelite-plugin.properties` with a support link and tags. `support` is the URL you want players to use to leave feedback for your plugin; by default this links to your repository. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  6. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
@@ -129,6 +129,10 @@ Create `gradle/verification-metadata.xml` with the following contents
     <verify-signatures>false</verify-signatures>
     <trusted-artifacts>
       <trust group="net.runelite"/>
+      <trust group="net.runelite.gluegen"/>
+      <trust group="net.runelite.jocl"/>
+      <trust group="net.runelite.jogl"/>
+      <trust group="net.runelite.pushingpixels"/>
     </trusted-artifacts>
   </configuration>
 </verification-metadata>
