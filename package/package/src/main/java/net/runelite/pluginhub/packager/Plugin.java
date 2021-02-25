@@ -35,6 +35,7 @@ import com.google.common.io.CountingOutputStream;
 import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
 import java.io.BufferedReader;
+import java.io.CharArrayWriter;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,6 +45,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -752,10 +754,28 @@ public class Plugin implements Closeable
 		Throwable t = fmt.getThrowable();
 		if (t != null)
 		{
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(log, StandardCharsets.UTF_8));
-			pw.println(t.getMessage());
+			CharArrayWriter caw = new CharArrayWriter();
+			PrintWriter pw = new PrintWriter(caw);
 			t.printStackTrace(pw);
 			pw.flush();
+
+			Writer w = new OutputStreamWriter(log, StandardCharsets.UTF_8);
+			boolean collapsing = false;
+			for (String line : Splitter.on('\n').split(caw.toString()))
+			{
+				boolean collapse = line.startsWith("\tat org.gradle.");
+				if (collapse && !collapsing)
+				{
+					w.write("\t...\n");
+				}
+				if (!collapse)
+				{
+					w.write(line);
+					w.write('\n');
+				}
+				collapsing = collapse;
+			}
+			w.flush();
 		}
 		log.flush();
 	}
