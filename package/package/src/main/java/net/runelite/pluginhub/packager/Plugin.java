@@ -40,6 +40,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -51,6 +52,7 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -367,6 +369,13 @@ public class Plugin implements Closeable
 				Files.copy(e.path, zos);
 				zos.closeEntry();
 			}
+		}
+
+		try (InputStream is = Plugin.class.getResourceAsStream("verification-metadata.xml"))
+		{
+			File metadataFile = new File(repositoryDirectory, "gradle/verification-metadata.xml");
+			metadataFile.getParentFile().mkdir();
+			Files.copy(is, metadataFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}
 
 		try (ProjectConnection con = GradleConnector.newConnector()

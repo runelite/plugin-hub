@@ -100,6 +100,26 @@ public class PluginTest
 		}
 	}
 
+	@Test
+	public void testUnverifiedDependency() throws InterruptedException, DisabledPluginException, PluginBuildException, IOException
+	{
+		try (Plugin p = createExamplePlugin("unverified-dependency"))
+		{
+			File buildFile = new File(p.repositoryDirectory, "build.gradle");
+			String buildSrc = Files.asCharSource(buildFile, StandardCharsets.UTF_8).read();
+			buildSrc = buildSrc.replace("dependencies {", "dependencies {\n" +
+				"	implementation 'org.apache.httpcomponents:httpclient:4.5.13'");
+			Files.asCharSink(buildFile, StandardCharsets.UTF_8).write(buildSrc);
+			p.build(Util.readRLVersion());
+			p.assembleManifest();
+			Assert.fail();
+		}
+		catch (PluginBuildException e)
+		{
+			log.info("ok: ", e);
+		}
+	}
+
 	private static void writeProperties(Properties props, File fi) throws IOException
 	{
 		try (FileOutputStream fos = new FileOutputStream(fi))

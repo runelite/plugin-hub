@@ -118,29 +118,6 @@ will not merge it__.
 We require any dependencies that are not a transitive dependency of runelite-client to
 be have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
 To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html).
-
-Create `gradle/verification-metadata.xml` with the following contents
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<verification-metadata xmlns="https://schema.gradle.org/dependency-verification" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://schema.gradle.org/dependency-verification https://schema.gradle.org/dependency-verification/dependency-verification-1.0.xsd">
-  <configuration>
-    <verify-metadata>true</verify-metadata>
-    <verify-signatures>false</verify-signatures>
-    <trusted-artifacts>
-      <trust group="net.runelite"/>
-      <trust group="net.runelite.gluegen"/>
-      <trust group="net.runelite.jocl"/>
-      <trust group="net.runelite.jogl"/>
-      <trust group="net.runelite.pushingpixels"/>
-    </trusted-artifacts>
-  </configuration>
-</verification-metadata>
-```
-
-And finally run: 
-```
-./gradlew --write-verification-metadata sha256
-```
-Then commit the files to your repository. You will have to run this final command anytime you
-add/remove/update dependencies that are not part of RuneLite.
+To add a new dependency, add it to the `thirdParty` configuration in [`package/verification-template/build.gradle`](https://github.com/runelite/plugin-hub/blob/master/package/verification-template/build.gradle),
+then run `../gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
+the dependencies manually before your pull request will be merged.
