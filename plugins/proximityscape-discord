@@ -1,2 +1,3 @@
 repository=https://github.com/warnerblue/proximityscape-discord.git
 commit=68209ef65b68412371dab797fea4bb2972b6a175
+warning=This plugin submits your world, region, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
