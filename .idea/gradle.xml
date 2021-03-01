@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/package" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/package" />
+            <option value="$PROJECT_DIR$/package/initLib" />
+            <option value="$PROJECT_DIR$/package/package" />
+            <option value="$PROJECT_DIR$/package/upload" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/templateplugin" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/templateplugin" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
