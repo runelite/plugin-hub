@@ -40,12 +40,12 @@ There are two methods to create an external plugin, you can either:
  ```
  displayName=Helmet check
  author=dekvall
- support=https://github.com/dekvall/helmet-check
+ support=
  description=Alerts you when you have nothing equipped in your head slot
  tags=hint,gear,head
  plugins=com.helmetcheck.HelmetCheckPlugin
  ```
- `support` is the URL you want players to use to leave feedback for your plugin; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ `support` is the URL you want players to use to leave feedback for your plugin; by default this links to your repository. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  11. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
@@ -69,7 +69,7 @@ There are two methods to create an external plugin, you can either:
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 5. Edit `runelite-plugin.properties` with a support link and tags. `support` is the URL you want players to use to leave feedback for your plugin; you can just use your repository for that. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ 5. Edit `runelite-plugin.properties` with a support link and tags. `support` is the URL you want players to use to leave feedback for your plugin; by default this links to your repository. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  6. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
@@ -118,25 +118,6 @@ will not merge it__.
 We require any dependencies that are not a transitive dependency of runelite-client to
 be have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
 To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html).
-
-Create `gradle/verification-metadata.xml` with the following contents
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<verification-metadata xmlns="https://schema.gradle.org/dependency-verification" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://schema.gradle.org/dependency-verification https://schema.gradle.org/dependency-verification/dependency-verification-1.0.xsd">
-  <configuration>
-    <verify-metadata>true</verify-metadata>
-    <verify-signatures>false</verify-signatures>
-    <trusted-artifacts>
-      <trust group="net.runelite"/>
-    </trusted-artifacts>
-  </configuration>
-</verification-metadata>
-```
-
-And finally run: 
-```
-./gradlew --write-verification-metadata sha256
-```
-Then commit the files to your repository. You will have to run this final command anytime you
-add/remove/update dependencies that are not part of RuneLite.
+To add a new dependency, add it to the `thirdParty` configuration in [`package/verification-template/build.gradle`](https://github.com/runelite/plugin-hub/blob/master/package/verification-template/build.gradle),
+then run `../gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
+the dependencies manually before your pull request will be merged.
