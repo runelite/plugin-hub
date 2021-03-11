@@ -28,11 +28,12 @@ jobs:
         path: |
           ~/.gradle/caches/
           ~/.gradle/wrapper/
-        key: package-2.0.3
+        key: package-2.0.4
     - name: prepare
       run: |
         pushd package
         ./gradlew --build-cache prep
+        ./gradlew --build-cache --project-dir verification-template :verifyCore
         popd
     - name: build
       env:
@@ -79,7 +80,7 @@ jobs:
         path: |
           ~/.gradle/caches/
           ~/.gradle/wrapper/
-        key: upload-2.0.3
+        key: upload-2.0.4
     - uses: actions/download-artifact@v2
       with:
         name: manifest_diff
