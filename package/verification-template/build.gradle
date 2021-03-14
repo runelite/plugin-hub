@@ -57,6 +57,13 @@ dependencies {
 	}
 	thirdParty("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0") {
 		because "elysiumevents-plugin"
+		exclude group: 'com.google.guava'
+		exclude group: 'com.google.oauth-client'
+		exclude group: 'org.apache.httpcomponents'
+		exclude group: 'org.apache.commons'
+		exclude group: 'org.apache'
+		exclude group: 'commons-logging'
+		exclude group: 'commons-codec'
 	}
 }
 
