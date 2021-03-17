@@ -65,6 +65,9 @@ dependencies {
 		exclude group: 'commons-logging'
 		exclude group: 'commons-codec'
 	}
+	thirdParty("org.xerial:sqlite-jdbc:3.34.0") {
+		because "drop-simulator"
+	}
 }
 
 task verifyCore {
