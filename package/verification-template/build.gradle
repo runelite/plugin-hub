@@ -65,12 +65,7 @@ dependencies {
 		exclude group: 'commons-logging'
 		exclude group: 'commons-codec'
 	}
-	thirdParty("com.fasterxml.jackson.core:jackson-annotations:2.0.1") {
-		because "infernalfc-plugin"
-	}
-	thirdParty("com.fasterxml.jackson.core:jackson-core:2.0.1") {
-		because "infernalfc-plugin"
-	}
+
 	thirdParty("com.fasterxml.jackson.core:jackson-databind:2.0.1") {
 		because "infernalfc-plugin"
 	}
