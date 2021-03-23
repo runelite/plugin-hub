@@ -65,10 +65,6 @@ dependencies {
 		exclude group: 'commons-logging'
 		exclude group: 'commons-codec'
 	}
-
-	thirdParty("com.fasterxml.jackson.core:jackson-databind:2.0.1") {
-		because "infernalfc-plugin"
-	}
 }
 
 task verifyCore {
