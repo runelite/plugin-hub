@@ -301,12 +301,12 @@ public class Plugin implements Closeable
 							return 4;
 						}
 						return 1;
-					}).sum() > 100)
+					}).sum() > 120)
 					.findAny()
 					.orElse(null);
 				if (badLine != null)
 				{
-					throw PluginBuildException.of(this, "All gradle files must wrap at 100 characters or less")
+					throw PluginBuildException.of(this, "All gradle files must wrap at 120 characters or less")
 						.withFileLine(path.toFile(), badLine);
 				}
 			}
