@@ -627,6 +627,21 @@ public class Plugin implements Closeable
 					.trimResults()
 					.splitToList(pluginsStr);
 
+				if (plugins.isEmpty())
+				{
+					throw PluginBuildException.of(this, "No plugin classes listed")
+						.withHelp(() ->
+						{
+							String m = "You must list your plugin class names in the plugin descriptor";
+							if (!pluginClasses.isEmpty())
+							{
+								m += "\nPerhaps you wanted plugins=" + String.join(", ", pluginClasses);
+							}
+							return m;
+						})
+						.withFileLine(propFile, "plugins=" + pluginsStr);
+				}
+
 				manifest.setPlugins(plugins.toArray(new String[0]));
 
 				for (String className : plugins)
