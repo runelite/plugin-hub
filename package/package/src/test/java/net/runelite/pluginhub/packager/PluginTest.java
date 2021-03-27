@@ -101,6 +101,26 @@ public class PluginTest
 	}
 
 	@Test
+	public void testEmptyPlugins() throws DisabledPluginException, PluginBuildException, IOException, InterruptedException
+	{
+		try (Plugin p = createExamplePlugin("empty-plugins"))
+		{
+			File propFile = new File(p.repositoryDirectory, "runelite-plugin.properties");
+			Properties props = Plugin.loadProperties(propFile);
+			props.setProperty("plugins", "");
+			writeProperties(props, propFile);
+			p.build(Util.readRLVersion());
+			p.assembleManifest();
+			Assert.fail();
+		}
+		catch (PluginBuildException e)
+		{
+			log.info("ok: ", e);
+			assertContains(e.getHelpText(), "com.example.ExamplePlugin");
+		}
+	}
+
+	@Test
 	public void testUnverifiedDependency() throws InterruptedException, DisabledPluginException, PluginBuildException, IOException
 	{
 		try (Plugin p = createExamplePlugin("unverified-dependency"))
