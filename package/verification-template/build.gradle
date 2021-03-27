@@ -73,6 +73,7 @@ dependencies {
 	}
 	thirdParty("io.ably:ably-java:1.2.5") {
 		because "broadcaster"
+		exclude group: 'com.google.code.gson'
 	}
 }
 
