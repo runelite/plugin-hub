@@ -68,6 +68,9 @@ dependencies {
 		exclude group: 'commons-logging'
 		exclude group: 'commons-codec'
 	}
+	thirdParty("com.esotericsoftware.minlog:minlog:1.2") {
+		because "blue-prox-chat"
+	}
 }
 
 task verifyCore {
