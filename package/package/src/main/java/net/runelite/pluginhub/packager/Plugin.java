@@ -35,14 +35,17 @@ import com.google.common.io.CountingOutputStream;
 import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
 import java.io.BufferedReader;
+import java.io.CharArrayWriter;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -51,6 +54,7 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -65,6 +69,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -96,7 +101,7 @@ public class Plugin implements Closeable
 	private static final long MAX_SRC_SIZE = 10 * MIB;
 
 	private static final Pattern PLUGIN_INTERNAL_NAME_TEST = Pattern.compile("^[a-z0-9-]+$");
-	private static final Pattern REPOSITORY_TEST = Pattern.compile("^https://github\\.com/.*\\.git$");
+	private static final Pattern REPOSITORY_TEST = Pattern.compile("^(https://github\\.com/.*)\\.git$");
 	private static final Pattern COMMIT_TEST = Pattern.compile("^[a-fA-F0-9]{40}$");
 
 	private static final File TMP_ROOT;
@@ -148,6 +153,7 @@ public class Plugin implements Closeable
 
 	private final String repositoryURL;
 	private final String commit;
+	private final String defaultSupportURL;
 
 	@Getter
 	private final ExternalPluginManifest manifest = new ExternalPluginManifest();
@@ -183,7 +189,8 @@ public class Plugin implements Closeable
 				.withFile(pluginCommitDescriptor);
 		}
 
-		if (!REPOSITORY_TEST.matcher(repositoryURL).matches())
+		Matcher repoMatcher = REPOSITORY_TEST.matcher(repositoryURL);
+		if (!repoMatcher.matches())
 		{
 			throw PluginBuildException.of(internalName, "repository is not an accepted url")
 				.withFileLine(pluginCommitDescriptor, "repository=" + repositoryURL)
@@ -204,6 +211,7 @@ public class Plugin implements Closeable
 					return null;
 				});
 		}
+		String repoRoot = repoMatcher.group(1);
 
 		commit = (String) cd.remove("commit");
 		if (!COMMIT_TEST.matcher(commit).matches())
@@ -211,6 +219,8 @@ public class Plugin implements Closeable
 			throw PluginBuildException.of(internalName, "commit must be a full 40 character sha1sum")
 				.withFileLine(pluginCommitDescriptor, "commit=" + commit);
 		}
+
+		defaultSupportURL = repoRoot + "/tree/" + commit;
 
 		warning = (String) cd.remove("warning");
 
@@ -291,12 +301,12 @@ public class Plugin implements Closeable
 							return 4;
 						}
 						return 1;
-					}).sum() > 100)
+					}).sum() > 120)
 					.findAny()
 					.orElse(null);
 				if (badLine != null)
 				{
-					throw PluginBuildException.of(this, "All gradle files must wrap at 100 characters or less")
+					throw PluginBuildException.of(this, "All gradle files must wrap at 120 characters or less")
 						.withFileLine(path.toFile(), badLine);
 				}
 			}
@@ -361,6 +371,13 @@ public class Plugin implements Closeable
 				Files.copy(e.path, zos);
 				zos.closeEntry();
 			}
+		}
+
+		try (InputStream is = Plugin.class.getResourceAsStream("verification-metadata.xml"))
+		{
+			File metadataFile = new File(repositoryDirectory, "gradle/verification-metadata.xml");
+			metadataFile.getParentFile().mkdir();
+			Files.copy(is, metadataFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}
 
 		try (ProjectConnection con = GradleConnector.newConnector()
@@ -567,17 +584,19 @@ public class Plugin implements Closeable
 
 			{
 				String supportStr = (String) props.remove("support");
-				if (!Strings.isNullOrEmpty(supportStr))
+				if (Strings.isNullOrEmpty(supportStr))
 				{
-					try
-					{
-						manifest.setSupport(new URL(supportStr));
-					}
-					catch (MalformedURLException e)
-					{
-						throw PluginBuildException.of(this, "support url is malformed", e)
-							.withFileLine(propFile, "support=" + supportStr);
-					}
+					supportStr = this.defaultSupportURL;
+				}
+
+				try
+				{
+					manifest.setSupport(new URL(supportStr));
+				}
+				catch (MalformedURLException e)
+				{
+					throw PluginBuildException.of(this, "support url is malformed", e)
+						.withFileLine(propFile, "support=" + supportStr);
 				}
 			}
 
@@ -607,6 +626,21 @@ public class Plugin implements Closeable
 					.omitEmptyStrings()
 					.trimResults()
 					.splitToList(pluginsStr);
+
+				if (plugins.isEmpty())
+				{
+					throw PluginBuildException.of(this, "No plugin classes listed")
+						.withHelp(() ->
+						{
+							String m = "You must list your plugin class names in the plugin descriptor";
+							if (!pluginClasses.isEmpty())
+							{
+								m += "\nPerhaps you wanted plugins=" + String.join(", ", pluginClasses);
+							}
+							return m;
+						})
+						.withFileLine(propFile, "plugins=" + pluginsStr);
+				}
 
 				manifest.setPlugins(plugins.toArray(new String[0]));
 
@@ -735,10 +769,28 @@ public class Plugin implements Closeable
 		Throwable t = fmt.getThrowable();
 		if (t != null)
 		{
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(log, StandardCharsets.UTF_8));
-			pw.println(t.getMessage());
+			CharArrayWriter caw = new CharArrayWriter();
+			PrintWriter pw = new PrintWriter(caw);
 			t.printStackTrace(pw);
 			pw.flush();
+
+			Writer w = new OutputStreamWriter(log, StandardCharsets.UTF_8);
+			boolean collapsing = false;
+			for (String line : Splitter.on('\n').split(caw.toString()))
+			{
+				boolean collapse = line.startsWith("\tat org.gradle.");
+				if (collapse && !collapsing)
+				{
+					w.write("\t...\n");
+				}
+				if (!collapse)
+				{
+					w.write(line);
+					w.write('\n');
+				}
+				collapsing = collapse;
+			}
+			w.flush();
 		}
 		log.flush();
 	}
