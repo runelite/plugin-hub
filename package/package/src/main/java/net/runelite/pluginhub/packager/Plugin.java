@@ -301,12 +301,12 @@ public class Plugin implements Closeable
 							return 4;
 						}
 						return 1;
-					}).sum() > 100)
+					}).sum() > 120)
 					.findAny()
 					.orElse(null);
 				if (badLine != null)
 				{
-					throw PluginBuildException.of(this, "All gradle files must wrap at 100 characters or less")
+					throw PluginBuildException.of(this, "All gradle files must wrap at 120 characters or less")
 						.withFileLine(path.toFile(), badLine);
 				}
 			}
@@ -626,6 +626,21 @@ public class Plugin implements Closeable
 					.omitEmptyStrings()
 					.trimResults()
 					.splitToList(pluginsStr);
+
+				if (plugins.isEmpty())
+				{
+					throw PluginBuildException.of(this, "No plugin classes listed")
+						.withHelp(() ->
+						{
+							String m = "You must list your plugin class names in the plugin descriptor";
+							if (!pluginClasses.isEmpty())
+							{
+								m += "\nPerhaps you wanted plugins=" + String.join(", ", pluginClasses);
+							}
+							return m;
+						})
+						.withFileLine(propFile, "plugins=" + pluginsStr);
+				}
 
 				manifest.setPlugins(plugins.toArray(new String[0]));
 
