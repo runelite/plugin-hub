@@ -59,9 +59,20 @@ dependencies {
 		because "chat-logger"
 	}
 	thirdParty("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0") {
-		because "elysiumevents-plugin"
+		because "elysiumevents-plugin, group-bronzeman-mode"
 		exclude group: 'com.google.guava'
-		exclude group: 'com.google.oauth-client'
+        	exclude group: 'com.google.ouath-client'
+		exclude group: 'org.apache.httpcomponents'
+		exclude group: 'org.apache.commons'
+		exclude group: 'org.apache'
+		exclude group: 'commons-logging'
+		exclude group: 'commons-codec'
+	}
+	thirdParty("com.google.oauth-client:google-oauth-client-jetty:1.23.0") {
+		because "group-bronzeman-mode"
+        	exclude group: 'org.slf4j'
+		exclude group: 'com.google.guava'
+        	exclude group: 'com.google.ouath-client'
 		exclude group: 'org.apache.httpcomponents'
 		exclude group: 'org.apache.commons'
 		exclude group: 'org.apache'
