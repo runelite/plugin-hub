@@ -61,7 +61,7 @@ dependencies {
 	thirdParty("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0") {
 		because "elysiumevents-plugin, group-bronzeman-mode"
 		exclude group: 'com.google.guava'
-        	exclude group: 'com.google.ouath-client'
+		// exclude group: 'com.google.oauth-client' // Dependency for group-bronzeman-mode
 		exclude group: 'org.apache.httpcomponents'
 		exclude group: 'org.apache.commons'
 		exclude group: 'org.apache'
@@ -70,9 +70,8 @@ dependencies {
 	}
 	thirdParty("com.google.oauth-client:google-oauth-client-jetty:1.23.0") {
 		because "group-bronzeman-mode"
-        	exclude group: 'org.slf4j'
+		exclude group: 'org.slf4j'
 		exclude group: 'com.google.guava'
-        	exclude group: 'com.google.ouath-client'
 		exclude group: 'org.apache.httpcomponents'
 		exclude group: 'org.apache.commons'
 		exclude group: 'org.apache'
