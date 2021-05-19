@@ -337,8 +337,13 @@ public class Packager implements Closeable
 
 			if (doPackageTests)
 			{
-				testFailure = new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", "test")
+				testFailure |= new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", "test")
 					.directory(PACKAGE_ROOT)
+					.inheritIO()
+					.start()
+					.waitFor() != 0;
+				testFailure |= new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", ":verifyAll")
+					.directory(new File(PACKAGE_ROOT, "verification-template"))
 					.inheritIO()
 					.start()
 					.waitFor() != 0;
