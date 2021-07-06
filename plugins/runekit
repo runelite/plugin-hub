@@ -1,4 +1,3 @@
 repository=https://github.com/ImToxicCode/runekit.git
 commit=96087ce4e1823a43997741826f69de7d69064f98
 warning=This plugin communicates the stage of crops and birdhouses to a 3rd party server not controlled or verified by the RuneLite Developers.
-disabled=true
