@@ -450,11 +450,18 @@ public class Plugin implements Closeable
 		{
 			Properties chunk = loadProperties(new File(buildDirectory, "chunk.properties"));
 
-			manifest.setVersion(chunk.getProperty("version"));
-			if (Strings.isNullOrEmpty(manifest.getVersion()))
+			String version = chunk.getProperty("version");
+			if (Strings.isNullOrEmpty(version))
 			{
 				throw new IllegalStateException("version in empty");
 			}
+
+			if (version.endsWith("SNAPSHOT"))
+			{
+				version = commit.substring(0, 8);
+			}
+
+			manifest.setVersion(version);
 		}
 
 		{
