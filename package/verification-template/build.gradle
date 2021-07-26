@@ -71,6 +71,10 @@ dependencies {
 	thirdParty("com.esotericsoftware.minlog:minlog:1.2") {
 		because "blue-prox-chat"
 	}
+	thirdParty("io.ably:ably-java:1.2.5") {
+		because "broadcaster"
+		exclude group: 'com.google.code.gson'
+	}
 }
 
 task verifyCore {
