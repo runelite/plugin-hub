@@ -266,7 +266,10 @@ public class Plugin implements Closeable
 
 	public void download() throws IOException, PluginBuildException
 	{
-		Process gitclone = new ProcessBuilder("git", "clone", "--config", "advice.detachedHead=false", this.repositoryURL, repositoryDirectory.getAbsolutePath())
+		Process gitclone = new ProcessBuilder("git", "clone",
+			"--config", "advice.detachedHead=false",
+			"--filter", "tree:0", "--no-checkout",
+			this.repositoryURL, repositoryDirectory.getAbsolutePath())
 			.redirectOutput(ProcessBuilder.Redirect.appendTo(logFile))
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.start();
