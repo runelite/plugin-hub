@@ -266,7 +266,10 @@ public class Plugin implements Closeable
 
 	public void download() throws IOException, PluginBuildException
 	{
-		Process gitclone = new ProcessBuilder("git", "clone", "--config", "advice.detachedHead=false", this.repositoryURL, repositoryDirectory.getAbsolutePath())
+		Process gitclone = new ProcessBuilder("git", "clone",
+			"--config", "advice.detachedHead=false",
+			"--filter", "tree:0", "--no-checkout",
+			this.repositoryURL, repositoryDirectory.getAbsolutePath())
 			.redirectOutput(ProcessBuilder.Redirect.appendTo(logFile))
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.start();
@@ -450,11 +453,18 @@ public class Plugin implements Closeable
 		{
 			Properties chunk = loadProperties(new File(buildDirectory, "chunk.properties"));
 
-			manifest.setVersion(chunk.getProperty("version"));
-			if (Strings.isNullOrEmpty(manifest.getVersion()))
+			String version = chunk.getProperty("version");
+			if (Strings.isNullOrEmpty(version))
 			{
 				throw new IllegalStateException("version in empty");
 			}
+
+			if (version.endsWith("SNAPSHOT"))
+			{
+				version = commit.substring(0, 8);
+			}
+
+			manifest.setVersion(version);
 		}
 
 		{
