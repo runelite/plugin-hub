@@ -17,7 +17,7 @@ configurations {
 
 dependencies {
 	core group: "net.runelite", name:"client", version: file("../../runelite.version").text.trim()
-	core "org.projectlombok:lombok:1.18.4"
+	core "org.projectlombok:lombok:1.18.20"
 
 	thirdParty("org.zeromq:jnacl:0.1.0") {
 		because "keepass-xc"
