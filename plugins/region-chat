@@ -1,0 +1,3 @@
+repository=https://github.com/Zoinkwiz/region-chat.git
+commit=1aa9d977ff5ad7d9c04fe8caf65198effcc78514
+warning=This plugin submits your IP Address, in-game name, and chat messages in certain regions to a server not controlled or verified by the RuneLite developers.
