@@ -26,7 +26,7 @@ There are two methods to create an external plugin, you can either:
 
  5. Open `build.gradle` and edit `runeLiteVersion` from `1.5.44-SNAPSHOT` to the latest release. If you are unsure about the current version it's specified on [runelite.net](https://runelite.net/).
 
- 6. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test.
+ 6. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
