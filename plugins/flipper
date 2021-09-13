@@ -1,0 +1,3 @@
+repository=https://github.com/Sir-Kyle-Richardson/OSRS-Flipper.git
+commit=967dc5c721647d9e0dbd63cf3dea30fb805f5122
+warning=This plugin submits Grand Exchange transactions and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers
