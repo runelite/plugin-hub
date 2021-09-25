@@ -1,2 +1,3 @@
-repository=https://github.com/Belieal/flipping-utilities.git
-commit=09b17807a785285512be2d87ef286c74ead963ae
+repository=https://github.com/Flipping-Utilities/rl-plugin.git
+commit=7043841d6da9270cb3baa79221e2958aed727fa6
+warning=If you've explicitly opted in to our syncing feature by logging in to our api, your GE data will be synced with our api. If you do not opt in, all of your data remains stored locally and the plugin still remains functional.
