@@ -1,3 +1,2 @@
 repository=https://github.com/Flipping-Utilities/rl-plugin.git
-commit=40583d4a673a8d114b082769e922827d1590b638
-warning=If you opt in to do so, this plugin will submit Grand Exchange transactions and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers. If you do not opt in, this plugin will store your data only locally and will still remain functional.
+commit=017a149a036ba5ef67f57bcfa4ea0c2bbe229428
