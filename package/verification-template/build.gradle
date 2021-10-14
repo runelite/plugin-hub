@@ -83,6 +83,10 @@ dependencies {
 		because "region-chat"
 		exclude group: 'com.google.code.gson'
 	}
+	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0"){
+		because "phillips-hue-integration"
+	}
+
 }
 
 task verifyCore {
