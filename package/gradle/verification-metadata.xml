@@ -3,11 +3,11 @@
    <configuration>
       <verify-metadata>true</verify-metadata>
       <verify-signatures>false</verify-signatures>
-      <trusted-artifacts>
-         <trust file=".*-javadoc[.]jar" regex="true"/>
-         <trust file=".*-sources[.]jar" regex="true"/>
-      </trusted-artifacts>
-   </configuration>
+			<trusted-artifacts>
+				<trust file=".*-javadoc[.]jar" regex="true"/>
+				<trust file=".*-sources[.]jar" regex="true"/>
+			</trusted-artifacts>
+	 </configuration>
    <components>
       <component group="com.github.jengelman.gradle.plugins" name="shadow" version="6.1.0">
          <artifact name="shadow-6.1.0.jar">
