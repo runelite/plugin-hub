@@ -25,6 +25,18 @@
 allprojects {
 	apply plugin: "java"
 
+	repositories {
+		mavenLocal()
+
+		// Upgrade older plugins to use https for rrn
+		whenObjectAdded {
+			if (it instanceof MavenArtifactRepository && it.url?.scheme == "http" && it.url?.host == "repo.runelite.net") {
+				it.url = new URL("https", it.url.host, it.url.path)
+				print("Deprecated: accessing repo.runelite.net without tls")
+			}
+		}
+	}
+
 	compileJava {
 		options.release.set(8)
 		options.compilerArgs.add("-Xplugin:RuneLiteAPIRecorder")
