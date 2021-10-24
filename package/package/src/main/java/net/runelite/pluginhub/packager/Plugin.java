@@ -266,7 +266,10 @@ public class Plugin implements Closeable
 
 	public void download() throws IOException, PluginBuildException
 	{
-		Process gitclone = new ProcessBuilder("git", "clone", "--config", "advice.detachedHead=false", this.repositoryURL, repositoryDirectory.getAbsolutePath())
+		Process gitclone = new ProcessBuilder("git", "clone",
+			"--config", "advice.detachedHead=false",
+			"--filter", "tree:0", "--no-checkout",
+			this.repositoryURL, repositoryDirectory.getAbsolutePath())
 			.redirectOutput(ProcessBuilder.Redirect.appendTo(logFile))
 			.redirectError(ProcessBuilder.Redirect.appendTo(logFile))
 			.start();
@@ -533,7 +536,7 @@ public class Plugin implements Closeable
 						@Override
 						public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
 						{
-							if (version > Opcodes.V1_8 && !fileName.startsWith("META-INF/versions"))
+							if (version > Opcodes.V1_8 && !(fileName.startsWith("META-INF/versions") || fileName.endsWith("module-info.class")))
 							{
 								throw PluginBuildException.of(Plugin.this, "plugins must be Java 1.8 compatible")
 									.withFile(fileName);
