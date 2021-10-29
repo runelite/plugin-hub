@@ -3,3 +3,4 @@ rootProject.name = "package-root"
 include "initLib"
 include "upload"
 include "package"
+include 'apirecorder'

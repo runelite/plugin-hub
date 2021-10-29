@@ -7,8 +7,13 @@ on:
       COMMIT_RANGE:
         description: "Commit range to build 1234abc..5689def"
         required: false
+      API_FILES_VERSION:
+        description: "RuneLite version to use .api files from"
+        required: false
   push:
   pull_request:
+env:
+  CACHE_VERSION: 2.1.0
 jobs:
   build:
     # any forks that predate this repo having an action will have actions
@@ -29,7 +34,9 @@ jobs:
         path: |
           ~/.gradle/caches/
           ~/.gradle/wrapper/
-        key: package-2.0.10
+        key: package-${{ env.CACHE_VERSION }}-${{ hashFiles('runelite.version') }}
+        restore-keys: |
+          package-${{ env.CACHE_VERSION }}-
     - name: prepare
       run: |
         pushd package
@@ -43,6 +50,7 @@ jobs:
         # workflow_dispatch
         FORCE_BUILD: ${{ github.event.inputs.FORCE_BUILD }}
         COMMIT_RANGE: ${{ github.event.inputs.COMMIT_RANGE }}
+        API_FILES_VERSION: ${{ github.event.inputs.API_FILES_VERSION }}
         # push
         COMMIT_BEFORE: ${{ github.event.before }}
         COMMIT_AFTER: ${{ github.event.after }}
@@ -68,6 +76,7 @@ jobs:
   upload:
     if: (github.event_name != 'push' || github.repository_owner == 'runelite') && github.event_name != 'pull_request'
     needs: build
+    concurrency: upload
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
@@ -82,7 +91,7 @@ jobs:
         path: |
           ~/.gradle/caches/
           ~/.gradle/wrapper/
-        key: upload-2.0.10
+        key: upload-${{ env.CACHE_VERSION }}
     - uses: actions/download-artifact@v2
       with:
         name: manifest_diff
