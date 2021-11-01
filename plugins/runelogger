@@ -1,2 +1,3 @@
 repository=https://github.com/Joopjr/Runelogger.git
 commit=9f52755b358b93e49922dddba21d59f3d8588cad
+warning=This plugin submits your username, character name, membership status, gaming activities and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
