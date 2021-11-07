@@ -86,6 +86,9 @@ dependencies {
 	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0"){
 		because "phillip-hue-integration"
 	}
+	thirdParty("net.sf.sociaal:freetts:1.2.2") {
+		because "narration"
+	}
 }
 
 task verifyCore {
