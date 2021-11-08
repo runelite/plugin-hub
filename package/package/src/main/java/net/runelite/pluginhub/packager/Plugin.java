@@ -536,7 +536,8 @@ public class Plugin implements Closeable
 						@Override
 						public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
 						{
-							if (version > Opcodes.V1_8 && !(fileName.startsWith("META-INF/versions") || fileName.endsWith("module-info.class")))
+							if ((version & 0xFFFF) > Opcodes.V1_8
+								&& !(fileName.startsWith("META-INF/versions") || fileName.endsWith("module-info.class")))
 							{
 								throw PluginBuildException.of(Plugin.this, "plugins must be Java 1.8 compatible")
 									.withFile(fileName);
