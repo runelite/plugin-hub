@@ -473,6 +473,10 @@ public class Plugin implements Closeable
 			{
 				throw PluginBuildException.of(this, "the output jar is {}MiB, which is above our limit of 10MiB", size / MIB);
 			}
+			if (size > (MAX_JAR_SIZE * 8) / 10)
+			{
+				writeLog("warning: the output jar is {}MiB, which is nearing our limit of 10MiB\n", size / MIB);
+			}
 			manifest.setSize((int) size);
 		}
 
