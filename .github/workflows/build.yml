@@ -29,7 +29,7 @@ jobs:
         path: |
           ~/.gradle/caches/
           ~/.gradle/wrapper/
-        key: package-2.0.9
+        key: package-2.0.10
     - name: prepare
       run: |
         pushd package
@@ -82,7 +82,7 @@ jobs:
         path: |
           ~/.gradle/caches/
           ~/.gradle/wrapper/
-        key: upload-2.0.9
+        key: upload-2.0.10
     - uses: actions/download-artifact@v2
       with:
         name: manifest_diff
