@@ -473,6 +473,10 @@ public class Plugin implements Closeable
 			{
 				throw PluginBuildException.of(this, "the output jar is {}MiB, which is above our limit of 10MiB", size / MIB);
 			}
+			if (size > (MAX_JAR_SIZE * 8) / 10)
+			{
+				writeLog("warning: the output jar is {}MiB, which is nearing our limit of 10MiB\n", size / MIB);
+			}
 			manifest.setSize((int) size);
 		}
 
@@ -536,7 +540,8 @@ public class Plugin implements Closeable
 						@Override
 						public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
 						{
-							if (version > Opcodes.V1_8 && !(fileName.startsWith("META-INF/versions") || fileName.endsWith("module-info.class")))
+							if ((version & 0xFFFF) > Opcodes.V1_8
+								&& !(fileName.startsWith("META-INF/versions") || fileName.endsWith("module-info.class")))
 							{
 								throw PluginBuildException.of(Plugin.this, "plugins must be Java 1.8 compatible")
 									.withFile(fileName);
