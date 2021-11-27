@@ -1,0 +1,3 @@
+repository=https://github.com/Bullish53/TTS.git
+commit=59f9f43fcab426a1852ff19cf45a0ab7aaf64296
+warning=This plugin submits chat & dialog messages (no usernames) and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
