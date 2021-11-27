@@ -38,7 +38,6 @@ import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -46,6 +45,8 @@ import okio.BufferedSource;
 
 public class Uploader
 {
+	private static final String MANIFEST_NAME = "manifest.js";
+
 	public static void main(String... args) throws IOException, NoSuchAlgorithmException, SignatureException, InvalidKeyException
 	{
 		Gson gson = new Gson();
@@ -58,15 +59,18 @@ public class Uploader
 		{
 			SigningConfiguration signingConfig = SigningConfiguration.fromEnvironment();
 
-			HttpUrl manifestURL = uploadConfig.getUploadRepoRoot().newBuilder()
-				.addPathSegment("manifest.js")
-				.build();
-
 			List<ExternalPluginManifest> manifests = new ArrayList<>();
-			if (!diff.isIgnoreOldManifest())
+			if (!diff.isIgnoreOldManifest() || (diff.getOldManifestVersion() != null && !diff.getCopyFromOld().isEmpty()))
 			{
+				String version = diff.getOldManifestVersion();
+				if (version == null)
+				{
+					version = Util.readRLVersion();
+				}
 				try (Response res = uploadConfig.getClient().newCall(new Request.Builder()
-					.url(manifestURL.newBuilder()
+					.url(uploadConfig.getVersionlessRoot().newBuilder()
+						.addPathSegment(version)
+						.addPathSegment(MANIFEST_NAME)
 						.addQueryParameter("c", System.nanoTime() + "")
 						.build())
 					.get()
@@ -96,6 +100,11 @@ public class Uploader
 				}
 			}
 
+			if (diff.isIgnoreOldManifest())
+			{
+				manifests.removeIf(m -> !diff.getCopyFromOld().contains(m.getInternalName()));
+			}
+
 			manifests.removeIf(m -> diff.getRemove().contains(m.getInternalName()));
 			manifests.addAll(diff.getAdd());
 			manifests.sort(Comparator.comparing(ExternalPluginManifest::getInternalName));
@@ -111,7 +120,9 @@ public class Uploader
 				byte[] manifest = out.toByteArray();
 
 				try (Response res = uploadConfig.getClient().newCall(new Request.Builder()
-					.url(manifestURL)
+					.url(uploadConfig.getUploadRepoRoot().newBuilder()
+						.addPathSegment(MANIFEST_NAME)
+						.build())
 					.put(RequestBody.create(null, manifest))
 					.build())
 					.execute())

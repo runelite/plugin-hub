@@ -38,6 +38,7 @@ dependencies {
 	implementation "com.squareup.okhttp3:okhttp:3.14.9"
 	implementation "com.google.code.gson:gson:2.8.5"
 	implementation project(":upload")
+	implementation project(":apirecorder")
 
 	def lombok = "org.projectlombok:lombok:1.18.4";
 	compileOnly lombok
@@ -63,5 +64,6 @@ jar {
 
 test {
 	dependsOn ":initLib:shadowJar"
+	dependsOn ":apirecorder:shadowJar"
 	workingDir new File(project.rootDir, "../")
 }

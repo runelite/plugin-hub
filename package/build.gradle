@@ -40,7 +40,7 @@ subprojects {
 	apply plugin: "java"
 	apply plugin: "com.github.johnrengelman.shadow"
 
-	sourceCompatibility = 1.8
+	sourceCompatibility = 11
 
 	shadowJar {
 		archiveFileName.set archiveBaseName.get() + "." + archiveExtension.get()
@@ -52,6 +52,7 @@ subprojects {
 task prep {
 	dependsOn ":package:shadowJar"
 	dependsOn ":initLib:shadowJar"
+	dependsOn ":apirecorder:shadowJar"
 	doLast {
 		file("build").mkdirs()
 		file("build/gradleHome").write(gradle.gradleHomeDir.absolutePath)

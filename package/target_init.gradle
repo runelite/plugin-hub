@@ -37,6 +37,11 @@ allprojects {
 
 	compileJava {
 		options.release.set(8)
+		options.compilerArgs.add("-Xplugin:RuneLiteAPIRecorder")
+	}
+
+	dependencies {
+		annotationProcessor files(System.getenv("runelite.pluginhub.package.apirecorder"))
 	}
 
 	tasks.withType(AbstractArchiveTask) {
