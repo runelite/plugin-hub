@@ -86,6 +86,9 @@ dependencies {
 	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0"){
 		because "phillip-hue-integration"
 	}
+	thirdParty("se.michaelthelin.spotify:spotify-web-api-java:7.0.0"){
+		because "spotify"
+	}
 }
 
 task verifyCore {
