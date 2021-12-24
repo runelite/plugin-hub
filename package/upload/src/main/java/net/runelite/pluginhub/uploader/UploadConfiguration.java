@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -45,7 +44,9 @@ public class UploadConfiguration implements Closeable
 {
 	private OkHttpClient client;
 
-	@Setter
+	@Getter
+	private HttpUrl versionlessRoot;
+
 	private HttpUrl uploadRepoRoot;
 
 	public UploadConfiguration fromEnvironment(String runeliteVersion)
@@ -61,7 +62,8 @@ public class UploadConfiguration implements Closeable
 		String uploadRepoRootStr = System.getenv("REPO_ROOT");
 		if (!Strings.isNullOrEmpty(uploadRepoRootStr))
 		{
-			uploadRepoRoot = HttpUrl.parse(uploadRepoRootStr)
+			versionlessRoot = HttpUrl.parse(uploadRepoRootStr);
+			uploadRepoRoot = versionlessRoot
 				.newBuilder()
 				.addPathSegment(runeliteVersion)
 				.build();
@@ -110,12 +112,68 @@ public class UploadConfiguration implements Closeable
 	public void put(HttpUrl path, File data) throws IOException
 	{
 		try (Response res = client.newCall(new Request.Builder()
-			.url(path)
-			.put(RequestBody.create(null, data))
-			.build())
+				.url(path)
+				.put(RequestBody.create(null, data))
+				.build())
 			.execute())
 		{
 			Util.check(res);
+		}
+	}
+
+	public void copy(HttpUrl from, HttpUrl to, String resource, boolean mustExist) throws IOException
+	{
+		if (from.equals(to))
+		{
+			return;
+		}
+
+		try (Response res = client.newCall(new Request.Builder()
+				.url(from.newBuilder().addPathSegment(resource).build())
+				.method("COPY", null)
+				.header("Destination", to.newBuilder().addPathSegment(resource).build().toString())
+				.build())
+			.execute())
+		{
+			if (!mustExist && res.code() == 404)
+			{
+				return;
+			}
+
+			Util.check(res);
+		}
+	}
+
+	public void mkdirs(HttpUrl url) throws IOException
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			try (Response res = client.newCall(new Request.Builder()
+					.url(url.newBuilder()
+						.addPathSegment("/")
+						.build())
+					.method("MKCOL", null)
+					.build())
+				.execute())
+			{
+				if (res.code() == 409 && i == 0)
+				{
+					mkdirs(url.newBuilder()
+						.removePathSegment(url.pathSize() - 1)
+						.build());
+
+					continue;
+				}
+
+				// even though 405 is method not allowed, if your webdav
+				// it actually means this url already exists
+				if (res.code() != 405)
+				{
+					Util.check(res);
+				}
+
+				return;
+			}
 		}
 	}
 
