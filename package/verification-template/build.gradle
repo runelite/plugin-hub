@@ -86,6 +86,12 @@ dependencies {
 	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0"){
 		because "phillip-hue-integration"
 	}
+	thirdParty("com.squareup.retrofit2:retrofit:2.9.0") {
+	   because "rl-weather"
+	}
+	thirdParty("com.squareup.retrofit2:converter-gson:2.9.0") {
+	   because "rl-weather"
+	}
 }
 
 task verifyCore {
