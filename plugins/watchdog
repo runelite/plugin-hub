@@ -1,0 +1,3 @@
+repository=https://github.com/adamk33n3r/runelite-watchdog.git
+commit=6c50ae97dafb6e9719ec3e0f9dd055cc8065faca
+warning=(For TTS) This plugin submits your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
