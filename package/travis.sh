@@ -31,8 +31,14 @@ env:
 '
 pushd "$(dirname "$0")"
 ./gradlew --console=plain --build-cache prep
+./gradlew --console=plain --build-cache --project-dir verification-template :verifyCore
 popd
 
 PACKAGE_IS_PR="$TRAVIS_PULL_REQUEST" \
 PACKAGE_COMMIT_RANGE="$TRAVIS_COMMIT_RANGE" \
-  java -XX:+UseParallelGC -jar package/package/build/libs/package.jar
+SIGNING_KEY="" \
+  java -XX:+UseParallelGC -cp package/package/build/libs/package.jar net.runelite.pluginhub.packager.Package
+
+if [[ "${TRAVIS_PULL_REQUEST:-false}" != "false" ]]; then
+  java -XX:+UseParallelGC -cp package/package/build/libs/package.jar net.runelite.pluginhub.packager.Uploader
+fi

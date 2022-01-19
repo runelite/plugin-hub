@@ -28,29 +28,23 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Stopwatch;
 import com.google.common.base.Strings;
 import com.google.common.collect.Queues;
-import com.google.common.collect.Sets;
+import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
-import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.Signature;
-import java.security.SignatureException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
-import java.util.Set;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -60,19 +54,22 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okio.BufferedSource;
+import net.runelite.pluginhub.apirecorder.API;
+import net.runelite.pluginhub.uploader.ManifestDiff;
+import net.runelite.pluginhub.uploader.UploadConfiguration;
+import net.runelite.pluginhub.uploader.Util;
+import org.slf4j.helpers.FormattingTuple;
+import org.slf4j.helpers.MessageFormatter;
 
 @Slf4j
-public class Packager
+public class Packager implements Closeable
 {
 	private static final File PLUGIN_ROOT = new File("./plugins");
 	public static final File PACKAGE_ROOT = new File("./package/").getAbsoluteFile();
 
+	private Semaphore apiCheckSemaphore = new Semaphore(8);
 	private Semaphore downloadSemaphore = new Semaphore(2);
 	private Semaphore buildSemaphore = new Semaphore(Runtime.getRuntime().availableProcessors());
 	private Semaphore uploadSemaphore = new Semaphore(2);
@@ -82,6 +79,11 @@ public class Packager
 	@Getter
 	private final String runeliteVersion;
 
+	@Setter
+	private String apiFilesVersion;
+
+	private API previousApi;
+
 	@Getter
 	private final UploadConfiguration uploadConfig = new UploadConfiguration();
 
@@ -89,27 +91,29 @@ public class Packager
 	private final int numTotal;
 
 	@Setter
-	private boolean ignoreOldManifest;
-
-	@Setter
 	private boolean alwaysPrintLog;
 
 	@Getter
 	private boolean failed;
 
+	private final StringBuilder buildSummary = new StringBuilder();
+
+	private ManifestDiff diff = new ManifestDiff();
+
 	public Packager(List<File> buildList) throws IOException
 	{
 		this.buildList = buildList;
 		this.numTotal = buildList.size();
-		this.runeliteVersion = readRLVersion();
+		this.runeliteVersion = Util.readRLVersion();
 	}
 
-	Set<ExternalPluginManifest> newManifests = Sets.newConcurrentHashSet();
-	Set<String> remove = Sets.newConcurrentHashSet();
-
-	public void buildPlugins()
-		throws IOException, InvalidKeyException, NoSuchAlgorithmException, SignatureException
+	public void buildPlugins() throws IOException
 	{
+		if (apiFilesVersion != null)
+		{
+			loadApi();
+		}
+
 		Queue<File> buildQueue = Queues.synchronizedQueue(new ArrayDeque<>(buildList));
 		List<Thread> buildThreads = IntStream.range(0, 8)
 			.mapToObj(v ->
@@ -137,84 +141,19 @@ public class Packager
 			}
 		}
 
-		if (uploadConfig.isComplete())
+		Gson gson = new Gson();
+		String diffJSON = gson.toJson(diff);
+		log.debug("manifest change: {}", diffJSON);
+
+		try (FileOutputStream fos = new FileOutputStream("/tmp/manifest_diff"))
 		{
-			Gson gson = new Gson();
-			HttpUrl manifestURL = uploadConfig.getUploadRepoRoot().newBuilder()
-				.addPathSegment("manifest.js")
-				.build();
-
-			List<ExternalPluginManifest> manifests = new ArrayList<>();
-			if (!ignoreOldManifest)
-			{
-				try (Response res = uploadConfig.getClient().newCall(new Request.Builder()
-					.url(manifestURL)
-					.get()
-					.build())
-					.execute())
-				{
-					if (res.code() != 404)
-					{
-						Util.check(res);
-
-						BufferedSource src = res.body().source();
-
-						byte[] signature = new byte[src.readInt()];
-						src.readFully(signature);
-
-						byte[] data = src.readByteArray();
-						Signature s = Signature.getInstance("SHA256withRSA");
-						s.initVerify(uploadConfig.getCert());
-						s.update(data);
-
-						if (!s.verify(signature))
-						{
-							throw new RuntimeException("Unable to verify external plugin manifest");
-						}
-
-						manifests = gson.fromJson(new String(data, StandardCharsets.UTF_8),
-							new TypeToken<List<ExternalPluginManifest>>()
-							{
-							}.getType());
-					}
-				}
-			}
-
-			manifests.removeIf(m -> remove.contains(m.getInternalName()));
-			manifests.addAll(newManifests);
-			manifests.sort(Comparator.comparing(ExternalPluginManifest::getInternalName));
-
-			{
-				byte[] data = gson.toJson(manifests).getBytes(StandardCharsets.UTF_8);
-				Signature s = Signature.getInstance("SHA256withRSA");
-				s.initSign(uploadConfig.getKey());
-				s.update(data);
-				byte[] sig = s.sign();
-
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				new DataOutputStream(out).writeInt(sig.length);
-				out.write(sig);
-				out.write(data);
-				byte[] manifest = out.toByteArray();
-
-				try (Response res = uploadConfig.getClient().newCall(new Request.Builder()
-					.url(manifestURL)
-					.put(RequestBody.create(null, manifest))
-					.build())
-					.execute())
-				{
-					Util.check(res);
-				}
-			}
-
-			uploadConfig.getClient().connectionPool().evictAll();
+			fos.write(diffJSON.getBytes(StandardCharsets.UTF_8));
 		}
 	}
 
-
 	private void buildPlugin(File plugin)
 	{
-		remove.add(plugin.getName());
+		diff.getRemove().add(plugin.getName());
 
 		if (!plugin.exists())
 		{
@@ -225,6 +164,18 @@ public class Packager
 		{
 			try
 			{
+				if (apiFilesVersion != null && previousApi != null)
+				{
+					try (Closeable ignored = acquireAPICheck(p))
+					{
+						if (!p.rebuildNeeded(uploadConfig, apiFilesVersion, previousApi))
+						{
+							diff.getCopyFromOld().add(p.getInternalName());
+							diff.getRemove().remove(p.getInternalName());
+							return;
+						}
+					}
+				}
 				try (Closeable ignored = acquireDownload(p))
 				{
 					p.download();
@@ -234,6 +185,7 @@ public class Packager
 					p.build(runeliteVersion);
 					p.assembleManifest();
 				}
+				String logURL = "";
 				if (uploadConfig.isComplete())
 				{
 					try (Closeable ignored = acquireUpload(p))
@@ -242,11 +194,16 @@ public class Packager
 					}
 
 					// outside the semaphore so the timing gets uploaded too
-					p.uploadLog(uploadConfig);
+					logURL = p.uploadLog(uploadConfig);
 				}
 
-				newManifests.add(p.getManifest());
+				diff.getAdd().add(p.getManifest());
 				log.info("{}: done in {}ms [{}/{}]", p.getInternalName(), p.getBuildTimeMS(), numDone.get() + 1, numTotal);
+
+				if (!p.getApiFile().exists())
+				{
+					logToSummary("{} failed to write the api record: {}", p.getInternalName(), logURL);
+				}
 			}
 			catch (PluginBuildException e)
 			{
@@ -259,7 +216,12 @@ public class Packager
 
 				if (uploadConfig.isComplete())
 				{
-					p.uploadLog(uploadConfig);
+					String logURL = p.uploadLog(uploadConfig);
+					logToSummary("{} failed: {}", p.getInternalName(), logURL);
+				}
+				else
+				{
+					logToSummary("{} failed", p.getInternalName());
 				}
 			}
 			finally
@@ -272,23 +234,63 @@ public class Packager
 		}
 		catch (DisabledPluginException e)
 		{
-			failed = true;
 			log.info("{}", e.getMessage());
 		}
 		catch (PluginBuildException e)
 		{
 			failed = true;
-			log.info("", e);
+			logToSummary("", e);
 		}
 		catch (Exception e)
 		{
 			failed = true;
-			log.warn("{}: crashed the build script: ", plugin.getName(), e);
+			logToSummary("{}: crashed the build script: ", plugin.getName(), e);
 		}
 		finally
 		{
 			numDone.addAndGet(1);
 		}
+	}
+
+	private void logToSummary(String message, Object... args)
+	{
+		log.info(message, args);
+		FormattingTuple fmt = MessageFormatter.arrayFormat(message, args);
+		synchronized (buildSummary)
+		{
+			buildSummary.append(fmt.getMessage()).append('\n');
+		}
+	}
+
+	@SneakyThrows
+	private void loadApi() throws IOException
+	{
+		diff.setOldManifestVersion(apiFilesVersion);
+
+		Process gradleApi = new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", ":apirecorder:api")
+			.directory(PACKAGE_ROOT)
+			.inheritIO()
+			.start();
+		gradleApi.waitFor(2, TimeUnit.MINUTES);
+		if (gradleApi.exitValue() != 0)
+		{
+			throw new RuntimeException("gradle :apirecorder:api exited with " + gradleApi.exitValue());
+		}
+
+		try (InputStream is = new FileInputStream(new File(PACKAGE_ROOT, "apirecorder/build/api")))
+		{
+			previousApi = API.decode(is);
+		}
+	}
+
+	public String getBuildSummary()
+	{
+		return buildSummary.toString();
+	}
+
+	private Closeable acquireAPICheck(Plugin plugin)
+	{
+		return section(plugin, "apicheck", apiCheckSemaphore);
 	}
 
 	private Closeable acquireDownload(Plugin plugin)
@@ -327,16 +329,34 @@ public class Packager
 		};
 	}
 
-	public static String readRLVersion() throws IOException
+	public void setIgnoreOldManifest(boolean ignore)
 	{
-		return Files.asCharSource(new File("./runelite.version"), StandardCharsets.UTF_8).read().trim();
+		diff.setIgnoreOldManifest(ignore);
 	}
 
+	@Override
+	public void close()
+	{
+		uploadConfig.close();
+	}
 
 	public static void main(String... args) throws Exception
 	{
 		boolean isBuildingAll = false;
 		boolean testFailure = false;
+
+		String apiFilesVersion = System.getenv("API_FILES_VERSION");
+		if (apiFilesVersion != null)
+		{
+			apiFilesVersion = apiFilesVersion.trim();
+			if (apiFilesVersion.isEmpty())
+			{
+				apiFilesVersion = null;
+			}
+		}
+
+		String range = System.getenv("PACKAGE_COMMIT_RANGE");
+
 		List<File> buildList;
 		if (args.length != 0)
 		{
@@ -347,21 +367,22 @@ public class Packager
 		else if ("ALL".equals(System.getenv("FORCE_BUILD")))
 		{
 			buildList = listAllPlugins();
+			isBuildingAll = true;
 		}
 		else if (!Strings.isNullOrEmpty(System.getenv("FORCE_BUILD")))
 		{
 			buildList = StreamSupport.stream(
-				Splitter.on(',')
-					.trimResults()
-					.omitEmptyStrings()
-					.split(System.getenv("FORCE_BUILD"))
-					.spliterator(), false)
+					Splitter.on(',')
+						.trimResults()
+						.omitEmptyStrings()
+						.split(System.getenv("FORCE_BUILD"))
+						.spliterator(), false)
 				.map(name -> new File(PLUGIN_ROOT, name))
 				.collect(Collectors.toList());
 		}
-		else if (!Strings.isNullOrEmpty(System.getenv("PACKAGE_COMMIT_RANGE")))
+		else if (!Strings.isNullOrEmpty(range))
 		{
-			Process gitdiff = new ProcessBuilder("git", "diff", "--name-only", System.getenv("PACKAGE_COMMIT_RANGE"))
+			Process gitdiff = new ProcessBuilder("git", "diff", "--name-only", range)
 				.redirectError(ProcessBuilder.Redirect.INHERIT)
 				.start();
 
@@ -389,8 +410,13 @@ public class Packager
 
 			if (doPackageTests)
 			{
-				testFailure = new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", "test")
+				testFailure |= new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", "test")
 					.directory(PACKAGE_ROOT)
+					.inheritIO()
+					.start()
+					.waitFor() != 0;
+				testFailure |= new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", ":verifyAll")
+					.directory(new File(PACKAGE_ROOT, "verification-template"))
 					.inheritIO()
 					.start()
 					.waitFor() != 0;
@@ -400,6 +426,20 @@ public class Packager
 			{
 				isBuildingAll = true;
 				buildList = listAllPlugins();
+
+				String commit = range.substring(0, range.indexOf(".."));
+				Process gitShow = new ProcessBuilder("git", "show", commit + ":runelite.version")
+					.redirectError(ProcessBuilder.Redirect.INHERIT)
+					.start();
+
+				apiFilesVersion = new String(ByteStreams.toByteArray(gitShow.getInputStream()), StandardCharsets.UTF_8)
+					.trim();
+
+				gitShow.waitFor(1, TimeUnit.SECONDS);
+				if (gitShow.exitValue() != 0)
+				{
+					throw new RuntimeException("git show exited with " + gitShow.exitValue());
+				}
 			}
 
 			gitdiff.waitFor(1, TimeUnit.SECONDS);
@@ -413,13 +453,33 @@ public class Packager
 			throw new RuntimeException("missing env vars");
 		}
 
-		Packager pkg = new Packager(buildList);
-		pkg.getUploadConfig().fromEnvironment(pkg.getRuneliteVersion());
-		pkg.setAlwaysPrintLog(!pkg.getUploadConfig().isComplete());
-		pkg.setIgnoreOldManifest(isBuildingAll);
-		pkg.buildPlugins();
+		boolean failed;
+		try (Packager pkg = new Packager(buildList))
+		{
+			pkg.getUploadConfig().fromEnvironment(pkg.getRuneliteVersion());
+			pkg.setAlwaysPrintLog(!pkg.getUploadConfig().isComplete());
+			pkg.setIgnoreOldManifest(isBuildingAll);
+			if (!pkg.getRuneliteVersion().equals(apiFilesVersion))
+			{
+				pkg.setApiFilesVersion(apiFilesVersion);
+			}
+			pkg.buildPlugins();
+			failed = pkg.isFailed();
+			if (isBuildingAll)
+			{
+				String summary = pkg.getBuildSummary();
+				if (!summary.isEmpty())
+				{
+					log.info("Failures:\n{}", summary);
+				}
+				if (!failed)
+				{
+					log.info("All plugins succeeded");
+				}
+			}
+		}
 
-		if (testFailure || pkg.isFailed() && !isBuildingAll)
+		if (testFailure || (failed && !isBuildingAll))
 		{
 			System.exit(1);
 		}
