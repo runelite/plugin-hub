@@ -1,2 +1,3 @@
 repository=https://github.com/evansloan/collection-log.git
-commit=3d44a8e68d4a5f58b67cbffdc572ad3bbaf30470
+commit=75c2dd58b8f97910ba6675cb17bec7618e9633ec
+warning=This plugin submits your IP address and hashed login name to a 3rd party website not controlled or verified by the RuneLite Developers.
