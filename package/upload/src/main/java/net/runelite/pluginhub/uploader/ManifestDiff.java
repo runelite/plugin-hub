@@ -38,6 +38,13 @@ public class ManifestDiff
 	private Set<ExternalPluginManifest> add = Sets.newConcurrentHashSet();
 
 	@Getter
+	private Set<String> copyFromOld = Sets.newConcurrentHashSet();
+
+	@Getter
+	@Setter
+	private String oldManifestVersion;
+
+	@Getter
 	@Setter
 	private boolean ignoreOldManifest;
 }
