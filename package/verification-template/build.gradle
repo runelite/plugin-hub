@@ -17,7 +17,7 @@ configurations {
 
 dependencies {
 	core group: "net.runelite", name:"client", version: file("../../runelite.version").text.trim()
-	core "org.projectlombok:lombok:1.18.4"
+	core "org.projectlombok:lombok:1.18.20"
 
 	thirdParty("org.zeromq:jnacl:0.1.0") {
 		because "keepass-xc"
@@ -58,6 +58,13 @@ dependencies {
 	thirdParty("net.jodah:failsafe:2.4.0") {
 		because "chat-logger"
 	}
+	thirdParty("io.socket:socket.io-client:2.0.1"){
+		because "gimptracker"
+		exclude group: 'com.squareup.okhttp3'
+	}
+	thirdParty("org.json:json:20090211") {
+		because "gimptracker"
+	}
 	thirdParty("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0") {
 		because "elysiumevents-plugin"
 		exclude group: 'com.google.guava'
@@ -73,7 +80,11 @@ dependencies {
 	}
 	thirdParty("io.ably:ably-java:1.2.5") {
 		because "broadcaster"
+		because "region-chat"
 		exclude group: 'com.google.code.gson'
+	}
+	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0"){
+		because "phillip-hue-integration"
 	}
 }
 
