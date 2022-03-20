@@ -28,13 +28,16 @@ import com.google.common.base.Splitter;
 import com.google.common.base.Stopwatch;
 import com.google.common.base.Strings;
 import com.google.common.collect.Queues;
+import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
@@ -51,7 +54,9 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.pluginhub.apirecorder.API;
 import net.runelite.pluginhub.uploader.ManifestDiff;
 import net.runelite.pluginhub.uploader.UploadConfiguration;
 import net.runelite.pluginhub.uploader.Util;
@@ -64,6 +69,7 @@ public class Packager implements Closeable
 	private static final File PLUGIN_ROOT = new File("./plugins");
 	public static final File PACKAGE_ROOT = new File("./package/").getAbsoluteFile();
 
+	private Semaphore apiCheckSemaphore = new Semaphore(8);
 	private Semaphore downloadSemaphore = new Semaphore(2);
 	private Semaphore buildSemaphore = new Semaphore(Runtime.getRuntime().availableProcessors());
 	private Semaphore uploadSemaphore = new Semaphore(2);
@@ -72,6 +78,11 @@ public class Packager implements Closeable
 
 	@Getter
 	private final String runeliteVersion;
+
+	@Setter
+	private String apiFilesVersion;
+
+	private API previousApi;
 
 	@Getter
 	private final UploadConfiguration uploadConfig = new UploadConfiguration();
@@ -98,6 +109,11 @@ public class Packager implements Closeable
 
 	public void buildPlugins() throws IOException
 	{
+		if (apiFilesVersion != null)
+		{
+			loadApi();
+		}
+
 		Queue<File> buildQueue = Queues.synchronizedQueue(new ArrayDeque<>(buildList));
 		List<Thread> buildThreads = IntStream.range(0, 8)
 			.mapToObj(v ->
@@ -148,6 +164,18 @@ public class Packager implements Closeable
 		{
 			try
 			{
+				if (apiFilesVersion != null && previousApi != null)
+				{
+					try (Closeable ignored = acquireAPICheck(p))
+					{
+						if (!p.rebuildNeeded(uploadConfig, apiFilesVersion, previousApi))
+						{
+							diff.getCopyFromOld().add(p.getInternalName());
+							diff.getRemove().remove(p.getInternalName());
+							return;
+						}
+					}
+				}
 				try (Closeable ignored = acquireDownload(p))
 				{
 					p.download();
@@ -157,6 +185,7 @@ public class Packager implements Closeable
 					p.build(runeliteVersion);
 					p.assembleManifest();
 				}
+				String logURL = "";
 				if (uploadConfig.isComplete())
 				{
 					try (Closeable ignored = acquireUpload(p))
@@ -165,11 +194,16 @@ public class Packager implements Closeable
 					}
 
 					// outside the semaphore so the timing gets uploaded too
-					p.uploadLog(uploadConfig);
+					logURL = p.uploadLog(uploadConfig);
 				}
 
 				diff.getAdd().add(p.getManifest());
 				log.info("{}: done in {}ms [{}/{}]", p.getInternalName(), p.getBuildTimeMS(), numDone.get() + 1, numTotal);
+
+				if (!p.getApiFile().exists())
+				{
+					logToSummary("{} failed to write the api record: {}", p.getInternalName(), logURL);
+				}
 			}
 			catch (PluginBuildException e)
 			{
@@ -228,9 +262,35 @@ public class Packager implements Closeable
 		}
 	}
 
+	@SneakyThrows
+	private void loadApi() throws IOException
+	{
+		diff.setOldManifestVersion(apiFilesVersion);
+
+		Process gradleApi = new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", ":apirecorder:api")
+			.directory(PACKAGE_ROOT)
+			.inheritIO()
+			.start();
+		gradleApi.waitFor(2, TimeUnit.MINUTES);
+		if (gradleApi.exitValue() != 0)
+		{
+			throw new RuntimeException("gradle :apirecorder:api exited with " + gradleApi.exitValue());
+		}
+
+		try (InputStream is = new FileInputStream(new File(PACKAGE_ROOT, "apirecorder/build/api")))
+		{
+			previousApi = API.decode(is);
+		}
+	}
+
 	public String getBuildSummary()
 	{
 		return buildSummary.toString();
+	}
+
+	private Closeable acquireAPICheck(Plugin plugin)
+	{
+		return section(plugin, "apicheck", apiCheckSemaphore);
 	}
 
 	private Closeable acquireDownload(Plugin plugin)
@@ -284,6 +344,19 @@ public class Packager implements Closeable
 	{
 		boolean isBuildingAll = false;
 		boolean testFailure = false;
+
+		String apiFilesVersion = System.getenv("API_FILES_VERSION");
+		if (apiFilesVersion != null)
+		{
+			apiFilesVersion = apiFilesVersion.trim();
+			if (apiFilesVersion.isEmpty())
+			{
+				apiFilesVersion = null;
+			}
+		}
+
+		String range = System.getenv("PACKAGE_COMMIT_RANGE");
+
 		List<File> buildList;
 		if (args.length != 0)
 		{
@@ -299,17 +372,17 @@ public class Packager implements Closeable
 		else if (!Strings.isNullOrEmpty(System.getenv("FORCE_BUILD")))
 		{
 			buildList = StreamSupport.stream(
-				Splitter.on(',')
-					.trimResults()
-					.omitEmptyStrings()
-					.split(System.getenv("FORCE_BUILD"))
-					.spliterator(), false)
+					Splitter.on(',')
+						.trimResults()
+						.omitEmptyStrings()
+						.split(System.getenv("FORCE_BUILD"))
+						.spliterator(), false)
 				.map(name -> new File(PLUGIN_ROOT, name))
 				.collect(Collectors.toList());
 		}
-		else if (!Strings.isNullOrEmpty(System.getenv("PACKAGE_COMMIT_RANGE")))
+		else if (!Strings.isNullOrEmpty(range))
 		{
-			Process gitdiff = new ProcessBuilder("git", "diff", "--name-only", System.getenv("PACKAGE_COMMIT_RANGE"))
+			Process gitdiff = new ProcessBuilder("git", "diff", "--name-only", range)
 				.redirectError(ProcessBuilder.Redirect.INHERIT)
 				.start();
 
@@ -337,8 +410,13 @@ public class Packager implements Closeable
 
 			if (doPackageTests)
 			{
-				testFailure = new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", "test")
+				testFailure |= new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", "test")
 					.directory(PACKAGE_ROOT)
+					.inheritIO()
+					.start()
+					.waitFor() != 0;
+				testFailure |= new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", ":verifyAll")
+					.directory(new File(PACKAGE_ROOT, "verification-template"))
 					.inheritIO()
 					.start()
 					.waitFor() != 0;
@@ -348,6 +426,20 @@ public class Packager implements Closeable
 			{
 				isBuildingAll = true;
 				buildList = listAllPlugins();
+
+				String commit = range.substring(0, range.indexOf(".."));
+				Process gitShow = new ProcessBuilder("git", "show", commit + ":runelite.version")
+					.redirectError(ProcessBuilder.Redirect.INHERIT)
+					.start();
+
+				apiFilesVersion = new String(ByteStreams.toByteArray(gitShow.getInputStream()), StandardCharsets.UTF_8)
+					.trim();
+
+				gitShow.waitFor(1, TimeUnit.SECONDS);
+				if (gitShow.exitValue() != 0)
+				{
+					throw new RuntimeException("git show exited with " + gitShow.exitValue());
+				}
 			}
 
 			gitdiff.waitFor(1, TimeUnit.SECONDS);
@@ -367,6 +459,10 @@ public class Packager implements Closeable
 			pkg.getUploadConfig().fromEnvironment(pkg.getRuneliteVersion());
 			pkg.setAlwaysPrintLog(!pkg.getUploadConfig().isComplete());
 			pkg.setIgnoreOldManifest(isBuildingAll);
+			if (!pkg.getRuneliteVersion().equals(apiFilesVersion))
+			{
+				pkg.setApiFilesVersion(apiFilesVersion);
+			}
 			pkg.buildPlugins();
 			failed = pkg.isFailed();
 			if (isBuildingAll)
