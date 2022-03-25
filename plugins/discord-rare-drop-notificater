@@ -1,3 +1,2 @@
 repository=https://github.com/BossHuso/discord-rare-drop-notificater.git
-commit=3527e7fe67db4826a6dcce5fab3f4d6aa5f332cd
-warning=This plugin submits the ID of monsters you kill, items you receive, and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
+commit=54dc0daa911efed0f1114d6249e40e66cf674324
