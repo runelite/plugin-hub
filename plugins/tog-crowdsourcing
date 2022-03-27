@@ -1,3 +1,3 @@
 repository=https://github.com/jcarbelbide/tog-crowdsourcing.git
-commit=e12fd450d63ac455e48e086b0be310cac1e1b889
+commit=65dfcec9b41235c0273290cb72c7d1f788c0ab1f
 warning=This plugin submits your current world number along with your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
