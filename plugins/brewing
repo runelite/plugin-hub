@@ -1,3 +1,2 @@
 repository=https://github.com/InfernoStats/Brewing.git
-commit=ccb8d927ea52512113e88b2ed3122b04df02cfdc
-warning=This plugin sends brewing data to a 3rd party server not controlled or verified by the RuneLite Developers.
+commit=3e227a7c8860599bc61e65dfb9d7d57e890e2606
