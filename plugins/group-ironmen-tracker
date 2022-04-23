@@ -1,0 +1,3 @@
+repository=https://github.com/christoabrown/group-ironmen-tracker.git
+commit=b28b2314f035776d25827b929b3a08c3998ec1d7
+warning=This plugin pushes data about your character to an external server.<br>This data is encrypted and is only viewable by people you share the credentials with.
