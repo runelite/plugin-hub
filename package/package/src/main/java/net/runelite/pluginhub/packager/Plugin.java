@@ -239,6 +239,7 @@ public class Plugin implements Closeable
 		defaultSupportURL = repoRoot + "/tree/" + commit;
 
 		warning = (String) cd.remove("warning");
+		cd.remove("authors");
 
 		for (Map.Entry<Object, Object> extra : cd.entrySet())
 		{
