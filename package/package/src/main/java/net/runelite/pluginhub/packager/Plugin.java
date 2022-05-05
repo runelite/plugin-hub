@@ -239,6 +239,7 @@ public class Plugin implements Closeable
 		defaultSupportURL = repoRoot + "/tree/" + commit;
 
 		warning = (String) cd.remove("warning");
+		cd.remove("authors");
 
 		for (Map.Entry<Object, Object> extra : cd.entrySet())
 		{
@@ -469,7 +470,6 @@ public class Plugin implements Closeable
 					"--console=plain",
 					"--init-script", new File("./package/target_init.gradle").getAbsolutePath())
 				.setEnvironmentVariables(ImmutableMap.of(
-					"runelite.pluginhub.package.lib", new File(Packager.PACKAGE_ROOT, "initLib/build/libs/initLib.jar").toString(),
 					"runelite.pluginhub.package.apirecorder", new File(Packager.PACKAGE_ROOT, "apirecorder/build/libs/apirecorder.jar").toString(),
 					"runelite.pluginhub.package.buildDir", buildDirectory.getAbsolutePath(),
 					"runelite.pluginhub.package.runeliteVersion", runeliteVersion))
