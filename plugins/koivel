@@ -1,3 +1,3 @@
 repository=https://github.com/koivel/runelite-plugin.git
-commit=3c05c26c34fb3db967e3e6731e51fa3ee7da0c77
+commit=e58ec4c89396f88e8c7c9b2201e1e6e75e22cc9f
 warning=This plugin submits your username and IP address and in game stats to a 3rd party server not controlled or verified by the RuneLite Developers.
