@@ -1,2 +1,6 @@
 repository=https://github.com/HerbsIO/ma2-memory.git
+<<<<<<< HEAD
 commit=c9ee46a44f35390d34ef580356813feddfaa4a73
+=======
+commit=d8db570ad0059e2173e72e11a602b2c469e3688b
+>>>>>>> upstream/master
