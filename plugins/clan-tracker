@@ -1,4 +1,4 @@
 repository=https://github.com/Talados/ClanTracker.git
-commit=d60a9215cf6313388a621fb1b12df04cb6b67e57
+commit=af97c6f251d40895f4267d5ce546aadd046363b9
 warning=This plugin submits the names, locations, and gear of encountered Players, and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
 authors=Hai Ke
