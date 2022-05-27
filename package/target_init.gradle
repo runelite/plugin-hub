@@ -54,6 +54,7 @@ allprojects {
 	def buildDir = new File(System.getenv("runelite.pluginhub.package.buildDir"));
 
 	task runelitePluginHubPackage(type: Jar) {
+		duplicatesStrategy = DuplicatesStrategy.INCLUDE
 		destinationDirectory = buildDir
 		archiveFileName = "plugin.jar"
 		from sourceSets.main.output
