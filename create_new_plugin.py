@@ -30,6 +30,7 @@ import os
 import re
 import sys
 from collections import OrderedDict
+from pyclbr import Function
 from string import Template
 
 templatedir = os.path.join(os.path.dirname(
@@ -37,39 +38,56 @@ templatedir = os.path.join(os.path.dirname(
 pwd = os.getcwd()
 parser = argparse.ArgumentParser()
 
+
 def strip_plugin(string: str) -> str:
-	re_strip_plugin = r"(?i)[ _-]*plugin$"
-	return re.sub(pattern=re_strip_plugin, repl="", string=string)
+    re_strip_plugin = r"(?i)[ _-]*plugin$"
+    return re.sub(pattern=re_strip_plugin, repl="", string=string)
 
-def reformat(string: str, string_replacement: function) -> str:
 
-	if string_replacement != to_spaces:
-		pattern = r"[^a-zA-Z0-9_ -]"
-		string = re.sub(pattern=pattern, repl="", string=string)
+def reformat(string: str, string_replacement: Function) -> str:
 
-	if re.match(r".*[ _-]", string):
-		pattern = r"(?:^|[ _.-]+)([^ _.-]+)"
-		return re.sub(pattern=pattern, repl=lambda m: string_replacement(m.group(1)), string=string).strip(" -_")
+    if string_replacement != to_spaces:
+        pattern = r"[^a-zA-Z0-9_ -]"
+        string = re.sub(pattern=pattern, repl="", string=string)
 
-	pattern = r"((?:^.|[A-Z0-9]+)(?:[a-z0-9]+|$))"
-	return re.sub(pattern=pattern, repl=lambda m: string_replacement(m.group(1)), string=string).strip(" -_")
+    if re.match(r".*[ _-]", string):
+        pattern = r"(?:^|[ _.-]+)([^ _.-]+)"
+        return re.sub(pattern=pattern, repl=lambda m: string_replacement(m.group(1)), string=string).strip(" -_")
+
+    pattern = r"((?:^.|[A-Z0-9]+)(?:[a-z0-9]+|$))"
+    return re.sub(pattern=pattern, repl=lambda m: string_replacement(m.group(1)), string=string).strip(" -_")
+
 
 def to_spaces(string: str) -> str:
     return " " + string.capitalize()
 
+
 def to_camelcase(string: str) -> str:
     return string.capitalize()
+
 
 def to_dashes(string: str) -> str:
     return "-" + string.lower()
 
+
 def to_lowercase(string: str) -> str:
     return string.lower()
 
-def strfun(strfun):
+
+def string_function(strfun):
     if isinstance(strfun, str):
         return strfun
     return strfun()
+
+
+def entry_complete() -> bool:
+    """ Requests verification from the user for the entered fields """
+    i = input("Is the information above correct? [y/n] ").lower()
+    if (i == "") or (i == "y"):
+        return True
+    if (i == "n"):
+        return False
+
 
 ordered_steps = OrderedDict(
     [
@@ -147,81 +165,80 @@ ordered_steps = OrderedDict(
     ]
 )
 
-pwdIsEmpty = len(os.listdir(pwd)) == 0
-if pwdIsEmpty:
-    ordered_steps["name"]["value"] = strip_plugin(reformat(os.path.basename(pwd), to_spaces))
 
-parser.add_argument("--noninteractive", dest="noninteractive", action="store_true")
-parser.add_argument("--output_directory", dest="output_directory")
-
-for key, var in ordered_steps.items():
-    parser.add_argument("--" + key, dest=key, help=var["desc"])
-
-args = vars(parser.parse_args())
-
-noninteractive = args["noninteractive"]
-if noninteractive and pwdIsEmpty:
-    ordered_steps["name"]["ask"] = False
-
-for key, var in ordered_steps.items():
-	if args[key] == None:
-		continue
-	
-	val = args[key]
-	if "strip_plugin" in var and var["strip_plugin"]:
-		val = strip_plugin(val)
-	var["value"] = val
-	var["ask"] = False
-
-askAll = False
-while True:
+def query_user(askAll: bool = True, ordered_steps: dict = ordered_steps) -> dict:
+    """ Queries user for ordered steps """
     for key, var in ordered_steps.items():
         if askAll or ("ask" in var and var["ask"]):
-            if noninteractive:
-                print('"{}" was not specified in noninteractive mode'.format(key))
-                sys.exit(1)
             print(var["desc"])
-            print("[" + strfun(var["value"]) + "]")
+            print("[" + string_function(var["value"]) + "]")
             val = input(key + ": ")
             if val:
                 if "strip_plugin" in var and var["strip_plugin"]:
                     val = strip_plugin(val)
                 var["value"] = val
 
-    askAll = True
-
-    print("")
+    print(" ")
     for key, var in ordered_steps.items():
-        print('{} = "{}"'.format(key, strfun(var["value"])))
+        print('{} = "{}"'.format(key, string_function(var["value"])))
+    return ordered_steps
 
-    def input_yes():
-        while True:
-            inp = input("Is this ok? [y/n]").lower()
-            if inp == "" or inp == "y":
-                return True
-            if inp == "n":
-                return False
 
-    if noninteractive or input_yes():
-        break
+# checks active directory
+pwdIsEmpty = len(os.listdir(pwd)) == 0
+if pwdIsEmpty:
+    ordered_steps["name"]["value"] = strip_plugin(
+        reformat(os.path.basename(pwd), to_spaces))
 
+# set up parser arguments
+parser.add_argument("--noninteractive",
+                    dest="noninteractive", action="store_true")
+parser.add_argument("--output_directory", dest="output_directory")
+for key, var in ordered_steps.items():
+    parser.add_argument("--" + key, dest=key, help=var["desc"])
+args = vars(parser.parse_args())
+
+# sets run as noninteractive and removes ordered steps
+noninteractive = args["noninteractive"]
+if noninteractive and pwdIsEmpty:
+    ordered_steps["name"]["ask"] = False
+
+for key, var in ordered_steps.items():
+    if args[key] == None:
+        continue
+    val = args[key]
+    if "strip_plugin" in var and var["strip_plugin"]:
+        val = strip_plugin(val)
+    var["ask"], var["value"] = False, val
+
+# queries user for form data
+if not noninteractive:
+    ordered_steps = query_user(askAll=False)
+    while True:
+        if entry_complete():
+            break
+        ordered_steps = query_user(askAll=True)
+
+# set output directory
 outdir = args["output_directory"]
 if outdir == None:
     if pwdIsEmpty:
         outdir = pwd
     else:
-        outdir = os.path.join(pwd, strfun(
+        outdir = os.path.join(pwd, string_function(
             ordered_steps["artifact_id"]["value"]))
 
+# set mappings
 mappings = {}
 for key, var in ordered_steps.items():
-    mappings[key] = strfun(var["value"])
-
+    mappings[key] = string_function(var["value"])
 mappings["package_path"] = mappings["package"].replace(".", os.path.sep)
 
-with open(os.path.join(templatedir, "../runelite.version"), "rt") as fi:
-    mappings["runelite_version"] = fi.read().strip()
+# set runelite version
+with open(os.path.join(templatedir, "../runelite.version"), "rt") as runelite_version:
+    mappings["runelite_version"] = runelite_version.read().strip()
 
+# convert form data into plugin template
 for root, dir, files in os.walk(templatedir):
     for file in files:
         try:
@@ -243,6 +260,3 @@ for root, dir, files in os.walk(templatedir):
                         ofd.write(contents.encode("utf-8"))
         except ValueError as ex:
             raise ValueError(infi) from ex
-
-if __name__ == '__main__':
-    pass
