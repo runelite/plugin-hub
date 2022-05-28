@@ -37,40 +37,39 @@ templatedir = os.path.join(os.path.dirname(
 pwd = os.getcwd()
 parser = argparse.ArgumentParser()
 
-
 def strip_plugin(string: str) -> str:
-    return re.sub(r"(?i)[ _-]*plugin$", "", string)
-
+	re_strip_plugin = r"(?i)[ _-]*plugin$"
+	return re.sub(pattern=re_strip_plugin, repl="", string=string)
 
 def reformat(string: str, string_replacement: function) -> str:
-    if string_replacement != to_spaces:
-        string = re.sub(r"[^a-zA-Z0-9_ -]", "", string)
-    if re.match(r".*[ _-]", string):
-        return re.sub(r"(?:^|[ _.-]+)([^ _.-]+)", lambda m: string_replacement(m.group(1)), string).strip(" -_")
-    return re.sub(r"((?:^.|[A-Z0-9]+)(?:[a-z0-9]+|$))", lambda m: string_replacement(m.group(1)), string).strip(" -_")
 
+	if string_replacement != to_spaces:
+		pattern = r"[^a-zA-Z0-9_ -]"
+		string = re.sub(pattern=pattern, repl="", string=string)
+
+	if re.match(r".*[ _-]", string):
+		pattern = r"(?:^|[ _.-]+)([^ _.-]+)"
+		return re.sub(pattern=pattern, repl=lambda m: string_replacement(m.group(1)), string=string).strip(" -_")
+
+	pattern = r"((?:^.|[A-Z0-9]+)(?:[a-z0-9]+|$))"
+	return re.sub(pattern=pattern, repl=lambda m: string_replacement(m.group(1)), string=string).strip(" -_")
 
 def to_spaces(string: str) -> str:
     return " " + string.capitalize()
 
-
 def to_camelcase(string: str) -> str:
     return string.capitalize()
-
 
 def to_dashes(string: str) -> str:
     return "-" + string.lower()
 
-
 def to_lowercase(string: str) -> str:
     return string.lower()
-
 
 def strfun(strfun):
     if isinstance(strfun, str):
         return strfun
     return strfun()
-
 
 ordered_steps = OrderedDict(
     [
@@ -148,14 +147,11 @@ ordered_steps = OrderedDict(
     ]
 )
 
-
 pwdIsEmpty = len(os.listdir(pwd)) == 0
 if pwdIsEmpty:
-    ordered_steps["name"]["value"] = strip_plugin(
-        reformat(os.path.basename(pwd), to_spaces))
+    ordered_steps["name"]["value"] = strip_plugin(reformat(os.path.basename(pwd), to_spaces))
 
-parser.add_argument("--noninteractive",
-                    dest="noninteractive", action="store_true")
+parser.add_argument("--noninteractive", dest="noninteractive", action="store_true")
 parser.add_argument("--output_directory", dest="output_directory")
 
 for key, var in ordered_steps.items():
@@ -164,17 +160,18 @@ for key, var in ordered_steps.items():
 args = vars(parser.parse_args())
 
 noninteractive = args["noninteractive"]
-
 if noninteractive and pwdIsEmpty:
     ordered_steps["name"]["ask"] = False
 
 for key, var in ordered_steps.items():
-    if args[key] != None:
-        val = args[key]
-        if "strip_plugin" in var and var["strip_plugin"]:
-            val = strip_plugin(val)
-        var["value"] = val
-        var["ask"] = False
+	if args[key] == None:
+		continue
+	
+	val = args[key]
+	if "strip_plugin" in var and var["strip_plugin"]:
+		val = strip_plugin(val)
+	var["value"] = val
+	var["ask"] = False
 
 askAll = False
 while True:
