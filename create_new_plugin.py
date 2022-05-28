@@ -32,41 +32,38 @@ import sys
 from collections import OrderedDict
 from string import Template
 
-templatedir = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "templateplugin"
-)
+templatedir = os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), "templateplugin")
+pwd = os.getcwd()
+parser = argparse.ArgumentParser()
 
 
-def strip_plugin(str: str):
-    return re.sub(r"(?i)[ _-]*plugin$", "", str)
+def strip_plugin(string: str) -> str:
+    return re.sub(r"(?i)[ _-]*plugin$", "", string)
 
 
-def reformat(str: str, replacer):
-    if replacer != to_spaces:
-        str = re.sub(r"[^a-zA-Z0-9_ -]", "", str)
-    if re.match(r".*[ _-]", str):
-        return re.sub(
-            r"(?:^|[ _.-]+)([^ _.-]+)", lambda m: replacer(m.group(1)), str
-        ).strip(" -_")
-    return re.sub(
-        r"((?:^.|[A-Z0-9]+)(?:[a-z0-9]+|$))", lambda m: replacer(m.group(1)), str
-    ).strip(" -_")
+def reformat(string: str, string_replacement: function) -> str:
+    if string_replacement != to_spaces:
+        string = re.sub(r"[^a-zA-Z0-9_ -]", "", string)
+    if re.match(r".*[ _-]", string):
+        return re.sub(r"(?:^|[ _.-]+)([^ _.-]+)", lambda m: string_replacement(m.group(1)), string).strip(" -_")
+    return re.sub(r"((?:^.|[A-Z0-9]+)(?:[a-z0-9]+|$))", lambda m: string_replacement(m.group(1)), string).strip(" -_")
 
 
-def to_spaces(seg):
-    return " " + seg.capitalize()
+def to_spaces(string: str) -> str:
+    return " " + string.capitalize()
 
 
-def to_camelcase(seg):
-    return seg.capitalize()
+def to_camelcase(string: str) -> str:
+    return string.capitalize()
 
 
-def to_dashes(seg):
-    return "-" + seg.lower()
+def to_dashes(string: str) -> str:
+    return "-" + string.lower()
 
 
-def to_lowercase(seg):
-    return seg.lower()
+def to_lowercase(string: str) -> str:
+    return string.lower()
 
 
 def strfun(strfun):
@@ -75,7 +72,7 @@ def strfun(strfun):
     return strfun()
 
 
-subs = OrderedDict(
+ordered_steps = OrderedDict(
     [
         (
             "name",
@@ -122,7 +119,7 @@ subs = OrderedDict(
             "plugin_prefix",
             {
                 "desc": "The name of the your plugin's main class, without the 'Plugin' suffix",
-                "value": lambda: reformat(subs["name"]["value"], to_camelcase),
+                "value": lambda: reformat(ordered_steps["name"]["value"], to_camelcase),
                 "strip_plugin": True,
             },
         ),
@@ -130,47 +127,48 @@ subs = OrderedDict(
             "artifact_id",
             {
                 "desc": "The name of the maven artifact",
-                "value": lambda: reformat(subs["name"]["value"], to_dashes),
+                "value": lambda: reformat(ordered_steps["name"]["value"], to_dashes),
             },
         ),
         (
             "group_id",
             {
                 "desc": "The group of the maven artifact",
-                "value": lambda: subs["package"]["value"],
+                "value": lambda: ordered_steps["package"]["value"],
             },
         ),
         (
             "plugin_config_group",
             {
                 "desc": "The prefix used to store config keys",
-                "value": lambda: reformat(subs["name"]["value"], to_lowercase),
+                "value": lambda: reformat(ordered_steps["name"]["value"], to_lowercase),
                 "strip_plugin": True,
             },
         ),
     ]
 )
 
-pwd = os.getcwd()
+
 pwdIsEmpty = len(os.listdir(pwd)) == 0
 if pwdIsEmpty:
-    subs["name"]["value"] = strip_plugin(
+    ordered_steps["name"]["value"] = strip_plugin(
         reformat(os.path.basename(pwd), to_spaces))
 
-parser = argparse.ArgumentParser()
 parser.add_argument("--noninteractive",
                     dest="noninteractive", action="store_true")
 parser.add_argument("--output_directory", dest="output_directory")
-for key, var in subs.items():
+
+for key, var in ordered_steps.items():
     parser.add_argument("--" + key, dest=key, help=var["desc"])
+
 args = vars(parser.parse_args())
 
 noninteractive = args["noninteractive"]
 
 if noninteractive and pwdIsEmpty:
-    subs["name"]["ask"] = False
+    ordered_steps["name"]["ask"] = False
 
-for key, var in subs.items():
+for key, var in ordered_steps.items():
     if args[key] != None:
         val = args[key]
         if "strip_plugin" in var and var["strip_plugin"]:
@@ -180,7 +178,7 @@ for key, var in subs.items():
 
 askAll = False
 while True:
-    for key, var in subs.items():
+    for key, var in ordered_steps.items():
         if askAll or ("ask" in var and var["ask"]):
             if noninteractive:
                 print('"{}" was not specified in noninteractive mode'.format(key))
@@ -196,12 +194,12 @@ while True:
     askAll = True
 
     print("")
-    for key, var in subs.items():
+    for key, var in ordered_steps.items():
         print('{} = "{}"'.format(key, strfun(var["value"])))
 
     def input_yes():
         while True:
-            inp = input("Is this ok? [Yn]").lower()
+            inp = input("Is this ok? [y/n]").lower()
             if inp == "" or inp == "y":
                 return True
             if inp == "n":
@@ -215,12 +213,15 @@ if outdir == None:
     if pwdIsEmpty:
         outdir = pwd
     else:
-        outdir = os.path.join(pwd, strfun(subs["artifact_id"]["value"]))
+        outdir = os.path.join(pwd, strfun(
+            ordered_steps["artifact_id"]["value"]))
 
 mappings = {}
-for key, var in subs.items():
+for key, var in ordered_steps.items():
     mappings[key] = strfun(var["value"])
+
 mappings["package_path"] = mappings["package"].replace(".", os.path.sep)
+
 with open(os.path.join(templatedir, "../runelite.version"), "rt") as fi:
     mappings["runelite_version"] = fi.read().strip()
 
@@ -233,9 +234,8 @@ for root, dir, files in os.walk(templatedir):
             outfi = Template(outfi).substitute(mappings)
             outfi = os.path.join(outdir, outfi)
             os.makedirs(os.path.dirname(outfi), exist_ok=True)
-            with open(
-                infi, "rb"
-            ) as ifd:  # we need binary mode to not do that stupid crlf bullshit on windows
+            # we need binary mode to not do that stupid crlf bullshit on windows
+            with open(infi, "rb") as ifd:
                 if file.endswith(".jar") or file.startswith("gradlew"):
                     with open(outfi, "wb") as ofd:
                         ofd.write(ifd.read())
@@ -246,3 +246,6 @@ for root, dir, files in os.walk(templatedir):
                         ofd.write(contents.encode("utf-8"))
         except ValueError as ex:
             raise ValueError(infi) from ex
+
+if __name__ == '__main__':
+    pass
