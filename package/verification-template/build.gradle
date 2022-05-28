@@ -87,6 +87,9 @@ dependencies {
 	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0"){
 		because "phillip-hue-integration"
 	}
+	thirdParty("com.h2database:h2:2.1.212") {
+		because "polywoof"
+	}
 }
 
 task verifyCore {
