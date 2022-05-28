@@ -155,10 +155,10 @@ while True:
 		print("{} = \"{}\"".format(key, strfun(var["value"])))
 	def input_yes():
 		while True:
-			inp = input("Is this ok? [Yn]").lower()
-			if inp == "" or inp == "y":
+			inp = input("Is this ok? [y/n] ").lower()
+			if inp == "Y" or inp == "y" or inp == "":
 				return True
-			if inp == "n":
+			if inp == "N" or inp == "n":
 				return False
 	if noninteractive or input_yes():
 		break
