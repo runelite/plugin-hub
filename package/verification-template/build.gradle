@@ -90,6 +90,10 @@ dependencies {
 	thirdParty("com.h2database:h2:2.1.212") {
 		because "polywoof"
 	}
+    thirdParty("com.google.inject.extensions:guice-multibindings:4.1.0") {
+        because "dps-calculator"
+        exclude group: 'com.google.inject'
+    }
 }
 
 task verifyCore {
