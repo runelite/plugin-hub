@@ -5,6 +5,10 @@ This repository contains markers for [RuneLite](https://github.com/runelite/rune
 plugins that are not supported by the RuneLite Developers. The plugins are
 provided "as is"; we make no guarantees about any plugin in this repo.
 
+## Setting up the development environment
+
+We recommend [IntelliJ Idea Community Edition](https://www.jetbrains.com/idea/download/) as well as Java 11. You can either have
+IntelliJ install Java (select `Eclipse Temurin`) or download it from https://adoptium.net/temurin/releases/.
 
 ## Creating new plugins
 There are two methods to create an external plugin, you can either:
@@ -12,8 +16,6 @@ There are two methods to create an external plugin, you can either:
  - Use [this](https://github.com/runelite/example-plugin/) plugin template.
 
  - Clone this repository and run the `create_new_plugin.py` script. This requires you to have `python3` installed
-
-**If you are using IntelliJ, you will need at least version 2017.3**
 
 ### Using the template repository
  1. Generate your own repository with [this](https://github.com/runelite/example-plugin/generate) link. You have to be logged in to GitHub.
@@ -113,6 +115,10 @@ We will review your plugin to ensure it isn't malicious or [breaking
 jagex's rules](https://secure.runescape.com/m=news/another-message-about-unofficial-clients?oldschool=1).
 __If it is difficult for us to ensure the plugin isn't against the rules we
 will not merge it__. 
+
+## Plugin resources
+Resources may be included with plugins, which are non-code and are bundled and distributed with the plugin, such as images and sounds. You may do this by placing them in `src/main/resources`. Plugins on the pluginhub are distributed in .jar form and the jars placed into the classpath. The plugin is not unpacked on disk, and you can not assume that it is. This means that using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getResource-java.lang.String- will return a jar-URL when the plugin is deployed to the pluginhub, but in your IDE will be a file-URL. This almost certainly makes it behave differently from how you expect it to, and isn't what you want.
+Instead, prefer using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getResourceAsStream-java.lang.String-. 
 
 ## Third party dependencies
 We require any dependencies that are not a transitive dependency of runelite-client to
