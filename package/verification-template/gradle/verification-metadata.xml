@@ -5,6 +5,7 @@
       <verify-signatures>false</verify-signatures>
       <trusted-artifacts>
          <trust group="net.runelite"/>
+         <trust group="net.runelite.arn"/>
          <trust group="net.runelite.archive-patcher"/>
          <trust group="net.runelite.gluegen"/>
          <trust group="net.runelite.jocl"/>
