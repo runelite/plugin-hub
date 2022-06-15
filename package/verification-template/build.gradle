@@ -66,7 +66,7 @@ dependencies {
 	thirdParty("org.json:json:20090211") {
 		because "gimptracker"
 	}
-	thirdParty("com.google.apis:google-api-services-sheets:v4-rev20210629-1.32.1") {
+	thirdParty("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0") {
 		because "elysiumevents-plugin"
 		exclude group: 'com.google.guava'
 		exclude group: 'com.google.oauth-client'
