@@ -16,7 +16,7 @@ configurations {
 }
 
 dependencies {
-	core group: "net.runelite", name:"client", version: file("../../runelite.version").text.trim()
+	core group: "net.runelite", name: "client", version: file("../../runelite.version").text.trim()
 	core "org.projectlombok:lombok:1.18.20"
 	core "org.jetbrains:annotations:23.0.0"
 
@@ -59,7 +59,7 @@ dependencies {
 	thirdParty("net.jodah:failsafe:2.4.0") {
 		because "chat-logger"
 	}
-	thirdParty("io.socket:socket.io-client:2.0.1"){
+	thirdParty("io.socket:socket.io-client:2.0.1") {
 		because "gimptracker"
 		exclude group: 'com.squareup.okhttp3'
 	}
@@ -84,16 +84,16 @@ dependencies {
 		because "region-chat"
 		exclude group: 'com.google.code.gson'
 	}
-	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0"){
+	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0") {
 		because "phillip-hue-integration"
 	}
 	thirdParty("com.h2database:h2:2.1.212") {
 		because "polywoof"
 	}
-    thirdParty("com.google.inject.extensions:guice-multibindings:4.1.0") {
-        because "dps-calculator"
-        exclude group: 'com.google.inject'
-    }
+	thirdParty("com.google.inject.extensions:guice-multibindings:4.1.0") {
+		because "dps-calculator"
+		exclude group: 'com.google.inject'
+	}
 }
 
 task verifyCore {
