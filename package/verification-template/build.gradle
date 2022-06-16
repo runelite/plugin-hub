@@ -107,5 +107,9 @@ task verifyAll {
 	doLast {
 		// This causes resolution (and therefore verification) of the configuration
 		configurations.thirdParty.asPath
+
+		if (file("build.gradle").text =~ /(?m)^ /) {
+			throw new RuntimeException("gradle files should be indented with tabs")
+		}
 	}
 }
