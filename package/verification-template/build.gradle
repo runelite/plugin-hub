@@ -94,6 +94,16 @@ dependencies {
 		because "dps-calculator"
 		exclude group: 'com.google.inject'
 	}
+
+	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
+		because "gpu-experimental"
+	}
+	thirdParty "org.lwjgl:lwjgl"
+	thirdParty "org.lwjgl:lwjgl-opengl"
+	["linux", "macos", "macos-arm64", "windows-x86", "windows"].each { platform ->
+		thirdParty "org.lwjgl:lwjgl::natives-$platform"
+		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
+	}
 }
 
 task verifyCore {
