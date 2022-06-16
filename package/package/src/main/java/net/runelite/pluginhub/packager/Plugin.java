@@ -649,7 +649,7 @@ public class Plugin implements Closeable
 						if (isMultiRelease)
 						{
 							// allow multirelease classes to not be parsable by asm, they may be too new
-							return;
+							continue;
 						}
 
 						throw e;
