@@ -67,7 +67,7 @@ There are two methods to create an external plugin, you can either:
 
  3. Move the generated folder to it's own git repository and open the `build.gradle` file in IntelliJ.
 
- 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test.
+ 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
@@ -80,10 +80,10 @@ There are two methods to create an external plugin, you can either:
  8. When you have your plugin working. Commit your changes and push them to your repository.
 
 ### Licensing your repository
- 1. Go to your repository on GitHub and select *Insights* from the top bar. Then choose *Community* in the list to the left.
- 2. In the license section of the list press *Add*.
+ 1. Go to your repository on GitHub and select *Add file* (next to the green *Code* button), and choose *Create new file* from the drop-down.
+ 2. In the file name field type *LICENSE* and click the *Choose a license template* button that will appear.
  3. Select `BSD 2-Clause "Simplified" License` from the list to the left. Fill in your details and press *Review and submit*.
- 4. Commit your changes by clicking *Create new file* in the bottom of the page. Make sure you check the button to directly commit to the master branch.
+ 4. Commit your changes by clicking *Commit changes* at the bottom of the page. Make sure you check the button to directly commit to the master branch.
 
 ## Submitting a plugin
  1. Fork the [plugin-hub repository](https://github.com/runelite/plugin-hub).
