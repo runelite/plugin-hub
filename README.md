@@ -67,7 +67,7 @@ There are two methods to create an external plugin, you can either:
 
  3. Move the generated folder to it's own git repository and open the `build.gradle` file in IntelliJ.
 
- 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test.
+ 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 

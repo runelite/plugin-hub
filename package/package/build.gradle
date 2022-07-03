@@ -34,7 +34,7 @@ dependencies {
 	implementation "org.slf4j:slf4j-simple:1.7.10"
 	implementation "com.google.code.findbugs:jsr305:3.0.2"
 	implementation "com.google.guava:guava:23.2-jre"
-	implementation "org.ow2.asm:asm:7.0"
+	implementation "org.ow2.asm:asm:9.3"
 	implementation "com.squareup.okhttp3:okhttp:3.14.9"
 	implementation "com.google.code.gson:gson:2.8.5"
 	implementation project(":upload")
