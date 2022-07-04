@@ -1,2 +1,3 @@
 repository=https://github.com/Equinox-/runelite-influxdb.git
-commit=09804bb7feb2b04c9cc89688aade4df1f1c3862c
+commit=c30f3c01ca6002241a437979ef9daf41d8213ad9
+disabled=unmaintained

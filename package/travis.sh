@@ -31,6 +31,7 @@ env:
 '
 pushd "$(dirname "$0")"
 ./gradlew --console=plain --build-cache prep
+./gradlew --console=plain --build-cache --project-dir verification-template :verifyCore
 popd
 
 PACKAGE_IS_PR="$TRAVIS_PULL_REQUEST" \
