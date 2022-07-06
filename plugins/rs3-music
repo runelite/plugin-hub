@@ -1,0 +1,3 @@
+repository=https://github.com/Frunkh/rl-rs3-music.git
+commit=4c33ebfff3233663d1afd1dbd3b6b734c9014602
+warning=This plugin retrieves the RS3 music from an external source
