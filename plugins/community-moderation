@@ -1,0 +1,3 @@
+repository=https://github.com/claudiodekker/runelite-community-moderation.git
+commit=0f8356210ea3ab5a3440ddcffde351d78577904b
+warning=This plugin communicates reported players, as well as your IP address, to a 3rd party website not controlled or verified by the RuneLite Developers.
