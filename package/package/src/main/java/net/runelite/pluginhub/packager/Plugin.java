@@ -604,41 +604,56 @@ public class Plugin implements Closeable
 						continue;
 					}
 
+					boolean isMultiRelease = fileName.startsWith("META-INF/versions");
 					byte[] classData = ByteStreams.toByteArray(jis);
-					new ClassReader(classData).accept(new ClassVisitor(Opcodes.ASM7, builtinApi)
+
+					try
 					{
-						boolean extendsPlugin;
-						String name;
-
-						@SneakyThrows
-						@Override
-						public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
+						new ClassReader(classData).accept(new ClassVisitor(Opcodes.ASM7, builtinApi)
 						{
-							if ((version & 0xFFFF) > Opcodes.V1_8
-								&& !(fileName.startsWith("META-INF/versions") || fileName.endsWith("module-info.class")))
+							boolean extendsPlugin;
+							String name;
+
+							@SneakyThrows
+							@Override
+							public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
 							{
-								throw PluginBuildException.of(Plugin.this, "plugins must be Java 1.8 compatible")
-									.withFile(fileName);
+								if ((version & 0xFFFF) > Opcodes.V1_8
+									&& !(isMultiRelease || fileName.endsWith("module-info.class")))
+								{
+									throw PluginBuildException.of(Plugin.this, "plugins must be Java 1.8 compatible")
+										.withFile(fileName);
+								}
+
+								jarClasses.add(name.replace('/', '.'));
+
+								extendsPlugin = "net/runelite/client/plugins/Plugin".equals(superName);
+								this.name = name;
+								super.visit(version, access, name, signature, superName, interfaces);
 							}
 
-							jarClasses.add(name.replace('/', '.'));
-
-							extendsPlugin = "net/runelite/client/plugins/Plugin".equals(superName);
-							this.name = name;
-							super.visit(version, access, name, signature, superName, interfaces);
-						}
-
-						@Override
-						public AnnotationVisitor visitAnnotation(String descriptor, boolean visible)
-						{
-							if ("Lnet/runelite/client/plugins/PluginDescriptor;".equals(descriptor) && extendsPlugin)
+							@Override
+							public AnnotationVisitor visitAnnotation(String descriptor, boolean visible)
 							{
-								pluginClasses.add(name.replace('/', '.'));
-							}
+								if ("Lnet/runelite/client/plugins/PluginDescriptor;".equals(descriptor) && extendsPlugin)
+								{
+									pluginClasses.add(name.replace('/', '.'));
+								}
 
-							return null;
+								return null;
+							}
+						}, ClassReader.SKIP_CODE);
+					}
+					catch (IllegalArgumentException e)
+					{
+						if (isMultiRelease)
+						{
+							// allow multirelease classes to not be parsable by asm, they may be too new
+							continue;
 						}
-					}, ClassReader.SKIP_CODE);
+
+						throw e;
+					}
 				}
 			}
 
