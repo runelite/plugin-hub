@@ -1,0 +1,3 @@
+repository=https://github.com/vyxyl/runelite-item-share.git
+commit=772a0f6a7cab3082efca98efdc2ae0c072ee4bd1
+warning=In order to share your items with other players, this plugin sends player data (including IP address) to an open-source 3rd party server. The server is not controlled or verified by the RuneLite Developers
