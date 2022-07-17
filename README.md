@@ -5,6 +5,10 @@ This repository contains markers for [RuneLite](https://github.com/runelite/rune
 plugins that are not supported by the RuneLite Developers. The plugins are
 provided "as is"; we make no guarantees about any plugin in this repo.
 
+## Setting up the development environment
+
+We recommend [IntelliJ Idea Community Edition](https://www.jetbrains.com/idea/download/) as well as Java 11. You can either have
+IntelliJ install Java (select `Eclipse Temurin`) or download it from https://adoptium.net/temurin/releases/.
 
 ## Creating new plugins
 There are two methods to create an external plugin, you can either:
@@ -12,8 +16,6 @@ There are two methods to create an external plugin, you can either:
  - Use [this](https://github.com/runelite/example-plugin/) plugin template.
 
  - Clone this repository and run the `create_new_plugin.py` script. This requires you to have `python3` installed
-
-**If you are using IntelliJ, you will need at least version 2017.3**
 
 ### Using the template repository
  1. Generate your own repository with [this](https://github.com/runelite/example-plugin/generate) link. You have to be logged in to GitHub.
@@ -26,7 +28,7 @@ There are two methods to create an external plugin, you can either:
 
  5. Open `build.gradle` and edit `runeLiteVersion` from `1.5.44-SNAPSHOT` to the latest release. If you are unsure about the current version it's specified on [runelite.net](https://runelite.net/).
 
- 6. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test.
+ 6. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
@@ -65,7 +67,7 @@ There are two methods to create an external plugin, you can either:
 
  3. Move the generated folder to it's own git repository and open the `build.gradle` file in IntelliJ.
 
- 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test.
+ 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
@@ -78,10 +80,10 @@ There are two methods to create an external plugin, you can either:
  8. When you have your plugin working. Commit your changes and push them to your repository.
 
 ### Licensing your repository
- 1. Go to your repository on GitHub and select *Insights* from the top bar. Then choose *Community* in the list to the left.
- 2. In the license section of the list press *Add*.
+ 1. Go to your repository on GitHub and select *Add file* (next to the green *Code* button), and choose *Create new file* from the drop-down.
+ 2. In the file name field type *LICENSE* and click the *Choose a license template* button that will appear.
  3. Select `BSD 2-Clause "Simplified" License` from the list to the left. Fill in your details and press *Review and submit*.
- 4. Commit your changes by clicking *Create new file* in the bottom of the page. Make sure you check the button to directly commit to the master branch.
+ 4. Commit your changes by clicking *Commit changes* at the bottom of the page. Make sure you check the button to directly commit to the master branch.
 
 ## Submitting a plugin
  1. Fork the [plugin-hub repository](https://github.com/runelite/plugin-hub).
@@ -113,6 +115,10 @@ We will review your plugin to ensure it isn't malicious or [breaking
 jagex's rules](https://secure.runescape.com/m=news/another-message-about-unofficial-clients?oldschool=1).
 __If it is difficult for us to ensure the plugin isn't against the rules we
 will not merge it__. 
+
+## Plugin resources
+Resources may be included with plugins, which are non-code and are bundled and distributed with the plugin, such as images and sounds. You may do this by placing them in `src/main/resources`. Plugins on the pluginhub are distributed in .jar form and the jars placed into the classpath. The plugin is not unpacked on disk, and you can not assume that it is. This means that using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getResource-java.lang.String- will return a jar-URL when the plugin is deployed to the pluginhub, but in your IDE will be a file-URL. This almost certainly makes it behave differently from how you expect it to, and isn't what you want.
+Instead, prefer using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getResourceAsStream-java.lang.String-. 
 
 ## Third party dependencies
 We require any dependencies that are not a transitive dependency of runelite-client to
