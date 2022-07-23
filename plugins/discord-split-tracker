@@ -1,3 +1,3 @@
-repository=https://github.com/skyhawkgaming/better-discord-loot-logger.git
-commit=df98670bf852294705005597d6fa977a8d74132a
+repository=https://github.com/skyhawkgaming/discord-split-tracker-plugin.git
+commit=d2d4fc17f86422c4c0af729d005eea9183759506
 warning=This plugin sends your username to wiseoldman.net to give you a list of groups you're in.
