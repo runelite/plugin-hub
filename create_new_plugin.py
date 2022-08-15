@@ -189,7 +189,6 @@ mappings["package_path"] = mappings["package"].replace(".", os.path.sep)
 with open(os.path.join(templatedir, "../runelite.version"), "rt") as fi:
     mappings["runelite_version"] = fi.read().strip()
 
-infi = ""
 for root, _, files in os.walk(templatedir):
     for file in files:
         try:
