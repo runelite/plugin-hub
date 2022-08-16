@@ -1,3 +1,3 @@
 repository=https://github.com/skyhawkgaming/better-discord-loot-logger.git
-commit=3b6f751da88e8e64b7f07da3e0efb725dfeb8460
-warning=This plugin sends your username to wiseoldman.net to give you a list of groups you're in.
+commit=ec4c0ddc9b1773afd8a722406935426fb1561996
+warning=This plugin submits your username to wiseoldman.net.
