@@ -26,19 +26,17 @@ There are two methods to create an external plugin, you can either:
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. Open `build.gradle` and edit `runeLiteVersion` from `1.5.44-SNAPSHOT` to the latest release. If you are unsure about the current version it's specified on [runelite.net](https://runelite.net/).
-
- 6. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 7. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
+ 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
 
- 8. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
+ 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
  
- 9. Go to your plugin file and set it's name in the `PluginDescriptor`, this can have spaces.
+ 8. Go to your plugin file and set its name in the `PluginDescriptor`, this can have spaces.
 
- 10. Open the `runelite-plugin.properties` file and add info to each row. 
+ 9. Open the `runelite-plugin.properties` file and add info to each row. 
  ```
  displayName=Helmet check
  author=dekvall
@@ -49,11 +47,11 @@ There are two methods to create an external plugin, you can either:
  ```
  `support` is the URL you want players to use to leave feedback for your plugin; by default this links to your repository. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
- 11. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
+ 10. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
- 12. Write a nice README so your users can see the features of your plugin.
+ 11. Write a nice README so your users can see the features of your plugin.
 
- 13. When you have your plugin working. Commit your changes and push them to your repository. 
+ 12. When you have your plugin working. Commit your changes and push them to your repository. 
 
 
 ### Using the script
@@ -65,7 +63,7 @@ There are two methods to create an external plugin, you can either:
  ```
  It will ask you a series of questions, and then generate a folder with the name of your plugin.
 
- 3. Move the generated folder to it's own git repository and open the `build.gradle` file in IntelliJ.
+ 3. Move the generated folder to its own git repository and open the `build.gradle` file in IntelliJ.
 
  4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
 

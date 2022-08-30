@@ -120,6 +120,8 @@ public class Plugin implements Closeable
 	private static final File TMP_ROOT;
 	private static final File GRADLE_HOME;
 
+	private static final API DISALLOWED_API;
+
 	static
 	{
 		ImageIO.setUseCache(false);
@@ -133,6 +135,11 @@ public class Plugin implements Closeable
 			if (!GRADLE_HOME.exists())
 			{
 				throw new RuntimeException("gradle home has moved");
+			}
+
+			try (InputStream is = Packager.class.getResourceAsStream("disallowed-apis.txt"))
+			{
+				DISALLOWED_API = API.decodePlain(is);
 			}
 		}
 		catch (IOException e)
@@ -516,7 +523,7 @@ public class Plugin implements Closeable
 		}
 	}
 
-	public void assembleManifest() throws IOException, PluginBuildException
+	public void assembleManifest(boolean disallowedFatal) throws IOException, PluginBuildException
 	{
 		manifest.setInternalName(internalName);
 		manifest.setCommit(commit);
@@ -663,7 +670,21 @@ public class Plugin implements Closeable
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				try (FileInputStream fis = new FileInputStream(apiFile))
 				{
-					API.encode(out, API.decode(fis).missingFrom(builtinApi.getApi()));
+					API api = API.decode(fis);
+					API.encode(out, api.missingFrom(builtinApi.getApi()));
+					String disallowed = DISALLOWED_API.in(api)
+						.collect(Collectors.joining("\n"));
+					if (!disallowed.isEmpty())
+					{
+						if (disallowedFatal)
+						{
+							throw PluginBuildException.of(this, "plugin uses terminally deprecated APIs:\n{}", disallowed);
+						}
+						else
+						{
+							writeLog("plugin uses terminally deprecated APIs:\n{}\n", disallowed);
+						}
+					}
 				}
 				Files.write(apiFile.toPath(), out.toByteArray());
 			}
