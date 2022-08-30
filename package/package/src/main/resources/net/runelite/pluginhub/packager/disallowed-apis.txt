@@ -1,0 +1,3 @@
+Lnet/runelite/api/Client;.getVar(I)I:ab
+Lnet/runelite/api/Client;.getVar(Lnet/runelite/api/VarPlayer;)I:ab
+Lnet/runelite/client/chat/ChatMessageManager;.update(Lnet/runelite/api/MessageNode;)V:b

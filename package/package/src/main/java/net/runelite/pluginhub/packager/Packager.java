@@ -183,7 +183,7 @@ public class Packager implements Closeable
 				try (Closeable ignored = acquireBuild(p))
 				{
 					p.build(runeliteVersion);
-					p.assembleManifest();
+					p.assembleManifest(alwaysPrintLog);
 				}
 				String logURL = "";
 				if (uploadConfig.isComplete())
@@ -262,11 +262,15 @@ public class Packager implements Closeable
 		}
 	}
 
-	@SneakyThrows
 	private void loadApi() throws IOException
 	{
 		diff.setOldManifestVersion(apiFilesVersion);
+		previousApi = calculateAPI();
+	}
 
+	@SneakyThrows
+	public static API calculateAPI() throws IOException
+	{
 		Process gradleApi = new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", ":apirecorder:api")
 			.directory(PACKAGE_ROOT)
 			.inheritIO()
@@ -279,7 +283,7 @@ public class Packager implements Closeable
 
 		try (InputStream is = new FileInputStream(new File(PACKAGE_ROOT, "apirecorder/build/api")))
 		{
-			previousApi = API.decode(is);
+			return API.decode(is);
 		}
 	}
 
