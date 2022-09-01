@@ -34,6 +34,7 @@ import com.google.common.io.ByteStreams;
 import com.google.common.io.CountingOutputStream;
 import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
@@ -580,11 +581,12 @@ public class Plugin implements Closeable
 					.withFile(iconFile);
 			}
 
+			BufferedImage bimg;
 			synchronized (ImageIO.class)
 			{
 				try
 				{
-					Objects.requireNonNull(ImageIO.read(iconFile));
+					bimg = Objects.requireNonNull(ImageIO.read(iconFile));
 				}
 				catch (Exception e)
 				{
@@ -593,7 +595,22 @@ public class Plugin implements Closeable
 				}
 			}
 
-			manifest.setHasIcon(true);
+			if (bimg.getWidth() * bimg.getHeight() > 50 * 100)
+			{
+				if (disallowedFatal)
+				{
+					throw PluginBuildException.of(this, "icon.png is too high-resolution. It should be 48x72 px")
+						.withFile(iconFile);
+				}
+				else
+				{
+					writeLog("icon.png is too high-resolution. It should be 48x72 px\n");
+				}
+			}
+			else
+			{
+				manifest.setHasIcon(true);
+			}
 		}
 
 		Set<String> pluginClasses = new HashSet<>();
