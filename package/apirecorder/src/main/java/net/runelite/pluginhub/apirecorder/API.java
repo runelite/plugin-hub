@@ -74,7 +74,12 @@ public class API
 
 	public static API decode(InputStream is)
 	{
-		return new API(new BufferedReader(new InputStreamReader(new InflaterInputStream(is), StandardCharsets.UTF_8))
+		return decodePlain(new InflaterInputStream(is));
+	}
+
+	public static API decodePlain(InputStream is)
+	{
+		return new API(new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))
 			.lines()
 			.filter(line -> !line.isEmpty())
 			.collect(ImmutableSet.toImmutableSet()));
@@ -89,6 +94,12 @@ public class API
 	{
 		return apis.stream()
 			.filter(a -> !other.getApis().contains(a));
+	}
+
+	public Stream<String> in(API other)
+	{
+		return apis.stream()
+			.filter(a -> other.getApis().contains(a));
 	}
 
 	public static String modifiersToString(int modifiers, boolean member)
