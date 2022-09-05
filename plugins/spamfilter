@@ -1,2 +1,3 @@
 repository=https://github.com/jackriccomini/spamfilter-plugin-runelite.git
 commit=9011f51302890a8d4c1b367522b2f73234039e78
+disabled=unstable
