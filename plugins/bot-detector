@@ -1,4 +1,4 @@
 repository=https://github.com/Bot-detector/bot-detector.git
-commit=516e9fbaaae868488fcd014ff4a2903b23256a7f
+commit=b5d794dd1d62f82699b31c8dd1f6c95da807fe9c
 warning=This plugin submits the names, locations, and gear of encountered Players, and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
 authors=Ferrariic,Cyborger1
