@@ -1,4 +1,3 @@
 repository=https://github.com/BossHuso/discord-rare-drop-notificater.git
-commit=8d178a229f13482dd46530ae6222bdc9a91c920c
+commit=cf4130003da57b5b2bc580aa9193871c66984e3d
 authors=BossHuso,MathieuDR
-disabled=excessive memory usage
