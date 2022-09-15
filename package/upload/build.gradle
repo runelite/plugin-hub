@@ -43,7 +43,7 @@ dependencies {
 }
 
 task run(type: JavaExec) {
-	main = "net.runelite.pluginhub.uploader.Uploader"
+	mainClass = "net.runelite.pluginhub.uploader.Uploader"
 	classpath = sourceSets.main.runtimeClasspath
 	workingDir = new File(project.rootDir, "../")
 }

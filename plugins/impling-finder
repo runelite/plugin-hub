@@ -1,3 +1,4 @@
 repository=https://github.com/Hablapatabla/ImplingFinder.git
-commit=2ed3aa09cdf4f33fe05b84d66da342d86dbdef3a
+commit=91168a517aaf6bf09c5f5b26d6ac24a078e6eaab
 warning=This plugin submits the location and time of found implings along with your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
+
