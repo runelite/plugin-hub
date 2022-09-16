@@ -34,6 +34,7 @@ import com.google.common.io.ByteStreams;
 import com.google.common.io.CountingOutputStream;
 import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
@@ -120,6 +121,8 @@ public class Plugin implements Closeable
 	private static final File TMP_ROOT;
 	private static final File GRADLE_HOME;
 
+	private static final API DISALLOWED_API;
+
 	static
 	{
 		ImageIO.setUseCache(false);
@@ -133,6 +136,11 @@ public class Plugin implements Closeable
 			if (!GRADLE_HOME.exists())
 			{
 				throw new RuntimeException("gradle home has moved");
+			}
+
+			try (InputStream is = Packager.class.getResourceAsStream("disallowed-apis.txt"))
+			{
+				DISALLOWED_API = API.decodePlain(is);
 			}
 		}
 		catch (IOException e)
@@ -239,6 +247,7 @@ public class Plugin implements Closeable
 		defaultSupportURL = repoRoot + "/tree/" + commit;
 
 		warning = (String) cd.remove("warning");
+		cd.remove("authors");
 
 		for (Map.Entry<Object, Object> extra : cd.entrySet())
 		{
@@ -515,7 +524,7 @@ public class Plugin implements Closeable
 		}
 	}
 
-	public void assembleManifest() throws IOException, PluginBuildException
+	public void assembleManifest(boolean disallowedFatal) throws IOException, PluginBuildException
 	{
 		manifest.setInternalName(internalName);
 		manifest.setCommit(commit);
@@ -572,11 +581,12 @@ public class Plugin implements Closeable
 					.withFile(iconFile);
 			}
 
+			BufferedImage bimg;
 			synchronized (ImageIO.class)
 			{
 				try
 				{
-					Objects.requireNonNull(ImageIO.read(iconFile));
+					bimg = Objects.requireNonNull(ImageIO.read(iconFile));
 				}
 				catch (Exception e)
 				{
@@ -585,7 +595,22 @@ public class Plugin implements Closeable
 				}
 			}
 
-			manifest.setHasIcon(true);
+			if (bimg.getWidth() * bimg.getHeight() > 50 * 100)
+			{
+				if (disallowedFatal)
+				{
+					throw PluginBuildException.of(this, "icon.png is too high-resolution. It should be 48x72 px")
+						.withFile(iconFile);
+				}
+				else
+				{
+					writeLog("icon.png is too high-resolution. It should be 48x72 px\n");
+				}
+			}
+			else
+			{
+				manifest.setHasIcon(true);
+			}
 		}
 
 		Set<String> pluginClasses = new HashSet<>();
@@ -603,41 +628,56 @@ public class Plugin implements Closeable
 						continue;
 					}
 
+					boolean isMultiRelease = fileName.startsWith("META-INF/versions");
 					byte[] classData = ByteStreams.toByteArray(jis);
-					new ClassReader(classData).accept(new ClassVisitor(Opcodes.ASM7, builtinApi)
+
+					try
 					{
-						boolean extendsPlugin;
-						String name;
-
-						@SneakyThrows
-						@Override
-						public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
+						new ClassReader(classData).accept(new ClassVisitor(Opcodes.ASM7, builtinApi)
 						{
-							if ((version & 0xFFFF) > Opcodes.V1_8
-								&& !(fileName.startsWith("META-INF/versions") || fileName.endsWith("module-info.class")))
+							boolean extendsPlugin;
+							String name;
+
+							@SneakyThrows
+							@Override
+							public void visit(int version, int access, String name, String signature, String superName, String[] interfaces)
 							{
-								throw PluginBuildException.of(Plugin.this, "plugins must be Java 1.8 compatible")
-									.withFile(fileName);
+								if ((version & 0xFFFF) > Opcodes.V1_8
+									&& !(isMultiRelease || fileName.endsWith("module-info.class")))
+								{
+									throw PluginBuildException.of(Plugin.this, "plugins must be Java 1.8 compatible")
+										.withFile(fileName);
+								}
+
+								jarClasses.add(name.replace('/', '.'));
+
+								extendsPlugin = "net/runelite/client/plugins/Plugin".equals(superName);
+								this.name = name;
+								super.visit(version, access, name, signature, superName, interfaces);
 							}
 
-							jarClasses.add(name.replace('/', '.'));
-
-							extendsPlugin = "net/runelite/client/plugins/Plugin".equals(superName);
-							this.name = name;
-							super.visit(version, access, name, signature, superName, interfaces);
-						}
-
-						@Override
-						public AnnotationVisitor visitAnnotation(String descriptor, boolean visible)
-						{
-							if ("Lnet/runelite/client/plugins/PluginDescriptor;".equals(descriptor) && extendsPlugin)
+							@Override
+							public AnnotationVisitor visitAnnotation(String descriptor, boolean visible)
 							{
-								pluginClasses.add(name.replace('/', '.'));
-							}
+								if ("Lnet/runelite/client/plugins/PluginDescriptor;".equals(descriptor) && extendsPlugin)
+								{
+									pluginClasses.add(name.replace('/', '.'));
+								}
 
-							return null;
+								return null;
+							}
+						}, ClassReader.SKIP_CODE);
+					}
+					catch (IllegalArgumentException e)
+					{
+						if (isMultiRelease)
+						{
+							// allow multirelease classes to not be parsable by asm, they may be too new
+							continue;
 						}
-					}, ClassReader.SKIP_CODE);
+
+						throw e;
+					}
 				}
 			}
 
@@ -647,7 +687,21 @@ public class Plugin implements Closeable
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				try (FileInputStream fis = new FileInputStream(apiFile))
 				{
-					API.encode(out, API.decode(fis).missingFrom(builtinApi.getApi()));
+					API api = API.decode(fis);
+					API.encode(out, api.missingFrom(builtinApi.getApi()));
+					String disallowed = DISALLOWED_API.in(api)
+						.collect(Collectors.joining("\n"));
+					if (!disallowed.isEmpty())
+					{
+						if (disallowedFatal)
+						{
+							throw PluginBuildException.of(this, "plugin uses terminally deprecated APIs:\n{}", disallowed);
+						}
+						else
+						{
+							writeLog("plugin uses terminally deprecated APIs:\n{}\n", disallowed);
+						}
+					}
 				}
 				Files.write(apiFile.toPath(), out.toByteArray());
 			}
