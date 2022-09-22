@@ -1,4 +1,4 @@
 repository=https://github.com/Talados/Multiverse.git
 commit=c5285467f0ebcc8f0aaee57911e003e37c30edb1
-warning=All messages which are being sent or received by this plugin go through a 3rd party which is not controlled or verified by the RuneLite Developers.
+warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.
 authors=Hai Ke
