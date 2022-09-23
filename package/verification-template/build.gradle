@@ -20,6 +20,9 @@ dependencies {
 	core "org.projectlombok:lombok:1.18.20"
 	core "org.jetbrains:annotations:23.0.0"
 
+    thirdParty("org.apache.commons:commons-math3:3.5") {
+        because "toa-puzzle-solver"
+    }
 	thirdParty("org.zeromq:jnacl:0.1.0") {
 		because "keepass-xc"
 	}
