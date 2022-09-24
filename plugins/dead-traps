@@ -1,2 +1,6 @@
 repository=https://github.com/oceijt/DeadTraps.git
+<<<<<<< HEAD
 commit=e5e558fb1f8820d3f169eb1eecbdc69359b90555
+=======
+commit=39febf041fdd2d43f8d82775326a5d709699d1a1
+>>>>>>> master
