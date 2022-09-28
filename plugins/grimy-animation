@@ -1,2 +1,6 @@
 repository=https://github.com/truenosus/grimy_animation.git
+<<<<<<< HEAD
 commit=54326c1d08c34897933046eb0846904d6fdf35ed
+=======
+commit=b9a8c03de659a7e152cbdc17a9eeaf2bfb2acdfb
+>>>>>>> 3284575e1763d69bd0f174ed673476d58850c7bb
