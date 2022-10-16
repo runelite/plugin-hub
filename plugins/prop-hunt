@@ -1,0 +1,3 @@
+repository=https://github.com/IdylRS/prop-hunt.git
+commit=7997742026cc02d75f00203ce14f8ce38ceafc1f
+warning=This plugin sends player data, including usernames, plugin configuration, and IP address to a third-party server for communication between clients.
