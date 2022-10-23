@@ -226,9 +226,8 @@ public class Packager implements Closeable
 				}
 			}
 		}
-		catch (DisabledPluginException e)
+		catch (DisabledPluginException ignored)
 		{
-			log.info("{}", e.getMessage());
 		}
 		catch (PluginBuildException e)
 		{
