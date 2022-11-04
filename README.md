@@ -110,7 +110,7 @@ To update a plugin, simply update the manifest with the most recent commit hash.
 
 ## Reviewing
 We will review your plugin to ensure it isn't malicious or [breaking
-jagex's rules](https://secure.runescape.com/m=news/another-message-about-unofficial-clients?oldschool=1).
+jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1).
 __If it is difficult for us to ensure the plugin isn't against the rules we
 will not merge it__. 
 
