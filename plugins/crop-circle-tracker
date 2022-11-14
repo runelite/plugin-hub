@@ -1,2 +1,3 @@
 repository=https://github.com/mattjrumble/crop-circle-tracker-plugin.git
-commit=d1ef0dcd56629cd3bf5ecb5980dd0c85a1e9dd22
+commit=a7f9820ff03187f548fc26435a159b0c10380096
+warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.
