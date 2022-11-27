@@ -34,7 +34,7 @@ There are two methods to create an external plugin, you can either:
 
  7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
  
- 8. Go to your plugin file and set it's name in the `PluginDescriptor`, this can have spaces.
+ 8. Go to your plugin file and set its name in the `PluginDescriptor`, this can have spaces.
 
  9. Open the `runelite-plugin.properties` file and add info to each row. 
  ```
@@ -63,7 +63,7 @@ There are two methods to create an external plugin, you can either:
  ```
  It will ask you a series of questions, and then generate a folder with the name of your plugin.
 
- 3. Move the generated folder to it's own git repository and open the `build.gradle` file in IntelliJ.
+ 3. Move the generated folder to its own git repository and open the `build.gradle` file in IntelliJ.
 
  4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
 
@@ -110,7 +110,7 @@ To update a plugin, simply update the manifest with the most recent commit hash.
 
 ## Reviewing
 We will review your plugin to ensure it isn't malicious or [breaking
-jagex's rules](https://secure.runescape.com/m=news/another-message-about-unofficial-clients?oldschool=1).
+jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1).
 __If it is difficult for us to ensure the plugin isn't against the rules we
 will not merge it__. 
 
