@@ -1,3 +1,4 @@
 repository=https://github.com/ImToxicCode/runekit.git
 commit=4dbcbce7521f6fa9b52d70003bbcda130fd4ed43
 warning=This plugin sends player data to a 3rd party server not controlled or verified by the RuneLite Developers.
+disabled=unmaintained
