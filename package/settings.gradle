@@ -1,0 +1,5 @@
+rootProject.name = "package-root"
+
+include "upload"
+include "package"
+include 'apirecorder'

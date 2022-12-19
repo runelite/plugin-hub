@@ -1,0 +1,125 @@
+plugins {
+	id "base"
+}
+
+repositories {
+	maven {
+		url = "https://repo.runelite.net"
+	}
+	mavenCentral()
+	gradlePluginPortal()
+}
+
+configurations {
+	core
+	thirdParty.extendsFrom core
+}
+
+dependencies {
+	core group: "net.runelite", name: "client", version: file("../../runelite.version").text.trim()
+	core "org.projectlombok:lombok:1.18.20"
+	core "org.jetbrains:annotations:23.0.0"
+
+	thirdParty("org.zeromq:jnacl:0.1.0") {
+		because "keepass-xc"
+	}
+	thirdParty("org.mongodb:mongodb-driver-sync:4.2.0") {
+		because "afterdark-pvm-loot-tracker"
+	}
+	thirdParty("jfree:jfreechart:1.0.13") {
+		because "bank-value-tracker"
+	}
+	thirdParty("net.sourceforge.jdatepicker:jdatepicker:1.3.2") {
+		because "bank-value-tracker"
+	}
+	thirdParty("io.freefair.lombok:io.freefair.lombok.gradle.plugin:5.3.0") {
+		because "discord-rare-drop-notifier"
+	}
+	thirdParty("org.projectlombok:lombok:1.18.16") {
+		because "discord-rare-drop-notifier"
+	}
+	thirdParty("org.json:json:20200518") {
+		because "discord-rare-drop-notifier"
+	}
+	thirdParty("org.jsoup:jsoup:1.13.1") {
+		because "discord-rare-drop-notifier, drop-simulator, fire-beats, loot-table, loot-lookup"
+	}
+	thirdParty("com.miglayout:miglayout-swing:5.2") {
+		because "drop-simulator"
+	}
+	thirdParty("org.apache.commons:commons-io:1.3.2") {
+		because "emojiscape"
+	}
+	thirdParty("org.influxdb:influxdb-java:2.5") {
+		because "influxdb-stats"
+	}
+	thirdParty("com.diffplug.spotless:spotless-plugin-gradle:5.2.0") {
+		because "ring-of-recoil-notifier"
+	}
+	thirdParty("net.jodah:failsafe:2.4.0") {
+		because "chat-logger"
+	}
+	thirdParty("io.socket:socket.io-client:2.0.1") {
+		because "gimptracker"
+		exclude group: 'com.squareup.okhttp3'
+	}
+	thirdParty("org.json:json:20090211") {
+		because "gimptracker"
+	}
+	thirdParty("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0") {
+		because "elysiumevents-plugin"
+		exclude group: 'com.google.guava'
+		exclude group: 'com.google.oauth-client'
+		exclude group: 'org.apache.httpcomponents'
+		exclude group: 'org.apache.commons'
+		exclude group: 'org.apache'
+		exclude group: 'commons-logging'
+		exclude group: 'commons-codec'
+	}
+	thirdParty("com.esotericsoftware.minlog:minlog:1.2") {
+		because "blue-prox-chat"
+	}
+	thirdParty("io.ably:ably-java:1.2.5") {
+		because "broadcaster"
+		because "region-chat"
+		exclude group: 'com.google.code.gson'
+	}
+	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0") {
+		because "phillip-hue-integration"
+	}
+	thirdParty("com.h2database:h2:2.1.212") {
+		because "polywoof"
+	}
+	thirdParty("com.google.inject.extensions:guice-multibindings:4.1.0") {
+		because "dps-calculator"
+		exclude group: 'com.google.inject'
+	}
+
+	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
+		because "gpu-experimental"
+	}
+	thirdParty "org.lwjgl:lwjgl"
+	thirdParty "org.lwjgl:lwjgl-opengl"
+	["linux", "macos", "macos-arm64", "windows-x86", "windows"].each { platform ->
+		thirdParty "org.lwjgl:lwjgl::natives-$platform"
+		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
+	}
+}
+
+task verifyCore {
+	doLast {
+		// This causes resolution (and therefore verification) of the configuration
+		configurations.core.asPath
+	}
+}
+
+task verifyAll {
+	doLast {
+		// This causes resolution (and therefore verification) of the configuration
+		configurations.thirdParty.asPath
+
+		if (file("build.gradle").text =~ /(?m)^ /) {
+			throw new RuntimeException("gradle files should be indented with tabs")
+		}
+	}
+}
