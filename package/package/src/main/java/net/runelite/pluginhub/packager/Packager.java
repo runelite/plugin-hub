@@ -34,10 +34,8 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
@@ -54,9 +52,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.pluginhub.apirecorder.API;
 import net.runelite.pluginhub.uploader.ManifestDiff;
 import net.runelite.pluginhub.uploader.UploadConfiguration;
 import net.runelite.pluginhub.uploader.Util;
@@ -81,8 +77,6 @@ public class Packager implements Closeable
 
 	@Setter
 	private String apiFilesVersion;
-
-	private API previousApi;
 
 	@Getter
 	private final UploadConfiguration uploadConfig = new UploadConfiguration();
@@ -111,7 +105,7 @@ public class Packager implements Closeable
 	{
 		if (apiFilesVersion != null)
 		{
-			loadApi();
+			diff.setOldManifestVersion(apiFilesVersion);
 		}
 
 		Queue<File> buildQueue = Queues.synchronizedQueue(new ArrayDeque<>(buildList));
@@ -164,11 +158,11 @@ public class Packager implements Closeable
 		{
 			try
 			{
-				if (apiFilesVersion != null && previousApi != null)
+				if (apiFilesVersion != null)
 				{
 					try (Closeable ignored = acquireAPICheck(p))
 					{
-						if (!p.rebuildNeeded(uploadConfig, apiFilesVersion, previousApi))
+						if (!p.rebuildNeeded(uploadConfig, apiFilesVersion))
 						{
 							diff.getCopyFromOld().add(p.getInternalName());
 							diff.getRemove().remove(p.getInternalName());
@@ -183,7 +177,7 @@ public class Packager implements Closeable
 				try (Closeable ignored = acquireBuild(p))
 				{
 					p.build(runeliteVersion);
-					p.assembleManifest();
+					p.assembleManifest(alwaysPrintLog);
 				}
 				String logURL = "";
 				if (uploadConfig.isComplete())
@@ -232,9 +226,8 @@ public class Packager implements Closeable
 				}
 			}
 		}
-		catch (DisabledPluginException e)
+		catch (DisabledPluginException ignored)
 		{
-			log.info("{}", e.getMessage());
 		}
 		catch (PluginBuildException e)
 		{
@@ -259,27 +252,6 @@ public class Packager implements Closeable
 		synchronized (buildSummary)
 		{
 			buildSummary.append(fmt.getMessage()).append('\n');
-		}
-	}
-
-	@SneakyThrows
-	private void loadApi() throws IOException
-	{
-		diff.setOldManifestVersion(apiFilesVersion);
-
-		Process gradleApi = new ProcessBuilder(new File(PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", ":apirecorder:api")
-			.directory(PACKAGE_ROOT)
-			.inheritIO()
-			.start();
-		gradleApi.waitFor(2, TimeUnit.MINUTES);
-		if (gradleApi.exitValue() != 0)
-		{
-			throw new RuntimeException("gradle :apirecorder:api exited with " + gradleApi.exitValue());
-		}
-
-		try (InputStream is = new FileInputStream(new File(PACKAGE_ROOT, "apirecorder/build/api")))
-		{
-			previousApi = API.decode(is);
 		}
 	}
 
