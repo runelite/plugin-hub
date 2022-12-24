@@ -99,7 +99,7 @@ dependencies {
 		because "gpu-experimental"
 	}
 
-	thirdParty platform("org.java-websocket:Java-WebSocket:1.5.3") {
+	thirdParty("org.java-websocket:Java-WebSocket:1.5.3") {
 		because "wiki-dialogue"
 	}
 
