@@ -102,6 +102,9 @@ dependencies {
 	thirdParty("org.java-websocket:Java-WebSocket:1.5.3") {
 		because "wiki-dialogue"
 	}
+	thirdParty("org.slf4j:slf4j-api:1.7.25") {
+		because "wiki-dialogue"
+	}
 
 	thirdParty "org.lwjgl:lwjgl"
 	thirdParty "org.lwjgl:lwjgl-opengl"
