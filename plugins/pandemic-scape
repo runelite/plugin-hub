@@ -1,0 +1,3 @@
+repository=https://github.com/IdylRS/runelite-plugins.git
+commit=f1b8f103b289a12ee24f3900ad4b065bcb7a81f4
+warning=This plugin sends player data, including usernames and player location, to a third-party server for communication between clients.
