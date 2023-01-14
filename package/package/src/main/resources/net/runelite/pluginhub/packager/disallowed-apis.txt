@@ -1,0 +1,16 @@
+# avoid client.getVar, prefer client.getVarbitValue
+Lnet/runelite/api/Client;.getVar(I)I:ab
+# avoid client.getVar, prefer client.getVarpValue
+Lnet/runelite/api/Client;.getVar(Lnet/runelite/api/VarPlayer;)I:ab
+
+# ChatMessageManager.update is a no-op
+Lnet/runelite/client/chat/ChatMessageManager;.update(Lnet/runelite/api/MessageNode;)V:b
+
+# Do not create fresh OkHttpClients - always @Inject the client's OkHttpClient
+Lokhttp3/OkHttpClient;.<init>()V:b
+Lokhttp3/OkHttpClient$Builder;.<init>()V:b
+
+# Do not create fresh Gson instances, always @Inject the client's Gson.
+# You can customize it by calling .newBuilder() on it
+Lcom/google/gson/Gson;.<init>()V:b
+Lcom/google/gson/GsonBuilder;.<init>()V:b
