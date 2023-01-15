@@ -104,6 +104,9 @@ dependencies {
 		thirdParty "org.lwjgl:lwjgl::natives-$platform"
 		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
 	}
+	thirdParty("com.fazecast:jSerialComm:2.9.1") {
+		because "hpdisplay"
+	}
 }
 
 task verifyCore {
