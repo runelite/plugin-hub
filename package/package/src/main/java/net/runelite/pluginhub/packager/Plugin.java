@@ -121,7 +121,8 @@ public class Plugin implements Closeable
 	private static final File TMP_ROOT;
 	private static final File GRADLE_HOME;
 
-	private static final API DISALLOWED_API;
+	static final API CURRENT_API;
+	private static final Map<String, String> DISALLOWED_APIS;
 
 	static
 	{
@@ -138,9 +139,10 @@ public class Plugin implements Closeable
 				throw new RuntimeException("gradle home has moved");
 			}
 
+			CURRENT_API = calculateAPI();
 			try (InputStream is = Packager.class.getResourceAsStream("disallowed-apis.txt"))
 			{
-				DISALLOWED_API = API.decodePlain(is);
+				DISALLOWED_APIS = CURRENT_API.parseCommented(is, false);
 			}
 		}
 		catch (IOException e)
@@ -269,6 +271,25 @@ public class Plugin implements Closeable
 		iconFile = new File(repositoryDirectory, "icon.png");
 	}
 
+	@SneakyThrows
+	private static API calculateAPI() throws IOException
+	{
+		Process gradleApi = new ProcessBuilder(new File(Packager.PACKAGE_ROOT, "gradlew").getAbsolutePath(), "--console=plain", ":apirecorder:api")
+			.directory(Packager.PACKAGE_ROOT)
+			.inheritIO()
+			.start();
+		gradleApi.waitFor(2, TimeUnit.MINUTES);
+		if (gradleApi.exitValue() != 0)
+		{
+			throw new RuntimeException("gradle :apirecorder:api exited with " + gradleApi.exitValue());
+		}
+
+		try (InputStream is = new FileInputStream(new File(Packager.PACKAGE_ROOT, "apirecorder/build/api")))
+		{
+			return API.decode(is);
+		}
+	}
+
 	private void waitAndCheck(Process process, String name, long timeout, TimeUnit timeoutUnit) throws PluginBuildException
 	{
 		try
@@ -290,7 +311,7 @@ public class Plugin implements Closeable
 		}
 	}
 
-	public boolean rebuildNeeded(UploadConfiguration uploadConfig, String previousVersion, API currentApi) throws IOException
+	public boolean rebuildNeeded(UploadConfiguration uploadConfig, String previousVersion) throws IOException
 	{
 		if (previousVersion == null)
 		{
@@ -316,7 +337,7 @@ public class Plugin implements Closeable
 			Util.check(res);
 
 			String missing = API.decode(res.body().byteStream())
-				.missingFrom(currentApi)
+				.missingFrom(CURRENT_API)
 				.collect(Collectors.joining("\n"));
 
 			if (!missing.isEmpty())
@@ -689,7 +710,8 @@ public class Plugin implements Closeable
 				{
 					API api = API.decode(fis);
 					API.encode(out, api.missingFrom(builtinApi.getApi()));
-					String disallowed = DISALLOWED_API.in(api)
+					String disallowed = api.disallowed(DISALLOWED_APIS)
+						.stream()
 						.collect(Collectors.joining("\n"));
 					if (!disallowed.isEmpty())
 					{
