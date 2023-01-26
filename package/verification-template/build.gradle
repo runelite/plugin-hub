@@ -105,7 +105,7 @@ dependencies {
 		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
 	}
 	thirdParty("com.github.trilarion:java-vorbis-support:1.2.1") {
-		because "vorbis .ogg playback support"
+		because "skill-jingles"
 	}
 }
 
