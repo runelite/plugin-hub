@@ -20,6 +20,14 @@ dependencies {
 	core "org.projectlombok:lombok:1.18.20"
 	core "org.jetbrains:annotations:23.0.0"
 
+	thirdParty("javax.activation:javax.activation-api:1.2.0") {
+		because "email-notifications"
+	}
+
+	thirdParty("com.sun.mail:javax.mail:1.6.2") {
+		because "email-notifications"
+	}
+
 	thirdParty("org.zeromq:jnacl:0.1.0") {
 		because "keepass-xc"
 	}
