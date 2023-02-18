@@ -1,7 +1,7 @@
 ![](https://runelite.net/img/logo.png)
 # plugin-hub [![Discord](https://img.shields.io/discord/301497432909414422.svg)](https://discord.gg/mePCs8U)
 
-This repository contains markers for [RuneLite](https://github.com/runelite/runelite)
+This repositorya contains markers for [RuneLite](https://github.com/runelite/runelite)
 plugins that are not supported by the RuneLite Developers. The plugins are
 provided "as is"; we make no guarantees about any plugin in this repo.
 
