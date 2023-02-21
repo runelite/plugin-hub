@@ -1,0 +1,3 @@
+repository=https://github.com/JebScape/JebScape-Client.git
+commit=ce2aba9d44ac26bdb65e7355206f64f90878248c
+warning=This plugin sends your unique account hash, display name, world, movements, public chat messages, and IP address to a 3rd party server to facilitate communication between clients across separate worlds.
