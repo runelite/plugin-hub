@@ -944,6 +944,12 @@ public class Plugin implements Closeable
 		return url.toString();
 	}
 
+	public void copyArtifacts(File artifactDir) throws IOException
+	{
+		Files.copy(jarFile.toPath(), new File(artifactDir, getInternalName() + ".jar").toPath());
+		Files.copy(logFile.toPath(), new File(artifactDir, getInternalName() + ".log").toPath());
+	}
+
 	public void writeLog(String format, Object... args) throws IOException
 	{
 		FormattingTuple fmt = MessageFormatter.arrayFormat(format, args);
