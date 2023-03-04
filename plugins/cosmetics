@@ -1,0 +1,3 @@
+repository=https://github.com/JohnathonNow/runelite-cosmetic-network.git
+commit=9f58304e61b4f2c8e494648d48e0165bbc3b1c1c
+warning=This plugin submits the in-game names of you and players around you, as well as your equipped items to a server not controlled or verified by the RuneLite developers.
