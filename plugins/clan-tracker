@@ -1,0 +1,4 @@
+repository=https://github.com/Talados/ClanTracker.git
+commit=2b0ec555d0816559a527fd3c43ed80d302607135
+warning=This plugin submits all messages in the clan channel to a 3rd party website not controlled or verified by the RuneLite Developers.
+authors=Hai Ke
