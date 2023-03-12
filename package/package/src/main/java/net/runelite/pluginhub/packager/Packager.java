@@ -64,6 +64,7 @@ public class Packager implements Closeable
 {
 	private static final File PLUGIN_ROOT = new File("./plugins");
 	public static final File PACKAGE_ROOT = new File("./package/").getAbsoluteFile();
+	private static final File ARTIFACT_DIR = new File("/tmp/jars");
 
 	private Semaphore apiCheckSemaphore = new Semaphore(8);
 	private Semaphore downloadSemaphore = new Semaphore(2);
@@ -107,6 +108,8 @@ public class Packager implements Closeable
 		{
 			diff.setOldManifestVersion(apiFilesVersion);
 		}
+
+		ARTIFACT_DIR.mkdirs();
 
 		Queue<File> buildQueue = Queues.synchronizedQueue(new ArrayDeque<>(buildList));
 		List<Thread> buildThreads = IntStream.range(0, 8)
@@ -190,6 +193,8 @@ public class Packager implements Closeable
 					// outside the semaphore so the timing gets uploaded too
 					logURL = p.uploadLog(uploadConfig);
 				}
+
+				p.copyArtifacts(ARTIFACT_DIR);
 
 				diff.getAdd().add(p.getManifest());
 				log.info("{}: done in {}ms [{}/{}]", p.getInternalName(), p.getBuildTimeMS(), numDone.get() + 1, numTotal);

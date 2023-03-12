@@ -73,6 +73,12 @@ jobs:
         name: manifest_diff
         path: /tmp/manifest_diff
         retention-days: 1
+    - uses: actions/upload-artifact@v3
+      if: ${{ github.event_name == 'pull_request' }}
+      with:
+        name: jars
+        path: /tmp/jars
+        retention-days: 1
   upload:
     if: (github.event_name != 'push' || github.repository_owner == 'runelite') && github.event_name != 'pull_request'
     needs: build
