@@ -16,8 +16,9 @@ configurations {
 }
 
 dependencies {
-	core group: "net.runelite", name:"client", version: file("../../runelite.version").text.trim()
+	core group: "net.runelite", name: "client", version: file("../../runelite.version").text.trim()
 	core "org.projectlombok:lombok:1.18.20"
+	core "org.jetbrains:annotations:23.0.0"
 
 	thirdParty("org.zeromq:jnacl:0.1.0") {
 		because "keepass-xc"
@@ -58,7 +59,7 @@ dependencies {
 	thirdParty("net.jodah:failsafe:2.4.0") {
 		because "chat-logger"
 	}
-	thirdParty("io.socket:socket.io-client:2.0.1"){
+	thirdParty("io.socket:socket.io-client:2.0.1") {
 		because "gimptracker"
 		exclude group: 'com.squareup.okhttp3'
 	}
@@ -83,8 +84,25 @@ dependencies {
 		because "region-chat"
 		exclude group: 'com.google.code.gson'
 	}
-	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0"){
+	thirdParty("io.github.zeroone3010:yetanotherhueapi:2.3.0") {
 		because "phillip-hue-integration"
+	}
+	thirdParty("com.h2database:h2:2.1.212") {
+		because "polywoof"
+	}
+	thirdParty("com.google.inject.extensions:guice-multibindings:4.1.0") {
+		because "dps-calculator"
+		exclude group: 'com.google.inject'
+	}
+
+	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
+		because "gpu-experimental"
+	}
+	thirdParty "org.lwjgl:lwjgl"
+	thirdParty "org.lwjgl:lwjgl-opengl"
+	["linux", "macos", "macos-arm64", "windows-x86", "windows"].each { platform ->
+		thirdParty "org.lwjgl:lwjgl::natives-$platform"
+		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
 	}
 }
 
@@ -99,5 +117,9 @@ task verifyAll {
 	doLast {
 		// This causes resolution (and therefore verification) of the configuration
 		configurations.thirdParty.asPath
+
+		if (file("build.gradle").text =~ /(?m)^ /) {
+			throw new RuntimeException("gradle files should be indented with tabs")
+		}
 	}
 }
