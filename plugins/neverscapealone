@@ -1,4 +1,5 @@
 repository=https://github.com/NeverScapeAlone/never-scape-alone.git
-commit=6cc8c182dc3ba79bf94e0be9ec637acfa36bd659
+commit=83072f8c5461a4d6787d70522a37442234df6de3
 warning=This plugin submits your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
 authors=Ferrariic
+disabled=true
