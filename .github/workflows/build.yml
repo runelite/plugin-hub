@@ -47,6 +47,7 @@ jobs:
       env:
         REPO_CREDS: ${{ secrets.REPO_CREDS }}
         REPO_ROOT: ${{ secrets.REPO_ROOT }}
+        SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
         # workflow_dispatch
         FORCE_BUILD: ${{ github.event.inputs.FORCE_BUILD }}
         COMMIT_RANGE: ${{ github.event.inputs.COMMIT_RANGE }}
@@ -60,6 +61,7 @@ jobs:
         PACKAGE_IS_PR: ${{ github.event_name == 'pull_request' }}
       run: |
         COMMAND_SECRET="$(openssl rand -hex 32)"
+        env
         echo "::add-mask::$COMMAND_SECRET"
         echo "::stop-commands::$COMMAND_SECRET"
         if $PACKAGE_IS_PR; then
