@@ -1,3 +1,3 @@
 repository=https://github.com/skeldoor/pet-namer.git
-commit=2fe82f93a3875de078571dfcc9bb9a1bdd82995f
+commit=04e58d1698dc571de4f480789c4ee0161353e9a5
 warning=This plugin sends your username and pet data to a third-party server for communication between clients.
