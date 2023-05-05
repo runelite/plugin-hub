@@ -96,7 +96,7 @@ public class PluginTest
 		catch (PluginBuildException e)
 		{
 			log.info("ok: ", e);
-			assertContains(e.getHelpText(), "com.example.ExamplePlugin");
+			assertContains(e.getHelpText(), "com.example.TestExamplePlugin");
 		}
 	}
 
@@ -116,7 +116,7 @@ public class PluginTest
 		catch (PluginBuildException e)
 		{
 			log.info("ok: ", e);
-			assertContains(e.getHelpText(), "com.example.ExamplePlugin");
+			assertContains(e.getHelpText(), "com.example.TestExamplePlugin");
 		}
 	}
 
@@ -180,10 +180,10 @@ public class PluginTest
 			new File("./create_new_plugin.py").getAbsolutePath(),
 			"--noninteractive",
 			"--output_directory", p.repositoryDirectory.getAbsolutePath(),
-			"--name", "Example",
+			"--name", "Test Example",
 			"--package", "com.example",
-			"--author", "Nobody",
-			"--description", "An example greeter plugin")
+			"--author", "Test Nobody",
+			"--description", "Test An example greeter plugin")
 			.inheritIO()
 			.start()
 			.waitFor());
