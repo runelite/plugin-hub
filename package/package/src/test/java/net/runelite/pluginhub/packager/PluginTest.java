@@ -176,7 +176,7 @@ public class PluginTest
 			"repository=https://github.com/runelite/example-plugin.git\n" +
 			"commit=0000000000000000000000000000000000000000");
 
-		Assert.assertEquals(new ProcessBuilder(
+		Assert.assertEquals(0, new ProcessBuilder(
 			new File("./create_new_plugin.py").getAbsolutePath(),
 			"--noninteractive",
 			"--output_directory", p.repositoryDirectory.getAbsolutePath(),
@@ -186,7 +186,7 @@ public class PluginTest
 			"--description", "An example greeter plugin")
 			.inheritIO()
 			.start()
-			.waitFor(), 0);
+			.waitFor());
 
 		return p;
 	}
