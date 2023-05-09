@@ -142,7 +142,7 @@ public class API
 
 				for (String k : keys)
 				{
-					out.put(k, comment);
+					out.put(k, comment.isEmpty() ? k : comment);
 				}
 			}
 			else
@@ -159,7 +159,7 @@ public class API
 					}
 				}
 
-				out.put(line, comment);
+				out.put(line, comment.isEmpty() ? line : comment);
 			}
 		}
 
