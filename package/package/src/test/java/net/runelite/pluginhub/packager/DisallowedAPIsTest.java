@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Abex
+ * Copyright (c) 2022 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,11 +22,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-repositories {
-	mavenCentral()
-	gradlePluginPortal()
-}
+package net.runelite.pluginhub.packager;
 
-dependencies {
-	implementation "com.github.johnrengelman.shadow:com.github.johnrengelman.shadow.gradle.plugin:6.1.0"
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import org.junit.Assert;
+import org.junit.Test;
+
+public class DisallowedAPIsTest
+{
+	@Test
+	public void testDisallowedExist() throws IOException
+	{
+		try (InputStream is = Packager.class.getResourceAsStream("disallowed-apis.txt"))
+		{
+			Map<String, String> disallowed = Plugin.CURRENT_API.parseCommented(is, true);
+			disallowed.forEach((k, v) -> Assert.assertFalse(k + " -> " + v, v.isEmpty()));
+		}
+	}
 }

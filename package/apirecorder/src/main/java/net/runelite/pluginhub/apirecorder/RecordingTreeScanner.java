@@ -28,6 +28,7 @@ import com.sun.source.tree.IdentifierTree;
 import com.sun.source.tree.ImportTree;
 import com.sun.source.tree.MemberSelectTree;
 import com.sun.source.tree.MethodInvocationTree;
+import com.sun.source.tree.NewClassTree;
 import com.sun.source.tree.PackageTree;
 import com.sun.source.util.JavacTask;
 import com.sun.source.util.TreePath;
@@ -39,6 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.ArrayType;
@@ -104,14 +106,21 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 	public Void visitMemberSelect(MemberSelectTree node, Void unused)
 	{
 		recordElement(trees.getElement(getCurrentPath()));
-		return null;
+		return super.visitMemberSelect(node, unused);
 	}
 
 	@Override
 	public Void visitMethodInvocation(MethodInvocationTree node, Void unused)
 	{
 		recordElement(trees.getElement(getCurrentPath()));
-		return null;
+		return super.visitMethodInvocation(node, unused);
+	}
+
+	@Override
+	public Void visitNewClass(NewClassTree node, Void unused)
+	{
+		recordElement(trees.getElement(getCurrentPath()));
+		return super.visitNewClass(node, unused);
 	}
 
 	@SneakyThrows
@@ -139,6 +148,10 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 			{
 				unexpected(tm);
 			}
+		}
+		else if (element instanceof PackageElement)
+		{
+			return false;
 		}
 		else
 		{
