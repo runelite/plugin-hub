@@ -739,7 +739,7 @@ public class Plugin implements Closeable
 
 			{
 				String displayName = (String) props.remove("displayName");
-				if (Strings.isNullOrEmpty(displayName))
+				if (Strings.isNullOrEmpty(displayName) || disallowedFatal && "Example".equals(displayName))
 				{
 					throw PluginBuildException.of(this, "\"displayName\" must be set")
 						.withFile(propFile);
@@ -749,7 +749,7 @@ public class Plugin implements Closeable
 
 			{
 				String author = (String) props.remove("author");
-				if (Strings.isNullOrEmpty(author))
+				if (Strings.isNullOrEmpty(author) || disallowedFatal && "Nobody".equals(author))
 				{
 					throw PluginBuildException.of(this, "\"author\" must be set")
 						.withFile(propFile);
@@ -775,7 +775,15 @@ public class Plugin implements Closeable
 				}
 			}
 
-			manifest.setDescription((String) props.remove("description"));
+			{
+				String description = (String) props.remove("description");
+				if (disallowedFatal && "An example greeter plugin".equals(description))
+				{
+					throw PluginBuildException.of(this, "\"description\" must be set")
+						.withFile(propFile);
+				}
+				manifest.setDescription(description);
+			}
 
 			{
 				String tagsStr = (String) props.remove("tags");
@@ -942,6 +950,12 @@ public class Plugin implements Closeable
 		uploadConfig.put(url, logFile);
 
 		return url.toString();
+	}
+
+	public void copyArtifacts(File artifactDir) throws IOException
+	{
+		Files.copy(jarFile.toPath(), new File(artifactDir, getInternalName() + ".jar").toPath());
+		Files.copy(logFile.toPath(), new File(artifactDir, getInternalName() + ".log").toPath());
 	}
 
 	public void writeLog(String format, Object... args) throws IOException
