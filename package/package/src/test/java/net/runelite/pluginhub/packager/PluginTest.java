@@ -96,7 +96,7 @@ public class PluginTest
 		catch (PluginBuildException e)
 		{
 			log.info("ok: ", e);
-			assertContains(e.getHelpText(), "com.example.ExamplePlugin");
+			assertContains(e.getHelpText(), "com.example.TestExamplePlugin");
 		}
 	}
 
@@ -116,7 +116,7 @@ public class PluginTest
 		catch (PluginBuildException e)
 		{
 			log.info("ok: ", e);
-			assertContains(e.getHelpText(), "com.example.ExamplePlugin");
+			assertContains(e.getHelpText(), "com.example.TestExamplePlugin");
 		}
 	}
 
@@ -176,17 +176,17 @@ public class PluginTest
 			"repository=https://github.com/runelite/example-plugin.git\n" +
 			"commit=0000000000000000000000000000000000000000");
 
-		Assert.assertEquals(new ProcessBuilder(
+		Assert.assertEquals(0, new ProcessBuilder(
 			new File("./create_new_plugin.py").getAbsolutePath(),
 			"--noninteractive",
 			"--output_directory", p.repositoryDirectory.getAbsolutePath(),
-			"--name", "Example",
+			"--name", "Test Example",
 			"--package", "com.example",
-			"--author", "Nobody",
-			"--description", "An example greeter plugin")
+			"--author", "Test Nobody",
+			"--description", "Test An example greeter plugin")
 			.inheritIO()
 			.start()
-			.waitFor(), 0);
+			.waitFor());
 
 		return p;
 	}
