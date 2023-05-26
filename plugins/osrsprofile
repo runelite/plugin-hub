@@ -1,2 +1,3 @@
 repository=https://github.com/mathiasHillmann/OsrsProfilePlugin.git
-commit=8f32f5bd732b4fe5df237fbb9c1db5a039fcd38c
+commit=587e6ba6dfbf06827abf2a46d12ff284c328edd1
+warning=Similar to the official HiScores, this plugin pushes up data about your character that can be viewed by anyone.<br>We don't suggest using this if you are (for example) a PvP-locked hardcore ironman, where broadcasting your<br>quest status could be detrimental to your account by giving away information about what you're currently doing.
