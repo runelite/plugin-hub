@@ -9,7 +9,6 @@
          <trust group="net.runelite.arn"/>
          <trust group="net.runelite.gluegen"/>
          <trust group="net.runelite.jocl"/>
-         <trust group="net.runelite.jogl"/>
          <trust group="net.runelite.pushingpixels"/>
       </trusted-artifacts>
    </configuration>
