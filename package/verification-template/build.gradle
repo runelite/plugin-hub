@@ -94,10 +94,6 @@ dependencies {
 		because "dps-calculator"
 		exclude group: 'com.google.inject'
 	}
-    	thirdParty("javax.annotation:javax.annotation-api:1.3.2") {
-        	because "action-progress"
-    	}
-
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
 		because "gpu-experimental"
 	}
