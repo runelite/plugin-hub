@@ -104,9 +104,9 @@ dependencies {
 		thirdParty "org.lwjgl:lwjgl::natives-$platform"
 		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
 	}
-    thirdParty("de.javagl:jgltf-obj:2.0.3") {
-        because "old-school-snitch"
-    }
+	thirdParty("de.javagl:jgltf-obj:2.0.3") {
+		because "old-school-snitch"
+	}
 }
 
 task verifyCore {
