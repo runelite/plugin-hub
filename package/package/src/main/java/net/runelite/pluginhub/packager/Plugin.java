@@ -590,6 +590,7 @@ public class Plugin implements Closeable
 					com.google.common.io.Files.asByteSource(jarFile)
 						.hash(Hashing.sha256())
 						.asBytes()));
+			writeLog("built jar with hash {} from commit {}\n", jarData.getJarHash(), commit);
 		}
 		catch (InterruptedException e)
 		{
