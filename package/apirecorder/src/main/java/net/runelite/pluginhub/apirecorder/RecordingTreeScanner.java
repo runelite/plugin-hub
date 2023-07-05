@@ -24,6 +24,7 @@
  */
 package net.runelite.pluginhub.apirecorder;
 
+import com.sun.source.tree.AnnotationTree;
 import com.sun.source.tree.IdentifierTree;
 import com.sun.source.tree.ImportTree;
 import com.sun.source.tree.MemberSelectTree;
@@ -34,6 +35,8 @@ import com.sun.source.util.JavacTask;
 import com.sun.source.util.TreePath;
 import com.sun.source.util.TreePathScanner;
 import com.sun.source.util.Trees;
+import com.sun.tools.javac.api.BasicJavacTask;
+import com.sun.tools.javac.code.Attribute;
 import com.sun.tools.javac.code.Flags;
 import com.sun.tools.javac.code.Symbol;
 import java.util.HashMap;
@@ -70,6 +73,7 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 	private final Trees trees;
 	private final Elements elements;
 	private final Types types;
+	private final com.sun.tools.javac.code.Types internalTypes;
 
 	@Getter
 	@Setter
@@ -80,6 +84,8 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 		this.trees = Trees.instance(task);
 		this.elements = task.getElements();
 		this.types = task.getTypes();
+		BasicJavacTask internalTask = (BasicJavacTask) task;
+		this.internalTypes = com.sun.tools.javac.code.Types.instance(internalTask.getContext());
 	}
 
 	@Override
@@ -121,6 +127,28 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 	{
 		recordElement(trees.getElement(getCurrentPath()));
 		return super.visitNewClass(node, unused);
+	}
+
+	@Override
+	public Void visitAnnotation(AnnotationTree node, Void unused)
+	{
+		Element typ = trees.getElement(new TreePath(getCurrentPath(), node.getAnnotationType()));
+		if (typ instanceof Symbol.TypeSymbol)
+		{
+			Symbol.TypeSymbol cs = (Symbol.TypeSymbol) typ;
+			// non runtime annotations may not exist in the output jar, so they can be
+			// always considered as missing if we were to record them
+			if (internalTypes.getRetention(cs) == Attribute.RetentionPolicy.RUNTIME)
+			{
+				scan(node.getAnnotationType(), null);
+			}
+		}
+		else
+		{
+			unexpected(typ);
+		}
+		scan(node.getArguments(), null);
+		return null;
 	}
 
 	@SneakyThrows
