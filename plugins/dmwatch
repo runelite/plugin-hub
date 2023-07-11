@@ -1,3 +1,3 @@
-repository=https://github.com/DMWatch/DMWatch.git
-commit=e6694966c2e0071fa08b02f6a6acd0a7765048c9
-authors=zguilt
+repository=https://github.com/zguilt/DMWatch.git
+commit=a66416935e7fa19e4bc464a03712388c340b9b21
+warning=This plugin interacts with a 3rd party website not controlled or verified by the RuneLite Developers.
