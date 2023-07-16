@@ -75,8 +75,7 @@ public class PluginTest
 	{
 		try (Plugin p = createExamplePlugin("example"))
 		{
-			p.build(Util.readRLVersion());
-			p.assembleManifest(true);
+			p.build(Util.readRLVersion(), true);
 		}
 	}
 
@@ -89,14 +88,13 @@ public class PluginTest
 			Properties props = Plugin.loadProperties(propFile);
 			props.setProperty("plugins", "com.nonexistent");
 			writeProperties(props, propFile);
-			p.build(Util.readRLVersion());
-			p.assembleManifest(true);
+			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
 		catch (PluginBuildException e)
 		{
 			log.info("ok: ", e);
-			assertContains(e.getHelpText(), "com.example.ExamplePlugin");
+			assertContains(e.getHelpText(), "com.example.TestExamplePlugin");
 		}
 	}
 
@@ -109,14 +107,13 @@ public class PluginTest
 			Properties props = Plugin.loadProperties(propFile);
 			props.setProperty("plugins", "");
 			writeProperties(props, propFile);
-			p.build(Util.readRLVersion());
-			p.assembleManifest(true);
+			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
 		catch (PluginBuildException e)
 		{
 			log.info("ok: ", e);
-			assertContains(e.getHelpText(), "com.example.ExamplePlugin");
+			assertContains(e.getHelpText(), "com.example.TestExamplePlugin");
 		}
 	}
 
@@ -130,8 +127,7 @@ public class PluginTest
 			buildSrc = buildSrc.replace("dependencies {", "dependencies {\n" +
 				"	implementation 'org.apache.httpcomponents:httpclient:4.5.13'");
 			Files.asCharSink(buildFile, StandardCharsets.UTF_8).write(buildSrc);
-			p.build(Util.readRLVersion());
-			p.assembleManifest(true);
+			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
 		catch (PluginBuildException e)
@@ -176,17 +172,17 @@ public class PluginTest
 			"repository=https://github.com/runelite/example-plugin.git\n" +
 			"commit=0000000000000000000000000000000000000000");
 
-		Assert.assertEquals(new ProcessBuilder(
+		Assert.assertEquals(0, new ProcessBuilder(
 			new File("./create_new_plugin.py").getAbsolutePath(),
 			"--noninteractive",
 			"--output_directory", p.repositoryDirectory.getAbsolutePath(),
-			"--name", "Example",
+			"--name", "Test Example",
 			"--package", "com.example",
-			"--author", "Nobody",
-			"--description", "An example greeter plugin")
+			"--author", "Test Nobody",
+			"--description", "Test An example greeter plugin")
 			.inheritIO()
 			.start()
-			.waitFor(), 0);
+			.waitFor());
 
 		return p;
 	}
