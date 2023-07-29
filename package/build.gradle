@@ -22,10 +22,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-plugins {
-	id "com.github.johnrengelman.shadow" version "6.1.0"
-}
-
 allprojects {
 	version "2.0-SNAPSHOT"
 	group "net.runelite.pluginhub"
@@ -38,12 +34,17 @@ allprojects {
 
 subprojects {
 	apply plugin: "java"
-	apply plugin: "com.github.johnrengelman.shadow"
 
-	sourceCompatibility = 1.8
+	sourceCompatibility = 11
 
-	shadowJar {
+	task shadowJar(type: Jar) {
 		archiveFileName.set archiveBaseName.get() + "." + archiveExtension.get()
+		from {
+			configurations.runtimeClasspath.collect {
+				it.isDirectory() ? it : zipTree(it)
+			}
+		}
+		with tasks.jar
 	}
 }
 
@@ -51,7 +52,7 @@ subprojects {
 // the daemon used to build this can be reused by a real plugin build
 task prep {
 	dependsOn ":package:shadowJar"
-	dependsOn ":initLib:shadowJar"
+	dependsOn ":apirecorder:shadowJar"
 	doLast {
 		file("build").mkdirs()
 		file("build/gradleHome").write(gradle.gradleHomeDir.absolutePath)
