@@ -1,4 +1,4 @@
 repository=https://github.com/mathiasHillmann/OsrsProfilePlugin.git
-commit=4010ab4b30d022d5cb28e18aaae963a4fb869dd4
-warning=This plugin submits your player stats, achievements, and IP address to a server not controlled or verified by the RuneLite developers.
+commit=635abff884d093cafc32407d43b375a5ca944f98
+warning=This plugin submits your player stats, achievements and IP address to a server not controlled or verified by the RuneLite developers.
 authors=H1llman
