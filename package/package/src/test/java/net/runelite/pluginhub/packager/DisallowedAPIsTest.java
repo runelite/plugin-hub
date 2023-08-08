@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Abex
+ * Copyright (c) 2022 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,35 +22,23 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.pluginhub.uploader;
+package net.runelite.pluginhub.packager;
 
-import java.net.URL;
-import javax.annotation.Nullable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import org.junit.Assert;
+import org.junit.Test;
 
-@Data
-public class ExternalPluginManifest
+public class DisallowedAPIsTest
 {
-	private String internalName;
-	private String commit;
-	private String hash;
-	private int size;
-	private String[] plugins;
-
-	private long createdAt;
-	private long lastUpdatedAt;
-
-	private String displayName;
-	private String version;
-	private String author;
-	@Nullable
-	private String description;
-	@Nullable
-	private String warning;
-	@Nullable
-	private String[] tags;
-	@EqualsAndHashCode.Exclude
-	private URL support;
-	private boolean hasIcon;
+	@Test
+	public void testDisallowedExist() throws IOException
+	{
+		try (InputStream is = Packager.class.getResourceAsStream("disallowed-apis.txt"))
+		{
+			Map<String, String> disallowed = Plugin.CURRENT_API.parseCommented(is, true);
+			disallowed.forEach((k, v) -> Assert.assertFalse(k + " -> " + v, v.isEmpty()));
+		}
+	}
 }
