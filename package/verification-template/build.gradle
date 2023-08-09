@@ -39,7 +39,7 @@ dependencies {
 		because "discord-rare-drop-notifier"
 	}
 	thirdParty("org.json:json:20200518") {
-		because "discord-rare-drop-notifier"
+		because "discord-rare-drop-notifier, droptracker"
 	}
 	thirdParty("org.jsoup:jsoup:1.13.1") {
 		because "discord-rare-drop-notifier, drop-simulator, fire-beats, loot-table, loot-lookup"
