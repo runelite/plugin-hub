@@ -25,8 +25,6 @@
 package net.runelite.pluginhub.uploader;
 
 import com.google.common.io.Files;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -35,31 +33,24 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSource;
 
 public class Uploader
 {
-	private static final String MANIFEST_NAME = "manifest.js";
-
 	public static void main(String... args) throws IOException, NoSuchAlgorithmException, SignatureException, InvalidKeyException
 	{
-		Gson gson = new Gson();
-
 		String diffJSON = Files.asCharSource(new File("/tmp/manifest_diff"), StandardCharsets.UTF_8)
 			.read();
-		ManifestDiff diff = gson.fromJson(diffJSON, ManifestDiff.class);
+		ManifestDiff diff = Util.GSON.fromJson(diffJSON, ManifestDiff.class);
 
 		try (UploadConfiguration uploadConfig = new UploadConfiguration().fromEnvironment(Util.readRLVersion()))
 		{
 			SigningConfiguration signingConfig = SigningConfiguration.fromEnvironment();
 
-			List<ExternalPluginManifest> manifests = new ArrayList<>();
+			PluginHubManifest.ManifestFull manifestFull = new PluginHubManifest.ManifestFull();
 			if (!diff.isIgnoreOldManifest() || (diff.getOldManifestVersion() != null && !diff.getCopyFromOld().isEmpty()))
 			{
 				String version = diff.getOldManifestVersion();
@@ -67,69 +58,55 @@ public class Uploader
 				{
 					version = Util.readRLVersion();
 				}
-				try (Response res = uploadConfig.getClient().newCall(new Request.Builder()
-					.url(uploadConfig.getVersionlessRoot().newBuilder()
-						.addPathSegment(version)
-						.addPathSegment(MANIFEST_NAME)
-						.addQueryParameter("c", System.nanoTime() + "")
-						.build())
-					.get()
-					.build())
-					.execute())
-				{
-					if (res.code() != 404)
-					{
-						Util.check(res);
 
-						BufferedSource src = res.body().source();
-
-						byte[] signature = new byte[src.readInt()];
-						src.readFully(signature);
-
-						byte[] data = src.readByteArray();
-						if (!signingConfig.verify(signature, data))
-						{
-							throw new RuntimeException("Unable to verify external plugin manifest");
-						}
-
-						manifests = gson.fromJson(new String(data, StandardCharsets.UTF_8),
-							new TypeToken<List<ExternalPluginManifest>>()
-							{
-							}.getType());
-					}
-				}
+				manifestFull = uploadConfig.getManifest(version, signingConfig);
 			}
 
 			if (diff.isIgnoreOldManifest())
 			{
-				manifests.removeIf(m -> !diff.getCopyFromOld().contains(m.getInternalName()));
+				manifestFull.getJars().removeIf(m -> !diff.getCopyFromOld().contains(m.getInternalName()));
+				manifestFull.getDisplay().removeIf(m -> !diff.getCopyFromOld().contains(m.getInternalName()));
 			}
 
-			manifests.removeIf(m -> diff.getRemove().contains(m.getInternalName()));
-			manifests.addAll(diff.getAdd());
-			manifests.sort(Comparator.comparing(ExternalPluginManifest::getInternalName));
+			manifestFull.getJars().removeIf(m -> diff.getRemove().contains(m.getInternalName()));
+			manifestFull.getDisplay().removeIf(m -> diff.getRemove().contains(m.getInternalName()));
 
-			{
-				byte[] data = gson.toJson(manifests).getBytes(StandardCharsets.UTF_8);
-				byte[] sig = signingConfig.sign(data);
+			manifestFull.getJars().addAll(diff.getAddJarData());
+			manifestFull.getDisplay().addAll(diff.getAddDisplayData());
 
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				new DataOutputStream(out).writeInt(sig.length);
-				out.write(sig);
-				out.write(data);
-				byte[] manifest = out.toByteArray();
+			manifestFull.getJars().sort(Comparator.comparing(m -> m.getInternalName()));
+			manifestFull.getDisplay().sort(Comparator.comparing(m -> m.getInternalName()));
 
-				try (Response res = uploadConfig.getClient().newCall(new Request.Builder()
-					.url(uploadConfig.getUploadRepoRoot().newBuilder()
-						.addPathSegment(MANIFEST_NAME)
-						.build())
-					.put(RequestBody.create(null, manifest))
+			PluginHubManifest.ManifestLite manifestLite = new PluginHubManifest.ManifestLite();
+			manifestLite.setJars(manifestFull.getJars());
+
+			putSigned(UploadConfiguration.MANIFEST_TYPE_FULL, manifestFull, uploadConfig, signingConfig);
+			putSigned(UploadConfiguration.MANIFEST_TYPE_LITE, manifestLite, uploadConfig, signingConfig);
+		}
+	}
+
+	private static void putSigned(String manifestType, Object manifest, UploadConfiguration uploadConfig, SigningConfiguration signingConfig)
+		throws IOException, NoSuchAlgorithmException, SignatureException, InvalidKeyException
+	{
+		byte[] data = Util.GSON.toJson(manifest).getBytes(StandardCharsets.UTF_8);
+		byte[] sig = signingConfig.sign(data);
+
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		new DataOutputStream(out).writeInt(sig.length);
+		out.write(sig);
+		out.write(data);
+		byte[] signed = out.toByteArray();
+
+		try (Response res = uploadConfig.getClient().newCall(new Request.Builder()
+				.url(uploadConfig.getRoot().newBuilder()
+					.addPathSegment(UploadConfiguration.DIR_MANIFEST)
+					.addPathSegment(uploadConfig.getRuneLiteVersion() + manifestType)
 					.build())
-					.execute())
-				{
-					Util.check(res);
-				}
-			}
+				.put(RequestBody.create(null, signed))
+				.build())
+			.execute())
+		{
+			Util.check(res);
 		}
 	}
 }

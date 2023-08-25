@@ -55,11 +55,11 @@ public class UploadConfigurationTest
 			.build())
 			.execute())
 		{
-			Assert.assertEquals(res.code(), 200);
-			Assert.assertEquals(res.body().string(), "ok");
+			Assert.assertEquals(200, res.code());
+			Assert.assertEquals("ok", res.body().string());
 		}
 
 		RecordedRequest r2 = server.takeRequest();
-		Assert.assertEquals(r2.getHeader("Authorization"), "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==");
+		Assert.assertEquals("Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==", r2.getHeader("Authorization"));
 	}
 }
