@@ -98,7 +98,7 @@ dependencies {
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
 		because "gpu-experimental"
 	}
-        thirdParty platform("redis.clients:jedis:4.4.3") {
+	thirdParty platform("redis.clients:jedis:4.4.3") {
 		because "voicescape-communication"
 	}
 	thirdParty "org.lwjgl:lwjgl"
