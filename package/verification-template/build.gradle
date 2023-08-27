@@ -98,6 +98,9 @@ dependencies {
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
 		because "gpu-experimental"
 	}
+        thirdParty platform("redis.clients:jedis:4.4.3") {
+		because "voicescape-communication"
+	}
 	thirdParty "org.lwjgl:lwjgl"
 	thirdParty "org.lwjgl:lwjgl-opengl"
 	["linux", "macos", "macos-arm64", "windows-x86", "windows"].each { platform ->
