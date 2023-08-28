@@ -97,6 +97,9 @@ dependencies {
 	thirdParty("redis.clients:jedis:4.4.3") {
 		because "voicescape-communication"
 		exclude group: 'org.apache.commons'
+		exclude group: 'org.apache'
+		exclude group: 'org.junit'
+		exclude group: 'org.junit.jupiter'
 	}
 
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
