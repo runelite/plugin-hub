@@ -105,6 +105,8 @@ commit=9db374fc205c5aae1f99bd5fd127266076f40ec8
 
  8. Be patient and wait for your plugin to be reviewed and merged.
 
+ 9. Pushing new commits to your plugin hub branch will cause your pull request to move to the back of the review 'queue'.
+
 ## Updating a plugin
 To update a plugin, simply update the manifest with the most recent commit hash. 
 
