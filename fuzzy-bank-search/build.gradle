@@ -1,0 +1,34 @@
+plugins {
+	id 'java'
+}
+
+repositories {
+	mavenLocal()
+	maven {
+		url = 'https://repo.runelite.net'
+	}
+	mavenCentral()
+}
+
+def runeLiteVersion = 'latest.release'
+
+dependencies {
+	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
+
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+	implementation group: 'de.gesundkrank.fzf4j', name: 'fzf4j', version: '0.2.0'
+
+	testImplementation 'junit:junit:4.12'
+	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
+}
+
+group = 'com.github.i.fuzzybanksearch'
+version = '1.0-SNAPSHOT'
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	options.release.set(11)
+}
