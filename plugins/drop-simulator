@@ -1,3 +1,4 @@
 repository=https://github.com/mxp190009/drop-simulator.git
 commit=673c11a14a0ddfd5a5861e90b028428f5a68da7b
 warning=This plugin submits the ID of monsters you kill and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
+disabled=unmaintained

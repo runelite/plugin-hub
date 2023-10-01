@@ -1,3 +1,3 @@
 repository=https://github.com/hex-agon/chat-logger.git
-commit=8cb91c8ee6cfe7dac266372c19cd717da0428c69
-warning=This plugin may submit all your friends chat (current clan chat) messages and IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
+commit=af26fb6237091b9e3a9a408dbbef3e6fc25b4929
+warning=This plugin may submit all your channel or clan chat messages and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.

@@ -29,26 +29,42 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.util.Base64;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSource;
 
 @Getter
 @Accessors(chain = true)
 public class UploadConfiguration implements Closeable
 {
+	public static final String DIR_JAR = "jar";
+	public static final String DIR_API = "api";
+	public static final String DIR_ICON = "icon";
+	public static final String DIR_SOURCE = "source";
+	public static final String DIR_LOG = "log";
+	public static final String DIR_MANIFEST = "manifest";
+
+	public static final String MANIFEST_TYPE_FULL = "_full.js";
+	public static final String MANIFEST_TYPE_LITE = "_lite.js";
+
 	private OkHttpClient client;
 
-	@Setter
-	private HttpUrl uploadRepoRoot;
+	@Getter
+	private HttpUrl root;
 
-	public UploadConfiguration fromEnvironment(String runeliteVersion)
+	@Getter
+	private String runeLiteVersion;
+
+	public UploadConfiguration fromEnvironment(String runeLiteVersion)
 	{
 		String prNo = System.getenv("PACKAGE_IS_PR");
 		if (prNo != null && !prNo.isEmpty() && !"false".equalsIgnoreCase(prNo))
@@ -61,18 +77,16 @@ public class UploadConfiguration implements Closeable
 		String uploadRepoRootStr = System.getenv("REPO_ROOT");
 		if (!Strings.isNullOrEmpty(uploadRepoRootStr))
 		{
-			uploadRepoRoot = HttpUrl.parse(uploadRepoRootStr)
-				.newBuilder()
-				.addPathSegment(runeliteVersion)
-				.build();
+			root = HttpUrl.parse(uploadRepoRootStr);
 		}
+		this.runeLiteVersion = runeLiteVersion;
 
 		return this;
 	}
 
 	public boolean isComplete()
 	{
-		return client != null && uploadRepoRoot != null;
+		return client != null && root != null;
 	}
 
 	public UploadConfiguration setClient(String credentials)
@@ -110,12 +124,86 @@ public class UploadConfiguration implements Closeable
 	public void put(HttpUrl path, File data) throws IOException
 	{
 		try (Response res = client.newCall(new Request.Builder()
-			.url(path)
-			.put(RequestBody.create(null, data))
-			.build())
+				.url(path)
+				.put(RequestBody.create(null, data))
+				.build())
 			.execute())
 		{
 			Util.check(res);
+		}
+	}
+
+	public void putMkDirs(HttpUrl path, File data) throws IOException
+	{
+		mkdirs(path.newBuilder()
+			.removePathSegment(path.pathSize() - 1)
+			.build());
+		put(path, data);
+	}
+
+	public void mkdirs(HttpUrl url) throws IOException
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			try (Response res = client.newCall(new Request.Builder()
+					.url(url.newBuilder()
+						.addPathSegment("/")
+						.build())
+					.method("MKCOL", null)
+					.build())
+				.execute())
+			{
+				if (res.code() == 409 && i == 0)
+				{
+					mkdirs(url.newBuilder()
+						.removePathSegment(url.pathSize() - 1)
+						.build());
+
+					continue;
+				}
+
+				// even though 405 is method not allowed, if your webdav
+				// it actually means this url already exists
+				if (res.code() != 405)
+				{
+					Util.check(res);
+				}
+
+				return;
+			}
+		}
+	}
+
+	public PluginHubManifest.ManifestFull getManifest(String version, SigningConfiguration signingConfig) throws IOException
+	{
+		try (Response res = getClient().newCall(new Request.Builder()
+				.url(getRoot().newBuilder()
+					.addPathSegment(DIR_MANIFEST)
+					.addPathSegment(version + MANIFEST_TYPE_FULL)
+					.addQueryParameter("c", System.nanoTime() + "")
+					.build())
+				.get()
+				.build())
+			.execute())
+		{
+			Util.check(res);
+
+			BufferedSource src = res.body().source();
+
+			byte[] signature = new byte[src.readInt()];
+			src.readFully(signature);
+
+			byte[] data = src.readByteArray();
+			if (signingConfig != null && !signingConfig.verify(signature, data))
+			{
+				throw new RuntimeException("Unable to verify external plugin manifest");
+			}
+
+			return Util.GSON.fromJson(new String(data, StandardCharsets.UTF_8), PluginHubManifest.ManifestFull.class);
+		}
+		catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException e)
+		{
+			throw new RuntimeException(e);
 		}
 	}
 
