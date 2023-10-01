@@ -25,6 +25,7 @@
 package net.runelite.pluginhub.uploader;
 
 import com.google.common.io.Files;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -32,6 +33,8 @@ import okhttp3.Response;
 
 public class Util
 {
+	public static final Gson GSON = new Gson();
+
 	private Util()
 	{
 	}
