@@ -99,6 +99,8 @@ public class Packager implements Closeable
 	@Getter
 	private boolean failed;
 
+	private boolean isIncrementalRebuild;
+
 	private final StringBuilder buildSummary = new StringBuilder();
 
 	private ManifestDiff diff = new ManifestDiff();
@@ -192,7 +194,7 @@ public class Packager implements Closeable
 			try
 			{
 				PluginHubManifest.JarData oldJarData = this.oldJarData.get(p.getInternalName());
-				if (oldJarData != null)
+				if (isIncrementalRebuild && oldJarData != null)
 				{
 					try (Closeable ignored = acquireAPICheck(p))
 					{
@@ -371,9 +373,10 @@ public class Packager implements Closeable
 		};
 	}
 
-	public void setIgnoreOldManifest(boolean ignore)
+	public void setIsIncrementalRebuild(boolean incremental)
 	{
-		diff.setIgnoreOldManifest(ignore);
+		this.isIncrementalRebuild = incremental;
+		diff.setIgnoreOldManifest(incremental);
 	}
 
 	@Override
@@ -503,7 +506,7 @@ public class Packager implements Closeable
 		{
 			pkg.getUploadConfig().fromEnvironment(pkg.getRuneliteVersion());
 			pkg.setAlwaysPrintLog(!pkg.getUploadConfig().isComplete());
-			pkg.setIgnoreOldManifest(isBuildingAll);
+			pkg.setIsIncrementalRebuild(isBuildingAll);
 			pkg.setApiFilesVersion(apiFilesVersion);
 			pkg.buildPlugins();
 			failed = pkg.isFailed();
