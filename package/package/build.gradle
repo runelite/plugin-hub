@@ -40,7 +40,7 @@ dependencies {
 	implementation project(":upload")
 	implementation project(":apirecorder")
 
-	def lombok = "org.projectlombok:lombok:1.18.4";
+	def lombok = "org.projectlombok:lombok:1.18.30";
 	compileOnly lombok
 	annotationProcessor lombok
 	testCompileOnly lombok

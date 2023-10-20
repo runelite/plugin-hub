@@ -17,7 +17,7 @@ configurations {
 
 dependencies {
 	core group: "net.runelite", name: "client", version: file("../../runelite.version").text.trim()
-	core "org.projectlombok:lombok:1.18.20"
+	core "org.projectlombok:lombok:1.18.30"
 	core "org.jetbrains:annotations:23.0.0"
 
 	thirdParty("org.zeromq:jnacl:0.1.0") {
