@@ -1,3 +1,3 @@
 repository=https://github.com/XyloYoyo/w45-ge-tracking.git
-commit=7b3d2df20ca52cfe9cabe3c2a64d3475e505bb37
+commit=92605b78e5e218b65b9ec1e65c8b9aa70b206f66
 warning=This plugin sends requests to a server Runelite doesn't own, trust, or have some affiliation with. This plugin sends trade data (id, price, buy/sell) to 3rd party servers for price tracking. Prices reported by this plugin may be inaccurate or false and could be manipulated by plugin maintainers or other users.
