@@ -44,10 +44,10 @@ dependencies {
 	implementation "org.slf4j:slf4j-simple:1.7.10"
 	implementation "com.google.code.findbugs:jsr305:3.0.2"
 	implementation "com.google.guava:guava:23.2-jre"
-	implementation "org.ow2.asm:asm:7.0"
+	implementation "org.ow2.asm:asm:9.3"
 	implementation "com.google.code.gson:gson:2.8.5"
 
-	def lombok = "org.projectlombok:lombok:1.18.4"
+	def lombok = "org.projectlombok:lombok:1.18.30"
 	compileOnly lombok
 	annotationProcessor lombok
 	testCompileOnly lombok
@@ -58,7 +58,10 @@ dependencies {
 	runelite lombok
 }
 
-compileJava.options.compilerArgs += ["--add-exports", "jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED"]
+compileJava.options.compilerArgs += [
+	"--add-exports", "jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
+	"--add-exports", "jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+]
 
 def apiFilePath = new File(project.buildDir, "api")
 
