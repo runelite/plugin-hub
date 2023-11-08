@@ -1,2 +1,3 @@
 repository=https://github.com/ArtsicleOfficial/Qolting.git
 commit=deb12130b7acdda86a1628583bafcd176d5f90de
+disabled=excessive memory usage
