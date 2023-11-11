@@ -1,2 +1,3 @@
 repository=https://github.com/skillingdev/runesync-plugin.git
-commit=c12fff4e9c6af1f512117b1538e4c909c335152d
+commit=a126ed1df40448f0d87e003efc5f473904eb8d02
+warning=This plugin shares your IP and username with a 3rd party server not controlled or verified by the RuneLite Developers.
