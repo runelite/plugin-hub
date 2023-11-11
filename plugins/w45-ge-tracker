@@ -1,3 +1,3 @@
 repository=https://github.com/XyloYoyo/w45-ge-tracking.git
 commit=92605b78e5e218b65b9ec1e65c8b9aa70b206f66
-warning=This plugin sends requests to a server Runelite doesn't own, trust, or have some affiliation with. This plugin sends trade data (id, price, buy/sell) to 3rd party servers for price tracking. Prices reported by this plugin may be inaccurate or false and could be manipulated by plugin maintainers or other users.
+warning=This plugin submits your Deadman mode Grand Exchange trade data and IP address to a server not controlled or verified by the RuneLite developers. Prices reported by this plugin are sourced from this server, thus could be inaccurate, false, or manipulated by the server owner or other users.
