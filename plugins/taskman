@@ -1,0 +1,3 @@
+repository=https://github.com/remcowesterhoud/taskman-plugin.git
+commit=452f51c3017cc09d3aec372f3cd3dc8541a6a2de
+warning=This plugin submits your ingame name, Taskman credentials, and your IP address to a server not controlled or verified by the RuneLite developers.

@@ -31,9 +31,17 @@ public class DisabledPluginException extends Exception
 	@Getter
 	private final String internalName;
 
-	public DisabledPluginException(String internalName, String cause)
+	@Getter
+	private final String reason;
+
+	@Getter
+	private final boolean includeInUnavailable;
+
+	public DisabledPluginException(String internalName, String reason, boolean includeInUnavailable)
 	{
-		super("Plugin \"" + internalName + "\" is disabled: " + cause);
+		super("Plugin \"" + internalName + "\" is disabled: " + reason);
+		this.reason = reason;
 		this.internalName = internalName;
+		this.includeInUnavailable = includeInUnavailable;
 	}
 }
