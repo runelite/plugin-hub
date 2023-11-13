@@ -1,3 +1,4 @@
 repository=https://github.com/osrs-reldo/tasks-tracker-plugin.git
-commit=f444a124b7215cdf6563a11153d61f0fab232de8
+commit=f05532c3816a83acc2cefd4e1fb67f7f73a9b0b9
 authors=tylerthardy
+disabled=freezes client when hopping
