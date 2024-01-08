@@ -102,7 +102,10 @@ commit=9db374fc205c5aae1f99bd5fd127266076f40ec8
 
  7. Write a short description of what your plugin does and then create your pull request.
 
- 8. Be patient and wait for your plugin to be reviewed and merged.
+ 8. Once you have created your pull request, you may see that your plugin has failed the CI check. If this happens click the ❌ next to your commit and check the build details. Once you've read over the build error, make the requested changes to your plugin and update the `commit=` in your PR with the commit hash of your new change.  
+Don't worry about how many times it takes you to resolve build errors; we prefer all changes be kept in a single pull request to avoid spamming notifications with further newly-opened PRs.
+
+ 9. Be patient and wait for your plugin to be reviewed and merged.
 
 ## Updating a plugin
 To update a plugin, simply update the manifest with the most recent commit hash. 
