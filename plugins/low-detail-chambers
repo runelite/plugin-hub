@@ -1,2 +1,3 @@
 repository=https://github.com/JacobLindelof/runelite-plugins.git
 commit=b5ccb7604bd0e9b4ab20522207648b146c82c92b
+warning=This plugin breaks scouting via tha stair Reload feature.
