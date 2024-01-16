@@ -1,3 +1,3 @@
 repository=https://github.com/fatfingers23/osrs-name-change-detector.git
-commit=aa295893c140d6676d278b3e115fd3435d428be1
+commit=cb1a4f81948508df410370193cb5e5c084ae913b
 warning=This plugin makes web requests to the Wise Old Man and Crystal Math Labs websites to retrieve players previous names.
