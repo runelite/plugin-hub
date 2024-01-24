@@ -1,3 +1,3 @@
 repository=https://github.com/peanubnutter/collection-log-luck.git
-commit=a0adbc10474e429e90a47c430ee3d4ffa2878072
+commit=d4f696374cfedcd29baad5c4188247b2a84857f5
 warning=This plugin pulls data from collectionlog.net, a 3rd party server not controlled or verified by the RuneLite developers, and which can access your IP address.
