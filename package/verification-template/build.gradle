@@ -17,7 +17,7 @@ configurations {
 
 dependencies {
 	core group: "net.runelite", name: "client", version: file("../../runelite.version").text.trim()
-	core "org.projectlombok:lombok:1.18.20"
+	core "org.projectlombok:lombok:1.18.30"
 	core "org.jetbrains:annotations:23.0.0"
 
 	thirdParty("org.zeromq:jnacl:0.1.0") {
@@ -39,7 +39,7 @@ dependencies {
 		because "discord-rare-drop-notifier"
 	}
 	thirdParty("org.json:json:20200518") {
-		because "discord-rare-drop-notifier"
+		because "discord-rare-drop-notifier, droptracker"
 	}
 	thirdParty("org.jsoup:jsoup:1.13.1") {
 		because "discord-rare-drop-notifier, drop-simulator, fire-beats, loot-table, loot-lookup"
@@ -93,6 +93,10 @@ dependencies {
 	thirdParty("com.google.inject.extensions:guice-multibindings:4.1.0") {
 		because "dps-calculator"
 		exclude group: 'com.google.inject'
+	}
+	thirdParty("redis.clients:jedis:4.4.3") {
+		because "voicescape-communication"
+		exclude group: 'org.apache.commons', module: 'commons-pool2'
 	}
 
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {

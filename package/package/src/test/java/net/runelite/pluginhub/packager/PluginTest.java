@@ -75,8 +75,7 @@ public class PluginTest
 	{
 		try (Plugin p = createExamplePlugin("example"))
 		{
-			p.build(Util.readRLVersion());
-			p.assembleManifest(true);
+			p.build(Util.readRLVersion(), true);
 		}
 	}
 
@@ -89,8 +88,7 @@ public class PluginTest
 			Properties props = Plugin.loadProperties(propFile);
 			props.setProperty("plugins", "com.nonexistent");
 			writeProperties(props, propFile);
-			p.build(Util.readRLVersion());
-			p.assembleManifest(true);
+			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
 		catch (PluginBuildException e)
@@ -109,8 +107,7 @@ public class PluginTest
 			Properties props = Plugin.loadProperties(propFile);
 			props.setProperty("plugins", "");
 			writeProperties(props, propFile);
-			p.build(Util.readRLVersion());
-			p.assembleManifest(true);
+			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
 		catch (PluginBuildException e)
@@ -130,8 +127,7 @@ public class PluginTest
 			buildSrc = buildSrc.replace("dependencies {", "dependencies {\n" +
 				"	implementation 'org.apache.httpcomponents:httpclient:4.5.13'");
 			Files.asCharSink(buildFile, StandardCharsets.UTF_8).write(buildSrc);
-			p.build(Util.readRLVersion());
-			p.assembleManifest(true);
+			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
 		catch (PluginBuildException e)
