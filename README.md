@@ -111,10 +111,9 @@ Don't worry about how many times it takes you to resolve build errors; we prefer
 To update a plugin, simply update the manifest with the most recent commit hash. 
 
 ## Reviewing
-We will review your plugin to ensure it isn't malicious or [breaking
-jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1).
-__If it is difficult for us to ensure the plugin isn't against the rules we
-will not merge it__. 
+We will review your plugin to ensure it isn't malicious, doesn't [break Jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1), 
+or isn't one of our previously [Rejected/Rolledback features](https://github.com/runelite/runelite/wiki/Rejected-or-Rolled-Back-Features).  
+__If it is difficult for us to ensure the plugin isn't against the rules we will not merge it__. 
 
 ## Plugin resources
 Resources may be included with plugins, which are non-code and are bundled and distributed with the plugin, such as images and sounds. You may do this by placing them in `src/main/resources`. Plugins on the pluginhub are distributed in .jar form and the jars placed into the classpath. The plugin is not unpacked on disk, and you can not assume that it is. This means that using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getResource-java.lang.String- will return a jar-URL when the plugin is deployed to the pluginhub, but in your IDE will be a file-URL. This almost certainly makes it behave differently from how you expect it to, and isn't what you want.
