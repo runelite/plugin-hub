@@ -1,3 +1,4 @@
 repository=https://github.com/NovaGTX/afterdark-pvm-loot-tracker.git
 commit=dae3a50296ee99e1bcf8c0251c93774475d77094
 warning=This plugin submits your Username and PvM Drop data to the AfterDark Database for PvM Competition tracking.
+disabled=unmaintained

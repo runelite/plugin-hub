@@ -27,9 +27,10 @@ package net.runelite.pluginhub.packager;
 import com.google.common.base.Splitter;
 import com.google.common.base.Stopwatch;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Queues;
+import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
-import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -37,14 +38,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -53,6 +58,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.pluginhub.uploader.ManifestDiff;
+import net.runelite.pluginhub.uploader.PluginHubManifest;
 import net.runelite.pluginhub.uploader.UploadConfiguration;
 import net.runelite.pluginhub.uploader.Util;
 import org.slf4j.helpers.FormattingTuple;
@@ -63,7 +69,9 @@ public class Packager implements Closeable
 {
 	private static final File PLUGIN_ROOT = new File("./plugins");
 	public static final File PACKAGE_ROOT = new File("./package/").getAbsoluteFile();
+	private static final File ARTIFACT_DIR = new File("/tmp/jars");
 
+	private Semaphore apiCheckSemaphore = new Semaphore(8);
 	private Semaphore downloadSemaphore = new Semaphore(2);
 	private Semaphore buildSemaphore = new Semaphore(Runtime.getRuntime().availableProcessors());
 	private Semaphore uploadSemaphore = new Semaphore(2);
@@ -72,6 +80,12 @@ public class Packager implements Closeable
 
 	@Getter
 	private final String runeliteVersion;
+
+	@Setter
+	private String apiFilesVersion;
+	private PluginHubManifest.ManifestFull oldManifest;
+	private Map<String, PluginHubManifest.JarData> oldJarData = ImmutableMap.of();
+	private Map<String, PluginHubManifest.DisplayData> oldDisplayData = ImmutableMap.of();
 
 	@Getter
 	private final UploadConfiguration uploadConfig = new UploadConfiguration();
@@ -84,6 +98,8 @@ public class Packager implements Closeable
 
 	@Getter
 	private boolean failed;
+
+	private boolean isIncrementalRebuild;
 
 	private final StringBuilder buildSummary = new StringBuilder();
 
@@ -98,6 +114,36 @@ public class Packager implements Closeable
 
 	public void buildPlugins() throws IOException
 	{
+		if (apiFilesVersion != null)
+		{
+			try
+			{
+				oldManifest = uploadConfig.getManifest(apiFilesVersion, null);
+				oldJarData = oldManifest.getJars()
+					.stream().collect(ImmutableMap.toImmutableMap(PluginHubManifest.JarData::getInternalName, Function.identity()));
+				oldDisplayData = oldManifest.getDisplay()
+					.stream().collect(ImmutableMap.toImmutableMap(PluginHubManifest.DisplayData::getInternalName, Function.identity()));
+				diff.setOldManifestVersion(apiFilesVersion);
+			}
+			catch (RuntimeException | IOException e)
+			{
+				log.info("Unable to download previous manifest, doing full build", e);
+				apiFilesVersion = null;
+			}
+		}
+
+		if (uploadConfig.isComplete())
+		{
+			uploadConfig.mkdirs(uploadConfig.getRoot().newBuilder().addPathSegment(UploadConfiguration.DIR_JAR).build());
+			uploadConfig.mkdirs(uploadConfig.getRoot().newBuilder().addPathSegment(UploadConfiguration.DIR_ICON).build());
+			uploadConfig.mkdirs(uploadConfig.getRoot().newBuilder().addPathSegment(UploadConfiguration.DIR_API).build());
+			uploadConfig.mkdirs(uploadConfig.getRoot().newBuilder().addPathSegment(UploadConfiguration.DIR_LOG).build());
+			uploadConfig.mkdirs(uploadConfig.getRoot().newBuilder().addPathSegment(UploadConfiguration.DIR_SOURCE).build());
+			uploadConfig.mkdirs(uploadConfig.getRoot().newBuilder().addPathSegment(UploadConfiguration.DIR_MANIFEST).build());
+		}
+
+		ARTIFACT_DIR.mkdirs();
+
 		Queue<File> buildQueue = Queues.synchronizedQueue(new ArrayDeque<>(buildList));
 		List<Thread> buildThreads = IntStream.range(0, 8)
 			.mapToObj(v ->
@@ -125,8 +171,7 @@ public class Packager implements Closeable
 			}
 		}
 
-		Gson gson = new Gson();
-		String diffJSON = gson.toJson(diff);
+		String diffJSON = Util.GSON.toJson(diff);
 		log.debug("manifest change: {}", diffJSON);
 
 		try (FileOutputStream fos = new FileOutputStream("/tmp/manifest_diff"))
@@ -148,15 +193,28 @@ public class Packager implements Closeable
 		{
 			try
 			{
+				PluginHubManifest.JarData oldJarData = this.oldJarData.get(p.getInternalName());
+				if (isIncrementalRebuild && oldJarData != null)
+				{
+					try (Closeable ignored = acquireAPICheck(p))
+					{
+						if (!p.rebuildNeeded(uploadConfig, oldJarData))
+						{
+							diff.getCopyFromOld().add(p.getInternalName());
+							diff.getRemove().remove(p.getInternalName());
+							return;
+						}
+					}
+				}
 				try (Closeable ignored = acquireDownload(p))
 				{
 					p.download();
 				}
 				try (Closeable ignored = acquireBuild(p))
 				{
-					p.build(runeliteVersion);
-					p.assembleManifest();
+					p.build(runeliteVersion, alwaysPrintLog);
 				}
+				String logURL = "";
 				if (uploadConfig.isComplete())
 				{
 					try (Closeable ignored = acquireUpload(p))
@@ -165,11 +223,19 @@ public class Packager implements Closeable
 					}
 
 					// outside the semaphore so the timing gets uploaded too
-					p.uploadLog(uploadConfig);
+					logURL = p.uploadLog(uploadConfig);
 				}
 
-				diff.getAdd().add(p.getManifest());
+				p.copyArtifacts(ARTIFACT_DIR);
+
+				diff.getAddJarData().add(p.getJarData());
+				diff.getAddDisplayData().add(p.getDisplayData());
 				log.info("{}: done in {}ms [{}/{}]", p.getInternalName(), p.getBuildTimeMS(), numDone.get() + 1, numTotal);
+
+				if (!p.getApiFile().exists())
+				{
+					logToSummary("{} failed to write the api record: {}", p.getInternalName(), logURL);
+				}
 			}
 			catch (PluginBuildException e)
 			{
@@ -180,14 +246,35 @@ public class Packager implements Closeable
 					Files.asCharSource(p.getLogFile(), StandardCharsets.UTF_8).copyTo(System.out);
 				}
 
+				PluginHubManifest.DisplayData oldDisplayData = this.oldDisplayData.get(p.getInternalName());
+
 				if (uploadConfig.isComplete())
 				{
 					String logURL = p.uploadLog(uploadConfig);
-					logToSummary("{} failed: {}", p.getInternalName(), logURL);
+					if (oldDisplayData != null && oldDisplayData.getBuildFailAt() != null)
+					{
+						long daysFailed = Instant.ofEpochSecond(oldDisplayData.getBuildFailAt()).until(Instant.now(), ChronoUnit.DAYS);
+						logToSummary("{} failed ({} days): {}", p.getInternalName(), daysFailed, logURL);
+					}
+					else
+					{
+						logToSummary("{} failed: {}", p.getInternalName(), logURL);
+					}
 				}
 				else
 				{
 					logToSummary("{} failed", p.getInternalName());
+				}
+
+				if (oldDisplayData != null)
+				{
+					if (oldDisplayData.getBuildFailAt() == null)
+					{
+						oldDisplayData.setBuildFailAt(Instant.now().getEpochSecond());
+					}
+
+					oldDisplayData.setUnavailableReason(null);
+					diff.getAddDisplayData().add(oldDisplayData);
 				}
 			}
 			finally
@@ -200,7 +287,19 @@ public class Packager implements Closeable
 		}
 		catch (DisabledPluginException e)
 		{
-			log.info("{}", e.getMessage());
+			if (e.isIncludeInUnavailable())
+			{
+				PluginHubManifest.DisplayData oldDisplayData = this.oldDisplayData.get(e.getInternalName());
+				if (oldDisplayData == null)
+				{
+					logToSummary("unavailible plugin {} wasn't in the previous manifest", e.getInternalName());
+				}
+				else
+				{
+					oldDisplayData.setUnavailableReason(e.getReason());
+					diff.getAddDisplayData().add(oldDisplayData);
+				}
+			}
 		}
 		catch (PluginBuildException e)
 		{
@@ -231,6 +330,11 @@ public class Packager implements Closeable
 	public String getBuildSummary()
 	{
 		return buildSummary.toString();
+	}
+
+	private Closeable acquireAPICheck(Plugin plugin)
+	{
+		return section(plugin, "apicheck", apiCheckSemaphore);
 	}
 
 	private Closeable acquireDownload(Plugin plugin)
@@ -269,9 +373,10 @@ public class Packager implements Closeable
 		};
 	}
 
-	public void setIgnoreOldManifest(boolean ignore)
+	public void setIsIncrementalRebuild(boolean incremental)
 	{
-		diff.setIgnoreOldManifest(ignore);
+		this.isIncrementalRebuild = incremental;
+		diff.setIgnoreOldManifest(incremental);
 	}
 
 	@Override
@@ -284,6 +389,19 @@ public class Packager implements Closeable
 	{
 		boolean isBuildingAll = false;
 		boolean testFailure = false;
+
+		String apiFilesVersion = System.getenv("API_FILES_VERSION");
+		if (apiFilesVersion != null)
+		{
+			apiFilesVersion = apiFilesVersion.trim();
+			if (apiFilesVersion.isEmpty())
+			{
+				apiFilesVersion = null;
+			}
+		}
+
+		String range = System.getenv("PACKAGE_COMMIT_RANGE");
+
 		List<File> buildList;
 		if (args.length != 0)
 		{
@@ -299,17 +417,17 @@ public class Packager implements Closeable
 		else if (!Strings.isNullOrEmpty(System.getenv("FORCE_BUILD")))
 		{
 			buildList = StreamSupport.stream(
-				Splitter.on(',')
-					.trimResults()
-					.omitEmptyStrings()
-					.split(System.getenv("FORCE_BUILD"))
-					.spliterator(), false)
+					Splitter.on(',')
+						.trimResults()
+						.omitEmptyStrings()
+						.split(System.getenv("FORCE_BUILD"))
+						.spliterator(), false)
 				.map(name -> new File(PLUGIN_ROOT, name))
 				.collect(Collectors.toList());
 		}
-		else if (!Strings.isNullOrEmpty(System.getenv("PACKAGE_COMMIT_RANGE")))
+		else if (!Strings.isNullOrEmpty(range))
 		{
-			Process gitdiff = new ProcessBuilder("git", "diff", "--name-only", System.getenv("PACKAGE_COMMIT_RANGE"))
+			Process gitdiff = new ProcessBuilder("git", "diff", "--name-only", range)
 				.redirectError(ProcessBuilder.Redirect.INHERIT)
 				.start();
 
@@ -366,12 +484,30 @@ public class Packager implements Closeable
 			throw new RuntimeException("missing env vars");
 		}
 
+		if (apiFilesVersion == null && !Strings.isNullOrEmpty(range))
+		{
+			String commit = range.substring(0, range.indexOf(".."));
+			Process gitShow = new ProcessBuilder("git", "show", commit + ":runelite.version")
+				.redirectError(ProcessBuilder.Redirect.INHERIT)
+				.start();
+
+			apiFilesVersion = new String(ByteStreams.toByteArray(gitShow.getInputStream()), StandardCharsets.UTF_8)
+				.trim();
+
+			gitShow.waitFor(1, TimeUnit.SECONDS);
+			if (gitShow.exitValue() != 0)
+			{
+				throw new RuntimeException("git show exited with " + gitShow.exitValue());
+			}
+		}
+
 		boolean failed;
 		try (Packager pkg = new Packager(buildList))
 		{
 			pkg.getUploadConfig().fromEnvironment(pkg.getRuneliteVersion());
 			pkg.setAlwaysPrintLog(!pkg.getUploadConfig().isComplete());
-			pkg.setIgnoreOldManifest(isBuildingAll);
+			pkg.setIsIncrementalRebuild(isBuildingAll);
+			pkg.setApiFilesVersion(apiFilesVersion);
 			pkg.buildPlugins();
 			failed = pkg.isFailed();
 			if (isBuildingAll)

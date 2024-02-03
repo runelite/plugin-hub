@@ -32,7 +32,7 @@ dependencies {
 	implementation "com.squareup.okhttp3:okhttp:3.14.9"
 	implementation "com.google.code.gson:gson:2.8.5"
 
-	def lombok = "org.projectlombok:lombok:1.18.4";
+	def lombok = "org.projectlombok:lombok:1.18.30";
 	compileOnly lombok
 	annotationProcessor lombok
 	testCompileOnly lombok
@@ -43,7 +43,7 @@ dependencies {
 }
 
 task run(type: JavaExec) {
-	main = "net.runelite.pluginhub.uploader.Uploader"
+	mainClass = "net.runelite.pluginhub.uploader.Uploader"
 	classpath = sourceSets.main.runtimeClasspath
 	workingDir = new File(project.rootDir, "../")
 }
