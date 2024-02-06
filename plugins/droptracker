@@ -1,3 +1,2 @@
 repository=https://github.com/joelhalen/droptracker-plugin.git
-commit=cfbc3f5c83b874eab25cdbcb297b43e7c3a735af
-warning=This plugin submits your player name, clan member names, drop data, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
+commit=8611dc99a765979eeea6ebf9c7591b0b5a0d9079
