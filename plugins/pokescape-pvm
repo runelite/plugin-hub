@@ -1,2 +1,4 @@
 repository=https://github.com/Quoded/PokeScape-PvM.git
 commit=baeb6822e5aa73b8adb6d7c55607d88188c955df
+warning=This plugin submits the names of you, loot, screenshots and other character data to api.pokescape.com
+authors=Quo
