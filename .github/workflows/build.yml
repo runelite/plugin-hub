@@ -20,7 +20,7 @@ jobs:
     # enabled by default, which will fail in a lot of cases because the branch
     # is new, which makes the differential build fail
     if: github.event_name != 'push' || github.repository_owner == 'runelite'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
       with:
@@ -83,7 +83,7 @@ jobs:
     if: (github.event_name != 'push' || github.repository_owner == 'runelite') && github.event_name != 'pull_request'
     needs: build
     concurrency: upload
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v4
       with:
