@@ -1,3 +1,3 @@
 repository=https://github.com/RusseII/region-chat.git
-commit=9c34075797ef6bd5dc83ef39b7fc8857ea35223c
+commit=bf863f1fd2fdbf9c6f53a92059d68135d82835d6
 warning=This plugin submits all sent chat messages and your IP address to a server not controlled or verified by the RuneLite developers.
