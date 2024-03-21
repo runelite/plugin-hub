@@ -1,0 +1,4 @@
+repository=https://github.com/Champions-Log/champions-log-plugin.git
+commit=c2660c7bca85602b3c96d8ce3200c77fef12df60
+authors=Hexagon
+warning=This plugin submits your display name and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
