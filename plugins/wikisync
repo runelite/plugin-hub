@@ -1,4 +1,4 @@
-repository=https://github.com/andmcadams/WikiSync.git
-commit=8246ef597be7554010737e8c47559b23d689410f
+repository=https://github.com/weirdgloop/WikiSync.git
+commit=92e83b58d2bdf074c3a737a7dc2c8c5c9a96a39f
 warning=Similar to the official HiScores, this plugin pushes up data about your character that can be viewed by anyone.<br>We don't suggest using this if you are (for example) a PvP-locked hardcore ironman, where broadcasting your<br>quest status could be detrimental to your account by giving away information about what you're currently doing.
-authors=andmcadams,leejt
+authors=andmcadams,leejt,lezed1,jayktaylor

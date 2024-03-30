@@ -1,0 +1,3 @@
+repository=https://github.com/skeldoor/ntfyer.git
+commit=eda892b9f12370d7bdb9588c7514e1c9718751a7
+warning=This plugin sends all notification data and your IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
