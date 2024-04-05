@@ -111,6 +111,10 @@ dependencies {
 		thirdParty "org.lwjgl:lwjgl::natives-$platform"
 		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
 	}
+
+	thirdParty("com.deepl.api:deepl-java:1.4.0") {
+		because "japanese"
+	}
 }
 
 task verifyCore {
