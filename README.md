@@ -40,12 +40,11 @@ There are two methods to create an external plugin, you can either:
  ```
  displayName=Helmet check
  author=dekvall
- support=
  description=Alerts you when you have nothing equipped in your head slot
  tags=hint,gear,head
  plugins=com.helmetcheck.HelmetCheckPlugin
  ```
- `support` is the URL you want players to use to leave feedback for your plugin; by default this links to your repository. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  10. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
@@ -69,7 +68,7 @@ There are two methods to create an external plugin, you can either:
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 5. Edit `runelite-plugin.properties` with a support link and tags. `support` is the URL you want players to use to leave feedback for your plugin; by default this links to your repository. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ 5. Edit `runelite-plugin.properties` with tags. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  6. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
@@ -103,16 +102,18 @@ commit=9db374fc205c5aae1f99bd5fd127266076f40ec8
 
  7. Write a short description of what your plugin does and then create your pull request.
 
- 8. Be patient and wait for your plugin to be reviewed and merged.
+ 8. Check the result of your PR's CI workflow. With a ✔️ all is good, however if it has a ❌ next to your commit click it to check the build log for details of the failure. Once you've read over the build error, make the required changes, and push another commit to update the PR with the new `commit=` hash.  
+Don't worry about how many times it takes you to resolve build errors; we prefer all changes be kept in a single pull request to avoid spamming notifications with further newly-opened PRs.
+
+ 9. Be patient and wait for your plugin to be reviewed and merged.
 
 ## Updating a plugin
 To update a plugin, simply update the manifest with the most recent commit hash. 
 
 ## Reviewing
-We will review your plugin to ensure it isn't malicious or [breaking
-jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1).
-__If it is difficult for us to ensure the plugin isn't against the rules we
-will not merge it__. 
+We will review your plugin to ensure it isn't malicious, doesn't [break Jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1), 
+or isn't one of our previously [Rejected/Rolledback features](https://github.com/runelite/runelite/wiki/Rejected-or-Rolled-Back-Features).  
+__If it is difficult for us to ensure the plugin isn't against the rules we will not merge it__. 
 
 ## Plugin resources
 Resources may be included with plugins, which are non-code and are bundled and distributed with the plugin, such as images and sounds. You may do this by placing them in `src/main/resources`. Plugins on the pluginhub are distributed in .jar form and the jars placed into the classpath. The plugin is not unpacked on disk, and you can not assume that it is. This means that using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getResource-java.lang.String- will return a jar-URL when the plugin is deployed to the pluginhub, but in your IDE will be a file-URL. This almost certainly makes it behave differently from how you expect it to, and isn't what you want.
@@ -125,3 +126,10 @@ To do this we rely on [Gradle's dependency verification](https://docs.gradle.org
 To add a new dependency, add it to the `thirdParty` configuration in [`package/verification-template/build.gradle`](https://github.com/runelite/plugin-hub/blob/master/package/verification-template/build.gradle),
 then run `../gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
 the dependencies manually before your pull request will be merged.
+
+## My client version is outdated
+If your client version is outdated or your plugin suddenly stopped working after RuneLite has been updated, make sure that your `runeLiteVersion` is set to `'latest.release'` in `build.gradle`. If this is set correctly, refresh the Gradle dependencies by doing the following:
+1. Open the Gradle tool window.
+2. Right-click on the project's name. This will contain the Gradle icon (elephant).
+3. Choose `Refresh Gradle Dependencies`.
+If your issue is not resolved, try reloading all Gradle projects. This option is located in the toolbar in the Gradle tool window. Additionally, try invalidating caches.

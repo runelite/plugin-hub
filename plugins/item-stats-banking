@@ -1,2 +1,3 @@
 repository=https://github.com/Boredska/bank-item-stats-toggle.git
 commit=b9d65c7472e59224895ff13b05bd459c81661a32
+warning=This plugin can disable the Item Stats plugin, don't install it if you want to see item stats.
