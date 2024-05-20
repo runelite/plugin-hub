@@ -102,6 +102,9 @@ dependencies {
 		exclude group: 'org.apache.commons', module: 'commons-pool2'
 	}
 
+	thirdParty("org.apache.httpcomponents.core5:httpcore5:5.2") {
+		because "osrs-archipelago"
+	}
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
 		because "gpu-experimental"
 	}
@@ -110,6 +113,9 @@ dependencies {
 	["linux", "macos", "macos-arm64", "windows-x86", "windows"].each { platform ->
 		thirdParty "org.lwjgl:lwjgl::natives-$platform"
 		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
+	}
+	thirdParty("org.java-websocket:Java-WebSocket:1.5.6") {
+		because "wikisync"
 	}
 }
 
