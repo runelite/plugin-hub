@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Abex
+ * Copyright (c) 2023 Abex
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,33 +24,74 @@
  */
 package net.runelite.pluginhub.uploader;
 
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import javax.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Data
-public class ExternalPluginManifest
+public class PluginHubManifest
 {
-	private String internalName;
-	private String commit;
-	private String hash;
-	private int size;
-	private String[] plugins;
+	public static final Base64.Encoder HASH_ENCODER = Base64.getUrlEncoder().withoutPadding();
 
-	private long createdAt;
-	private long lastUpdatedAt;
+	@Data
+	public static class JarData
+	{
+		private String internalName;
+		private String displayName;
+		private String jarHash;
+		private int jarSize;
+	}
 
-	private String displayName;
-	private String version;
-	private String author;
-	@Nullable
-	private String description;
-	@Nullable
-	private String warning;
-	@Nullable
-	private String[] tags;
-	@EqualsAndHashCode.Exclude
-	private URL support;
-	private boolean hasIcon;
+	@Data
+	public static class ManifestLite
+	{
+		private List<JarData> jars = new ArrayList<>();
+	}
+
+	@Data
+	@EqualsAndHashCode(callSuper = true)
+	public static class ManifestFull extends ManifestLite
+	{
+		private List<DisplayData> display = new ArrayList<>();
+	}
+
+	@Data
+	public static class DisplayData
+	{
+		private String internalName;
+		private String displayName;
+		private String version;
+
+		@Nullable
+		private String iconHash;
+
+		private long createdAt;
+		private long lastUpdatedAt;
+
+		private String author;
+
+		@Nullable
+		private String description;
+
+		@Nullable
+		private String warning;
+
+		@Nullable
+		private String[] tags;
+
+		@Nullable
+		private Long buildFailAt;
+
+		@Nullable
+		private String unavailableReason;
+	}
+
+	@Data
+	@EqualsAndHashCode(callSuper = true)
+	public static class Stub extends DisplayData
+	{
+		private String[] plugins;
+	}
 }
