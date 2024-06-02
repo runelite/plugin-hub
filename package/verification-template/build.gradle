@@ -120,6 +120,9 @@ dependencies {
 	thirdParty("com.google.protobuf:protobuf-gradle-plugin:0.9.4") {
 		because "blert"
 	}
+	thirdParty("com.google.protobuf:com.google.protobuf.gradle.plugin:0.9.4") {
+		because "blert"
+	}
 	thirdParty("com.google.gradle:osdetector-gradle-plugin:1.7.3") {
 		because "blert"
 	}
