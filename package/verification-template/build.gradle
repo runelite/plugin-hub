@@ -117,6 +117,15 @@ dependencies {
 	thirdParty("org.java-websocket:Java-WebSocket:1.5.6") {
 		because "wikisync"
 	}
+	thirdParty("com.google.protobuf:protobuf-gradle-plugin:0.9.4") {
+		because "blert"
+	}
+	thirdParty("com.google.gradle:osdetector-gradle-plugin:1.7.3") {
+		because "blert"
+	}
+	thirdParty("kr.motd.maven:os-maven-plugin:1.7.1") {
+		because "blert"
+	}
 }
 
 task verifyCore {

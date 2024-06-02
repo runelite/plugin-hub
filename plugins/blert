@@ -1,4 +1,4 @@
 repository=https://github.com/blert-io/plugin.git
-commit=4bfe248f54f4c54520a8eeec44f0142553ef4774
+commit=df0acc8c47c87165f794d0577c75c05b97622bfd
 authors=frolv
 warning=This plugin sends data about your raids to a third-party server not controlled by the RuneLite developers.
