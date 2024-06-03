@@ -26,17 +26,21 @@ There are two methods to create an external plugin, you can either:
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by right-clicking `ExamplePluginTest.java` and clicking run.
 
- ![run-test](https://i.imgur.com/tKSQH5e.png)
+![run-test](https://github.com/runelite/wiki/assets/41973452/e491216c-546c-4f7f-8db3-a5c0d9a4acbf)
 
- 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
+ 6. Running the test the first time will fail, due to needing `-ea` to be added to your VM options to enable assertions. This can be done in IntellIJ under `Run/Debug Configurations`, clicking `Modify options` -> `Add VM options`, and then adding `-ea` into the `VM Options` input field that appears.
 
- 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
+![ea](https://github.com/runelite/wiki/assets/41973452/ac4c2761-6d72-4341-9d18-2dd351e1d9a7)
+
+ 7. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
+
+ 8. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
  
- 8. Go to your plugin file and set its name in the `PluginDescriptor`, this can have spaces.
+ 9. Go to your plugin file and set its name in the `PluginDescriptor`, this can have spaces.
 
- 9. Open the `runelite-plugin.properties` file and add info to each row. 
+ 10. Open the `runelite-plugin.properties` file and add info to each row.
  ```
  displayName=Helmet check
  author=dekvall
@@ -46,11 +50,11 @@ There are two methods to create an external plugin, you can either:
  ```
  `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
- 10. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
+ 11. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
- 11. Write a nice README so your users can see the features of your plugin.
+ 12. Write a nice README so your users can see the features of your plugin.
 
- 12. When you have your plugin working. Commit your changes and push them to your repository. 
+ 13. When you have your plugin working. Commit your changes and push them to your repository.
 
 
 ### Using the script
@@ -64,17 +68,21 @@ There are two methods to create an external plugin, you can either:
 
  3. Move the generated folder to its own git repository and open the `build.gradle` file in IntelliJ.
 
- 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by right-clicking `ExamplePluginTest.java` and clicking run.
 
- ![run-test](https://i.imgur.com/tKSQH5e.png)
+![run-test](https://github.com/runelite/plugin-hub/assets/41973452/5342438f-5b60-43b2-9e46-0eb1bd47597a)
 
- 5. Edit `runelite-plugin.properties` with tags. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ 5. Running the test the first time will fail, due to needing `-ea` to be added to your VM options to enable assertions. This can be done in IntellIJ under `Run/Debug Configurations`, clicking `Modify options` -> `Add VM options`, and then adding `-ea` into the `VM Options` input field that appears.
 
- 6. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
+![ea](https://github.com/runelite/plugin-hub/assets/41973452/c929e960-2207-4379-8b2b-bcf6ca3a4af7)
 
- 7. Write a nice README so your users can see the features of your plugin.
+ 6. Edit `runelite-plugin.properties` with tags. `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
- 8. When you have your plugin working. Commit your changes and push them to your repository.
+ 7. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
+
+ 8. Write a nice README so your users can see the features of your plugin.
+
+ 9. When you have your plugin working. Commit your changes and push them to your repository.
 
 ### Licensing your repository
  1. Go to your repository on GitHub and select *Add file* (next to the green *Code* button), and choose *Create new file* from the drop-down.
