@@ -129,6 +129,12 @@ dependencies {
 	thirdParty("kr.motd.maven:os-maven-plugin:1.7.1") {
 		because "blert"
 	}
+	thirdParty("com.google:google:1") {
+		because "blert"
+	}
+	thirdParty("com.google.protobuf:protoc:3.21.12") {
+		because "blert"
+	}
 }
 
 task verifyCore {
