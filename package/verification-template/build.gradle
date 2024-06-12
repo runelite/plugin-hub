@@ -120,6 +120,18 @@ dependencies {
 	thirdParty("commons-validator:commons-validator:1.9.0") {
 		because "spectralclanmgmt"
 	}
+	thirdParty("commons-beanutils:commons-beanutils:1.9.4") {
+		because "spectralclanmgmt"
+	}
+	thirdParty("org.apache.commons:commons-collections4:4.5.0-M1") {
+		because "spectralclanmgmt"
+	}
+	thirdParty("org.apache.commons:commons-digester3:3.2") {
+		because "spectralclanmgmt"
+	}
+	thirdParty("commons-logging:commons-logging:1.3.2") {
+		because "spectralclanmgmt"
+	}
 }
 
 task verifyCore {
