@@ -120,10 +120,6 @@ dependencies {
 	
 	thirdParty("commons-validator:commons-validator:1.9.0") {
 		because "spectralclanmgmt"
-		exclude group: 'commons-beanutils'
-		exclude group: 'commons-collections'
-		exclude group: 'commons-digester'
-		exclude group: 'commons-logging'
 	}
 }
 
