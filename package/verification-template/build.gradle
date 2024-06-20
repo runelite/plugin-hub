@@ -134,7 +134,7 @@ dependencies {
 	}
 	thirdParty("com.google.protobuf:protoc:3.21.12") {
 		because "blert"
-  }
+	}
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
 	}
