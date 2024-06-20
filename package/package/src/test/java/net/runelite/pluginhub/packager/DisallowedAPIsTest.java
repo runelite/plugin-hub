@@ -26,6 +26,8 @@ package net.runelite.pluginhub.packager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DisallowedAPIsTest
@@ -35,7 +37,8 @@ public class DisallowedAPIsTest
 	{
 		try (InputStream is = Packager.class.getResourceAsStream("disallowed-apis.txt"))
 		{
-			Plugin.CURRENT_API.parseCommented(is, true);
+			Map<String, String> disallowed = Plugin.CURRENT_API.parseCommented(is, true);
+			disallowed.forEach((k, v) -> Assert.assertFalse(k + " -> " + v, v.isEmpty()));
 		}
 	}
 }
