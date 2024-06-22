@@ -26,7 +26,10 @@ There are two methods to create an external plugin, you can either:
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the provided test. If you don't have a run configuration yet for the test, attempt to run it by clicking `Run test`. This will create a run configuration and fail to run due to asserts being disabled. Add `-ea`
+ to your VM options in the run configuration to enable assertions, which can be found under `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+
+ The client should now launch with your plugin enabled. If you have a Jagex account, you will be unable to login without first following [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts).
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
@@ -64,7 +67,10 @@ There are two methods to create an external plugin, you can either:
 
  3. Move the generated folder to its own git repository and open the `build.gradle` file in IntelliJ.
 
- 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the provided test. If you don't have a run configuration yet for the test, attempt to run it by clicking `Run test`. This will create a run configuration and fail to run due to asserts being disabled. Add `-ea`
+ to your VM options in the run configuration to enable assertions, which can be found under `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+
+ The client should now launch with your plugin enabled. If you have a Jagex account, you will be unable to login without first following [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts).
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
@@ -102,16 +108,18 @@ commit=9db374fc205c5aae1f99bd5fd127266076f40ec8
 
  7. Write a short description of what your plugin does and then create your pull request.
 
- 8. Be patient and wait for your plugin to be reviewed and merged.
+ 8. Check the result of your PR's CI workflow. With a ✔️ all is good, however if it has a ❌ next to your commit click it to check the build log for details of the failure. Once you've read over the build error, make the required changes, and push another commit to update the PR with the new `commit=` hash.  
+Don't worry about how many times it takes you to resolve build errors; we prefer all changes be kept in a single pull request to avoid spamming notifications with further newly-opened PRs.
+
+ 9. Be patient and wait for your plugin to be reviewed and merged.
 
 ## Updating a plugin
 To update a plugin, simply update the manifest with the most recent commit hash. 
 
 ## Reviewing
-We will review your plugin to ensure it isn't malicious or [breaking
-jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1).
-__If it is difficult for us to ensure the plugin isn't against the rules we
-will not merge it__. 
+We will review your plugin to ensure it isn't malicious, doesn't [break Jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1), 
+or isn't one of our previously [Rejected/Rolledback features](https://github.com/runelite/runelite/wiki/Rejected-or-Rolled-Back-Features).  
+__If it is difficult for us to ensure the plugin isn't against the rules we will not merge it__. 
 
 ## Plugin resources
 Resources may be included with plugins, which are non-code and are bundled and distributed with the plugin, such as images and sounds. You may do this by placing them in `src/main/resources`. Plugins on the pluginhub are distributed in .jar form and the jars placed into the classpath. The plugin is not unpacked on disk, and you can not assume that it is. This means that using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getResource-java.lang.String- will return a jar-URL when the plugin is deployed to the pluginhub, but in your IDE will be a file-URL. This almost certainly makes it behave differently from how you expect it to, and isn't what you want.
