@@ -26,7 +26,10 @@ There are two methods to create an external plugin, you can either:
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the provided test. If you don't have a run configuration yet for the test, attempt to run it by clicking `Run test`. This will create a run configuration and fail to run due to asserts being disabled. Add `-ea`
+ to your VM options in the run configuration to enable assertions, which can be found under `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+
+ The client should now launch with your plugin enabled. If you have a Jagex account, you will be unable to login without first following [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts).
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
@@ -64,7 +67,10 @@ There are two methods to create an external plugin, you can either:
 
  3. Move the generated folder to its own git repository and open the `build.gradle` file in IntelliJ.
 
- 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the test. The test requires `-ea` to be added to your VM options to enable assertions, which can be found in IntellIJ in `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 4. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the provided test. If you don't have a run configuration yet for the test, attempt to run it by clicking `Run test`. This will create a run configuration and fail to run due to asserts being disabled. Add `-ea`
+ to your VM options in the run configuration to enable assertions, which can be found under `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+
+ The client should now launch with your plugin enabled. If you have a Jagex account, you will be unable to login without first following [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts).
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
