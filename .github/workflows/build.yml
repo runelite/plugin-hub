@@ -22,14 +22,14 @@ jobs:
     if: github.event_name != 'push' || github.repository_owner == 'runelite'
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - uses: actions/setup-java@v3
+    - uses: actions/setup-java@v4
       with:
         distribution: adopt
         java-version: 11
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches/
@@ -68,12 +68,12 @@ jobs:
           export PACKAGE_COMMIT_RANGE="${COMMIT_RANGE:-${COMMIT_BEFORE:+$COMMIT_BEFORE...$COMMIT_AFTER}}"
         fi
         exec java -XX:+UseParallelGC -cp package/package/build/libs/package.jar net.runelite.pluginhub.packager.Packager
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: manifest_diff
         path: /tmp/manifest_diff
         retention-days: 1
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: ${{ github.event_name == 'pull_request' }}
       with:
         name: jars
@@ -85,20 +85,20 @@ jobs:
     concurrency: upload
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 1
-    - uses: actions/setup-java@v3
+    - uses: actions/setup-java@v4
       with:
         distribution: adopt
         java-version: 11
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches/
           ~/.gradle/wrapper/
         key: upload-${{ env.CACHE_VERSION }}
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: manifest_diff
         path: /tmp
