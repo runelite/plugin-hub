@@ -10,6 +10,12 @@ provided "as is"; we make no guarantees about any plugin in this repo.
 We recommend [IntelliJ Idea Community Edition](https://www.jetbrains.com/idea/download/) as well as Java 11. You can either have
 IntelliJ install Java (select `Eclipse Temurin`) or download it from https://adoptium.net/temurin/releases/. You must also have a GitHub account.
 
+## Contribute to existing plugins
+
+We recommend contributing to existing plugins if the author(s) are accepting contributions, and the feature you want to add fits well into the plugin, to avoid fragmentation of plugin ecosystem. Reducing plugin fragmentation helps users discover features more easily, and helps us review changes in a more timely manner.
+
+You may contribute to existing plugins by selecting the plugin from https://runelite.net/plugin-hub, navigating to the plugin's GitHub repository by following the "Report an issue" link, and then following the "Create new plugins" section below from step 3.
+
 ## Creating new plugins
  1. Generate your own repository from the [plugin template](https://github.com/runelite/example-plugin/generate) link.
     Alternatively, you may use the `create_new_plugin.py` script provided in this repository to generate a new plugin project.
