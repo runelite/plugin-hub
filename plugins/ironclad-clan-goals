@@ -1,4 +1,4 @@
 repository=https://github.com/ironclad-osrs/runelite-plugin.git
-commit=99f31b87984e7e85049d8a154cb54aab4136cdfd
+commit=dd8cebfa2704a559ea74dd3ead3cd34782ad948c
 authors=dextermb
 warning=This plugin sends player data to a 3rd party server not controlled by RuneLite or Jagex.
