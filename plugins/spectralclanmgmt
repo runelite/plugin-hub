@@ -1,3 +1,3 @@
 repository=https://github.com/rebelego/spectralclanmgmt.git
-commit=440916f12db50c0858479cd886dc1bdf258083a8
+commit=4404f724806f2a2f7405016ac508e0cfdd9f575e
 warning=This plugin may submit certain data to a 3rd-party server not controlled or verified by the RuneLite Developers. This data could include any of the following: your IP address, your current in-game name, your previous in-game name, and/or your clan join date. IP addresses are transmitted as part of the HTTP request and are not retained by the server.
