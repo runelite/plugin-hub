@@ -20,6 +20,9 @@ dependencies {
 	core "org.projectlombok:lombok:1.18.30"
 	core "org.jetbrains:annotations:23.0.0"
 
+	thirdParty("org.xerial:sqlite-jdbc:3.46.0.0") {
+		because "quest-voiceover"
+	}
 	thirdParty("org.zeromq:jnacl:0.1.0") {
 		because "keepass-xc"
 	}
@@ -69,6 +72,7 @@ dependencies {
 	thirdParty("org.json:json:20090211") {
 		because "gimptracker"
 	}
+
 	thirdParty("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0") {
 		because "elysiumevents-plugin"
 		exclude group: 'com.google.guava'
