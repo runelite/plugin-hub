@@ -124,6 +124,10 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
 	}
+
+	thirdParty("com.fazecast:jSerialComm:2.7.0") {
+		because "arduino-idle.notifier"
+	}
 }
 
 task verifyCore {
