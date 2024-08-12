@@ -105,6 +105,11 @@ dependencies {
 	thirdParty("org.apache.httpcomponents.core5:httpcore5:5.2") {
 		because "osrs-archipelago"
 	}
+
+	thirdParty("dev.koifysh:archipelago-client:0.1.18") {
+		because "osrs-archipelago"
+	}
+
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
 		because "gpu-experimental"
 	}
