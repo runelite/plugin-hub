@@ -106,11 +106,7 @@ dependencies {
 		exclude group: 'org.apache.commons', module: 'commons-pool2'
 	}
 
-	thirdParty("org.apache.httpcomponents.core5:httpcore5:5.2") {
-		because "osrs-archipelago"
-	}
-
-	thirdParty("dev.koifysh:archipelago-client:0.1.18") {
+	thirdParty("dev.koifysh:archipelago-client:0.1.19") {
 		because "osrs-archipelago"
 	}
 
