@@ -110,7 +110,7 @@ dependencies {
 		because "osrs-archipelago"
 	}
 
-	thirdParty("dev.koifysh:archipelago-client:0.1.18") {
+	thirdParty("dev.koifysh:archipelago-client:0.1.19") {
 		because "osrs-archipelago"
 	}
 
