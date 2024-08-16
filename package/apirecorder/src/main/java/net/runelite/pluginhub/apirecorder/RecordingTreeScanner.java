@@ -130,6 +130,14 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 	}
 
 	@Override
+	public Void visitMemberReference(MemberReferenceTree node, Void unused)
+	{
+		TypeMirror receiver = trees.getTypeMirror(new TreePath(getCurrentPath(), node.getQualifierExpression()));
+		recordElement(trees.getElement(getCurrentPath()), receiver);
+		return super.visitMemberReference(node, unused);
+	}
+
+	@Override
 	public Void visitClass(ClassTree node, Void unused)
 	{
 		// it is hard to resolve the implicit receiver from this-calls to superclasses
