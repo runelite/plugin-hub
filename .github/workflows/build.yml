@@ -13,7 +13,7 @@ on:
   push:
   pull_request:
 env:
-  CACHE_VERSION: 2.3.1
+  CACHE_VERSION: 2.4.0
 jobs:
   build:
     # any forks that predate this repo having an action will have actions
