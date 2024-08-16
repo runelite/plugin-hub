@@ -26,8 +26,7 @@ package net.runelite.pluginhub.packager;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.stream.Collectors;
-import net.runelite.pluginhub.apirecorder.API;
+import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -36,15 +35,10 @@ public class DisallowedAPIsTest
 	@Test
 	public void testDisallowedExist() throws IOException
 	{
-		API api = Packager.calculateAPI();
-		API disallowed;
 		try (InputStream is = Packager.class.getResourceAsStream("disallowed-apis.txt"))
 		{
-			disallowed = API.decodePlain(is);
+			Map<String, String> disallowed = Plugin.CURRENT_API.parseCommented(is, true);
+			disallowed.forEach((k, v) -> Assert.assertFalse(k + " -> " + v, v.isEmpty()));
 		}
-
-		String missing = disallowed.missingFrom(api)
-			.collect(Collectors.joining("\n"));
-		Assert.assertEquals("", missing);
 	}
 }

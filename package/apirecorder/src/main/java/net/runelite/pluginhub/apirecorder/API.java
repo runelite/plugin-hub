@@ -34,16 +34,24 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.reflect.Modifier;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.objectweb.asm.Opcodes;
 
+@Slf4j
 @RequiredArgsConstructor
 public class API
 {
@@ -85,6 +93,79 @@ public class API
 			.collect(ImmutableSet.toImmutableSet()));
 	}
 
+	public Map<String, String> parseCommented(InputStream is, boolean checked) throws IOException
+	{
+		Map<String, String> out = new HashMap<>();
+		String comment = "";
+		boolean clearComment = true;
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+		for (String line; (line = br.readLine()) != null; )
+		{
+			if (line.trim().isEmpty())
+			{
+				continue;
+			}
+
+			if (line.startsWith("#"))
+			{
+				if (clearComment)
+				{
+					clearComment = false;
+					comment = "";
+				}
+				else
+				{
+					comment += "\n";
+				}
+
+				comment += line.substring(1).trim();
+				continue;
+			}
+			clearComment = true;
+
+			if (line.startsWith("/"))
+			{
+				String re = line.trim();
+				Pattern p = Pattern.compile(re.substring(1, re.length() - 1));
+				List<String> keys = apis.stream().filter(p.asPredicate()).collect(Collectors.toList());
+				if (keys.isEmpty())
+				{
+					if (checked)
+					{
+						throw new RuntimeException("no apis match regex \"" + line + "\"");
+					}
+					else
+					{
+						log.warn("no apis match regex \"{}\"", line);
+					}
+				}
+
+				for (String k : keys)
+				{
+					out.put(k, comment.isEmpty() ? k : comment);
+				}
+			}
+			else
+			{
+				if (!apis.contains(line))
+				{
+					if (checked)
+					{
+						throw new RuntimeException("no apis match \"" + line + "\"");
+					}
+					else
+					{
+						log.warn("no apis match \"{}\"", line);
+					}
+				}
+
+				out.put(line, comment.isEmpty() ? line : comment);
+			}
+		}
+
+		return out;
+	}
+
 	public void encode(OutputStream os) throws IOException
 	{
 		encode(os, apis.stream());
@@ -100,6 +181,14 @@ public class API
 	{
 		return apis.stream()
 			.filter(a -> other.getApis().contains(a));
+	}
+
+	public Set<String> disallowed(Map<String, String> disaslowed)
+	{
+		return apis.stream()
+			.map(disaslowed::get)
+			.filter(Objects::nonNull)
+			.collect(Collectors.toSet());
 	}
 
 	public static String modifiersToString(int modifiers, boolean member)
@@ -146,6 +235,11 @@ public class API
 		{
 			apis.add(descriptor + modifiersToString(modifiers, false));
 		}
+	}
+
+	public void recordClassHierarchy(String from, String superDescriptor)
+	{
+		apis.add(from + ">" + superDescriptor);
 	}
 
 	public void recordMethod(int modifiers, String classDescriptor, CharSequence name, String descriptor)
