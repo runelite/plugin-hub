@@ -7,7 +7,7 @@ repositories {
 	maven {
 		url = 'https://repo.runelite.net'
 		content {
-			includeGroupByRegex("net\\.runelite\\.*")
+			includeGroupByRegex("net\\.runelite.*")
 		}
 	}
 	mavenCentral()
