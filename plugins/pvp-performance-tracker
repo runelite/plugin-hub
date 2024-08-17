@@ -1,2 +1,3 @@
 repository=https://github.com/Matsyir/pvp-performance-tracker.git
 commit=9fb9a9a8630331a038248d7f76c9ca0e5f206569
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
