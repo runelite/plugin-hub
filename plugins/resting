@@ -1,2 +1,3 @@
 repository=https://github.com/ScreteMonge/TestPlugin.git
 commit=a20daf32a6db0802cf6cced989fcb87bc1657263
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
