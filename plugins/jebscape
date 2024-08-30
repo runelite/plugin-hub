@@ -1,3 +1,3 @@
 repository=https://github.com/JebScape/JebScape-Client.git
-commit=0e45899b5dab759ecf65af65379715dccd0816d3
+commit=11faef25bb607758218a87cc418c1597b6ef4d3e
 warning=This plugin sends game data and your IP address to a third party server to facilitate communication between clients across separate worlds.
