@@ -61,6 +61,11 @@ public class ClassRecorder extends ClassVisitor
 	{
 		this.className = "L" + name + ";";
 		api.recordClass(access, className);
+		api.recordClassHierarchy(this.className, "L" + superName + ";");
+		for (String iface : interfaces)
+		{
+			api.recordClassHierarchy(this.className, "L" + iface + ";");
+		}
 		super.visit(version, access, name, signature, superName, interfaces);
 	}
 
@@ -102,7 +107,7 @@ public class ClassRecorder extends ClassVisitor
 		}
 	}
 
-	public static void main(String ...classes) throws IOException
+	public static void main(String... classes) throws IOException
 	{
 		var cr = new ClassRecorder();
 		Iterator<String> args = List.of(classes).iterator();
