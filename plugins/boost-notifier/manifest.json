@@ -1,0 +1,10 @@
+{
+  "id": "boostnotifier",
+  "internalName": "boostnotifier",
+  "displayName": "Boost Notifier",
+  "description": "Notifies the player when skill boosts reach specified thresholds.",
+  "author": "rikbreukers",
+  "tags": ["combat", "boost", "notification"],
+  "repo": "https://github.com/rikbreukers/boost-notifier",
+  "version": "1.0"
+}
