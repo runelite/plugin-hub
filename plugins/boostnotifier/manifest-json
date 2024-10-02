@@ -3,7 +3,7 @@
   "internalName": "boostnotifier",
   "displayName": "Boost Notifier",
   "description": "Notifies you when skill boosts drop below certain thresholds.",
-  "author": "Your Name",
+  "author": "rikbreukers",
   "tags": ["boost", "notification"],
   "version": "1.0",
   "dependencies": ["runelite-api"],
