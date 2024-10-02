@@ -1,0 +1,10 @@
+{
+  "id": "boostnotifier",
+  "internalName": "boostnotifier",
+  "displayName": "Boost Notifier",
+  "description": "Notifies you when your selected skill boost drops to certain levels",
+  "author": "Rik Breukers",
+  "tags": ["combat", "boost", "notification"],
+  "repo": "https://github.com/rikbreukers/boost-notifier",
+  "version": "1.0"
+}
