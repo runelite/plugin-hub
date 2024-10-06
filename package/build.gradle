@@ -35,7 +35,9 @@ allprojects {
 subprojects {
 	apply plugin: "java"
 
-	sourceCompatibility = 11
+	java {
+		sourceCompatibility = 11
+	}
 
 	task shadowJar(type: Jar) {
 		archiveFileName.set archiveBaseName.get() + "." + archiveExtension.get()
