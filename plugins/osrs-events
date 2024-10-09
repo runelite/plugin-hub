@@ -1,2 +1,4 @@
 repository=https://github.com/llamaXc/osrs-events.git
-commit=a192eefa44dff9ba832ae620b209d72ebf98fff6
+commit=0e0eb9a8156fcb03dafa21b0442392718c94fc9c
+authors=llamaXc,eggins
+disabled=unmaintained
