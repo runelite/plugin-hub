@@ -124,6 +124,9 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
 	}
+	thirdParty("net.sf.sociaal:freetts:1.2.2") {
+		because "thenotifier"
+	}
 }
 
 task verifyCore {
