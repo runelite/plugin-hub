@@ -25,12 +25,15 @@
 package net.runelite.pluginhub.apirecorder;
 
 import com.sun.source.tree.AnnotationTree;
+import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.IdentifierTree;
 import com.sun.source.tree.ImportTree;
+import com.sun.source.tree.MemberReferenceTree;
 import com.sun.source.tree.MemberSelectTree;
 import com.sun.source.tree.MethodInvocationTree;
 import com.sun.source.tree.NewClassTree;
 import com.sun.source.tree.PackageTree;
+import com.sun.source.tree.Tree;
 import com.sun.source.util.JavacTask;
 import com.sun.source.util.TreePath;
 import com.sun.source.util.TreePathScanner;
@@ -48,6 +51,9 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.NoType;
+import javax.lang.model.type.NullType;
+import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.util.Elements;
@@ -104,28 +110,53 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 	@Override
 	public Void visitIdentifier(IdentifierTree node, Void unused)
 	{
-		recordElement(trees.getElement(getCurrentPath()));
+		recordElement(trees.getElement(getCurrentPath()), null);
 		return null;
 	}
 
 	@Override
 	public Void visitMemberSelect(MemberSelectTree node, Void unused)
 	{
-		recordElement(trees.getElement(getCurrentPath()));
+		TypeMirror receiver = trees.getTypeMirror(new TreePath(getCurrentPath(), node.getExpression()));
+		recordElement(trees.getElement(getCurrentPath()), receiver);
 		return super.visitMemberSelect(node, unused);
 	}
 
 	@Override
 	public Void visitMethodInvocation(MethodInvocationTree node, Void unused)
 	{
-		recordElement(trees.getElement(getCurrentPath()));
+		recordElement(trees.getElement(getCurrentPath()), null);
 		return super.visitMethodInvocation(node, unused);
+	}
+
+	@Override
+	public Void visitMemberReference(MemberReferenceTree node, Void unused)
+	{
+		TypeMirror receiver = trees.getTypeMirror(new TreePath(getCurrentPath(), node.getQualifierExpression()));
+		recordElement(trees.getElement(getCurrentPath()), receiver);
+		return super.visitMemberReference(node, unused);
+	}
+
+	@Override
+	public Void visitClass(ClassTree node, Void unused)
+	{
+		// it is hard to resolve the implicit receiver from this-calls to superclasses
+		// so record the whole hierarchy for all extends/implements clauses
+		if (node.getExtendsClause() != null)
+		{
+			recordFullHierarchy(trees.getElement(new TreePath(getCurrentPath(), node.getExtendsClause())).asType());
+		}
+		for (Tree iface : node.getImplementsClause())
+		{
+			recordFullHierarchy(trees.getElement(new TreePath(getCurrentPath(), iface)).asType());
+		}
+		return super.visitClass(node, unused);
 	}
 
 	@Override
 	public Void visitNewClass(NewClassTree node, Void unused)
 	{
-		recordElement(trees.getElement(getCurrentPath()));
+		recordElement(trees.getElement(getCurrentPath()), null);
 		return super.visitNewClass(node, unused);
 	}
 
@@ -152,30 +183,45 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 	}
 
 	@SneakyThrows
-	private boolean shouldRecord(Element element)
+	private boolean shouldRecord(TypeMirror tm)
 	{
-		if (element instanceof TypeElement)
+		if (tm instanceof DeclaredType)
 		{
+			Element e = ((DeclaredType) tm).asElement();
+
 			// there isn't a particularly nice way to find where a symbol is resolved from in the public api
-			JavaFileObject classfile = ((Symbol.ClassSymbol) element).classfile;
+			JavaFileObject classfile = ((Symbol.ClassSymbol) e).classfile;
 			if (classfile == null || classfile.getKind() == JavaFileObject.Kind.SOURCE)
 			{
 				return false;
 			}
 
-			TypeMirror tm = element.asType();
-			if (tm instanceof DeclaredType)
-			{
-				Element e = ((DeclaredType) tm).asElement();
-				String fqn = elements.getBinaryName((TypeElement) e).toString();
-				return jvmClassCache.computeIfAbsent(fqn, name ->
-					ClassLoader.getPlatformClassLoader()
-						.getResource(fqn.replace('.', '/') + ".class") == null);
-			}
-			else
-			{
-				unexpected(tm);
-			}
+			String fqn = elements.getBinaryName((TypeElement) e).toString();
+			return jvmClassCache.computeIfAbsent(fqn, name ->
+				ClassLoader.getPlatformClassLoader()
+					.getResource(fqn.replace('.', '/') + ".class") == null);
+		}
+		else if (tm instanceof TypeVariable)
+		{
+			return shouldRecord(((TypeVariable) tm).getLowerBound());
+		}
+		else if (tm instanceof ArrayType || tm instanceof NullType || tm instanceof NoType || tm instanceof PrimitiveType)
+		{
+			// ignored
+		}
+		else
+		{
+			unexpected(tm);
+		}
+		return false;
+	}
+
+	@SneakyThrows
+	private boolean shouldRecord(Element element)
+	{
+		if (element instanceof TypeElement)
+		{
+			return shouldRecord(element.asType());
 		}
 		else if (element instanceof PackageElement)
 		{
@@ -195,11 +241,69 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 		return false;
 	}
 
-	private void recordElement(Element element)
+	private boolean isJLObject(TypeMirror tm)
+	{
+		tm = types.erasure(tm);
+		return tm instanceof DeclaredType && elements.getBinaryName((TypeElement) ((DeclaredType) tm).asElement()).contentEquals("java.lang.Object");
+	}
+
+	private void recordElement(Element element, TypeMirror receiverType)
 	{
 		if (element == null)
 		{
 			unexpected(element);
+		}
+
+		if (receiverType != null && shouldRecord(receiverType))
+		{
+			if (element instanceof ExecutableElement)
+			{
+				TypeMirror realRecv = element.getEnclosingElement().asType();
+
+				if (!isJLObject(realRecv) && !recordClassHierarchy(receiverType, realRecv))
+				{
+					log.warn("could not find {} in {}", receiverType, realRecv);
+					unexpected(realRecv);
+				}
+			}
+			else if (element instanceof VariableElement)
+			{
+				switch (element.getKind())
+				{
+					case FIELD:
+					case ENUM_CONSTANT:
+						TypeMirror realRecv = element.getEnclosingElement().asType();
+
+						if (!isJLObject(realRecv) && !recordClassHierarchy(receiverType, realRecv))
+						{
+							log.warn("could not find {} in {}", receiverType, realRecv);
+							unexpected(realRecv);
+						}
+						break;
+					case RESOURCE_VARIABLE:
+					case LOCAL_VARIABLE:
+					case PARAMETER:
+						return;
+					default:
+						unexpected(element);
+						return;
+				}
+			}
+			else if (element instanceof TypeElement)
+			{
+				// Inner class ref
+				TypeMirror realRecv = element.getEnclosingElement().asType();
+
+				if (!isJLObject(realRecv) && !recordClassHierarchy(receiverType, realRecv))
+				{
+					log.warn("could not find {} in {}", receiverType, realRecv);
+					unexpected(realRecv);
+				}
+			}
+			else
+			{
+				unexpected(element);
+			}
 		}
 
 		if (!shouldRecord(element))
@@ -270,6 +374,45 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 		else
 		{
 			unexpected(element);
+		}
+	}
+
+	private boolean recordClassHierarchy(TypeMirror from, TypeMirror target)
+	{
+		// no public api for superclass, without getting a TypeElement
+		if (types.isSameType(types.erasure(from), types.erasure(target)))
+		{
+			return true;
+		}
+
+		boolean hit = false;
+		for (TypeMirror m : types.directSupertypes(from))
+		{
+			if (recordClassHierarchy(m, target))
+			{
+				hit = true;
+				if (shouldRecord(from))
+				{
+					api.recordClassHierarchy(typeDescriptor(from), typeDescriptor(m));
+				}
+			}
+		}
+
+		return hit;
+	}
+
+	private void recordFullHierarchy(TypeMirror from)
+	{
+		if (shouldRecord(from))
+		{
+			for (TypeMirror m : types.directSupertypes(from))
+			{
+				if (!isJLObject(m))
+				{
+					recordFullHierarchy(m);
+					api.recordClassHierarchy(typeDescriptor(from), typeDescriptor(m));
+				}
+			}
 		}
 	}
 
@@ -381,6 +524,6 @@ class RecordingTreeScanner extends TreePathScanner<Void, Void>
 		partial = true;
 		TreePath p = getCurrentPath();
 		for (int i = 0; p.getParentPath() != null && i < 1; p = p.getParentPath(), i++) ;
-		log.info("{}", PrintingScanner.print(p.getLeaf()));
+		log.info("{} {}", getCurrentPath().getCompilationUnit().getSourceFile().getName(), PrintingScanner.print(p.getLeaf()));
 	}
 }
