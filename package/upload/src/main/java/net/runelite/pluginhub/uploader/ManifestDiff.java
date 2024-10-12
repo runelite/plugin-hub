@@ -35,7 +35,10 @@ public class ManifestDiff
 	private Set<String> remove = Sets.newConcurrentHashSet();
 
 	@Getter
-	private Set<ExternalPluginManifest> add = Sets.newConcurrentHashSet();
+	private Set<PluginHubManifest.JarData> addJarData = Sets.newConcurrentHashSet();
+
+	@Getter
+	private Set<PluginHubManifest.DisplayData> addDisplayData = Sets.newConcurrentHashSet();
 
 	@Getter
 	private Set<String> copyFromOld = Sets.newConcurrentHashSet();
