@@ -1,2 +1,3 @@
 repository=https://github.com/SkyBouncer/sky_slayer.git
 commit=ab4c245996bcb23e5e5222be6a3a0b78624c814c
+disabled=breaks other plugins ability to highlight
