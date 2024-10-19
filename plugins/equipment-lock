@@ -1,0 +1,3 @@
+repository=https://github.com/Matimatician/Equipment-Lock.git
+commit=b266046405611f35111415955ad675d75b1f4249
+warning=This plugin submits your account hash, IP address, group ID, and items equipped to a 3rd party server not controlled or verified by the RuneLite Developers. Also, the plugin may momentarily freeze the client when you equip a new item.
