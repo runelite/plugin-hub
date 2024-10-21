@@ -237,6 +237,11 @@ public class API
 		}
 	}
 
+	public void recordClassHierarchy(String from, String superDescriptor)
+	{
+		apis.add(from + ">" + superDescriptor);
+	}
+
 	public void recordMethod(int modifiers, String classDescriptor, CharSequence name, String descriptor)
 	{
 		if (classDescriptor != null & descriptor != null)
