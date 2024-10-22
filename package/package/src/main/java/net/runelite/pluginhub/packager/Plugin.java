@@ -632,7 +632,7 @@ public class Plugin implements Closeable
 			long srcSizeLimitMiB = Math.max(MAX_SRC_SIZE_MIB, jarSizeLimitMiB);
 			if (size > (srcSizeLimitMiB + 1) * MIB) // allow the header to be a bit bigger
 			{
-				throw PluginBuildException.of(this, "the source archive is {}MiB, which is above our limit of MiB", srcSizeLimitMiB);
+				throw PluginBuildException.of(this, "the source archive is {}MiB, which is above our limit of {}MiB", size / MIB, srcSizeLimitMiB);
 			}
 		}
 
