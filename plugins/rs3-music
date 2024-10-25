@@ -1,0 +1,3 @@
+repository=https://github.com/Frunkh/rl-rs3-music.git
+commit=9da74ef4a53d94f575e9a004e699e209991dfee1
+warning=This plugin retrieves the RS3 music from rs3.frunk.ovh, a 3rd party website not controlled or verified by the RuneLite Developers.
