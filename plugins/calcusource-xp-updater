@@ -1,0 +1,3 @@
+repository=https://github.com/hessrs/calcusource-xp-updater.git
+commit=050bc975aa04208ea34d8b0c2a50e25298e3f772
+warning=This plugin submits your player data and IP address to a server not controlled or verified by the RuneLite developers.
