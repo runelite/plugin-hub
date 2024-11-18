@@ -1,2 +1,3 @@
 repository=https://github.com/thatgamerblue/runelite-rsn-hider.git
-commit=7fbc58631dd332c2bc24a860eebc1026f57d847d
+commit=116d011317fb69c1980e6931b723ec9430936175
+warning=This plugin can freeze your client and make it unusable. We recommend not using it.
