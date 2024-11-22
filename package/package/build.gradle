@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-	implementation "org.gradle:gradle-tooling-api:7.4"
+	implementation "org.gradle:gradle-tooling-api:8.10"
 	implementation "org.slf4j:slf4j-simple:1.7.10"
 	implementation "com.google.code.findbugs:jsr305:3.0.2"
 	implementation "com.google.guava:guava:23.2-jre"
@@ -40,7 +40,7 @@ dependencies {
 	implementation project(":upload")
 	implementation project(":apirecorder")
 
-	def lombok = "org.projectlombok:lombok:1.18.4";
+	def lombok = "org.projectlombok:lombok:1.18.30";
 	compileOnly lombok
 	annotationProcessor lombok
 	testCompileOnly lombok
