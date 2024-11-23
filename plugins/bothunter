@@ -1,4 +1,4 @@
 repository=https://github.com/olipayne/BotHunterPlugin.git
-commit=b828fb7a7b987998d998d4b7969fed4f2319555e
+commit=0a2b41549acd66964d7a37d3de5ab6dbc830d4be
 warning=The BotHunter plugin submits the names, locations, and gear of encountered Players. This information is passed to a service not controlled or verified by the RuneLite Developers.
 authors=olipayne
