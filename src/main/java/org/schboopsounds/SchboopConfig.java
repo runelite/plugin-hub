@@ -18,24 +18,12 @@ public interface SchboopConfig extends Config
 	{
 		return 100;
 	}
-
-	@ConfigItem(
-			keyName = "Schboop_says_Moo",
-			name = "Moo Mode",
-			description = "Configure whether or not Schboop should moo in various cow-associated situations.",
-			position = 5
-	)
-	default boolean Schboop_says_Moo()
-	{
-
-		return true;
-	}
-
+	
 	@ConfigItem(
 			keyName = "Pops_Died",
 			name = "'What happened?' on death",
 			description = "Configure whether or not Pops should say 'what happened?' when you die.",
-			position = 0
+			position = 1
 	)
 	default boolean Pops_Died()
 	{
@@ -47,7 +35,7 @@ public interface SchboopConfig extends Config
 			keyName = "lowHP",
 			name = "Low HP Warnings",
 			description = "Configure whether or not Schboop reminds you to drink a yellow when you health is low.",
-			position = 1
+			position = 2
 	)
 	default boolean lowHP()
 	{
@@ -59,7 +47,7 @@ public interface SchboopConfig extends Config
 			keyName = "lowpray",
 			name = "Low Prayer Warning",
 			description = "Configure whether or not Schboop reminds you to drink a pink at 20% prayer.",
-			position = 2
+			position = 3
 	)
 	default boolean lowpray()
 	{
@@ -71,7 +59,7 @@ public interface SchboopConfig extends Config
 			keyName = "achievement",
 			name = "Achievement Reactions",
 			description = "Configure whether or not Pops makes fun of your achievements.",
-			position = 3
+			position = 4
 	)
 	default boolean achievement()
 	{
@@ -83,9 +71,21 @@ public interface SchboopConfig extends Config
 			keyName = "roast",
 			name = "Roast Mode",
 			description = "Configure whether or not Pops makes fun of you in assorted circumstances.",
-			position = 4
+			position = 5
 	)
 	default boolean roast()
+	{
+
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "Schboop_says_Moo",
+			name = "Moo Mode",
+			description = "Configure whether or not Schboop should moo in various cow-associated situations.",
+			position = 6
+	)
+	default boolean Schboop_says_Moo()
 	{
 
 		return true;

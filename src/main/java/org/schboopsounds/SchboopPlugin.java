@@ -101,11 +101,14 @@ public class SchboopPlugin extends Plugin
 
 	@Inject
 	private OkHttpClient okHttpClient;
-	private static final Pattern COLLECTION_LOG_ITEM_REGEX = Pattern.compile("New item added to your collection log:.*");
-	private static final Pattern EASY_TASK_REGEX = Pattern.compile("Well done! You have completed an easy task.*");
-	private static final Pattern MEDIUM_TASK_REGEX = Pattern.compile("Well done! You have completed a medium task.*");
-	private static final Pattern HARD_TASK_REGEX = Pattern.compile("Well done! You have completed a hard task.*");
-	private static final Pattern ELITE_TASK_REGEX = Pattern.compile("Well done! You have completed an elite task.*");
+	private static final Pattern COLLECTION_LOG_ITEM_REGEX = Pattern.compile("New item added to your collection log:.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern EASY_TASK_REGEX = Pattern.compile("Well done! You have completed an easy task.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern MEDIUM_TASK_REGEX = Pattern.compile("Well done! You have completed a medium task.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern HARD_TASK_REGEX = Pattern.compile("Well done! You have completed a hard task.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern ELITE_TASK_REGEX = Pattern.compile("Well done! You have completed an elite task.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern[] DIARY_LIST_REGEX = new Pattern[]{
+			EASY_TASK_REGEX, MEDIUM_TASK_REGEX, HARD_TASK_REGEX, ELITE_TASK_REGEX
+	};
 	private static final Pattern NEW_LEVEL_REGEX = Pattern.compile("Congratulations, you've just advanced your.*");
 	private static final Pattern NEW_PLACE_REGEX = Pattern.compile("You have unlocked a new music track.*");
 
@@ -122,13 +125,15 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern COW_EXAMINE_REGEX4 = Pattern.compile("A cow by any other name would smell as sweet.*");
 	private static final Pattern DAIRY_EXAMINE_REGEX = Pattern.compile("Fit for milking.*");
 	private static final Pattern CALF_EXAMINE_REGEX = Pattern.compile("Young and tender; nearly ready for the slaughter.*");
+	private static final Pattern CALF_EXAMINE_REGEX2 = Pattern.compile("Prelude to a steak.*");
 	private static final Pattern BOB_EXAMINE_REGEX = Pattern.compile("Hey, it's Bob the cat.*");
-	private static final Pattern MEOW_REGEX = Pattern.compile("Meo.*");
-	private static final Pattern MEOW_REGEX2 = Pattern.compile("Meee.*");
-	private static final Pattern MEOW_REGEX3 = Pattern.compile("Yowl.*");
 	private static final Pattern CAT_EXAMINE_REGEX = Pattern.compile("A fully grown feline.*");
 	private static final Pattern KITTEN_EXAMINE_REGEX = Pattern.compile("A friendly little pet.*");
-
+	private static final Pattern[] MOO_LIST_REGEX = new Pattern[]{
+			COW_EXAMINE_REGEX, COW_EXAMINE_REGEX2, COW_EXAMINE_REGEX3, COW_EXAMINE_REGEX4,
+			DAIRY_EXAMINE_REGEX, CALF_EXAMINE_REGEX, BOB_EXAMINE_REGEX, CAT_EXAMINE_REGEX,
+			KITTEN_EXAMINE_REGEX, CALF_EXAMINE_REGEX2
+	};
 	// bones you shouldn't bury:
 	private static final Pattern BONES_REGEX1 = Pattern.compile(".*\\>Superior dragon bones\\<.*");
 	private static final Pattern BONES_REGEX2 = Pattern.compile(".*\\>Wyrm bones\\<.*");
@@ -142,7 +147,12 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern BONES_REGEX11 = Pattern.compile(".*\\>Fayrg bones\\<.*");
 	private static final Pattern BONES_REGEX12 = Pattern.compile(".*\\>Drake bones\\<.*");
 	private static final Pattern BONES_REGEX13 = Pattern.compile(".*\\>Babydragon bones\\<.*");
-
+	// private static final Pattern BONES_REGEX14 = Pattern.compile(".*\\>Bones\\<.*"); //F2P test
+	private static final Pattern[] BONES_LIST_REGEX = new Pattern[]{
+			BONES_REGEX1, BONES_REGEX2, BONES_REGEX3, BONES_REGEX4,
+			BONES_REGEX5, BONES_REGEX6, BONES_REGEX7, BONES_REGEX8,
+			BONES_REGEX10, BONES_REGEX11, BONES_REGEX12, BONES_REGEX13//, BONES_REGEX14
+	};
 	// https://github.com/evaan/tedious-collection-log/blob/master/src/main/java/xyz/evaan/TediousCollectionLogPlugin.java
 	// collection log related example -- this functionality may not work as I can't test it
 
@@ -150,7 +160,7 @@ public class SchboopPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		initSoundFiles();
-		// playSound(MORON); // for testing purposes
+		//playSound(Dad2); // for testing purposes
 		for (int i = 0; i < Skill.values().length; i++) // this keeps track of stats:
 		{
 			previousStats[i] = client.getBoostedSkillLevel(Skill.values()[i]);
@@ -251,42 +261,13 @@ public class SchboopPlugin extends Plugin
 
 	@Subscribe
 	public void onChatMessage(ChatMessage chatMessage) {
-		// I got carried away and put a lot of moo triggers in for no reason
-		if (COW_EXAMINE_REGEX.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM) {
-			playSound(SchboopMoo);
-		}
-		if (COW_EXAMINE_REGEX2.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM) {
-			playSound(SchboopMoo);
-		}
-		if (COW_EXAMINE_REGEX3.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM) {
-			playSound(SchboopMoo);
-		}
-		if (COW_EXAMINE_REGEX4.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM) {
-			playSound(SchboopMoo);
-		}
-		if(DAIRY_EXAMINE_REGEX.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM){
-			playSound(SchboopMoo);
-		}
-		if(CALF_EXAMINE_REGEX.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM){
-			playSound(SchboopMoo);
-		}
-		if(BOB_EXAMINE_REGEX.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM){
-			playSound(SchboopMoo);
-		}
-		if(MEOW_REGEX.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM){
-			playSound(SchboopMoo);
-		}
-		if(MEOW_REGEX2.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM){
-			playSound(SchboopMoo);
-		}
-		if(MEOW_REGEX3.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM){
-			playSound(SchboopMoo);
-		}
-		if(CAT_EXAMINE_REGEX.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM){
-			playSound(SchboopMoo);
-		}
-		if(KITTEN_EXAMINE_REGEX.matcher(chatMessage.getMessage()).matches() && config.Schboop_says_Moo() && chatMessage.getType() != ChatMessageType.SPAM){
-			playSound(SchboopMoo);
+		if(config.Schboop_says_Moo()){
+			for (Pattern pattern : MOO_LIST_REGEX) {
+				if (pattern.matcher(chatMessage.getMessage()).matches()) {
+					playSound(SchboopMoo);
+					break; // Stop checking further once a match is found
+				}
+			}
 		}
 
 		// secret chat triggers (cannot be toggled)
@@ -304,43 +285,39 @@ public class SchboopPlugin extends Plugin
 		if (chatMessage.getType() != ChatMessageType.GAMEMESSAGE && chatMessage.getType() != ChatMessageType.SPAM) {
 			return;
 		}
+		if(config.achievement()){
+			for (Pattern pattern : DIARY_LIST_REGEX) {
+				if (pattern.matcher(chatMessage.getMessage()).matches()) {
+					playSound(Dad2);
+					break; // Stop checking further once a match is found
+				}
+			}
+		}
 		if (COLLECTION_LOG_ITEM_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
 			playSound(Dad2);
 		}
 		if (NEW_LEVEL_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
 			playSound(Dad1);
 		}
-		if (EASY_TASK_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
-			playSound(Dad2);
-		}
-		if (MEDIUM_TASK_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
-			playSound(Dad2);
-		}
-		if (HARD_TASK_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
-			playSound(Dad2);
-		}
-		if (ELITE_TASK_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
-			playSound(Dad2);
-		}
 		if (NEW_PLACE_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
 			playSound(where); // replace this with a "where am I?" sound
 		}
-
 		// Pops calls you a moron for forgetting to bring a slash weapon to a web
 		if (WEBFAIL_REGEX.matcher(chatMessage.getMessage()).matches() && config.roast() && chatMessage.getType() != ChatMessageType.SPAM) {
 			playSound(MORON);
 		}
 	}
 
-	@Subscribe // Dad calls you a moron for taking poison damage
-	public void onHitsplatApplied(HitsplatApplied hitsplatApplied) {
-		switch (hitsplatApplied.getHitsplat().getHitsplatType()) {
-			case HitsplatID.POISON:
-				if (config.roast()){
-					playSound(MORON);
-				}
-		}
-	}
+	// removed taking poison damage because I think it might be causing the bug
+	//@Subscribe // Dad calls you a moron for taking poison damage
+	//public void onHitsplatApplied(HitsplatApplied hitsplatApplied) {
+	//	switch (hitsplatApplied.getHitsplat().getHitsplatType()) {
+	//		case HitsplatID.POISON:
+	//			if (client.getVarbitValue(Varbits.POISON) > 0 && config.roast()) { // Check poison status
+	//				playSound(MORON);
+	//			}
+	//	}
+	//}
 
 	// Pops calls you a moron for burying expensive bones
 	// Schboop tells you reading is for nerds
@@ -348,45 +325,11 @@ public class SchboopPlugin extends Plugin
 	@Subscribe
 	public void onMenuOptionClicked(MenuOptionClicked event) {
 		if("Bury".equals(event.getMenuOption()) && config.roast()) {
-			// log.warn("Item ID is:" + event.getMenuOption());
-			if (BONES_REGEX1.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX2.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX3.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX4.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX5.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX6.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX7.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX8.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX10.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX10.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX11.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX12.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
-			}
-			if (BONES_REGEX13.matcher(event.getMenuTarget()).matches()){
-				playSound(MORON);
+			for (Pattern pattern : BONES_LIST_REGEX) {
+				if (pattern.matcher(event.getMenuTarget()).matches()) {
+					playSound(MORON);
+					break; // Stop checking further once a match is found
+				}
 			}
 		}
 		if("Read".equals(event.getMenuOption()) && config.roast()){
@@ -397,9 +340,6 @@ public class SchboopPlugin extends Plugin
 			String itemName = event.getMenuTarget().toLowerCase();
 			if ((itemName.contains("potion") | itemName.contains("super ")) && !itemName.contains("stamina") && !itemName.contains("energy") && !itemName.contains("goading") && !itemName.contains("regeneration") && !itemName.contains("fire") && !itemName.contains("poison") && !itemName.contains("compost") && !itemName.contains(" set") && !itemName.contains(" kebab"))
 			{
-
-				float currentSTR = client.getBoostedSkillLevel(STRENGTH);
-				log.warn("current strength: "+currentSTR);
 				// Store current stats before potion consumption
 				for (int i = 0; i < Skill.values().length; i++)
 				{
@@ -445,12 +385,12 @@ public class SchboopPlugin extends Plugin
 		trackingPotion = false;
 	}
 
+	// This should fix Fursty's issue I hope
     private void handleItem(int id, int quantity) {
 		final ItemComposition itemComposition = itemManager.getItemComposition(id);
 		final String name = itemComposition.getName().toLowerCase();
-		//playSound(SchboopMoo);
 		if (config.Schboop_says_Moo() && name.contains("raw beef")) {
-			playSound(SchboopMoo);
+			playSound_Chaotic(SchboopMoo);
 		}
 	}
 
