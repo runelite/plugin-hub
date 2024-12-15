@@ -124,6 +124,53 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
 	}
+
+
+	thirdParty("org.lwjgl:lwjgl-openxr:3.3.2") {
+		because "rsvr"
+	}
+	thirdParty("org.lwjgl:lwjgl-openxr:3.3.2:natives-windows") {
+		because "rsvr"
+	}
+	thirdParty("org.lwjgl:lwjgl-opengl:3.3.2") {
+		because "rsvr"
+	}
+	thirdParty("org.lwjgl:lwjgl-glfw:3.3.2") {
+		because "rsvr"
+	}
+	thirdParty("org.lwjgl:lwjgl-glfw:3.3.2:natives-windows") {
+		because "rsvr"
+	}
+	thirdParty("org.lwjgl:lwjgl-egl:3.3.2") {
+		because "rsvr"
+	}
+	thirdParty("org.joml:joml:1.10.5") {
+		because "rsvr"
+	}
+	thirdParty("com.badlogicgames.gdx:gdx-freetype:1.9.9") {
+		because "rsvr"
+	}
+	thirdParty("com.badlogicgames.gdx:gdx:1.9.9") {
+		because "rsvr"
+	}
+	thirdParty("com.badlogicgames.gdx:gdx-platform:1.9.9:natives-desktop") {
+		because "rsvr"
+	}
+	thirdParty("com.badlogicgames.gdx:gdx-freetype-platform:1.9.9:natives-desktop") {
+		because "rsvr"
+	}
+	thirdParty("com.badlogicgames.gdx:gdx-box2d-platform:1.9.9:natives-desktop") {
+		because "rsvr"
+	}
+	thirdParty("com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.9") {
+		because "rsvr"
+	}
+	thirdParty("org.lwjgl:lwjgl-stb:3.3.2") {
+		because "rsvr"
+	}
+	thirdParty("org.lwjgl:lwjgl-stb:3.3.2:natives-windows") {
+		because "rsvr"
+	}
 }
 
 task verifyCore {
