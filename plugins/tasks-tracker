@@ -1,3 +1,4 @@
 repository=https://github.com/osrs-reldo/tasks-tracker-plugin.git
-commit=a259b5045e2ce2cc916b7f8e302fa7912eb8ccf0
+commit=b57d548986e211fdd1b77d7af6826cda7ffef3dc
 authors=tylerthardy
+unavailable=freezes the client when switching profiles
