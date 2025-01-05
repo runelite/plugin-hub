@@ -68,6 +68,7 @@ dependencies {
 	thirdParty("io.socket:socket.io-client:2.0.1") {
 		because "gimptracker, osrs-splits-the-kodai"
 		exclude group: 'com.squareup.okhttp3'
+		exclude group: 'com.squareup.okio'
 	}
 	thirdParty("org.json:json:20090211") {
 		because "gimptracker"
