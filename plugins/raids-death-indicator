@@ -1,5 +1,2 @@
 repository=https://github.com/vikke1234/raids-death-indicator.git
 commit=55732dd9b9883c50fa76cb8c271ee36f0f9b4aa7
-authors=Fisu
-tags=raids
-description=Tries to accurately show when mobs die in raids (currently only ToA)
