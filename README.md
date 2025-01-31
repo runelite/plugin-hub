@@ -87,7 +87,14 @@ Don't worry about how many times it takes you to resolve build errors; we prefer
  9. Be patient and wait for your plugin to be reviewed and merged.
 
 ## Updating a plugin
-To update a plugin, simply update the manifest with the most recent commit hash. 
+To update a plugin, simply update the manifest with the most recent commit hash.
+
+It is recommended to open a pull request from a separate branch. You can run the following commands from your `plugin-hub` repository directory to set up a branch:
+```bash
+$ git remote add upstream https://github.com/runelite/plugin-hub.git  # Only necessary if you have not set it before
+$ git fetch upstream && git checkout -B <your-plugin-name> upstream/master
+```
+Once your changes have been merged, you can delete the branch. The next time you would like to update your plugin, you can create the branch again.
 
 ## Reviewing
 We will review your plugin to ensure it isn't malicious, doesn't [break Jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1), 
