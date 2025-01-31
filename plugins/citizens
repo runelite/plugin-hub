@@ -1,3 +1,4 @@
 repository=https://github.com/gc/citizens.git
-commit=2e0e7f26652e007c7a33780c9b096c219cde518a
+commit=83020312e566b8135606524694de08d1f1292291
 authors=Magnaboy,Diabolickal
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
