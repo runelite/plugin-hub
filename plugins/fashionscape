@@ -1,2 +1,3 @@
 repository=https://github.com/equirs/fashionscape-plugin.git
 commit=bd2adf78d572e12a5bf5a3a451ce0e602aa64f0e
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
