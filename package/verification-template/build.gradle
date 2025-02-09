@@ -144,6 +144,40 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
 	}
+
+    thirdParty("org.checkerframework:checker-qual:3.42.0") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.errorprone:error_prone_annotations:2.26.1") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.errorprone:error_prone_parent:2.26.1") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.guava:failureaccess:1.0.2") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.guava:guava:33.1.0-jre") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.guava:guava-parent:26.0-android") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.guava:guava-parent:33.1.0-jre") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.inject:guice:4.1.0") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.inject.extensions:guice-assistedinject:4.1.0") {
+        because "naturalspeech"
+    }
+    thirdParty("net.java.dev.jna:jna:5.14.0") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava") {
+        because "naturalspeech"
+    }
 }
 
 task verifyCore {
