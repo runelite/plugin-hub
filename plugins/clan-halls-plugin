@@ -1,3 +1,3 @@
 repository=https://github.com/raphpion/clan-halls-plugin.git
-commit=569b37674ba8c6ab8bb95060f2cc94c32d322915
+commit=7c598fec05561ae972465b801164b8f0514b6998
 warning=This plugin sends your IP address, members' names and ranks, as well as the name and titles of your clan chat, to clanhalls.net, a third-party website not controlled or verified by the RuneLite developers.
