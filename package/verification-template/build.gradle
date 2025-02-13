@@ -144,6 +144,12 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
 	}
+    thirdParty("com.google.code.findbugs:jsr305:1.3.9") {
+        because "naturalspeech"
+    }
+    thirdParty("com.google.inject.extensions:guice-assistedinject:4.1.0") {
+        because "naturalspeech"
+    }
 }
 
 task verifyCore {
