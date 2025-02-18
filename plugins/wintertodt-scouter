@@ -1,3 +1,4 @@
 repository=https://github.com/nucleon/wintertodt-scouter.git
-commit=910d8f1a8b905e10a7390d693c7260f90984f2fd
+commit=24695878eccda0cd5747d1eecb0fdd0521589627
 warning=This plugin shares your IP with a 3rd party server not controlled or verified by the RuneLite Developers.
+disabled=disabled by plugin developer
