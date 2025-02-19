@@ -81,7 +81,7 @@ commit=9db374fc205c5aae1f99bd5fd127266076f40ec8
 
  7. Write a short description of what your plugin does and then create your pull request.
 
- 8. Check the result of your PR's CI workflow, next to `.github/workflows/build.yml / build (pull_request)` will be either a ✔️ or an ❌. With a ✔️ all is good, however if it has an ❌, click `Details` to check the build log for details of the failure. Along with the build workflow there also may be an ❌ next to `RuneLite Plugin Hub Checks`, you will only need to worry about this if it says `View details for requested changes.`, in that case you should also read over those requested changes. Once you've read over the build error and requested changes, make the required changes, and push another commit to update the PR with the new `commit=` hash.  
+ 8. Check the result of your PR's CI workflow, next to `.github/workflows/build.yml / build (pull_request)` will be either a ✔️ or an ❌. With a ✔️ all is good, however if it has an ❌, click `Details` to check the build log for details of the failure. Along with the build workflow there also may be an ❌ next to `RuneLite Plugin Hub Checks`, you will only need to worry about this if it says `Changes are needed.`, in that case you should also read over those requested changes. Once you've read over the build error and requested changes, make the required changes, and push another commit to update the PR with the new `commit=` hash.  
 Don't worry about how many times it takes you to resolve build errors; we prefer all changes be kept in a single pull request to avoid spamming notifications with further newly-opened PRs.
 
  9. Be patient and wait for your plugin to be reviewed and merged.
