@@ -1,2 +1,4 @@
 repository=https://github.com/ryanwohara/irc-plugin.git
 commit=6d90a4386ab0ec8bd14681a7f87981c8ab065b3c
+warning=This plugin will connect you to a third-party Internet Relay Chat server. Your IP will be shared with the IRC administration.
+authors=ryanwohara
