@@ -81,13 +81,20 @@ commit=9db374fc205c5aae1f99bd5fd127266076f40ec8
 
  7. Write a short description of what your plugin does and then create your pull request.
 
- 8. Check the result of your PR's CI workflow, next to `.github/workflows/build.yml / build (pull_request)` will be either a ✔️ or an ❌. With a ✔️ all is good, however if it has an ❌, click `Details` to check the build log for details of the failure. Along with the build workflow there also may be an ❌ next to `RuneLite Plugin Hub Checks`, you will only need to worry about this if it says `View details for requested changes.`, in that case you should also read over those requested changes. Once you've read over the build error and requested changes, make the required changes, and push another commit to update the PR with the new `commit=` hash.  
+ 8. Check the result of your PR's CI workflow, next to `.github/workflows/build.yml / build (pull_request)` will be either a ✔️ or an ❌. With a ✔️ all is good, however if it has an ❌, click `Details` to check the build log for details of the failure. Along with the build workflow there also may be an ❌ next to `RuneLite Plugin Hub Checks`, you will only need to worry about this if it says `Changes are needed.`, in that case you should also read over those requested changes. Once you've read over the build error and requested changes, make the required changes, and push another commit to update the PR with the new `commit=` hash.  
 Don't worry about how many times it takes you to resolve build errors; we prefer all changes be kept in a single pull request to avoid spamming notifications with further newly-opened PRs.
 
  9. Be patient and wait for your plugin to be reviewed and merged.
 
 ## Updating a plugin
-To update a plugin, simply update the manifest with the most recent commit hash. 
+To update a plugin, simply update the manifest with the most recent commit hash.
+
+It is recommended to open a pull request from a separate branch. You can run the following commands from your `plugin-hub` repository directory to set up a branch:
+```bash
+$ git remote add upstream https://github.com/runelite/plugin-hub.git  # Only necessary if you have not set it before
+$ git fetch upstream && git checkout -B <your-plugin-name> upstream/master
+```
+Once your changes have been merged, you can delete the branch. The next time you would like to update your plugin, you can create the branch again.
 
 ## Reviewing
 We will review your plugin to ensure it isn't malicious, doesn't [break Jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1), 
