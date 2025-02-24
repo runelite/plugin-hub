@@ -141,6 +141,9 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
 	}
+	thirdParty("software.amazon.awssdk:s3:2.20.28") {
+		because "basqh"
+	}
 }
 
 task verifyCore {
