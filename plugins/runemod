@@ -1,2 +1,3 @@
 repository=https://github.com/RuneMod/RuneMod.git
 commit=6826f4be03edfed30deabe7a4d19a494d0171aea
+warning=In order to work, this plugin needs to download additional third party software from RuneMod's servers.
