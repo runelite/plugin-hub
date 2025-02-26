@@ -126,9 +126,6 @@ dependencies {
 		exclude group: 'org.apache.commons', module: 'commons-pool2'
 	}
 
-	thirdParty("org.apache.httpcomponents.core5:httpcore5:5.2") {
-		because "osrs-archipelago"
-	}
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
 		because "gpu-experimental"
 	}

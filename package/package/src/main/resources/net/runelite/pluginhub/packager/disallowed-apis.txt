@@ -20,14 +20,6 @@ Lcom/google/gson/GsonBuilder;.<init>()V:b
 # Use the overloaded getItemStats(int itemId) method instead
 Lnet/runelite/client/game/ItemManager;.getItemStats(IZ)Lnet/runelite/http/api/item/ItemStats;:b
 
-# Use client.getTopLevelWorldView().npcs() instead
-Lnet/runelite/api/Client;.getCachedNPCs()[Lnet/runelite/api/NPC;:b
-# Use client.getTopLevelWorldView().players() instead
-Lnet/runelite/api/Client;.getCachedPlayers()[Lnet/runelite/api/Player;:b
-# Use IndexedObjectSet.iterator() or IndexedObjectSet.byIndex() instead
-Lnet/runelite/api/IndexedObjectSet;.getSparse()[Ljava/lang/Object;:b
-Lnet/runelite/api/IndexedObjectSet;.getSize()I:b
-
 #
 Lnet/runelite/client/account/AccountClient;.<clinit>()V:gs
 Lnet/runelite/client/account/AccountClient;.login(I)Lnet/runelite/http/api/account/OAuthResponse;:b
