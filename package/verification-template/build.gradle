@@ -73,6 +73,26 @@ dependencies {
 		because "gimptracker"
 	}
 
+	thirdParty("com.google.apis:google-api-services-sheets:v4-rev20240514-2.0.0") {
+		because "dude-wheres-my-stuff"
+		exclude group: 'com.google.guava'
+		exclude group: 'org.apache.httpcomponents'
+		exclude group: 'commons-logging'
+		exclude group: 'commons-codec'
+	}
+	thirdParty("com.google.api-client:google-api-client:2.6.0") {
+		because "dude-wheres-my-stuff"
+		exclude group: 'com.google.oauth-client'
+		exclude group: 'com.google.guava'
+		exclude group: 'org.apache.httpcomponents'
+		exclude group: 'commons-codec'
+	}
+	thirdParty("com.google.oauth-client:google-oauth-client-jetty:1.36.0") {
+		because "dude-wheres-my-stuff"
+		exclude group: 'com.google.guava'
+		exclude group: 'org.apache.httpcomponents'
+	}
+
 	thirdParty("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0") {
 		because "elysiumevents-plugin"
 		exclude group: 'com.google.guava'
@@ -106,9 +126,6 @@ dependencies {
 		exclude group: 'org.apache.commons', module: 'commons-pool2'
 	}
 
-	thirdParty("org.apache.httpcomponents.core5:httpcore5:5.2") {
-		because "osrs-archipelago"
-	}
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
 		because "gpu-experimental"
 	}
