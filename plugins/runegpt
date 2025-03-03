@@ -1,2 +1,4 @@
 repository=https://github.com/Kamran14/RuneGPT.git
-commit=0a33f830df8df8a039485cca67dfc81b1c3cd2b4
+commit=88e81340ae994fd9353fe036f40659a96e94543d
+warning=This plugin submits your game stats to a 3rd party server not controller or verified by Runelite or Plugin developer
+authors=Kam
