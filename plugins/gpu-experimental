@@ -1,3 +1,3 @@
 repository=https://github.com/Adam-/runelite-plugins.git
-commit=ea577c0531d7dc0440fb4155f4befb7c3a8f8326
+commit=4950f700652026a7534fab0cc133f970fe395e56
 warning=This plugin is for testing experimental GPU changes, and may cause crashes and render things incorrectly.
