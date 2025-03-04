@@ -141,6 +141,13 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
 	}
+	thirdParty("org.kitteh.irc:client-lib:8.0.0") {
+		because "irc"
+	}
+	thirdParty("com.vdurmont:emoji-java:5.1.1") {
+		because "irc"
+		exclude group: 'org.json'
+	}
 }
 
 task verifyCore {
