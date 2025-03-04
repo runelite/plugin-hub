@@ -1,4 +1,4 @@
 repository=https://github.com/phyce/rl-natural-speech.git
-commit=d31da91b698b031d5de748f56feb7d1b190e45d9
+commit=61f9d13f9aa514e80c325ae9a1c9647e29dd3194
 warning=This plugin downloads voice model files from, (and sends your IP address in the process, to) huggingface.co, a 3rd party website not controlled or verified by the RuneLite Developers.
 authors=phyce,TheLouisHong
