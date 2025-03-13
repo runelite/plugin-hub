@@ -1,3 +1,4 @@
 repository=https://github.com/SMaloney2017/Temple-OSRS-Plugin.git
-commit=85839df943e74f19d60ccb077af573e27bf01017
+commit=7e010de6d1614054d47ec1f93afc13a6e1e59767
+authors=SMaloney2017,44Mikael
 warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.
