@@ -1,3 +1,3 @@
 repository=https://github.com/willrobaggins/prop-hunt.git
-commit=64844561b98edd11626f5d5dacc6a3f34288ded0
+commit=7e81fb1e2eefe8f6c2cfafd3d8bd953a5c373b74
 warning=This plugin sends player data, including usernames, plugin configuration, and IP address to a third-party server for communication between clients.
