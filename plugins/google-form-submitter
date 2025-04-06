@@ -1,4 +1,4 @@
 repository=https://github.com/umer-rs/google-form-submitter.git
-commit=c260a4f5dbe32613d0f91087b4e11a4136beacda
+commit=aa3d42b9e9d2e523af31480b8efdcd68c5aafba4
 warning=This plugin submits your IP address and screenshots to a 3rd party website not controlled or verified by the RuneLite Developers.
 authors=umer-rs
