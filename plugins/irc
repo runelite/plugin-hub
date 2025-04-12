@@ -1,4 +1,4 @@
 repository=https://github.com/ryanwohara/irc-plugin.git
-commit=9ef5d8d7dce23c3e1999c914f0a7a8f20f6c0f75
+commit=68b69b6d7ec5fb8d9c1512fdbd7c94b4b62a85a4
 warning=This plugin submits your IP address and applicable IRC messages to a third-party server not controlled by the RuneLite developers.
 authors=ryanwohara
