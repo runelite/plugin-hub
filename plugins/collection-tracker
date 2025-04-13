@@ -1,2 +1,3 @@
 repository=https://github.com/voltmaister/collection-tracker.git
 commit=d3cec2acdeddad17f4e38d205c0133f3f5abfe35
+warning=This plugin submits your username and IP address to a server not controlled or verified by the RuneLite developers.
