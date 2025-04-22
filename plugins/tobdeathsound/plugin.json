@@ -1,0 +1,8 @@
+{
+  "internalName": "tobdeathsound",
+  "displayName": "ToB Death Sound",
+  "description": "Plays a sound when a player dies in the Theatre of Blood.",
+  "tags": ["theatre of blood", "sound", "death", "notification"],
+  "authors": ["nicellenburg"],
+  "version": "1.0.0"
+}

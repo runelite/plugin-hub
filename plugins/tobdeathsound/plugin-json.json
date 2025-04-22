@@ -1,8 +1,0 @@
-{
-  "internalName": "tobdeathsound",
-  "displayName": "ToB Death Sound",
-  "description": "Plays a sound when a player nearby dies during ToB.",
-  "author": "Nic",
-  "tags": ["death", "sound", "tob"],
-  "version": "1.0.0"
-}
