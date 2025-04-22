@@ -19,20 +19,20 @@ import java.io.InputStream;
     description = "Plays a sound when a player nearby dies (only in ToB)",
     tags = {"death", "sound", "tob"}
 )
-public class ToBDeathSoundPlugin extends Plugin
+public class tobdeathsoundplugin extends Plugin
 {
     @Inject
     private Client client;
 
     @Inject
-    private ToBDeathSoundConfig config;
+    private tobdeathsoundconfig config;
 
     private boolean hasPlayed = false;
 
     @Override
     protected void configure()
     {
-        bind(ToBDeathSoundConfig.class);
+        bind(tobdeathsoundconfig.class);
     }
 
     @Subscribe
