@@ -1,0 +1,10 @@
+{
+  "internalName": "mondaymadness",           // must match @PluginDescriptor name
+  "displayName": "Monday Madness Tracker",
+  "description": "Tracks clan PvP kills, deaths and loot, posts to Discord.",
+  "commit": "107ebb6365f6698cc224a4c0eddabcc6a111e3ee",
+  "owner": "craigmuzza",                     // your GitHub username
+  "repo":  "craigmuzza/monday-madness-plugin",
+  "icon":  "https://raw.githubusercontent.com/craigmuzza/monday-madness-plugin/107ebb6365f6698cc224a4c0eddabcc6a111e3ee/RatPactLogo.png",
+  "tags": ["pvp", "clan", "discord"]
+}
