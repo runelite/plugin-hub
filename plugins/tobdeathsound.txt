@@ -1,0 +1,9 @@
+{
+  "internalName": "tobdeathsound",
+  "displayName": "ToB Death Sound",
+  "description": "Plays a sound when a player dies nearby during Theatre of Blood.",
+  "author": "nicellenburg",
+  "repo": "https://github.com/nicellenburg/tobdeathsound",
+  "commit": "61b8e91a4aeb9e407610ebd3085848171b171d03",
+  "icon": "icon.png"
+}
