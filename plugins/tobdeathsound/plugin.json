@@ -1,8 +1,13 @@
 {
+  "compilerArgs": [
+    "-Xlint:unchecked"
+  ],
+  "description": "Plays a sound when a teammate dies in Theatre of Blood.",
+  "hasIcon": false,
   "internalName": "tobdeathsound",
-  "displayName": "ToB Death Sound",
-  "description": "Plays a sound when a player dies in the Theatre of Blood.",
-  "tags": ["theatre of blood", "sound", "death", "notification"],
-  "authors": ["nicellenburg"],
-  "version": "1.0.0"
+  "name": "ToB Death Sound",
+  "tags": ["ToB", "death", "sound", "raid"],
+  "type": "EXTERNAL",
+  "vendor": "your-github-username"
 }
+
