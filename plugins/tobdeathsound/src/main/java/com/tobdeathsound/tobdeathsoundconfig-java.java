@@ -3,7 +3,7 @@ package com.tobdeathsound;
 import net.runelite.client.config.*;
 
 @ConfigGroup("tobdeathsound")
-public interface tobdeathsoundconfig extends Config
+public interface ToBDeathSoundConfig extends Config
 {
     @ConfigItem(
         keyName = "enabled",
