@@ -1,6 +1,6 @@
 {
-  "internalName": "hitthedaddy",
-  "displayName": "Hit The Daddy",
+  "internalName": "hitthecythdaddy",
+  "displayName": "Hit The Scyth Daddy",
   "description": "Plays a sound and shows an overlay when it's time to hit the boss.",
   "author": ["FERGUSISAGOODBOY"],
   "tags": ["TOB", "boss", "helper", "PVM"]
