@@ -63,6 +63,7 @@ public class SchboopPlugin extends Plugin
 	private static final File troll2 = new File(CUSTOM_SOUNDS_DIR, "deezballs.wav");
 	private static final File troll3 = new File(CUSTOM_SOUNDS_DIR, "certified.wav");
 	private static final File reading = new File(CUSTOM_SOUNDS_DIR, "4Nerds.wav");
+	private static final File stroke = new File(CUSTOM_SOUNDS_DIR, "stroke.wav");
 	private static final File[] SOUND_FILES = new File[]{
 			SchboopMoo,
 			WhaHappen,
@@ -335,6 +336,10 @@ public class SchboopPlugin extends Plugin
 		if("Read".equals(event.getMenuOption()) && config.roast()){
 			// "Reading is for nerds" when you try to read something
 			playSound(reading);
+		}
+		if("Rub".equals(event.getMenuOption()) && config.roast()){
+			// Eva's idea :) 
+			playSound(stroke);
 		}
 		if("Drink".equals(event.getMenuOption()) && config.roast()){
 			String itemName = event.getMenuTarget().toLowerCase();
