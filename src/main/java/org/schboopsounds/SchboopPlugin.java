@@ -62,6 +62,8 @@ public class SchboopPlugin extends Plugin
 	private static final File troll1 = new File(CUSTOM_SOUNDS_DIR, "hydrate.wav");
 	private static final File troll2 = new File(CUSTOM_SOUNDS_DIR, "deezballs.wav");
 	private static final File troll3 = new File(CUSTOM_SOUNDS_DIR, "certified.wav");
+	private static final File troll4 = new File(CUSTOM_SOUNDS_DIR, "beethoven.wav");
+	private static final File troll5 = new File(CUSTOM_SOUNDS_DIR, "calm.wav");
 	private static final File reading = new File(CUSTOM_SOUNDS_DIR, "4Nerds.wav");
 	private static final File stroke = new File(CUSTOM_SOUNDS_DIR, "stroke.wav");
 	private static final File[] SOUND_FILES = new File[]{
@@ -119,6 +121,8 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern ROBERT_SPAM_REGEX = Pattern.compile(".*All hail robert prime.*");
 	private static final Pattern ROBERT_SPAM_REGEX2 = Pattern.compile(".*I am a loyal bert.*");
 	private static final Pattern ROBERT_SPAM_REGEX3 = Pattern.compile(".*Enter the light of robert prime.*");
+	private static final Pattern ROBERT_SPAM_REGEX4 = Pattern.compile(".*Prime is love, prime is life.*");
+	private static final Pattern ROBERT_SPAM_REGEX5 = Pattern.compile(".*I love robert prime.*");
 
 	private static final Pattern COW_EXAMINE_REGEX = Pattern.compile("Converts grass to.*");
 	private static final Pattern COW_EXAMINE_REGEX2 = Pattern.compile("Beefy.*");
@@ -281,7 +285,12 @@ public class SchboopPlugin extends Plugin
 		if (ROBERT_SPAM_REGEX3.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
 			playSound_Chaotic(troll3);
 		}
-
+		if (ROBERT_SPAM_REGEX4.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
+			playSound_Chaotic(troll4);
+		}
+		if (ROBERT_SPAM_REGEX5.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
+			playSound_Chaotic(troll5);
+		}
 		// Dad makes fun of your achievements
 		if (chatMessage.getType() != ChatMessageType.GAMEMESSAGE && chatMessage.getType() != ChatMessageType.SPAM) {
 			return;
