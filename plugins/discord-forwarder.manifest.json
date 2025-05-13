@@ -1,0 +1,9 @@
+{
+  "internalName": "discordforwarder",
+  "displayName": "Discord Forwarder",
+  "description": "Forwards clan chat messages containing 'coffer' to a Discord webhook.",
+  "author": "shpg8642",
+  "tags": ["discord", "clan", "webhook", "chat"],
+  "repo": "https://github.com/spg8642/discord-forwarder",
+  "commit": "b9c6ac741a0b130f0930760626068a80c96e8505"
+}
