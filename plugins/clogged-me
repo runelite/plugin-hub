@@ -1,0 +1,3 @@
+repository=https://github.com/Advistane/clogged.git
+commit=5ad132c6aed2579a6c3b25b00d01f936a9a87ed3
+warning=This plugin submits your IP address, username, and collection log data to a server not controlled or verified by the RuneLite developers.
