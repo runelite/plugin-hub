@@ -1,0 +1,9 @@
+{
+  "internalName": "ironmanplanner",
+  "displayName": "Ironman Planner",
+  "description": "Guides Ironman players through a structured progression plan. Full Credit to Boaty for his Ironman V2 Guide on OSRS Wiki",
+  "author": "Ceepee",
+  "tags": ["ironman", "planner", "guide"],
+  "repo": "https://github.com/Ceepee-OSRS/ironman-planner",
+  "icon": "icon.png"
+}
