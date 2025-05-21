@@ -137,10 +137,12 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern BOB_EXAMINE_REGEX = Pattern.compile("Hey, it's Bob the cat.*");
 	private static final Pattern CAT_EXAMINE_REGEX = Pattern.compile("A fully grown feline.*");
 	private static final Pattern KITTEN_EXAMINE_REGEX = Pattern.compile("A friendly little pet.*");
+	private static final Pattern CHATMEOWUPPER = Pattern.compile("*Meow*");
+	private static final Pattern CHATMEOWLOWER = Pattern.compile("*meow*");
 	private static final Pattern[] MOO_LIST_REGEX = new Pattern[]{
 			COW_EXAMINE_REGEX, COW_EXAMINE_REGEX2, COW_EXAMINE_REGEX3, COW_EXAMINE_REGEX4,
 			DAIRY_EXAMINE_REGEX, CALF_EXAMINE_REGEX, BOB_EXAMINE_REGEX, CAT_EXAMINE_REGEX,
-			KITTEN_EXAMINE_REGEX, CALF_EXAMINE_REGEX2
+			KITTEN_EXAMINE_REGEX, CALF_EXAMINE_REGEX2, CHATMEOWUPPER, CHATMEOWLOWER
 	};
 	// bones you shouldn't bury:
 	private static final Pattern BONES_REGEX1 = Pattern.compile(".*\\>Superior dragon bones\\<.*");
