@@ -82,6 +82,9 @@ public class SchboopPlugin extends Plugin
 			troll1,
 			troll2,
 			troll3,
+			troll4,
+			troll5,
+			stroke,
 			reading
 	};
 
