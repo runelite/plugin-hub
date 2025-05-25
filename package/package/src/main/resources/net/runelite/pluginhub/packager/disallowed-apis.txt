@@ -20,6 +20,15 @@ Lcom/google/gson/GsonBuilder;.<init>()V:b
 # Use the overloaded getItemStats(int itemId) method instead
 Lnet/runelite/client/game/ItemManager;.getItemStats(IZ)Lnet/runelite/http/api/item/ItemStats;:b
 
+# Do not play audio via the java AudioSystem directly.
+# @Inject RuneLite's AudioPlayer instead.
+Ljavax/sound/sampled/AudioSystem;.getClip()Ljavax/sound/sampled/Clip;:bs
+Ljavax/sound/sampled/AudioSystem;.getClip(Ljavax/sound/sampled/Mixer$Info;)Ljavax/sound/sampled/Clip;:bs
+Ljavax/sound/sampled/AudioSystem;.getLine(Ljavax/sound/sampled/Line$Info;)Ljavax/sound/sampled/Line;:bs
+Ljavax/sound/sampled/AudioSystem;.getMixer(Ljavax/sound/sampled/Mixer$Info;)Ljavax/sound/sampled/Mixer;:bs
+Ljavax/sound/sampled/AudioSystem;.getSourceDataLine(Ljavax/sound/sampled/AudioFormat;)Ljavax/sound/sampled/SourceDataLine;:bs
+Ljavax/sound/sampled/AudioSystem;.getSourceDataLine(Ljavax/sound/sampled/AudioFormat;Ljavax/sound/sampled/Mixer$Info;)Ljavax/sound/sampled/SourceDataLine;:bs
+
 #
 Lnet/runelite/client/account/AccountClient;.<clinit>()V:gs
 Lnet/runelite/client/account/AccountClient;.login(I)Lnet/runelite/http/api/account/OAuthResponse;:b
