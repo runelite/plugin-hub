@@ -86,12 +86,12 @@ public interface SchboopConfig extends Config
 	}
 
 	@ConfigItem(
-			keyName = "ALL_HAIL_PRIME",
+			keyName = "all_hail_prime",
 			name = "Worship Prime?",
 			description = "Piss-related jokes mostly.",
 			position = 7
 	)
-	default boolean ALL_HAIL_PRIME()
+	default boolean all_hail_prime()
 	{
 		return false;
 	}
