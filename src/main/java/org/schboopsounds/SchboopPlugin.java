@@ -286,7 +286,7 @@ public class SchboopPlugin extends Plugin
 		}
 
 		// piss
-		if(config.ALL_HAIL_PRIME()){
+		if(config.all_hail_prime()){
 			if (DRINK_POOL.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
 			playSound_Chaotic(piss_pool);
 			}
