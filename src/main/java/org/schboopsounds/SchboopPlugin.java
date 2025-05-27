@@ -116,6 +116,9 @@ public class SchboopPlugin extends Plugin
 			EASY_TASK_REGEX, MEDIUM_TASK_REGEX, HARD_TASK_REGEX, ELITE_TASK_REGEX
 	};
 	private static final Pattern NEW_LEVEL_REGEX = Pattern.compile("Congratulations, you've just advanced your.*");
+	private static final Pattern LEVEL_69_REGEX = Pattern.compile("*You are now level 69.*");
+
+	
 	private static final Pattern NEW_PLACE_REGEX = Pattern.compile("You have unlocked a new music track.*");
 
 	private static final Pattern WEBFAIL_REGEX = Pattern.compile("Only a sharp blade can cut through this.*");
@@ -312,7 +315,11 @@ public class SchboopPlugin extends Plugin
 			playSound(Dad2);
 		}
 		if (NEW_LEVEL_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
-			playSound(Dad1);
+			if (LEVEL_69_REGEX.matcher(chatMessage.getMessage()).matches()) {
+				playSound(Dad1); // plays if you level to 69
+			} else {
+				playSound(Dad1); // normal level up sound
+			}			
 		}
 		if (NEW_PLACE_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
 			playSound(where); // replace this with a "where am I?" sound
