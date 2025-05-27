@@ -66,6 +66,7 @@ public class SchboopPlugin extends Plugin
 	private static final File troll5 = new File(CUSTOM_SOUNDS_DIR, "calm.wav");
 	private static final File reading = new File(CUSTOM_SOUNDS_DIR, "4Nerds.wav");
 	private static final File stroke = new File(CUSTOM_SOUNDS_DIR, "stroke.wav");
+	private static final File piss_pool = new File(CUSTOM_SOUNDS_DIR, "piss_bowl.wav");
 	private static final File[] SOUND_FILES = new File[]{
 			SchboopMoo,
 			WhaHappen,
@@ -85,7 +86,8 @@ public class SchboopPlugin extends Plugin
 			troll4,
 			troll5,
 			stroke,
-			reading
+			reading,
+			piss_pool
 	};
 
 	// runelite haves the what_happened.wav file... need to convert to something it can stand
@@ -117,10 +119,7 @@ public class SchboopPlugin extends Plugin
 	};
 	private static final Pattern NEW_LEVEL_REGEX = Pattern.compile("Congratulations, you've just advanced your.*");
 	private static final Pattern LEVEL_69_REGEX = Pattern.compile("*You are now level 69.*");
-
-	
 	private static final Pattern NEW_PLACE_REGEX = Pattern.compile("You have unlocked a new music track.*");
-
 	private static final Pattern WEBFAIL_REGEX = Pattern.compile("Only a sharp blade can cut through this.*");
     //private static final Pattern POTION_REGEX = Pattern.compile(".*potion.*");
 
@@ -130,6 +129,9 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern ROBERT_SPAM_REGEX4 = Pattern.compile(".*Prime is love, prime is life.*");
 	private static final Pattern ROBERT_SPAM_REGEX5 = Pattern.compile(".*I love robert prime.*");
 
+// piss zone
+	private static final Pattern DRINK_POOL = Pattern.compile("You feel reinvigorated after drinking from the pool.");
+	
 	private static final Pattern COW_EXAMINE_REGEX = Pattern.compile("Converts grass to.*");
 	private static final Pattern COW_EXAMINE_REGEX2 = Pattern.compile("Beefy.*");
 	private static final Pattern COW_EXAMINE_REGEX3 = Pattern.compile("Where beef comes from.*");
@@ -283,6 +285,11 @@ public class SchboopPlugin extends Plugin
 			}
 		}
 
+		// piss
+		if (DRINK_POOL.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
+			playSound_Chaotic(piss_pool);
+		}
+			
 		// secret chat triggers (cannot be toggled)
 		if (ROBERT_SPAM_REGEX.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
 			playSound_Chaotic(troll1);
