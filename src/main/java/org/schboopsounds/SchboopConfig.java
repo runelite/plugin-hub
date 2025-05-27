@@ -27,7 +27,6 @@ public interface SchboopConfig extends Config
 	)
 	default boolean Pops_Died()
 	{
-
 		return true;
 	}
 
@@ -39,7 +38,6 @@ public interface SchboopConfig extends Config
 	)
 	default boolean lowHP()
 	{
-
 		return true;
 	}
 
@@ -51,7 +49,6 @@ public interface SchboopConfig extends Config
 	)
 	default boolean lowpray()
 	{
-
 		return true;
 	}
 
@@ -63,7 +60,6 @@ public interface SchboopConfig extends Config
 	)
 	default boolean achievement()
 	{
-
 		return true;
 	}
 
@@ -75,7 +71,6 @@ public interface SchboopConfig extends Config
 	)
 	default boolean roast()
 	{
-
 		return true;
 	}
 
@@ -87,9 +82,21 @@ public interface SchboopConfig extends Config
 	)
 	default boolean Schboop_says_Moo()
 	{
-
 		return true;
 	}
+
+	@ConfigItem(
+			keyName = "ALL_HAIL_PRIME",
+			name = "Worship Prime?",
+			description = "Piss-related jokes mostly.",
+			position = 7
+	)
+	default boolean ALL_HAIL_PRIME()
+	{
+		return false;
+	}
+
+	
 }
 
 
