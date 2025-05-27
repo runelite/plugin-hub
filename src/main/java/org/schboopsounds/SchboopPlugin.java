@@ -286,8 +286,10 @@ public class SchboopPlugin extends Plugin
 		}
 
 		// piss
-		if (DRINK_POOL.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
+		if(config.ALL_HAIL_PRIME()){
+			if (DRINK_POOL.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
 			playSound_Chaotic(piss_pool);
+			}
 		}
 			
 		// secret chat triggers (cannot be toggled)
