@@ -118,7 +118,7 @@ public class SchboopPlugin extends Plugin
 			EASY_TASK_REGEX, MEDIUM_TASK_REGEX, HARD_TASK_REGEX, ELITE_TASK_REGEX
 	};
 	private static final Pattern NEW_LEVEL_REGEX = Pattern.compile("Congratulations, you've just advanced your.*");
-	private static final Pattern LEVEL_69_REGEX = Pattern.compile("*You are now level 69.*");
+	private static final Pattern LEVEL_69_REGEX = Pattern.compile(".*You are now level 69.*");
 	private static final Pattern NEW_PLACE_REGEX = Pattern.compile("You have unlocked a new music track.*");
 	private static final Pattern WEBFAIL_REGEX = Pattern.compile("Only a sharp blade can cut through this.*");
     //private static final Pattern POTION_REGEX = Pattern.compile(".*potion.*");
@@ -142,8 +142,8 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern BOB_EXAMINE_REGEX = Pattern.compile("Hey, it's Bob the cat.*");
 	private static final Pattern CAT_EXAMINE_REGEX = Pattern.compile("A fully grown feline.*");
 	private static final Pattern KITTEN_EXAMINE_REGEX = Pattern.compile("A friendly little pet.*");
-	private static final Pattern CHATMEOWUPPER = Pattern.compile("*Meow*");
-	private static final Pattern CHATMEOWLOWER = Pattern.compile("*meow*");
+	private static final Pattern CHATMEOWUPPER = Pattern.compile(".*Meow.*");
+	private static final Pattern CHATMEOWLOWER = Pattern.compile(".*meow.*");
 	private static final Pattern[] MOO_LIST_REGEX = new Pattern[]{
 			COW_EXAMINE_REGEX, COW_EXAMINE_REGEX2, COW_EXAMINE_REGEX3, COW_EXAMINE_REGEX4,
 			DAIRY_EXAMINE_REGEX, CALF_EXAMINE_REGEX, BOB_EXAMINE_REGEX, CAT_EXAMINE_REGEX,
