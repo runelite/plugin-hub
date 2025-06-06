@@ -1,3 +1,3 @@
 repository=https://github.com/Sharpienero/Embargo-Plugin.git
-commit=1374e231e927724896ae58127d0818f1a4206cc0
+commit=0146251c53c9f9e101e70b97a436eba9e8441022
 warning=This plugin sends player data (including IP address) to a 3rd party server not controlled by RuneLite or Jagex. To see the full list of data this plugin collects, check out project's README on Github
