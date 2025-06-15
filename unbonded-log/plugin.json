@@ -1,0 +1,8 @@
+{
+  "internalName": "unbondedlog",
+  "displayName": "Unbonded Log",
+  "description": "Hides members-only Collection Log tabs for pure F2P play.",
+  "author": "Xi2ediviist",
+  "tags": ["f2p", "collection log", "pure", "utility"],
+  "version": "1.0.0"
+}
