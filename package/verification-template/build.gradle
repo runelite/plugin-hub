@@ -136,7 +136,7 @@ dependencies {
 		because "wikisync"
 	}
 	thirdParty("org.tomlj:tomlj:1.1.1") {
-		because "resource-packs"
+		because "resource-packs, friendly-guide"
 	}
 }
 
