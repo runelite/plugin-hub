@@ -67,6 +67,9 @@ public class SchboopPlugin extends Plugin
 	private static final File reading = new File(CUSTOM_SOUNDS_DIR, "4Nerds.wav");
 	private static final File stroke = new File(CUSTOM_SOUNDS_DIR, "stroke.wav");
 	private static final File piss_pool = new File(CUSTOM_SOUNDS_DIR, "piss_bowl.wav");
+	private static final File laugh = new File(CUSTOM_SOUNDS_DIR, "Dad_Cackle.wav");
+	private static final File ew = new File(CUSTOM_SOUNDS_DIR, "ew.wav");
+	private static final File dragonhead = new File(CUSTOM_SOUNDS_DIR, "head.wav");
 	private static final File[] SOUND_FILES = new File[]{
 			SchboopMoo,
 			WhaHappen,
@@ -87,7 +90,10 @@ public class SchboopPlugin extends Plugin
 			troll5,
 			stroke,
 			reading,
-			piss_pool
+			piss_pool,
+			laugh,
+			ew,
+			dragonhead
 	};
 
 	// runelite haves the what_happened.wav file... need to convert to something it can stand
@@ -109,14 +115,17 @@ public class SchboopPlugin extends Plugin
 
 	@Inject
 	private OkHttpClient okHttpClient;
-	private static final Pattern COLLECTION_LOG_ITEM_REGEX = Pattern.compile("New item added to your collection log:.*", Pattern.CASE_INSENSITIVE);
-	private static final Pattern EASY_TASK_REGEX = Pattern.compile("Well done! You have completed an easy task.*", Pattern.CASE_INSENSITIVE);
-	private static final Pattern MEDIUM_TASK_REGEX = Pattern.compile("Well done! You have completed a medium task.*", Pattern.CASE_INSENSITIVE);
-	private static final Pattern HARD_TASK_REGEX = Pattern.compile("Well done! You have completed a hard task.*", Pattern.CASE_INSENSITIVE);
-	private static final Pattern ELITE_TASK_REGEX = Pattern.compile("Well done! You have completed an elite task.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern COLLECTION_LOG_ITEM_REGEX = Pattern.compile(".*New item added to your collection log.*", Pattern.CASE_INSENSITIVE);
+	//private static final Pattern COLLECTION_LOG_ITEM_REGEX = Pattern.compile("Test.*");
+	private static final Pattern EASY_TASK_REGEX = Pattern.compile(".*Well done\\! You have completed an easy task.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern MEDIUM_TASK_REGEX = Pattern.compile(".*Well done\\! You have completed a medium task.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern HARD_TASK_REGEX = Pattern.compile(".*Well done\\! You have completed a hard task.*", Pattern.CASE_INSENSITIVE);
+	private static final Pattern ELITE_TASK_REGEX = Pattern.compile(".*Well done\\! You have completed an elite task.*", Pattern.CASE_INSENSITIVE);
 	private static final Pattern[] DIARY_LIST_REGEX = new Pattern[]{
 			EASY_TASK_REGEX, MEDIUM_TASK_REGEX, HARD_TASK_REGEX, ELITE_TASK_REGEX
 	};
+	//private static final Pattern TASK_REGEX = Pattern.compile("Well done! You have completed.*");
+
 	private static final Pattern NEW_LEVEL_REGEX = Pattern.compile("Congratulations, you've just advanced your.*");
 	private static final Pattern LEVEL_69_REGEX = Pattern.compile(".*You are now level 69.*");
 	private static final Pattern NEW_PLACE_REGEX = Pattern.compile("You have unlocked a new music track.*");
@@ -128,7 +137,7 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern ROBERT_SPAM_REGEX3 = Pattern.compile(".*Enter the light of robert prime.*");
 	private static final Pattern ROBERT_SPAM_REGEX4 = Pattern.compile(".*Prime is love, prime is life.*");
 	private static final Pattern ROBERT_SPAM_REGEX5 = Pattern.compile(".*I love robert prime.*");
-
+	private static final Pattern STROKE_REGEX = Pattern.compile("You rub the.*");
 // piss zone
 	private static final Pattern DRINK_POOL = Pattern.compile("You feel reinvigorated after drinking from the pool.");
 	
@@ -175,7 +184,7 @@ public class SchboopPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		initSoundFiles();
-		//playSound(Dad2); // for testing purposes
+		//playSound_Chaotic(stroke); // for testing purposes
 		for (int i = 0; i < Skill.values().length; i++) // this keeps track of stats:
 		{
 			previousStats[i] = client.getBoostedSkillLevel(Skill.values()[i]);
@@ -274,6 +283,7 @@ public class SchboopPlugin extends Plugin
 
 	}
 
+
 	@Subscribe
 	public void onChatMessage(ChatMessage chatMessage) {
 		if(config.Schboop_says_Moo()){
@@ -285,13 +295,18 @@ public class SchboopPlugin extends Plugin
 			}
 		}
 
-		// piss
-		if(config.all_hail_prime()){
-			if (DRINK_POOL.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
-			playSound_Chaotic(piss_pool);
-			}
+		// stroke because the doesn't work for whatever reason
+		// WHY DIDN'T THIS WORK?????????
+		if (STROKE_REGEX.matcher(chatMessage.getMessage()).matches()) {
+			playSound_Chaotic(stroke);
 		}
-			
+
+		// piss
+		if (DRINK_POOL.matcher(chatMessage.getMessage()).matches() && config.all_hail_prime()) {
+			playSound_Chaotic(piss_pool);
+		}
+
+
 		// secret chat triggers (cannot be toggled)
 		if (ROBERT_SPAM_REGEX.matcher(chatMessage.getMessage()).matches() && chatMessage.getType() == ChatMessageType.PUBLICCHAT) {
 			playSound_Chaotic(troll1);
@@ -309,9 +324,9 @@ public class SchboopPlugin extends Plugin
 			playSound_Chaotic(troll5);
 		}
 		// Dad makes fun of your achievements
-		if (chatMessage.getType() != ChatMessageType.GAMEMESSAGE && chatMessage.getType() != ChatMessageType.SPAM) {
-			return;
-		}
+		//if (chatMessage.getType() != ChatMessageType.GAMEMESSAGE && chatMessage.getType() != ChatMessageType.SPAM) {
+		//	return;
+		//}
 		if(config.achievement()){
 			for (Pattern pattern : DIARY_LIST_REGEX) {
 				if (pattern.matcher(chatMessage.getMessage()).matches()) {
@@ -328,7 +343,7 @@ public class SchboopPlugin extends Plugin
 				playSound(Dad1); // plays if you level to 69
 			} else {
 				playSound(Dad1); // normal level up sound
-			}			
+			}
 		}
 		if (NEW_PLACE_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
 			playSound(where); // replace this with a "where am I?" sound
@@ -367,10 +382,10 @@ public class SchboopPlugin extends Plugin
 			// "Reading is for nerds" when you try to read something
 			playSound(reading);
 		}
-		if("Rub".equals(event.getMenuOption()) && config.roast()){
-			// Eva's idea :) 
-			playSound(stroke);
-		}
+		//if("Rub".equals(event.getMenuAction()) && config.roast()){
+			 //Eva's idea :)
+		//	playSound(stroke);
+		//}
 		if("Drink".equals(event.getMenuOption()) && config.roast()){
 			String itemName = event.getMenuTarget().toLowerCase();
 			if ((itemName.contains("potion") | itemName.contains("super ")) && !itemName.contains("stamina") && !itemName.contains("energy") && !itemName.contains("goading") && !itemName.contains("regeneration") && !itemName.contains("fire") && !itemName.contains("poison") && !itemName.contains("compost") && !itemName.contains(" set") && !itemName.contains(" kebab"))
@@ -426,6 +441,9 @@ public class SchboopPlugin extends Plugin
 		final String name = itemComposition.getName().toLowerCase();
 		if (config.Schboop_says_Moo() && name.contains("raw beef")) {
 			playSound_Chaotic(SchboopMoo);
+		}
+		if (name.contains("vorkath's head") | name.contains("elvarg's head") | name.contains("draconic visage")) {
+			playSound_Chaotic(dragonhead);
 		}
 	}
 

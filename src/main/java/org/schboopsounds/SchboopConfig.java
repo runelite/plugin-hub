@@ -93,7 +93,7 @@ public interface SchboopConfig extends Config
 	)
 	default boolean all_hail_prime()
 	{
-		return false;
+		return true;
 	}
 
 	
