@@ -382,10 +382,10 @@ public class SchboopPlugin extends Plugin
 			// "Reading is for nerds" when you try to read something
 			playSound(reading);
 		}
-		//if("Rub".equals(event.getMenuAction()) && config.roast()){
+		if("Rub".equals(event.getMenuAction()) && config.roast()){
 			 //Eva's idea :)
-		//	playSound(stroke);
-		//}
+			playSound(stroke);
+		}
 		if("Drink".equals(event.getMenuOption()) && config.roast()){
 			String itemName = event.getMenuTarget().toLowerCase();
 			if ((itemName.contains("potion") | itemName.contains("super ")) && !itemName.contains("stamina") && !itemName.contains("energy") && !itemName.contains("goading") && !itemName.contains("regeneration") && !itemName.contains("fire") && !itemName.contains("poison") && !itemName.contains("compost") && !itemName.contains(" set") && !itemName.contains(" kebab"))
