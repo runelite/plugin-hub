@@ -340,7 +340,7 @@ public class SchboopPlugin extends Plugin
 		}
 		if (NEW_LEVEL_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
 			if (LEVEL_69_REGEX.matcher(chatMessage.getMessage()).matches()) {
-				playSound(Dad1); // plays if you level to 69
+				playSound(laugh); // plays if you level to 69
 			} else {
 				playSound(Dad1); // normal level up sound
 			}
