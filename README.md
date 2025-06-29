@@ -10,6 +10,18 @@ provided "as is"; we make no guarantees about any plugin in this repo.
 We recommend [IntelliJ Idea Community Edition](https://www.jetbrains.com/idea/download/) as well as Java 11. You can either have
 IntelliJ install Java (select `Eclipse Temurin`) or download it from https://adoptium.net/temurin/releases/. You must also have a GitHub account.
 
+## Plugin hub restrictions
+
+For security and reviewability reasons, hub plugins are forbidden from using the following in-code behaviors:
+* [Java reflection](https://www.oracle.com/technical-resources/articles/java/javareflection.html)
+* [JNI](https://en.wikipedia.org/wiki/Java_Native_Interface)
+* Execution of external programs (e.g. subprocesses) via any means
+* Downloading or otherwise vendoring external source code at runtime
+
+These technologies prevent us from being able to fully review the source code and therefore the behavior of your plugin.
+
+This list is not necessarily exclusive. **As a rule of thumb, if we cannot review every single line of source code that your plugin will execute, we will not accept it.**
+
 ## Contribute to existing plugins
 
 We recommend contributing to existing plugins if the author(s) are accepting contributions, and the feature you want to add fits well into the plugin, to avoid fragmentation of plugin ecosystem. Reducing plugin fragmentation helps users discover features more easily, and helps us review changes in a more timely manner.
