@@ -1,2 +1,4 @@
 repository=https://github.com/BA-Services/queue-helper.git
-commit=d18d7f24d5f79496f89209ca33ee468dfe920a26
+commit=6c72106cdff7852cb0b2105c2f20536434f7cfcd
+authors=hisean1
+warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.

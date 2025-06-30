@@ -1,0 +1,4 @@
+repository=https://github.com/Naughty-Klaus/supply-depot.git
+commit=ee716a1f69e1c19df30ea633cefcbf3177890ae8
+warning=This plugin submits your username and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
+disabled=true
