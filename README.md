@@ -91,10 +91,20 @@ To update a plugin, simply update the manifest with the most recent commit hash.
 
 It is recommended to open a pull request from a separate branch. You can run the following commands from your `plugin-hub` repository directory to set up a branch:
 ```bash
-$ git remote add upstream https://github.com/runelite/plugin-hub.git  # Only necessary if you have not set it before
-$ git fetch upstream && git checkout -B <your-plugin-name> upstream/master
+# Only necessary if you have not set it before
+git remote add upstream https://github.com/runelite/plugin-hub.git
+
+git fetch upstream
+git checkout -B <your-plugin-name> upstream/master
+# update commit= in plugins/<your-plugin>
+git add plugins/<your-plugin>
+git commit -m "update <your-plugin>"
+git push
 ```
-Once your changes have been merged, you can delete the branch. The next time you would like to update your plugin, you can create the branch again.
+
+Then create a pull request from within the GitHub UI, or using the GitHub CLI via `gh pr create -w`.
+
+Once your changes have been merged, you can delete the branch (`git branch -D <your-plugin-name>`). The next time you would like to update your plugin, you can create the branch again.
 
 ## Reviewing
 We will review your plugin to ensure it isn't malicious, doesn't [break Jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1), 
