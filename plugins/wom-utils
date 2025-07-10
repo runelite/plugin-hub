@@ -1,4 +1,4 @@
 repository=https://github.com/wise-old-man/wiseoldman-runelite-plugin.git
-commit=2109cdc394f7a233b82c96abb739c0d09ccd13e7
+commit=994b7c6ae4ca22015ed7dee32ef38e6501622c44
 warning=This plugin submits the names of you, your friends and members of your clan chat to wiseoldman.net.
 authors=dekvall,rorro,psikoi
