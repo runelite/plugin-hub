@@ -1,0 +1,8 @@
+{
+"id": "moblocator-json",
+  "name": "MobLocator",
+  "description": "Tracks and displays the location of various mobs, with search functionality.",
+  "author": "elisadamico",
+"repository": "elisadamico/MobLocator-RuneLite-Plugin",
+  "tags": ["pvm", "utility", "tracking", "overlay"]
+}
