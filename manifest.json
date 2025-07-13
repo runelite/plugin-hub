@@ -1,0 +1,11 @@
+[
+  {
+    "internalName": "dropstracker",
+    "displayName": "Drops Tracker",
+    "description": "Logs individual boss kills and loot drops locally.",
+    "tags": ["loot", "boss", "pvm", "tracking"],
+    "pluginPath": "dropstracker",
+    "author": "jeryO",
+    "support": "https://github.com/jeryO/dropstracker"
+  }
+]
