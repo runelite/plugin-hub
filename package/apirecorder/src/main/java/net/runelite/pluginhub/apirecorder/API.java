@@ -142,7 +142,7 @@ public class API
 
 				for (String k : keys)
 				{
-					out.put(k, comment);
+					out.put(k, comment.isEmpty() ? k : comment);
 				}
 			}
 			else
@@ -159,7 +159,7 @@ public class API
 					}
 				}
 
-				out.put(line, comment);
+				out.put(line, comment.isEmpty() ? line : comment);
 			}
 		}
 
@@ -235,6 +235,11 @@ public class API
 		{
 			apis.add(descriptor + modifiersToString(modifiers, false));
 		}
+	}
+
+	public void recordClassHierarchy(String from, String superDescriptor)
+	{
+		apis.add(from + ">" + superDescriptor);
 	}
 
 	public void recordMethod(int modifiers, String classDescriptor, CharSequence name, String descriptor)
