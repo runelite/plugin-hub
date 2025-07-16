@@ -53,9 +53,6 @@ dependencies {
 	thirdParty("org.apache.commons:commons-math3:3.0") {
 		because "collection-log-luck"
 	}
-	thirdParty("org.apache.httpcomponents.core5:httpcore5:5.2") {
-		because "osrs-archipelago"
-	}
 	thirdParty("org.influxdb:influxdb-java:2.5") {
 		because "influxdb-stats"
 	}
