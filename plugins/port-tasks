@@ -1,0 +1,4 @@
+repository=https://github.com/nucleon/port-tasks.git
+commit=d0b0225de74106f40a26a7f6a6bca18a4eaff792
+warning=This plugin is intended for use within the Sailing Beta, which is not yet released into the main game.
+disabled=Sailing Beta has ended.
