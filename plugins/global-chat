@@ -1,3 +1,3 @@
 repository=https://github.com/RusseII/region-chat.git
-commit=668b7130a3e19009c2bcbce75abc155060f551cf
+commit=0601c37ca055b020f3fe4ea990807b2345303dd7
 warning=This plugin connects to Global Chat servers to enable messaging between players. Your chat messages and IP address are sent to provide real-time communication.
