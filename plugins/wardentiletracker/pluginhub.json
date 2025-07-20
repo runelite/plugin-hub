@@ -1,0 +1,8 @@
+{
+  "internalName": "wardentiletracker",
+  "displayName": "Warden Tile Tracker",
+  "description": "Tracks safe tiles during Warden phases at ToA.",
+  "tags": ["toa", "wardens", "pvm", "tiles"],
+  "author": "YourName",
+  "version": "1.0.0"
+}

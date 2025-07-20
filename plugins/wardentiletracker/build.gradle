@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'idea'
+	id 'checkstyle'
+	id 'com.github.johnrengelman.shadow' version '7.1.2' // Add this line
+}
+
+idea {
+	module {
+		downloadJavadoc = true
+		downloadSources = true
+	}
+}
+
+repositories {
+	mavenLocal()
+	maven {
+		url = 'https://repo.runelite.net'
+	}
+	mavenCentral()
+}
+
+def runeLiteVersion = 'latest.release'
+
+dependencies {
+	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
+	implementation group: 'com.google.inject.extensions', name: 'guice-multibindings', version: '4.1.0', {
+		exclude group: 'com.google.inject'
+	}
+
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.20'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name:'api', version: runeLiteVersion
+
+	testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.5.1'
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.2'
+	testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.8.2'
+}
+
+group = 'com.duckblade.osrs'
+version = '2.14.2'
+sourceCompatibility = '1.8'
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = 'UTF-8'
+	options.release.set(11)
+}
+
+test {
+	useJUnitPlatform()
+}
