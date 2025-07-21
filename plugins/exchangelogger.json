@@ -1,0 +1,11 @@
+{
+  "internalName": "exchangelogger",
+  "displayName": "Exchange Logger",
+  "description": "Stores all Grand Exchange transactions into a local file for later analysis.",
+  "tags": ["grand exchange", "ge", "log", "flipping", "tracker"],
+  "category": "Utility",
+  "support": "https://github.com/istid/exchange-logger",
+  "author": "istid, Mreedon",
+  "version": "1.0",
+  "commit": "5b2f50ec7ea49fec3139dbeca05d0712cb773028"
+}
