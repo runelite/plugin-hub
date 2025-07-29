@@ -1,3 +1,3 @@
 repository=https://github.com/RusseII/region-chat.git
-commit=08a368ea4d77e452971169e4d1125c7f4643b23e
+commit=47ada5eda9fe9a7a4ee9683d687ce45a27223af6
 warning=This plugin connects to the Global Chat servers to enable messaging between players. Your chat messages and IP address are sent to provide real-time communication. The Global Chat servers are not verified or controlled by the RuneLite developers.
