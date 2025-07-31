@@ -1,0 +1,10 @@
+{
+  "internalName": "uitoggle",
+  "displayName": "UI Toggle",
+  "description": "Allows toggling of core UI panels via hotkey and config, intelligently syncing with game-driven changes.",
+  "supportedGameModes": ["OSRS"]
+  "githubRepo": "https://github.com/ItsThatNova/RuneLite_UI_Toggle"
+  "tags": ["utility", "interface", "customization", "hotkey"],
+  "authors": ["ItsThatNova"],
+  "version": "1.0"
+}
