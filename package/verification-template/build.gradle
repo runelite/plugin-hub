@@ -134,6 +134,7 @@ dependencies {
 	}
 	thirdParty("org.java-websocket:Java-WebSocket:1.5.6") {
 		because "wikisync"
+		because "osrs-archipelago"
 	}
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
