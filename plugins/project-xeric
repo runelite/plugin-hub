@@ -1,2 +1,3 @@
 repository=https://github.com/Septem151/project-xeric.git
-commit=2332fd8f1a2f76847ec4409a90f52cf2b9415fdd
+commit=81cc245f44f1358db8d25c29904baa978b662c5c
+warning=This plugin submits your IP address and player data including username to a server not controlled or verified by the RuneLite developers.
