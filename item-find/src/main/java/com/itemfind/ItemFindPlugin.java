@@ -13,7 +13,6 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.api.events.MenuOpened;
 import okhttp3.OkHttpClient;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import java.awt.image.BufferedImage;
@@ -22,9 +21,7 @@ import javax.swing.SwingUtilities;
 
 import net.runelite.api.ItemComposition;
 import net.runelite.api.MenuAction;
-import net.runelite.api.Menu;
 import net.runelite.api.MenuEntry;
-import net.runelite.api.NPC;
 import net.runelite.client.game.ItemManager;
 
 @PluginDescriptor(
@@ -62,9 +59,9 @@ public class ItemFindPlugin extends Plugin
             if (searchResults.isEmpty()) {
                 // Show simple error message
                 itemObtainedSelection[] error = new itemObtainedSelection[1];
-                error[0] = new itemObtainedSelection("Item not found",
+                error[0] = new itemObtainedSelection("Untradable Item",
                     Collections.emptyMap());
-                panel.updateResults(error);
+                panel.updateResults(error, itemName);
                 return;
             }
             int itemId = searchResults.get(0).getId();
@@ -95,22 +92,29 @@ public class ItemFindPlugin extends Plugin
     
     void searchForItemName(String itemName, int itemId) {
         if (itemName.isEmpty()) return;
-        
         // Don't search if it's the same item
         if (itemName.equals(currentItemName)) return;
-        
+        var searchResults = itemManager.search(itemName);
+            if (searchResults.isEmpty()) {
+                // Show simple error message
+                itemObtainedSelection[] error = new itemObtainedSelection[1];
+                error[0] = new itemObtainedSelection("Untradable Item",
+                    Collections.emptyMap());
+                panel.updateResults(error, itemName);
+                return;
+        }
         currentItemName = itemName;
         WikiScraper.getItemLocations(okHttpClient, itemName, itemId).whenCompleteAsync((itemObtainedSelection, ex) -> {
             if (ex != null) {
                 // Create a single selection to show the error
                 itemObtainedSelection[] error = new itemObtainedSelection[1];
                 error[0] = new itemObtainedSelection("Error", 
-                    Collections.singletonMap("❗ Item Not Found", new WikiItem[]{
-                        new WikiItem("/skill_icons/Construction.png", 
+                    Collections.singletonMap("❗ " + itemName + " Not Found", new WikiItem[]{
+                        new WikiItem("/construction.png", 
                             "Item '" + itemName + "' could not be found on the Wiki", 
                             "", 0, "", "", 0.0)
                     }));
-                panel.updateResults(error);
+                panel.updateResults(error, itemName);
                 return;
             }
             
@@ -119,15 +123,15 @@ public class ItemFindPlugin extends Plugin
                 itemObtainedSelection[] noResults = new itemObtainedSelection[1];
                 noResults[0] = new itemObtainedSelection("No Results", 
                     Collections.singletonMap("❗ No Sources Found", new WikiItem[]{
-                        new WikiItem("/skill_icons/Construction.png", 
+                        new WikiItem("/construction.png", 
                             "No sources found for '" + itemName + "'", 
                             "", 0, "", "", 0.0)
                     }));
-                panel.updateResults(noResults);
+                panel.updateResults(noResults, itemName);
                 return;
             }
             
-            panel.updateResults(itemObtainedSelection);
+            panel.updateResults(itemObtainedSelection, itemName);
         });
     }
 
@@ -139,37 +143,46 @@ public class ItemFindPlugin extends Plugin
     @Subscribe
     public void onMenuOpened(MenuOpened event) {
         
-        String itemName = ""; // default empty item name
-        ItemComposition itemComposition = null;
         MenuEntry[] menuEntries = event.getMenuEntries();
-        
-        int itemId = menuEntries[0].getItemId();
-        if (menuEntries[0].getType() != MenuAction.GROUND_ITEM_FIRST_OPTION) {
-            // Not an item examine, nothing to do
-            return;
-        }
+        Boolean isItemInv = false;
+        Boolean isItemGround = false;
         for (MenuEntry menuEntry : menuEntries) {
             MenuAction menuType = menuEntry.getType();
-
-            if (menuType == MenuAction.EXAMINE_ITEM_GROUND || menuType == MenuAction.GROUND_ITEM_SECOND_OPTION || menuType == MenuAction.GROUND_ITEM_FIFTH_OPTION) {
+            String menuOp = menuEntry.getOption();
+            if (menuType == MenuAction.EXAMINE_ITEM_GROUND || menuType == MenuAction.GROUND_ITEM_THIRD_OPTION) {
                  // Not an item examine or ground item option, nothing to do
-                 itemComposition = client.getItemDefinition(itemId);
-                 itemName = itemComposition.getName();
-            }
-            else
+                 isItemGround = true; // we found an item
+                 break; // no need to check further;
+                 // record the idx. To place the new entry before it. (Examine)
+                    //itemId = menuEntry.get();
+            }else if(menuOp.equals("Use"))
             {
-                return;
+                isItemInv = true;
+                break; // no need to check further;
             }
         }
         // find out if menu is for an item
-
-        MenuEntry entryToAppendOn = menuEntries[menuEntries.length - 1];
-
-        int idx = Arrays.asList(menuEntries).indexOf(entryToAppendOn);
+        if(!isItemInv && !isItemGround) {
+            return; // not an item, nothing to do
+        }
+        else{
+            // get item info
+            int itemId;
+            int entryIdx = menuEntries.length - 1; // Default to the last entry
+            if(isItemGround)
+            { // ground item
+                itemId = menuEntries[entryIdx].getIdentifier(); // Get the item ID from the first entry
+            } else { // inv item
+                itemId = menuEntries[entryIdx].getItemId(); // Get the last entry's identifier
+            }
+            ItemComposition itemComposition = client.getItemDefinition(itemId);
+            String itemName = itemComposition.getName();
+            
+        MenuEntry entryToAppendOn = menuEntries[entryIdx];
 
         client
                 .getMenu()
-                .createMenuEntry(idx - 1)
+                .createMenuEntry(0)
                 .setOption("Find Item")
                 .setTarget(entryToAppendOn.getTarget())
                 .setIdentifier(entryToAppendOn.getIdentifier())
@@ -180,7 +193,8 @@ public class ItemFindPlugin extends Plugin
                             selectNavButton();
                             searchForItemName(itemName, itemId);
                         });
-    }
+        }
+}
 
     public void selectNavButton() {
         SwingUtilities.invokeLater(

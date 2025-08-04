@@ -104,8 +104,8 @@ public class ItemFindPanel extends PluginPanel {
         searchBar.setIcon(new ImageIcon(img));
     }
 
-    public void updateResults(itemObtainedSelection[] selections) {
-        resultPanel.updateDisplay(selections);
+    public void updateResults(itemObtainedSelection[] selections, String itemName) {
+        resultPanel.updateDisplay(selections, itemName);
         scrollPane.getVerticalScrollBar().setValue(0);
     }
 }

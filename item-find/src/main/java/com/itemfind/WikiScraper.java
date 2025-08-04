@@ -141,29 +141,12 @@ public class WikiScraper {
                 for (Element dropTableCell : dropTableCells) {
                     if (isDrop && index > 4)
                     {
-                        // Skip the last two cells for drop tables
+                        // Skip the last cell related to deprecated leagues tags
                         continue;
                     }
                     String cellContent = dropTableCell.text();
                     Elements images = dropTableCell.select("img");
-                    if(cellContent != null && 
-                    (cellContent.equals("Scavenger beast") ||
-                    cellContent.equals("Hell-Rat") ||
-                    cellContent.equals("Hell-Rat Behemoth") ||
-                    cellContent.equals("Boneguard") ||
-                    cellContent.equals("Lizardman shaman (Chambers of Xeric)") ||
-                    cellContent.equals("Skeletal Mystic") ||
-                    cellContent.equals("Deathly mage") ||
-                    cellContent.equals("Deathly ranger") ||
-                    cellContent.equals("Dungeon rat Regular") ||
-                    cellContent.equals("Mummy (Klenter's Pyramid) Level 84") ||
-                    cellContent.equals("Mummy (Pyramid Plunder) Level 84") ||
-                    cellContent.equals("Thing under the bed") ||
-                    cellContent.equals("Muttadile") ||
-                    cellContent.equals("Muttadile") ||
-                    cellContent.equals("Chest (Aldarin Villas)") ||
-                    cellContent.equals("Chest (Bryophyta's lair) Members")) // Edge case no combat level. Should update
-                    )
+                    if(cellContent != null && isSourceNameForEdgeCases(cellContent)) // Does the source have an empty level?
                     {
                         emptyLevel = true;
                     }
@@ -196,8 +179,11 @@ public class WikiScraper {
                 }
             }
         }
+        // Start sorting here based on rarity
+        // Split the rarity with '/' since the fractions appear as "1/12"
 
-
+        wikiItems.sort(Comparator.comparingDouble(WikiItem::getRarity).reversed());
+        
         WikiItem[] result = new WikiItem[wikiItems.size()];
         return wikiItems.toArray(result);
     }
@@ -308,13 +294,30 @@ public class WikiScraper {
         return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
-    public static Boolean isItemHeaderForEdgeCases(String itemName, String tableHeaderText) {
-        return false; // update
+    public static Boolean isSourceNameForEdgeCases(String source) {
+        // Edge cases for sources with no level
+        if(source.equals("Scavenger beast") ||
+        source.equals("Hell-Rat") ||
+        source.equals("Hell-Rat Behemoth") ||
+        source.equals("Boneguard") ||
+        source.equals("Lizardman shaman (Chambers of Xeric)") ||
+        source.equals("Skeletal Mystic") ||
+        source.equals("Deathly mage") ||
+        source.equals("Deathly ranger") ||
+        source.equals("Dungeon rat Regular") ||
+        source.equals("Mummy (Klenter's Pyramid) Level 84") ||
+        source.equals("Mummy (Pyramid Plunder) Level 84") ||
+        source.equals("Thing under the bed") ||
+        source.equals("Zombie Pirate's Locker") ||
+        source.equals("Muttadile") ||
+        source.equals("Chest (Aldarin Villas)") ||
+        source.equals("Chest (Bryophyta's lair) Members"))
+        {
+            return true; // update
+        }
+        return false;
     }
 
-    public static Boolean parseH3PrimaryForEdgeCases(String itemName) {
-        return itemName.toLowerCase().equals("cyclops");
-    }
 
     private static CompletableFuture<String> requestAsync(OkHttpClient okHttpClient, String url) {
         CompletableFuture<String> future = new CompletableFuture<>();

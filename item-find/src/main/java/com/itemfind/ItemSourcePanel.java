@@ -2,6 +2,7 @@ package com.itemfind;
 
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.FontManager;
+import net.runelite.client.util.ImageUtil;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,32 +12,25 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class ItemSourcePanel extends JPanel {
-    private static final Dimension IMAGE_SIZE = new Dimension(32, 32);
+    private static final Dimension IMAGE_SIZE = new Dimension(25, 25);
     private static final Color BACKGROUND_COLOR = ColorScheme.DARKER_GRAY_COLOR;
     private static final Color HEADER_COLOR = ColorScheme.BRAND_ORANGE;
-    private static final int PADDING = 3;
-    private static final int INNER_PADDING = 2;
+    private static final int PADDING = 0;
+    private static final int INNER_PADDING = 0;
     private static final int PANEL_WIDTH = 270;
-    private static final int ITEM_HEIGHT = 45;
+    private static final int ITEM_HEIGHT = 30;
 
     public ItemSourcePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(BACKGROUND_COLOR);
     }
 
-    public void updateDisplay(itemObtainedSelection[] selections) {
+    public void updateDisplay(itemObtainedSelection[] selections, String itemName) {
         removeAll();
-
-        if (selections == null || selections.length == 0) {
-            add(createLabel("No sources found for this item.", HEADER_COLOR));
-            revalidate();
-            repaint();
-            return;
-        }
 
         for (itemObtainedSelection section : selections) {
             // Add section header
-            add(createHeader(section.getHeader()));
+            add(createHeader((section.getHeader() + " - " + itemName)));
             
             for (Map.Entry<String, WikiItem[]> table : section.getTable().entrySet()) {
                 // Add table header
@@ -65,7 +59,7 @@ public class ItemSourcePanel extends JPanel {
         JLabel header = new JLabel(text);
         header.setFont(FontManager.getRunescapeBoldFont());
         header.setForeground(HEADER_COLOR);
-        header.setBorder(new EmptyBorder(PADDING, INNER_PADDING, 0, INNER_PADDING));
+        header.setBorder(new EmptyBorder(0, 0, 0, 0));
         header.setAlignmentX(Component.LEFT_ALIGNMENT);
         return header;
     }
@@ -100,15 +94,33 @@ public class ItemSourcePanel extends JPanel {
         panel.setPreferredSize(new Dimension(PANEL_WIDTH - (PADDING * 2), panel.getPreferredSize().height));
 
         // Left side - Image
-        if (item.getImageUrl() != null && !item.getImageUrl().isEmpty()) {
-            loadImage(item.getImageUrl()).thenAccept(image -> {
-                if (image != null) {
-                    JLabel imageLabel = new JLabel(new ImageIcon(image));
-                    imageLabel.setPreferredSize(IMAGE_SIZE);
-                    panel.add(imageLabel, BorderLayout.WEST);
-                    panel.revalidate();
+        if (item.getImageUrl() != null && !item.getImageUrl().isEmpty()) { // find commonly used images to avoid loading
+            if(item.getImageUrl().contains("construction")) { // Maybe update for cached png?
+                // set the image here
+                JLabel imageLabel = new JLabel(new ImageIcon(ImageUtil.loadImageResource(getClass(), "construction.png")));
+                if(imageLabel != null) {
+                imageLabel.setPreferredSize(IMAGE_SIZE);
+                panel.add(imageLabel, BorderLayout.WEST);
+                panel.revalidate();
                 }
-            });
+            }
+            else if(item.getImageUrl().contains("Multicombat"))
+            {
+                JLabel imageLabel = new JLabel(new ImageIcon(ImageUtil.loadImageResource(getClass(), "combat.png")));
+                imageLabel.setPreferredSize(IMAGE_SIZE);
+                panel.add(imageLabel, BorderLayout.WEST);
+                panel.revalidate();
+            }
+            else{
+                loadImage(item.getImageUrl()).thenAccept(image -> {
+                    if (image != null) {
+                        JLabel imageLabel = new JLabel(new ImageIcon(image));
+                        imageLabel.setPreferredSize(IMAGE_SIZE);
+                        panel.add(imageLabel, BorderLayout.WEST);
+                        panel.revalidate();
+                    }
+                });
+            }
         }
 
         // Center - Information
@@ -128,27 +140,18 @@ public class ItemSourcePanel extends JPanel {
             // Create a panel for level and amount on the same line
             JPanel statsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, INNER_PADDING, 0));
             statsPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
-            
-            if (!item.getLevel().isEmpty()) {
-                String levelText = "L:" + item.getLevel();
-                statsPanel.add(createLabel(levelText, Color.WHITE));
-                statsPanel.add(createLabel(" • ", Color.GRAY)); // Smaller separator
-            }
-            statsPanel.add(createLabel("Qty:" + item.getQuantityLabelText(), Color.WHITE));
+            String levelText = "Lvl:" + item.getLevel();
+            statsPanel.add(createLabel(levelText, Color.WHITE));
+            statsPanel.add(createLabel(" • ", Color.GRAY)); // Smaller separator
+            statsPanel.add(createLabel("Qty:" + item.getQuantityLabelText() + " • ", Color.WHITE));
+            statsPanel.add(createLabel("R: " + item.getRarityStr(), HEADER_COLOR));
             
             JPanel bottomPanel = new JPanel(new BorderLayout());
             bottomPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
             bottomPanel.setBorder(new EmptyBorder(INNER_PADDING, INNER_PADDING, 0, 0));
             bottomPanel.add(statsPanel, BorderLayout.NORTH);
             
-            JLabel rarityLabel = createLabel("Rarity: " + item.getRarityStr(), HEADER_COLOR);
-            JPanel rarityPanel = new JPanel(new BorderLayout());
-            rarityPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
-            rarityPanel.setBorder(new EmptyBorder(INNER_PADDING, INNER_PADDING, 0, 0));
-            rarityPanel.add(rarityLabel, BorderLayout.WEST);
-            
-            bottomPanel.add(rarityPanel, BorderLayout.CENTER);
-            infoPanel.add(bottomPanel, BorderLayout.CENTER);
+            infoPanel.add(bottomPanel, BorderLayout.WEST);
         } else if (tableType.toLowerCase().contains("spawn")) {
             infoPanel.add(createLabel("Amount: " + item.getQuantityLabelText(), Color.WHITE));
         } else {
