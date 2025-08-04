@@ -103,6 +103,13 @@ dependencies {
 	thirdParty("com.esotericsoftware.minlog:minlog:1.2") {
 		because "blue-prox-chat"
 	}
+	thirdParty("org.jsoup:jsoup:1.17.2")
+	{
+		because "Jsoup"
+	}
+	thirdParty("com.squareup.okhttp3:okhttp:4.12.0"){
+		because "okhttp"
+	}
 	thirdParty("io.ably:ably-java:1.2.5") {
 		because "broadcaster"
 		because "region-chat"

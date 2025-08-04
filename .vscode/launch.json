@@ -1,0 +1,45 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "type": "java",
+      "name": "Current File",
+      "request": "launch",
+      "mainClass": "${file}",
+      "vmArgs": "-ea"
+    },
+    {
+      "type": "java",
+      "name": "ClassRecorder",
+      "request": "launch",
+      "mainClass": "net.runelite.pluginhub.apirecorder.ClassRecorder",
+      "projectName": "apirecorder"
+    },
+    {
+      "type": "java",
+      "name": "ItemFindPluginTest",
+      "request": "launch",
+      "mainClass": "com.itemfind.ItemFindPluginTest",
+      "projectName": "item-find",
+      "vmArgs": "-ea"
+    },
+    {
+      "type": "java",
+      "name": "Packager",
+      "request": "launch",
+      "mainClass": "net.runelite.pluginhub.packager.Packager",
+      "projectName": "package"
+    },
+    {
+      "type": "java",
+      "name": "Uploader",
+      "request": "launch",
+      "mainClass": "net.runelite.pluginhub.uploader.Uploader",
+      "projectName": "upload"
+    }
+  ]
+}
