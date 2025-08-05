@@ -17,7 +17,9 @@ public class WikiScraper {
     private final static String baseUrl = "https://oldschool.runescape.wiki";
     private final static String baseWikiUrl = baseUrl + "/w/";
     private final static String baseWikiLookupUrl = baseWikiUrl + "Special:Lookup";
-
+    private final static int DROP_ROW_SIZE = 5;
+    private final static int SHOP_ROW_SIZE = 7;
+    private final static int SPAWN_ROW_SIZE = 3;
     private static Document doc;
 
     public static CompletableFuture<itemObtainedSelection[]> getItemLocations(OkHttpClient okHttpClient, String itemName, int itemId) {
@@ -41,7 +43,6 @@ public class WikiScraper {
             doc = Jsoup.parse(responseHTML);
             Elements tableHeaders = doc.select("h2 span.mw-headline, h3 span.mw-headline");
 
-            Boolean parseitemObtainedSelection = false;
             itemObtainedSelection curritemObtainedSelection = new itemObtainedSelection();
             Map<String, WikiItem[]> currDropTable = new LinkedHashMap<>();
             int tableIndexH3 = 0;
@@ -50,8 +51,9 @@ public class WikiScraper {
             for (Element tableHeader : tableHeaders) {
                 String tableHeaderText = tableHeader.text();
                 
-                String tableHeaderTextLower = tableHeaderText.toLowerCase();
-                Boolean isItemObtainHeader = tableHeaderTextLower.toLowerCase().contains("item_sources") || tableHeaderTextLower.toLowerCase().contains("shop_locations")|| tableHeaderTextLower.toLowerCase().contains("item-drops"); // || tableHeaderTextLower.toLowerCase().contains("spawns");
+                String tableHeaderTextLower = tableHeaderText.toLowerCase(); // convert to lower case for comparison
+                Boolean isItemObtainHeader = tableHeaderTextLower.toLowerCase().contains("shop locations") || tableHeaderTextLower.toLowerCase().contains("item sources"); // || tableHeaderTextLower.toLowerCase().contains("spawns");
+                // Look for headers where we want to partse the table
 
                 Elements parentH2 = tableHeader.parent().select("h2"); // Drops
                 Boolean isParentH2 = !parentH2.isEmpty();
@@ -59,8 +61,9 @@ public class WikiScraper {
                 Elements parentH3 = tableHeader.parent().select("h3"); // spawns and store locations
                 Boolean isParentH3 = !parentH3.isEmpty();
 
-                if (isItemObtainHeader && (isParentH2 || isParentH3)) {
-                    if (!currDropTable.isEmpty()) {
+                if (isItemObtainHeader && (isParentH2 || isParentH3)) { // Is this section a header we want to parse?
+                    if (!currDropTable.isEmpty()) { // Check if the current table is not empty
+                        // If it is not empty, we need to add the current itemObtainedSelection to
                         // reset section
                         curritemObtainedSelection.setTable(currDropTable);
                         itemObtainedSelections.add(curritemObtainedSelection);
@@ -68,25 +71,19 @@ public class WikiScraper {
                         currDropTable = new LinkedHashMap<>();
                         curritemObtainedSelection = new itemObtainedSelection();
                     }
-
-                    if (isItemObtainHeader) {
-                        // new section
-                        parseitemObtainedSelection = true;
-                        curritemObtainedSelection.setHeader(tableHeaderText);
-                    } else {
-                        parseitemObtainedSelection = false;
-                    }
-                } else if (parseitemObtainedSelection && (isParentH2 || isParentH3)) {
+                    // Set the header to be displayed
+                    curritemObtainedSelection.setHeader(tableHeaderText);
+                    // Is this an item drop or store location?
                     String element = isParentH2 ? "h2" : "h3";
                     int tableIndex = isParentH2 ? tableIndexH2 : tableIndexH3;
-                    // parse table
-                    // h2 is item-drops, h3 is store-locations-list || align-center-2
 
-                    String selector = element == "h2" ? " ~ table.item-drops" : " ~ table.store-locations-list";
-                    int rowSize = 6; // consolidating
+                    // Determine the html element to parse
+                    String selector = element == "h2" ? " ~ table.item-drops" : " ~ table.store-locations-list"; // update this later
+                    int rowSize = element == "hs" ? DROP_ROW_SIZE : SHOP_ROW_SIZE; // consolidating
                     Boolean isDrop = element.equals("h2");
-                    WikiItem[] tableRows = getTableItems(tableIndex, element + selector, rowSize, isDrop);
+                    WikiItem[] tableRows = getTableItems(tableIndex, element + selector, rowSize, isDrop, !isDrop);
 
+                    // 
                     if (tableRows.length > 0 && !currDropTable.containsKey(tableHeaderText)) {
                         currDropTable.put(tableHeaderText, tableRows);
                         if (isParentH2) {
@@ -106,19 +103,6 @@ public class WikiScraper {
                 itemObtainedSelections.add(curritemObtainedSelection);
             }
 
-            if (itemObtainedSelections.isEmpty()) {
-                tableHeaders = doc.select("h2 span.mw-headline");
-
-                if (!tableHeaders.isEmpty()) {
-                    WikiItem[] tableRows = getTableItems(0, "h2 ~ table.item-drops", 6, true);
-                    if (tableRows.length > 0) {
-                        currDropTable = new LinkedHashMap<>();
-                        currDropTable.put("Source", tableRows);
-                        itemObtainedSelections.add(new itemObtainedSelection("Source", currDropTable));
-                    }
-                }
-            }
-
             itemObtainedSelection[] result = itemObtainedSelections.toArray(new itemObtainedSelection[itemObtainedSelections.size()]);
             future.complete(result);
         });
@@ -126,34 +110,33 @@ public class WikiScraper {
         return future;
     }
 
-    private static WikiItem[] getTableItems(int tableIndex, String selector, int rowSize, Boolean isDrop) {
+    private static WikiItem[]  getTableItems(int tableIndex, String selector, int rowSize, Boolean isDrop, Boolean isShop) {
         List<WikiItem> wikiItems = new ArrayList<>();
         Elements dropTables = doc.select(selector);
-
         if (dropTables.size() > tableIndex) {
             Elements dropTableRows = dropTables.get(tableIndex).select("tbody tr");
             for (Element dropTableRow : dropTableRows) {
                 String[] lootRow = new String[rowSize];
                 Elements dropTableCells = dropTableRow.select("td");
                 int index = 1;
+                Boolean imgUsed = false; // Used to check if the image was already used in the row
                 Boolean emptyLevel = false; // monsters with no level.
                 
                 for (Element dropTableCell : dropTableCells) {
-                    if (isDrop && index > 4)
-                    {
-                        // Skip the last cell related to deprecated leagues tags
-                        continue;
-                    }
+                    // Check edge cases for removing uneeded cells
+                    if ((isDrop || isShop) && index >= rowSize) break; 
+
                     String cellContent = dropTableCell.text();
                     Elements images = dropTableCell.select("img");
                     if(cellContent != null && isSourceNameForEdgeCases(cellContent)) // Does the source have an empty level?
                     {
                         emptyLevel = true;
                     }
-                    if (images.size() != 0) {
+                    if (images.size() != 0 && !imgUsed) { // If there is an image and it has not been used yet
                         String imageSource = images.first().attr("src");
                         if (!imageSource.isEmpty()) {
                             lootRow[0] = baseUrl + imageSource;
+                            imgUsed = true; // Mark the image as used
                         }
                     }
 
@@ -174,15 +157,19 @@ public class WikiScraper {
                 }
 
                 if (lootRow[0] != null) {
-                    WikiItem wikiItem = parseRow(lootRow, isDrop);
+                    WikiItem wikiItem = parseRow(lootRow, isDrop, isShop); // isShop = !isDrop
                     wikiItems.add(wikiItem);
                 }
             }
         }
         // Start sorting here based on rarity
         // Split the rarity with '/' since the fractions appear as "1/12"
-
-        wikiItems.sort(Comparator.comparingDouble(WikiItem::getRarity).reversed());
+        if (isDrop) {
+            wikiItems.sort(Comparator.comparingDouble(WikiItem::getRarity).reversed());
+        } else if (isShop) {
+            // For shops, sort by buy price
+            wikiItems.sort(Comparator.comparingInt(WikiItem::getSoldPrice).reversed());
+        }
         
         WikiItem[] result = new WikiItem[wikiItems.size()];
         return wikiItems.toArray(result);
@@ -201,18 +188,19 @@ public class WikiScraper {
         return originalUrl;
     }
 
-    public static WikiItem parseRow(String[] row, Boolean isDrop) {
+    public static WikiItem parseRow(String[] row, Boolean isDrop, Boolean isShop) {
+
         String src_spwn_sell = "";
-        String level = "";
         String imageUrl = "";
-        double rarity = -1;
-        String rarityStr = "";
-
-        int quantity = 0;
-        String quantityStr = "";
-
+        WikiItem wikiItem = null;
         // First element is always a seller/spawn/npc        
         if (isDrop) { // dropped from an NPC, use item_sources logic
+            String level = "";
+            double rarity = -1;
+            String rarityStr = "";
+            int quantity = 0;
+            String quantityStr = "";
+
             imageUrl = row[0];
             src_spwn_sell = row[1];
             // Map the image URL based on source name
@@ -256,9 +244,40 @@ public class WikiScraper {
                 }
             } catch (ParseException ex) {
             }
-
+            wikiItem = new WikiItem(imageUrl, src_spwn_sell, level, quantity, quantityStr, rarityStr, rarity);
         }
-        return new WikiItem(imageUrl, src_spwn_sell, level, quantity, quantityStr, rarityStr, rarity);
+        else if(isShop)
+        {
+            String location = "";
+            int stock = 0;
+            int soldPrice = 0;
+            int buyPrice = 0;
+            String restockTime = "";
+
+            imageUrl = row[0];
+            src_spwn_sell = row[1];
+            // Map the image URL based on source name
+            imageUrl = mapImageUrl(imageUrl, src_spwn_sell);
+            NumberFormat nf = NumberFormat.getNumberInstance();
+            
+            location = row[2];
+            try {
+                stock = nf.parse(row[3]).intValue();
+            } catch (ParseException e) {
+            }
+            restockTime = row[4];
+            try {
+                soldPrice = nf.parse(row[5]).intValue();
+            } catch (ParseException e) {
+            }
+            try {
+                buyPrice = nf.parse(row[6]).intValue();
+            } catch (ParseException e) {
+            }
+            
+            wikiItem = new WikiItem(imageUrl, src_spwn_sell, location, stock, restockTime, soldPrice, buyPrice);
+        }
+        return wikiItem; // Return the WikiItem object
     }
 
 

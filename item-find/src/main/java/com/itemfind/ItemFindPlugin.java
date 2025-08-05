@@ -155,9 +155,9 @@ public class ItemFindPlugin extends Plugin
                  break; // no need to check further;
                  // record the idx. To place the new entry before it. (Examine)
                     //itemId = menuEntry.get();
-            }else if(menuOp.equals("Use"))
+            }else if(menuOp.equals("Use") || menuOp.contains("Withdraw") || menuOp.contains("Deposit"))
             {
-                isItemInv = true;
+                isItemInv = true; // Item is found in inv or bank
                 break; // no need to check further;
             }
         }
@@ -182,7 +182,7 @@ public class ItemFindPlugin extends Plugin
 
         client
                 .getMenu()
-                .createMenuEntry(0)
+                .createMenuEntry(1) // Right above 'cancel'mdk
                 .setOption("Find Item")
                 .setTarget(entryToAppendOn.getTarget())
                 .setIdentifier(entryToAppendOn.getIdentifier())

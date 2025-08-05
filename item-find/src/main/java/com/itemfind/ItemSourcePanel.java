@@ -18,7 +18,8 @@ public class ItemSourcePanel extends JPanel {
     private static final int PADDING = 0;
     private static final int INNER_PADDING = 0;
     private static final int PANEL_WIDTH = 270;
-    private static final int ITEM_HEIGHT = 30;
+    private static final int DROP_ITEM_HEIGHT = 30;
+    private static final int SHOP_ITEM_HEIGHT = 60;
 
     public ItemSourcePanel() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -60,7 +61,7 @@ public class ItemSourcePanel extends JPanel {
         header.setFont(FontManager.getRunescapeBoldFont());
         header.setForeground(HEADER_COLOR);
         header.setBorder(new EmptyBorder(0, 0, 0, 0));
-        header.setAlignmentX(Component.LEFT_ALIGNMENT);
+        header.setAlignmentX(Component.CENTER_ALIGNMENT);
         return header;
     }
 
@@ -88,30 +89,39 @@ public class ItemSourcePanel extends JPanel {
         panel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
         panel.setBorder(BorderFactory.createLineBorder(ColorScheme.DARKER_GRAY_COLOR.brighter(), 1));
         panel.setLayout(new BorderLayout(INNER_PADDING, 0));
+        // Shop height is different from drop height since it has more fields
+        final int ITEM_HEIGHT = (tableType.toLowerCase().contains("sources") ? DROP_ITEM_HEIGHT : SHOP_ITEM_HEIGHT);
+
         panel.setPreferredSize(new Dimension(PANEL_WIDTH - (PADDING * 2), ITEM_HEIGHT));
         panel.setMinimumSize(new Dimension(PANEL_WIDTH - (PADDING * 2), ITEM_HEIGHT));
         panel.setMaximumSize(new Dimension(PANEL_WIDTH - (PADDING * 2), ITEM_HEIGHT));
         panel.setPreferredSize(new Dimension(PANEL_WIDTH - (PADDING * 2), panel.getPreferredSize().height));
-
+        ImageIcon icon = null;
         // Left side - Image
         if (item.getImageUrl() != null && !item.getImageUrl().isEmpty()) { // find commonly used images to avoid loading
             if(item.getImageUrl().contains("construction")) { // Maybe update for cached png?
-                // set the image here
-                JLabel imageLabel = new JLabel(new ImageIcon(ImageUtil.loadImageResource(getClass(), "construction.png")));
-                if(imageLabel != null) {
-                imageLabel.setPreferredSize(IMAGE_SIZE);
-                panel.add(imageLabel, BorderLayout.WEST);
-                panel.revalidate();
-                }
+                icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "construction.png"));
             }
-            else if(item.getImageUrl().contains("Multicombat"))
-            {
-                JLabel imageLabel = new JLabel(new ImageIcon(ImageUtil.loadImageResource(getClass(), "combat.png")));
-                imageLabel.setPreferredSize(IMAGE_SIZE);
-                panel.add(imageLabel, BorderLayout.WEST);
-                panel.revalidate();
+            else if(item.getImageUrl().contains("Multicombat")){
+                icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "combat.png"));
             }
-            else{
+            // Getting common coin images to avoid loading delays
+            else if(item.getImageUrl().contains("Coins_5") || item.getImageUrl().contains("Coins_1.png")){
+                icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "Coins_5.png"));
+            }
+            else if(item.getImageUrl().contains("Coins_25.png")) {
+                icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "Coins_25.png"));
+            }
+            else if(item.getImageUrl().contains("Coins_250")) {
+                icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "Coins_250.png"));
+            }
+            else if(item.getImageUrl().contains("Coins_1000.png")) {
+                icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "Coins_1000.png"));
+            }
+            else if(item.getImageUrl().contains("Coins_10000")) {
+                icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "Coins_10000.png"));
+            }
+            else{ // default logic, download the image
                 loadImage(item.getImageUrl()).thenAccept(image -> {
                     if (image != null) {
                         JLabel imageLabel = new JLabel(new ImageIcon(image));
@@ -120,6 +130,12 @@ public class ItemSourcePanel extends JPanel {
                         panel.revalidate();
                     }
                 });
+            }
+            JLabel imageLabel = new JLabel(icon);
+            if(imageLabel != null) {
+            imageLabel.setPreferredSize(IMAGE_SIZE);
+            panel.add(imageLabel, BorderLayout.WEST);
+            panel.revalidate();
             }
         }
 
@@ -136,21 +152,56 @@ public class ItemSourcePanel extends JPanel {
         infoPanel.add(sourcePanel, BorderLayout.NORTH);
 
         // Additional info based on type
-        if (!tableType.toLowerCase().contains("shop") && !tableType.toLowerCase().contains("spawn")) {
+        if (tableType.toLowerCase().contains("sources")) {
             // Create a panel for level and amount on the same line
-            JPanel statsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, INNER_PADDING, 0));
-            statsPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
+            JPanel sourcesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, INNER_PADDING, 0));
+            sourcesPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
             String levelText = "Lvl:" + item.getLevel();
-            statsPanel.add(createLabel(levelText, Color.WHITE));
-            statsPanel.add(createLabel(" • ", Color.GRAY)); // Smaller separator
-            statsPanel.add(createLabel("Qty:" + item.getQuantityLabelText() + " • ", Color.WHITE));
-            statsPanel.add(createLabel("R: " + item.getRarityStr(), HEADER_COLOR));
+            sourcesPanel.add(createLabel(levelText, Color.WHITE));
+            sourcesPanel.add(createLabel(" • ", Color.GRAY)); // Smaller separator
+            sourcesPanel.add(createLabel("Qty:" + item.getQuantityLabelText() + " • ", Color.WHITE));
+            sourcesPanel.add(createLabel("R: " + item.getRarityStr(), HEADER_COLOR));
             
             JPanel bottomPanel = new JPanel(new BorderLayout());
             bottomPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
             bottomPanel.setBorder(new EmptyBorder(INNER_PADDING, INNER_PADDING, 0, 0));
-            bottomPanel.add(statsPanel, BorderLayout.NORTH);
+            bottomPanel.add(sourcesPanel, BorderLayout.NORTH);
             
+            infoPanel.add(bottomPanel, BorderLayout.WEST);
+        }
+        else if(tableType.toLowerCase().contains("shop")){
+            // Display Seller, Location, stock, restock time, price sold, proce bought
+            // Format as: "[Seller] 
+            // [location]
+            // Stock: [stock] Restock: [restock time]
+            // Price Sold: [price sold] 
+            // Price Bought: [price bought]"
+            // Create a panel for level and amount on the same line
+            JPanel bottomPanel = new JPanel();
+            bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+            bottomPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
+            bottomPanel.setBorder(new EmptyBorder(INNER_PADDING + 5, INNER_PADDING + 5, 4, 4));
+
+            // First line: Loc
+            JPanel shopsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, INNER_PADDING, 0));
+            shopsPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
+            shopsPanel.add(createLabel("Loc: " + item.getLocation(), Color.WHITE));
+            bottomPanel.add(shopsPanel);
+
+            // Second line: Stock & Restock
+            JPanel stockPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, INNER_PADDING, 0));
+            stockPanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
+            stockPanel.add(createLabel("Stock: " + item.getStock() + " • ", Color.GREEN));
+            stockPanel.add(createLabel("Restock: " + item.getRestockTime(), Color.GREEN));
+            bottomPanel.add(stockPanel);
+
+            // Third line: Sold & Buy
+            JPanel pricePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, INNER_PADDING, 0));
+            pricePanel.setBackground(ColorScheme.DARKER_GRAY_COLOR.darker());
+            pricePanel.add(createLabel("Buy: " + item.getSoldPrice() + "gp • ", Color.YELLOW));
+            pricePanel.add(createLabel("Sell: " + item.getBuyPrice() + "gp ", Color.YELLOW));
+            bottomPanel.add(pricePanel);
+
             infoPanel.add(bottomPanel, BorderLayout.WEST);
         } else if (tableType.toLowerCase().contains("spawn")) {
             infoPanel.add(createLabel("Amount: " + item.getQuantityLabelText(), Color.WHITE));

@@ -52,9 +52,9 @@ public class ItemFindPanel extends PluginPanel {
         filterPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         filterPanel.setLayout(new BoxLayout(filterPanel, BoxLayout.Y_AXIS));
 
-        dropsCheckbox = new JCheckBox("Drops");
-        spawnsCheckbox = new JCheckBox("Spawns");
-        storesCheckbox = new JCheckBox("Stores");
+        dropsCheckbox = new JCheckBox("Drops", true);
+        spawnsCheckbox = new JCheckBox("Spawns", true);
+        storesCheckbox = new JCheckBox("Stores", true);
 
         // Style the checkboxes
         for (JCheckBox checkbox : new JCheckBox[]{dropsCheckbox, spawnsCheckbox, storesCheckbox}) {
