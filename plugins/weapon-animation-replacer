@@ -1,2 +1,3 @@
 repository=https://github.com/geheur/weapon-animation-replacer.git
 commit=0deb8d16d0f4259b8170a671fab8b54dd9af1b5a
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
