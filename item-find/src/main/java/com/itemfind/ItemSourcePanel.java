@@ -99,7 +99,7 @@ public class ItemSourcePanel extends JPanel {
         ImageIcon icon = null;
         // Left side - Image
         if (item.getImageUrl() != null && !item.getImageUrl().isEmpty()) { // find commonly used images to avoid loading
-            if(item.getImageUrl().contains("construction")) { // Maybe update for cached png?
+            if(item.getImageUrl().contains("construction")) { // Maybe update for cached png? for now, store manually
                 icon = new ImageIcon(ImageUtil.loadImageResource(getClass(), "construction.png"));
             }
             else if(item.getImageUrl().contains("Multicombat")){

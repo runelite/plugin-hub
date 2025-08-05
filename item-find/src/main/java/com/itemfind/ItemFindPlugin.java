@@ -7,9 +7,9 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.util.ImageUtil;
-import net.runelite.client.config.ConfigManager;
+import net.runelite.client.config.ConfigManager; // to be used later with config for view setetings
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.events.ConfigChanged;
+import net.runelite.client.events.ConfigChanged; // to be used later with config for view setetings
 import net.runelite.api.events.MenuOpened;
 import okhttp3.OkHttpClient;
 

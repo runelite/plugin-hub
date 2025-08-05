@@ -19,7 +19,7 @@ public class WikiScraper {
     private final static String baseWikiLookupUrl = baseWikiUrl + "Special:Lookup";
     private final static int DROP_ROW_SIZE = 5;
     private final static int SHOP_ROW_SIZE = 7;
-    private final static int SPAWN_ROW_SIZE = 3;
+    private final static int SPAWN_ROW_SIZE = 3; // to be used later for spawn tables
     private static Document doc;
 
     public static CompletableFuture<itemObtainedSelection[]> getItemLocations(OkHttpClient okHttpClient, String itemName, int itemId) {
@@ -120,7 +120,7 @@ public class WikiScraper {
                 Elements dropTableCells = dropTableRow.select("td");
                 int index = 1;
                 Boolean imgUsed = false; // Used to check if the image was already used in the row
-                Boolean emptyLevel = false; // monsters with no level.
+                Boolean emptyLevel = false; // Source with no level.
                 
                 for (Element dropTableCell : dropTableCells) {
                     // Check edge cases for removing uneeded cells
