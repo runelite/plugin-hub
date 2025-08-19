@@ -1,4 +1,4 @@
 repository=https://github.com/RunePulse/runepulse-runelite-plugin.git
 commit=a36d50cde0e5bcd48f4b4b0169996b3ceb0e5d64
 authors=hawolt
-warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.
+warning=This plugin submits your username and game related information in addition to your IP address to a server not controlled or verified by the RuneLite developers.
