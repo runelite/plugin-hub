@@ -1,0 +1,4 @@
+repository=https://github.com/mistereman22/bingosrs-runelite-plugin.git
+commit=9228326f3e489c5a8ad5d9c4920069a6c29a9631
+authors=mistereman22
+warning=This plugin sends player data, including usernames, screenshots, and IP address to a third-party server not controlled or verified by the RuneLite Developers, for tile verification.
