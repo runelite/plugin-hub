@@ -1,2 +1,3 @@
 repository=https://github.com/cameronspears/gielinor-gains-runelite.git
-commit=dbfbc7f90f555952c44c8b3380133fe379b4565c
+commit=180a6ffe7344216fab09ddc3ea25d5cf81e19f4a
+warning=This plugin connects to GielinorGains.com to fetch trading data. Your IP address will be sent with these requests. Currently, the plugin only retrieves public market data (item prices, trading opportunities). No personal information or game data is transmitted. Future updates may include optional account authentication for premium features.
