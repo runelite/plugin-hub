@@ -1,0 +1,3 @@
+repository=https://github.com/perrylzx/telegram-notifier.git
+commit=9225137d2a0ba1839b53013e069727dba5ddd13e
+warning=This plugin submits your IP address and player action data to a service not controlled or verified by the RuneLite developers.
