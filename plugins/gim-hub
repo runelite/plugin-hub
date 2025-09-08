@@ -1,4 +1,0 @@
-repository=https://github.com/wouterrutgers/gim-hub-plugin.git
-commit=146d5a595a34c8afb63875d05fde30573188b4b0
-authors=wouterrutgers,EllarBooher
-warning=This plugin sends your player data (including your items, world map location, xp values, collection log information), and IP address to a server not controlled or verified by the RuneLite developers.
