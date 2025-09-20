@@ -1,1 +1,5 @@
-https://github.com/findarian/pvp-leaderboard
+{
+  "repository": "https://github.com/findarian/pvp-leaderboard",
+  "branch": "add-pvp-leaderboard",
+  "warning": "This plugin connects to external servers by default to fetch and submit PvP data. Your IP address and in-game username may be transmitted to the external service."
+}
