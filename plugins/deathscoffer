@@ -1,3 +1,3 @@
 repository=https://github.com/NSammut/Death-s-Coffer.git
-commit=0ad2237ef37404bc45693ad9f8d2c3d77e8ac898
+commit=5cb447065c18a9c070ce00fd06725742dbc99e68
 warning=This plugin submits your username, death's coffer value, and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers. This is needed to track coffer value and update chat messages.
