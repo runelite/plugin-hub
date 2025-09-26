@@ -1,0 +1,12 @@
+{
+  "id": "goldenskilloutline",
+  "name": "Golden Skill Outline",
+  "description": "Adds a golden trim around any skill that is at level 99.",
+  "author": "Murab",
+  "tags": ["overlay", "outline", "99", "skills", "highlight", "overlay"],
+  "plugins": [
+    {
+      "classname": "net.runelite.client.plugins.goldenoutlines.GoldenOutlinesPlugin"
+    }
+  ]
+}
