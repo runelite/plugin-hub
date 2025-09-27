@@ -1,8 +1,0 @@
-{
-  "name": "High Alchemy Profit Calculator",
-  "description": "Shows the most profitable items to high alch based on current GE prices",
-  "tags": ["alchemy", "profit", "money", "ge", "calculator"],
-  "enabledByDefault": false,
-  "repository": "https://github.com/justindbrown07-dev/high-alchemy-calculator",
-  "commit": "main"
-}
