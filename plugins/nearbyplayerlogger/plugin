@@ -1,0 +1,6 @@
+id= nearbyplayerlogger
+name= Nearby Player Logger
+description= Logs nearby players in RuneLite
+version= 1.0.0
+repository= https://github.com/rickandreae/nearbyplayerlogger.git
+license= BSD-2-Clause

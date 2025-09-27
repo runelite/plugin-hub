@@ -5,7 +5,7 @@ version=1.0.0
 license=BSD-2-Clause
 
 # GitHub repository URL for the plugin
-repo=https://github.com/rickandreae/nearbyplayerlogger.git
+repository=https://github.com/rickandreae/nearbyplayerlogger.git
 
 # Plugin authors
 authors=rickandreae
