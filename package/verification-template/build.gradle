@@ -45,7 +45,7 @@ dependencies {
 		because "discord-rare-drop-notifier, droptracker"
 	}
 	thirdParty("org.jsoup:jsoup:1.13.1") {
-		because "discord-rare-drop-notifier, drop-simulator, fire-beats, loot-table, loot-lookup"
+		because "discord-rare-drop-notifier, drop-simulator, fire-beats, loot-table, loot-lookup, chance-man"
 	}
 	thirdParty("com.miglayout:miglayout-swing:5.2") {
 		because "drop-simulator"
@@ -134,6 +134,7 @@ dependencies {
 	}
 	thirdParty("org.java-websocket:Java-WebSocket:1.5.6") {
 		because "wikisync"
+		because "osrs-archipelago"
 	}
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs"
