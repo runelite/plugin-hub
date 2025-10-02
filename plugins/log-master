@@ -1,3 +1,4 @@
 repository=https://github.com/OSRS-Taskman/collection-log-master.git
-commit=f2dd0ff09385a63c9b93ed60b2e179db200b9056
+commit=091e7f0e8e6885ec09baa27069a3f492e2325a13
 authors=ImTedious,rmobis
+warning=This plugin is deprecated, you should not install it. Look for 'Collection Log Master' in the plugin hub for the newest version.
