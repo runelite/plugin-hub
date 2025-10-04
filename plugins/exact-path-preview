@@ -1,4 +1,8 @@
 {
   "repository": "https://github.com/blindtcg/exact-path-preview",
   "commit": "15f318639104575b6c496ad50c8fc2d6fb9ce67d"
+
+  "repository": "https://github.com/blindtcg/exact-path-preview.git",
+  "commit": "58eb3a87b4799bb5482c4e88df02d4f02fd6cf29"
+
 }
