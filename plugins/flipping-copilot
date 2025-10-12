@@ -1,0 +1,4 @@
+repository=https://github.com/cbrewitt/flipping-copilot.git
+commit=0bc8ea2ccb0423e1853b9225b663ab24b92650fd
+authors=cbrewitt,jptrs93
+warning=This plugin submits your grand exchange offers, grand exchange transactions, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
