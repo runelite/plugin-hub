@@ -1,2 +1,3 @@
 repository=https://github.com/rauvagol/lockedchunkoverlay.git
 commit=898fd5280885434328c7df126306186bc0da1cf4
+warning=If using the "Chunk Picker Site" source, this plugin makes network requests and transmits your IP address to a 3rd-party server not controlled or verified by RuneLite developers.
