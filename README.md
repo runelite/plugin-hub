@@ -33,7 +33,7 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
+ 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`. Make sure to also change the package name in src/test/resources/logback-test.xml in case IntelliJ misses it.
 
  7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
  
