@@ -1,4 +1,4 @@
 repository=https://github.com/deathbeam/example-plugin.git
 commit=98f4b4f707b267f1f8363baee0475a2d8e05e822
 authors=deathbeam,supyosup
-disabled=broken on live
+unavailable=broken on live
