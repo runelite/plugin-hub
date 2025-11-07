@@ -1,0 +1,3 @@
+repository=https://github.com/mrhappyasthma/runelite-profit-tracker.git
+commit=9224cd514bfc76d4c97103ce17516ff619b0590f
+warning=This plugin exposes a port on your machine. Only set this up if you understand what you are doing.
