@@ -1,3 +1,3 @@
 repository=https://github.com/CodyFraker/Prometheus-Skill-Exporter.git
-commit=9224cd514bfc76d4c97103ce17516ff619b0590f
+commit=a8fcd2a8bb37b9a5aa60580a8c39eb2e883fd3d4
 warning=This plugin exposes a port on your machine. Only set this up if you understand what you are doing.
