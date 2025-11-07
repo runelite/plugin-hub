@@ -1,0 +1,44 @@
+# avoid client.getVar, prefer client.getVarbitValue
+Lnet/runelite/api/Client;.getVar(I)I:ab
+
+# ChatMessageManager.update is a no-op
+Lnet/runelite/client/chat/ChatMessageManager;.update(Lnet/runelite/api/MessageNode;)V:b
+
+# Do not create fresh OkHttpClients - always @Inject the client's OkHttpClient
+Lokhttp3/OkHttpClient;.<init>()V:b
+Lokhttp3/OkHttpClient$Builder;.<init>()V:b
+
+# Do not create fresh Gson instances, always @Inject the client's Gson.
+# You can customize it by calling .newBuilder() on it
+Lcom/google/gson/Gson;.<init>()V:b
+Lcom/google/gson/GsonBuilder;.<init>()V:b
+
+# Use ComponentID or InterfaceID instead of WidgetInfo or WidgetID
+/^Lnet/runelite/api/widgets/WidgetInfo;/
+/^Lnet/runelite/api/widgets/WidgetID/
+
+# Use the overloaded getItemStats(int itemId) method instead
+Lnet/runelite/client/game/ItemManager;.getItemStats(IZ)Lnet/runelite/http/api/item/ItemStats;:b
+
+#
+Lnet/runelite/client/account/AccountClient;.<clinit>()V:gs
+Lnet/runelite/client/account/AccountClient;.login(I)Lnet/runelite/http/api/account/OAuthResponse;:b
+Lnet/runelite/client/account/AccountClient;.logout()V:b
+Lnet/runelite/client/account/AccountClient;.sessionCheck()Z:b
+Lnet/runelite/client/account/AccountClient;.setUuid(Ljava/util/UUID;)V:b
+Lnet/runelite/client/account/AccountClient;b
+Lnet/runelite/client/account/AccountSession;.<init>(Ljava/util/UUID;Ljava/time/Instant;Ljava/lang/String;)V:b
+Lnet/runelite/client/account/AccountSession;.canEqual(Ljava/lang/Object;)Z:t
+Lnet/runelite/client/account/AccountSession;.equals(Ljava/lang/Object;)Z:b
+Lnet/runelite/client/account/AccountSession;.getCreated()Ljava/time/Instant;:b
+Lnet/runelite/client/account/AccountSession;.getUsername()Ljava/lang/String;:b
+Lnet/runelite/client/account/AccountSession;.getUuid()Ljava/util/UUID;:b
+Lnet/runelite/client/account/AccountSession;.hashCode()I:b
+Lnet/runelite/client/account/AccountSession;.toString()Ljava/lang/String;:b
+Lnet/runelite/client/account/AccountSession;b
+Lnet/runelite/client/account/SessionManager;.<clinit>()V:gs
+Lnet/runelite/client/account/SessionManager;.getAccountSession()Lnet/runelite/client/account/AccountSession;:b
+Lnet/runelite/client/account/SessionManager;.loadSession()V:b
+Lnet/runelite/client/account/SessionManager;.login()V:b
+Lnet/runelite/client/account/SessionManager;.logout()V:b
+Lnet/runelite/client/account/SessionManager;b
