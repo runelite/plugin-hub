@@ -17,6 +17,9 @@ We recommend contributing to existing plugins if the author(s) are accepting con
 You may contribute to existing plugins by selecting the plugin from https://runelite.net/plugin-hub, navigating to the plugin's GitHub repository by following the "Report an issue" link, and then following the "Create new plugins" section below from step 3.
 
 ## Creating new plugins
+
+**Plugins MUST be written in Java.** Alternative JVM languages such as Kotlin are not allowed. ([learn more](https://github.com/runelite/runelite/wiki/Rejected-or-Rolled-Back-Features#forbidden-language-features))
+
  1. Generate your own repository from the [plugin template](https://github.com/runelite/example-plugin/generate) link (you must be signed into GitHub first).
     Alternatively, you may use the `create_new_plugin.py` script provided in this repository to generate a new plugin project.
  
