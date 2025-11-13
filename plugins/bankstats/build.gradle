@@ -1,0 +1,83 @@
+
+plugins {
+    id 'java'
+}
+
+
+
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.runelite.net'
+    }
+}
+
+def runeLiteVersion = 'latest.release'
+
+dependencies {
+    implementation group: 'net.runelite', name: 'client', version: '1.11.25'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
+}
+task runClient(type: JavaExec) {
+    group = 'runelite'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'net.runelite.client.RuneLite'
+    args '--developer-mode', '--profile=DEV'
+    jvmArgs '-ea'  // Enable assertions
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    // ✅ This ensures Gradle always uses Java 11 for compiling and running.
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+    // Optional but recommended
+    withJavadocJar()
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+//tasks.register('shadowJar', Jar) {
+  //  dependsOn configurations.testRuntimeClasspath
+    //manifest {
+      //  attributes(
+        //        'Main-Class': 'com.BankStats.BankStatsTest',
+          //      'Multi-Release': true
+        //)
+    //}
+
+    //duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    //from sourceSets.main.output
+    //from sourceSets.test.output
+    //from {
+      //  configurations.testRuntimeClasspath.collect { file ->
+        //    file.isDirectory() ? file : zipTree(file)
+        //}
+    //}
+
+    //exclude 'META-INF/INDEX.LIST'
+    //exclude 'META-INF/*.SF'
+    //exclude 'META-INF/*.DSA'
+    //exclude 'META-INF/*.RSA'
+    //exclude '**/module-info.class'
+
+    //group = BasePlugin.BUILD_GROUP
+    //archiveClassifier.set('shadow')
+    //archiveFileName.set("${rootProject.name}-${project.version}-all.jar")
+//}
+tasks.register('printJavaHome') {
+    doLast {
+        def version = java.toolchain.languageVersion.get()
+        def launcher = javaToolchains.launcherFor { spec -> spec.languageVersion.set(version) }.get()
+        println "TOOLCHAIN_JAVA_HOME=${launcher.metadata.installationPath.asFile.absolutePath}"
+        println "TOOLCHAIN_JAVA_EXE=${launcher.executablePath}"
+    }
+}
