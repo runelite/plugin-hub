@@ -1,3 +1,4 @@
 repository=https://github.com/revalOSRS/reval-cc-plugin.git
-commit=17d2139ed226eb742fb9541e0ce0e7fcf6db51a7
-authors=Lightroom
+commit=424a5357a005a6da7ff0b58f1af96a94b9e896a9
+authors=stenjansarv
+warning=This plugin sends player data, including usernames, user hashes and screenshots to a third-party server not controlled or verified by the RuneLite Developers, for tile verification and Discord notifications.
