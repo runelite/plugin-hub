@@ -139,6 +139,10 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs, friendly-guide"
 	}
+
+    thirdParty("org.assertj:assertj-core:3.27.6") {
+        because "random-event-helper"
+    }
 }
 
 task verifyCore {
