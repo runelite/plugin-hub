@@ -33,7 +33,7 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
+ 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`. Make sure to also change the package name in src/test/resources/logback-test.xml in case IntelliJ misses it.
 
  7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
  
@@ -81,7 +81,7 @@ commit=9db374fc205c5aae1f99bd5fd127266076f40ec8
 
  7. Write a short description of what your plugin does and then create your pull request.
 
- 8. Check the result of your PR's CI workflow, next to `.github/workflows/build.yml / build (pull_request)` will be either a ✔️ or an ❌. With a ✔️ all is good, however if it has an ❌, click `Details` to check the build log for details of the failure. Along with the build workflow there also may be an ❌ next to `RuneLite Plugin Hub Checks`, you will only need to worry about this if it says `View details for requested changes.`, in that case you should also read over those requested changes. Once you've read over the build error and requested changes, make the required changes, and push another commit to update the PR with the new `commit=` hash.  
+ 8. Check the result of your PR's CI workflow, next to `.github/workflows/build.yml / build (pull_request)` will be either a ✔️ or an ❌. With a ✔️ all is good, however if it has an ❌, click `Details` to check the build log for details of the failure. Along with the build workflow there also may be an ❌ next to `RuneLite Plugin Hub Checks`, you will only need to worry about this if it says `Changes are needed.`, in that case you should also read over those requested changes. Once you've read over the build error and requested changes, make the required changes, and push another commit to update the PR with the new `commit=` hash.  
 Don't worry about how many times it takes you to resolve build errors; we prefer all changes be kept in a single pull request to avoid spamming notifications with further newly-opened PRs.
 
  9. Be patient and wait for your plugin to be reviewed and merged.
@@ -91,10 +91,20 @@ To update a plugin, simply update the manifest with the most recent commit hash.
 
 It is recommended to open a pull request from a separate branch. You can run the following commands from your `plugin-hub` repository directory to set up a branch:
 ```bash
-$ git remote add upstream https://github.com/runelite/plugin-hub.git  # Only necessary if you have not set it before
-$ git fetch upstream && git checkout -B <your-plugin-name> upstream/master
+# Only necessary if you have not set it before
+git remote add upstream https://github.com/runelite/plugin-hub.git
+
+git fetch upstream
+git checkout -B <your-plugin-name> upstream/master
+# update commit= in plugins/<your-plugin-name>
+git add plugins/<your-plugin-name>
+git commit -m "update <your-plugin-name>"
+git push -f -u origin <your-plugin-name>
 ```
-Once your changes have been merged, you can delete the branch. The next time you would like to update your plugin, you can create the branch again.
+
+Then create a pull request from within the GitHub UI, or using the GitHub CLI via `gh pr create -w`.
+
+Once your changes have been merged, you can delete the branch (`git branch -D <your-plugin-name>`). The next time you would like to update your plugin, you can create the branch again.
 
 ## Reviewing
 We will review your plugin to ensure it isn't malicious, doesn't [break Jagex's rules](https://secure.runescape.com/m=news/third-party-client-guidelines?oldschool=1), 
@@ -107,11 +117,11 @@ Instead, prefer using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.
 
 ## Third party dependencies
 We require any dependencies that are not a transitive dependency of runelite-client to
-be have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
+have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
 To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html).
 To add a new dependency, add it to the `thirdParty` configuration in [`package/verification-template/build.gradle`](https://github.com/runelite/plugin-hub/blob/master/package/verification-template/build.gradle),
 then run `../gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
-the dependencies manually before your pull request will be merged.
+the dependencies manually before your pull request will be merged. This process generally adds significantly to the amount of time it takes for a plugin submission or update to be reviewed, so we recommend avoiding adding any new dependencies unless absolutely necessary.
 
 ## My client version is outdated
 If your client version is outdated or your plugin suddenly stopped working after RuneLite has been updated, make sure that your `runeLiteVersion` is set to `'latest.release'` in `build.gradle`. If this is set correctly, refresh the Gradle dependencies by doing the following:
