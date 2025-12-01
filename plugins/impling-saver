@@ -1,2 +1,3 @@
-repository=https://github.com/AggieNateHarris/ImplingSaver.git
-commit=779d5137c643a41bd3ed8e01f46a6dccb81af009
+repository=https://github.com/TheLope/ImplingSaver.git
+commit=76d7d001fb1517fed2359ee61c32b724440118c6
+warning=The features of this plugin and future development have migrated to the Clue Saver plugin.

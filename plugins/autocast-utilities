@@ -1,3 +1,3 @@
-repository=https://github.com/jcarbelbide/autocast-utilities.git
-commit=78b73945e76a4f02b575d6ec1391f866ca640cb1
-disabled=unmaintained
+repository=https://github.com/jcarbelbide/autocasting.git
+commit=c1af95dab53b6283b52ee9441bb3ed6b54bec21c
+authors=zbruennig,jcarbelbide

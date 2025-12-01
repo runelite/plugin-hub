@@ -1,2 +1,4 @@
-repository=https://github.com/dey0/ground-object-hider.git
-commit=38e414ccf7756083fdf88ac912823ad2b1e1c1bb
+repository=https://github.com/dey0/pluginhub-plugins.git
+commit=b70abbc8f98d3b00b7091ed0cadc0b2fe98f4e41
+authors=dey0,umer-rs
+unavailable=broken
