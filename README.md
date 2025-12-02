@@ -33,7 +33,7 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  ![run-test](https://i.imgur.com/tKSQH5e.png)
 
- 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
+ 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`. Make sure to also change the package name in src/test/resources/logback-test.xml in case IntelliJ misses it.
 
  7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
  
@@ -96,10 +96,10 @@ git remote add upstream https://github.com/runelite/plugin-hub.git
 
 git fetch upstream
 git checkout -B <your-plugin-name> upstream/master
-# update commit= in plugins/<your-plugin>
-git add plugins/<your-plugin>
-git commit -m "update <your-plugin>"
-git push
+# update commit= in plugins/<your-plugin-name>
+git add plugins/<your-plugin-name>
+git commit -m "update <your-plugin-name>"
+git push -f -u origin <your-plugin-name>
 ```
 
 Then create a pull request from within the GitHub UI, or using the GitHub CLI via `gh pr create -w`.
