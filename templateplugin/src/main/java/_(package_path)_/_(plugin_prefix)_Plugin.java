@@ -27,13 +27,13 @@ public class ${plugin_prefix}Plugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		log.info("${name} started!");
+		log.debug("${name} started!");
 	}
 
 	@Override
 	protected void shutDown() throws Exception
 	{
-		log.info("${name} stopped!");
+		log.debug("${name} stopped!");
 	}
 
 	@Subscribe
