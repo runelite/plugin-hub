@@ -1,0 +1,13 @@
+plugins { id 'java' }
+
+group = 'com.lizardman'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.runelite.net' }
+}
+
+dependencies {
+    implementation group: 'net.runelite', name: 'client', version: 'latest.release'
+}
