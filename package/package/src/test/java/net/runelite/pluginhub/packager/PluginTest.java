@@ -151,6 +151,11 @@ public class PluginTest
 			configClassSrc = configClassSrc.replace("package com.example;", "package net.runelite;");
 			Files.asCharSink(configClassFile, StandardCharsets.UTF_8).write(configClassSrc);
 
+			File propFile = new File(p.repositoryDirectory, "runelite-plugin.properties");
+			Properties props = Plugin.loadProperties(propFile);
+			props.setProperty("plugins", "net.runelite.TestExamplePlugin");
+			writeProperties(props, propFile);
+
 			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
@@ -158,6 +163,30 @@ public class PluginTest
 		{
 			assertContains(e.getMessage(), "use of net.runelite package namespace is not allowed");
 			log.info("ok: ", e);
+		}
+	}
+
+	@Test
+	public void testNetRuneLitePackageDoesNotBlockExisting() throws InterruptedException, DisabledPluginException, PluginBuildException, IOException
+	{
+		try (Plugin p = createExamplePlugin("net-runelite-package-preexisting"))
+		{
+			File pluginClassFile = new File(p.repositoryDirectory, "src/main/java/com/example/TestExamplePlugin.java");
+			String pluginClassSrc = Files.asCharSource(pluginClassFile, StandardCharsets.UTF_8).read();
+			pluginClassSrc = pluginClassSrc.replace("package com.example;", "package net.runelite;");
+			Files.asCharSink(pluginClassFile, StandardCharsets.UTF_8).write(pluginClassSrc);
+
+			File configClassFile = new File(p.repositoryDirectory, "src/main/java/com/example/TestExampleConfig.java");
+			String configClassSrc = Files.asCharSource(configClassFile, StandardCharsets.UTF_8).read();
+			configClassSrc = configClassSrc.replace("package com.example;", "package net.runelite;");
+			Files.asCharSink(configClassFile, StandardCharsets.UTF_8).write(configClassSrc);
+
+			File propFile = new File(p.repositoryDirectory, "runelite-plugin.properties");
+			Properties props = Plugin.loadProperties(propFile);
+			props.setProperty("plugins", "net.runelite.TestExamplePlugin");
+			writeProperties(props, propFile);
+
+			p.build(Util.readRLVersion(), false);
 		}
 	}
 
