@@ -714,6 +714,12 @@ public class Plugin implements Closeable
 										.withFile(fileName);
 								}
 
+								if (name != null && name.startsWith("net/runelite/"))
+								{
+									throw PluginBuildException.of(Plugin.this, "use of net.runelite package namespace is not allowed")
+										.withFile(fileName);
+								}
+
 								jarClasses.add(name.replace('/', '.'));
 
 								extendsPlugin = "net/runelite/client/plugins/Plugin".equals(superName);
