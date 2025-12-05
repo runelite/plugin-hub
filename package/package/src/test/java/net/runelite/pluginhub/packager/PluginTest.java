@@ -139,23 +139,8 @@ public class PluginTest
 	@Test
 	public void testNetRuneLitePackage() throws InterruptedException, DisabledPluginException, PluginBuildException, IOException
 	{
-		try (Plugin p = createExamplePlugin("net-runelite-package"))
+		try (Plugin p = createExamplePlugin("net-runelite-package", "net.runelite"))
 		{
-			File pluginClassFile = new File(p.repositoryDirectory, "src/main/java/com/example/TestExamplePlugin.java");
-			String pluginClassSrc = Files.asCharSource(pluginClassFile, StandardCharsets.UTF_8).read();
-			pluginClassSrc = pluginClassSrc.replace("package com.example;", "package net.runelite;");
-			Files.asCharSink(pluginClassFile, StandardCharsets.UTF_8).write(pluginClassSrc);
-
-			File configClassFile = new File(p.repositoryDirectory, "src/main/java/com/example/TestExampleConfig.java");
-			String configClassSrc = Files.asCharSource(configClassFile, StandardCharsets.UTF_8).read();
-			configClassSrc = configClassSrc.replace("package com.example;", "package net.runelite;");
-			Files.asCharSink(configClassFile, StandardCharsets.UTF_8).write(configClassSrc);
-
-			File propFile = new File(p.repositoryDirectory, "runelite-plugin.properties");
-			Properties props = Plugin.loadProperties(propFile);
-			props.setProperty("plugins", "net.runelite.TestExamplePlugin");
-			writeProperties(props, propFile);
-
 			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
@@ -169,23 +154,8 @@ public class PluginTest
 	@Test
 	public void testNetRuneLitePackageDoesNotBlockExisting() throws InterruptedException, DisabledPluginException, PluginBuildException, IOException
 	{
-		try (Plugin p = createExamplePlugin("net-runelite-package-preexisting"))
+		try (Plugin p = createExamplePlugin("net-runelite-package-preexisting", "net.runelite"))
 		{
-			File pluginClassFile = new File(p.repositoryDirectory, "src/main/java/com/example/TestExamplePlugin.java");
-			String pluginClassSrc = Files.asCharSource(pluginClassFile, StandardCharsets.UTF_8).read();
-			pluginClassSrc = pluginClassSrc.replace("package com.example;", "package net.runelite;");
-			Files.asCharSink(pluginClassFile, StandardCharsets.UTF_8).write(pluginClassSrc);
-
-			File configClassFile = new File(p.repositoryDirectory, "src/main/java/com/example/TestExampleConfig.java");
-			String configClassSrc = Files.asCharSource(configClassFile, StandardCharsets.UTF_8).read();
-			configClassSrc = configClassSrc.replace("package com.example;", "package net.runelite;");
-			Files.asCharSink(configClassFile, StandardCharsets.UTF_8).write(configClassSrc);
-
-			File propFile = new File(p.repositoryDirectory, "runelite-plugin.properties");
-			Properties props = Plugin.loadProperties(propFile);
-			props.setProperty("plugins", "net.runelite.TestExamplePlugin");
-			writeProperties(props, propFile);
-
 			p.build(Util.readRLVersion(), false);
 		}
 	}
@@ -222,6 +192,11 @@ public class PluginTest
 
 	private static Plugin createExamplePlugin(String name) throws DisabledPluginException, PluginBuildException, IOException, InterruptedException
 	{
+		return createExamplePlugin(name, "com.example");
+	}
+
+	private static Plugin createExamplePlugin(String name, String packageName) throws DisabledPluginException, PluginBuildException, IOException, InterruptedException
+	{
 		Plugin p = newPlugin(name, "" +
 			"repository=https://github.com/runelite/example-plugin.git\n" +
 			"commit=0000000000000000000000000000000000000000");
@@ -231,7 +206,7 @@ public class PluginTest
 			"--noninteractive",
 			"--output_directory", p.repositoryDirectory.getAbsolutePath(),
 			"--name", "Test Example",
-			"--package", "com.example",
+			"--package", packageName,
 			"--author", "Test Nobody",
 			"--description", "Test An example greeter plugin")
 			.inheritIO()
