@@ -139,6 +139,12 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs, friendly-guide"
 	}
+	thirdParty("org.projectlombok:lombok:1.18.34") {
+		because "salvage-sack"
+	}
+	thirdParty("com.google.code.gson:gson:2.11.0") {
+		because "salvage-sack"
+	}
 }
 
 task verifyCore {
