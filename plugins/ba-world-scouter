@@ -1,0 +1,3 @@
+repository=https://github.com/rsfost/ba-world-scouter.git
+commit=7ea304645bf626a16602143a24109e327f159a0d
+warning=This plugin shares your IP, world, and in-game location with a 3rd party server not controlled or verified by the RuneLite developers.
