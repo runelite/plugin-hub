@@ -16,7 +16,7 @@ public interface SchboopConfig extends Config
 	)
 	default int masterVolume()
 	{
-		return 100;
+		return 50;
 	}
 	
 	@ConfigItem(
@@ -89,14 +89,24 @@ public interface SchboopConfig extends Config
 			keyName = "all_hail_prime",
 			name = "Worship Prime?",
 			description = "Piss-related jokes mostly.",
-			position = 7
+			position = 8
 	)
 	default boolean all_hail_prime()
 	{
 		return true;
 	}
 
-	
+	@ConfigItem(
+			keyName = "BullySchbob",
+			name = "Mess with Schboop?",
+			description = "Secret functionality specifically to annoy Schboop that you should turn off. Good thing Schboop can't read.",
+			position = 7
+	)
+	default boolean bullymode()
+	{
+		return true;
+	}
+
 }
 
 

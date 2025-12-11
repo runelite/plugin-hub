@@ -28,6 +28,11 @@ import net.runelite.client.game.ItemStack;
 import net.runelite.client.plugins.loottracker.LootReceived;
 import net.runelite.api.*;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import java.util.Set;
+import java.util.HashMap;
+
 import java.util.regex.Pattern;
 import okhttp3.OkHttpClient;
 import net.runelite.api.Skill;
@@ -36,6 +41,14 @@ import java.util.TimerTask;
 import net.runelite.api.events.MenuOptionClicked;
 
 import static net.runelite.api.Skill.*;
+import net.runelite.api.events.BeforeRender;
+import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetInfo;
+import java.util.Map;
+
+import net.runelite.api.events.MenuEntryAdded;
+import net.runelite.client.util.Text;
+
 
 
 @Slf4j
@@ -101,6 +114,101 @@ public class SchboopPlugin extends Plugin
     //private List<String> highlightedItemsList = new CopyOnWriteArrayList<>();
 	private static final long CLIP_TIME_UNLOADED = -2;
 
+	private static final Set<MenuAction> NPC_MENU_ACTIONS = ImmutableSet.of(
+			MenuAction.NPC_FIRST_OPTION, MenuAction.NPC_SECOND_OPTION,
+			MenuAction.NPC_THIRD_OPTION, MenuAction.NPC_FOURTH_OPTION,
+			MenuAction.NPC_FIFTH_OPTION, MenuAction.WIDGET_TARGET_ON_NPC,
+			MenuAction.EXAMINE_NPC, MenuAction.EXAMINE_OBJECT);
+
+	private static final Set<MenuAction> BULLY_MENU_ACTIONS = ImmutableSet.of(
+			MenuAction.NPC_FIRST_OPTION, MenuAction.NPC_SECOND_OPTION,
+			MenuAction.NPC_THIRD_OPTION, MenuAction.NPC_FOURTH_OPTION,
+			MenuAction.NPC_FIFTH_OPTION, MenuAction.WIDGET_TARGET_ON_NPC,
+			MenuAction.EXAMINE_NPC, MenuAction.EXAMINE_OBJECT);
+
+
+	private static final Set<MenuAction> ITEM_MENU_ACTIONS = ImmutableSet.of(
+			MenuAction.GROUND_ITEM_FIRST_OPTION, MenuAction.GROUND_ITEM_SECOND_OPTION,
+			MenuAction.GROUND_ITEM_THIRD_OPTION, MenuAction.GROUND_ITEM_FOURTH_OPTION,
+			MenuAction.GROUND_ITEM_FIFTH_OPTION, MenuAction.EXAMINE_ITEM_GROUND,
+			// Inventory + Using Item on Players/NPCs/Objects
+			MenuAction.CC_OP, MenuAction.CC_OP_LOW_PRIORITY, MenuAction.WIDGET_TARGET,
+			MenuAction.WIDGET_TARGET_ON_PLAYER, MenuAction.WIDGET_TARGET_ON_NPC,
+			MenuAction.WIDGET_TARGET_ON_GAME_OBJECT, MenuAction.WIDGET_TARGET_ON_GROUND_ITEM,
+			MenuAction.WIDGET_TARGET_ON_WIDGET);
+
+	// rename items
+	private static final ImmutableMap<String, String> ItemNameRemap = ImmutableMap.<String, String>builder()
+			.put("Saradomin brew(1)", "Piss(1)")
+			.put("Saradomin brew(2)", "Piss(2)")
+			.put("Saradomin brew(3)", "Piss(3)")
+			.put("Saradomin brew(4)", "Piss(4)")
+			.put("Vial of water", "Vial of piss")
+			.put("Bucket of water", "Bucket of piss")
+			.put("Jug of water", "Jug of piss")
+			.put("Ham hood", "Prime hood")
+			.put("Ham shirt", "Prime shirt")
+			.put("Ham robe", "Prime robe")
+			.put("Ham gloves", "Prime gloves")
+			.put("Ham cloak", "Prime cloak")
+			.put("Ham logo", "Prime logo")
+			.put("Tinderbox", "Chiken tindies")
+			//I hate myself :|
+			.put("Air rune", "Air wune")
+			.put("Mind rune", "Mind wune")
+			.put("Water rune", "Water wune")
+			.put("Earth rune", "Earth wune")
+			.put("Fire rune", "Fire wune")
+			.put("Body rune", "Body wune")
+			.put("Cosmic rune", "Cosmic wune")
+			.put("Chaos rune", "Chaos wune")
+			.put("Nature rune", "Nature wune")
+			.put("Law rune", "Waw wune")
+			.put("Death rune", "Death wune")
+			.put("Sunfire rune", "Sunfire wune")
+			.put("Astral rune", "Astwal wune")
+			.put("Blood rune", "Bwood wune")
+			.put("Soul rune", "Soul wune")
+			.put("Wrath rune", "Wath wune")
+			.put("Mist rune", "Mist wune")
+			.put("Dust rune", "Dust wune")
+			.put("Smoke rune", "Smoke wune")
+			.put("Steam rune", "Steam wune")
+			.put("Lava rune", "Wava wune")
+			.put("Aether rune", "Aether wune")
+			.put("Rope", "Wope")
+			.build();
+
+	// rename NPCs
+	private static final ImmutableMap<String, String> NPCNameRemap = ImmutableMap.<String, String>builder()
+			.put("H.A.M. Member", "Prime Follower")
+			.put("H.A.M. Guard", "Prime Guard")
+			.put("H.A.M. Deacon", "Prime Minister")
+			.put("Zamorakian Acolyte", "Prime Acolyte")
+			.put("Jimmy the Chisel", "Denier of Prime")
+			.put("Man", "Robert")
+			.put("Woman", "Wobert")
+			.put("Frog Princess", "Fwog Pwincess")
+			.put("Frog Prince", "Fwog Pwince")
+			.put("Prince", "Pwince")
+			.put("Princess", "Pwincess")
+			.put("Civilian", "Cat chomper")
+			.put("Rantz", "Schboop")
+			// these are here specifically to bully schboop:
+			//.put("Jack Seagull", "Robert Prankington") // Bone Voyage
+			//.put("Hammerspike", "Dwarf Prime") // One Small Favour
+			.build();
+
+	private static final ImmutableMap<String, String> BullyRemap = ImmutableMap.<String, String>builder()
+			// these are here specifically to bully schboop:
+			.put("Jack Seagull", "Robert Prankington") // Bone Voyage
+			.put("Hammerspike", "Dwarf Prime") // One Small Favour
+			.build();
+
+	private final HashMap<String, String> CustomNPCRemap = new HashMap<>();
+	private final HashMap<String, String> CustomItemRemap = new HashMap<>();
+
+
 	private long lastClipTime = CLIP_TIME_UNLOADED;
 	private Clip clip = null;
 
@@ -139,7 +247,7 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern ROBERT_SPAM_REGEX5 = Pattern.compile(".*I love robert prime.*");
 	private static final Pattern STROKE_REGEX = Pattern.compile("You rub the.*");
 // piss zone
-	private static final Pattern DRINK_POOL = Pattern.compile("You feel reinvigorated after drinking from the pool.");
+	private static final Pattern DRINK_POOL = Pattern.compile(".*You feel reinvigorated after drinking from the pool.*");
 	
 	private static final Pattern COW_EXAMINE_REGEX = Pattern.compile("Converts grass to.*");
 	private static final Pattern COW_EXAMINE_REGEX2 = Pattern.compile("Beefy.*");
@@ -159,8 +267,9 @@ public class SchboopPlugin extends Plugin
 			KITTEN_EXAMINE_REGEX, CALF_EXAMINE_REGEX2, CHATMEOWUPPER, CHATMEOWLOWER
 	};
 	// bones you shouldn't bury:
+	// tried to make this a little less restrictive
 	private static final Pattern BONES_REGEX1 = Pattern.compile(".*\\>Superior dragon bones\\<.*");
-	private static final Pattern BONES_REGEX2 = Pattern.compile(".*\\>Wyrm bones\\<.*");
+	// private static final Pattern BONES_REGEX2 = Pattern.compile(".*\\>Wyrm bones\\<.*");
 	private static final Pattern BONES_REGEX3 = Pattern.compile(".*\\>Wyvern bones\\<.*");
 	private static final Pattern BONES_REGEX4 = Pattern.compile(".*\\>Raurg bones\\<.*");
 	private static final Pattern BONES_REGEX5 = Pattern.compile(".*\\>Ourg bones\\<.*");
@@ -170,12 +279,13 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern BONES_REGEX10 = Pattern.compile(".*\\>Hydra bones\\<.*");
 	private static final Pattern BONES_REGEX11 = Pattern.compile(".*\\>Fayrg bones\\<.*");
 	private static final Pattern BONES_REGEX12 = Pattern.compile(".*\\>Drake bones\\<.*");
-	private static final Pattern BONES_REGEX13 = Pattern.compile(".*\\>Babydragon bones\\<.*");
+	// private static final Pattern BONES_REGEX13 = Pattern.compile(".*\\>Babydragon bones\\<.*");
 	// private static final Pattern BONES_REGEX14 = Pattern.compile(".*\\>Bones\\<.*"); //F2P test
 	private static final Pattern[] BONES_LIST_REGEX = new Pattern[]{
-			BONES_REGEX1, BONES_REGEX2, BONES_REGEX3, BONES_REGEX4,
+			BONES_REGEX1,// BONES_REGEX3,
+			BONES_REGEX3, BONES_REGEX4,
 			BONES_REGEX5, BONES_REGEX6, BONES_REGEX7, BONES_REGEX8,
-			BONES_REGEX10, BONES_REGEX11, BONES_REGEX12, BONES_REGEX13//, BONES_REGEX14
+			BONES_REGEX10, BONES_REGEX11, BONES_REGEX12//, BONES_REGEX13//, BONES_REGEX14
 	};
 	// https://github.com/evaan/tedious-collection-log/blob/master/src/main/java/xyz/evaan/TediousCollectionLogPlugin.java
 	// collection log related example -- this functionality may not work as I can't test it
@@ -184,7 +294,7 @@ public class SchboopPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		initSoundFiles();
-		//playSound_Chaotic(stroke); // for testing purposes
+		// playSound_Chaotic(piss_pool); // for testing purposes
 		for (int i = 0; i < Skill.values().length; i++) // this keeps track of stats:
 		{
 			previousStats[i] = client.getBoostedSkillLevel(Skill.values()[i]);
@@ -198,6 +308,7 @@ public class SchboopPlugin extends Plugin
 		clip.close();
 		clip = null;
 	}
+
 
 	@Subscribe
 	public void onLootReceived(LootReceived lootReceived) {
@@ -230,7 +341,7 @@ public class SchboopPlugin extends Plugin
 				int PRAYthresh50 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.4f);
 				if (currentPray <= PRAYthresh50 && config.lowpray() && org.schboopsounds.counter.PRAYCOUNTER < 1)
 				{
-					playSound(pink);
+					playSound_Chaotic(pink);
 					org.schboopsounds.counter.PRAYCOUNTER = 1;
 				}
 				if (currentPray > PRAYthresh50 && config.lowpray() && org.schboopsounds.counter.PRAYCOUNTER > 0)
@@ -242,37 +353,37 @@ public class SchboopPlugin extends Plugin
 			float currentHP = client.getBoostedSkillLevel(HITPOINTS);
 			//int counter = 0;
 
-			int HPthresh50 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.3f);
-			int HPthresh40 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.24f );
-			int HPthresh30 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.18f);
-			int HPthresh20 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.12f);
-			int HPthresh10 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.06f);
+			int HPthresh50 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.4f);
+			int HPthresh40 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.32f );
+			int HPthresh30 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.24f);
+			int HPthresh20 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.16f);
+			int HPthresh10 = (int) ((float) client.getRealSkillLevel(HITPOINTS) * 0.08f);
 
 			//log.warn("Apparently the clip is playing");
 
 			if (currentHP <= HPthresh50 && currentHP > HPthresh40 && config.lowHP() && org.schboopsounds.counter.HPCOUNTER < 1)
 			{
-				playSound(yellowv1);
+				playSound_Chaotic(yellowv1);
 				org.schboopsounds.counter.HPCOUNTER = 1;
 			}
 			if (currentHP <= HPthresh40 && currentHP > HPthresh30 && config.lowHP() && org.schboopsounds.counter.HPCOUNTER < 2)
 			{
-				playSound(yellowv2);
+				playSound_Chaotic(yellowv2);
 				org.schboopsounds.counter.HPCOUNTER = 2;
 			}
 			if (currentHP <= HPthresh30 && currentHP > HPthresh20 && config.lowHP() && org.schboopsounds.counter.HPCOUNTER < 3)
 			{
-				playSound(yellowv3);
+				playSound_Chaotic(yellowv3);
 				org.schboopsounds.counter.HPCOUNTER = 3;
 			}
 			if (currentHP <= HPthresh20 && currentHP > HPthresh10 && config.lowHP() && org.schboopsounds.counter.HPCOUNTER < 4)
 			{
-				playSound(yellowv5);
+				playSound_Chaotic(yellowv5);
 				org.schboopsounds.counter.HPCOUNTER = 4;
 			}
-			if (currentHP <= HPthresh10 && config.lowHP() && org.schboopsounds.counter.HPCOUNTER < 5)
+			if (currentHP <= HPthresh10 && currentHP > 0 && config.lowHP() && org.schboopsounds.counter.HPCOUNTER < 5)
 			{
-				playSound(yellowv6);
+				playSound_Chaotic(yellowv6);
 				org.schboopsounds.counter.HPCOUNTER = 5;
 			}
 			if (currentHP > HPthresh50 && config.lowHP() && org.schboopsounds.counter.HPCOUNTER > 0)
@@ -289,7 +400,7 @@ public class SchboopPlugin extends Plugin
 		if(config.Schboop_says_Moo()){
 			for (Pattern pattern : MOO_LIST_REGEX) {
 				if (pattern.matcher(chatMessage.getMessage()).matches()) {
-					playSound(SchboopMoo);
+					playSound_Chaotic(SchboopMoo);
 					break; // Stop checking further once a match is found
 				}
 			}
@@ -330,40 +441,30 @@ public class SchboopPlugin extends Plugin
 		if(config.achievement()){
 			for (Pattern pattern : DIARY_LIST_REGEX) {
 				if (pattern.matcher(chatMessage.getMessage()).matches()) {
-					playSound(Dad2);
+					playSound_Chaotic(Dad2);
 					break; // Stop checking further once a match is found
 				}
 			}
 		}
 		if (COLLECTION_LOG_ITEM_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
-			playSound(Dad2);
+			playSound_Chaotic(Dad2);
 		}
 		if (NEW_LEVEL_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
 			if (LEVEL_69_REGEX.matcher(chatMessage.getMessage()).matches()) {
-				playSound(laugh); // plays if you level to 69
+				playSound_Chaotic(laugh); // plays if you level to 69
 			} else {
-				playSound(Dad1); // normal level up sound
+				playSound_Chaotic(Dad1); // normal level up sound
 			}
 		}
 		if (NEW_PLACE_REGEX.matcher(chatMessage.getMessage()).matches() && config.achievement()) {
-			playSound(where); // replace this with a "where am I?" sound
+			playSound_Chaotic(where); // replace this with a "where am I?" sound
 		}
 		// Pops calls you a moron for forgetting to bring a slash weapon to a web
 		if (WEBFAIL_REGEX.matcher(chatMessage.getMessage()).matches() && config.roast() && chatMessage.getType() != ChatMessageType.SPAM) {
-			playSound(MORON);
+			playSound_Chaotic(MORON);
 		}
 	}
 
-	// removed taking poison damage because I think it might be causing the bug
-	//@Subscribe // Dad calls you a moron for taking poison damage
-	//public void onHitsplatApplied(HitsplatApplied hitsplatApplied) {
-	//	switch (hitsplatApplied.getHitsplat().getHitsplatType()) {
-	//		case HitsplatID.POISON:
-	//			if (client.getVarbitValue(Varbits.POISON) > 0 && config.roast()) { // Check poison status
-	//				playSound(MORON);
-	//			}
-	//	}
-	//}
 
 	// Pops calls you a moron for burying expensive bones
 	// Schboop tells you reading is for nerds
@@ -373,43 +474,46 @@ public class SchboopPlugin extends Plugin
 		if("Bury".equals(event.getMenuOption()) && config.roast()) {
 			for (Pattern pattern : BONES_LIST_REGEX) {
 				if (pattern.matcher(event.getMenuTarget()).matches()) {
-					playSound(MORON);
+					playSound_Chaotic(MORON);
 					break; // Stop checking further once a match is found
 				}
 			}
 		}
 		if("Read".equals(event.getMenuOption()) && config.roast()){
 			// "Reading is for nerds" when you try to read something
-			playSound(reading);
+			playSound_Chaotic(reading);
 		}
 		if("Rub".equals(event.getMenuAction()) && config.roast()){
 			 //Eva's idea :)
-			playSound(stroke);
+			playSound_Chaotic(stroke);
 		}
-		if("Drink".equals(event.getMenuOption()) && config.roast()){
-			String itemName = event.getMenuTarget().toLowerCase();
-			if ((itemName.contains("potion") | itemName.contains("super ")) && !itemName.contains("stamina") && !itemName.contains("energy") && !itemName.contains("goading") && !itemName.contains("regeneration") && !itemName.contains("fire") && !itemName.contains("poison") && !itemName.contains("compost") && !itemName.contains(" set") && !itemName.contains(" kebab"))
-			{
-				// Store current stats before potion consumption
-				for (int i = 0; i < Skill.values().length; i++)
-				{
-					previousStats[i] = client.getBoostedSkillLevel(Skill.values()[i]);
-				}
-				// Start tracking the potion use
-				trackingPotion = true;
 
-				// Schedule a check after a short delay (e.g., 1 second)
-				new Timer().schedule(new TimerTask()
-				{
-					@Override
-					public void run()
-					{
-						// Check if stats have changed after the potion use
-						checkPotionEffect();
-					}
-				}, 1000);
-			}
-		}
+		// this is too buggy as is...
+		//if("Drink".equals(event.getMenuOption()) && config.roast()){
+		//	String itemName = event.getMenuTarget().toLowerCase();
+		//	if ((itemName.contains("potion") | itemName.contains("super ")) && !itemName.contains("stamina") && !itemName.contains("energy") && !itemName.contains("goading") && !itemName.contains("regeneration") && !itemName.contains("fire") && !itemName.contains("poison") && !itemName.contains("compost") && !itemName.contains(" set") && !itemName.contains(" kebab"))
+		//	{
+		//		// Store current stats before potion consumption
+		//		for (int i = 0; i < Skill.values().length; i++)
+		//		{
+		//			previousStats[i] = client.getBoostedSkillLevel(Skill.values()[i]);
+		//		}
+		//		// Start tracking the potion use
+		//		trackingPotion = true;
+		//
+ 		//		// Schedule a check after a short delay (e.g., 1 second)
+		//		new Timer().schedule(new TimerTask()
+		//		{
+		//			@Override
+		//			public void run()
+		//			{
+		//				// Check if stats have changed after the potion use
+		//				checkPotionEffect();
+		//			}
+		//		}, 1000);
+		//	}
+		//}
+
 	}
 
 
@@ -429,7 +533,7 @@ public class SchboopPlugin extends Plugin
 			}
 		}
 		if(nStats == 0){
-			playSound(MORON);
+			playSound_Chaotic(MORON);
 		}
 		// Stop tracking potion use
 		trackingPotion = false;
@@ -447,33 +551,33 @@ public class SchboopPlugin extends Plugin
 		}
 	}
 
-
-	private void playSound(File f)
-	{
-		long currentTime = System.currentTimeMillis();
-		if (clip == null || !clip.isOpen() || currentTime != lastClipTime) {
-			lastClipTime = currentTime;
-			try
-			{
-				// making sure last clip closes so we don't get multiple instances
-				if (clip != null && clip.isOpen()) clip.close();
-
-				AudioInputStream is = AudioSystem.getAudioInputStream(f);
-				AudioFormat format = is.getFormat();
-				DataLine.Info info = new DataLine.Info(Clip.class, format);
-				clip = (Clip) AudioSystem.getLine(info);
-				clip.open(is);
-				setVolume(config.masterVolume());
-				clip.start();
-				//log.warn("Apparently the clip is playing");
-			}
-			catch (LineUnavailableException | UnsupportedAudioFileException | IOException e)
-			{
-				log.warn("Sound file error", e);
-				lastClipTime = CLIP_TIME_UNLOADED;
-			}
-		}
-	}
+// checking if a clip is already playing seems to cause problems so lets just stop doing that
+//	private void playSound(File f)
+//	{
+//		long currentTime = System.currentTimeMillis();
+//		if (clip == null || !clip.isOpen() || currentTime != lastClipTime) {
+//			lastClipTime = currentTime;
+//			try
+//			{
+//				// making sure last clip closes so we don't get multiple instances
+//				if (clip != null && clip.isOpen()) clip.close();
+//
+//				AudioInputStream is = AudioSystem.getAudioInputStream(f);
+//				AudioFormat format = is.getFormat();
+//				DataLine.Info info = new DataLine.Info(Clip.class, format);
+//				clip = (Clip) AudioSystem.getLine(info);
+//				clip.open(is);
+//				setVolume(config.masterVolume());
+//				clip.start();
+//				//log.warn("Apparently the clip is playing");
+//			}
+//			catch (LineUnavailableException | UnsupportedAudioFileException | IOException e)
+//			{
+//				log.warn("Sound file error", e);
+//				lastClipTime = CLIP_TIME_UNLOADED;
+//			}
+//		}
+//	}
 
 	private void playSound_Chaotic(File f)
 	{
@@ -504,13 +608,14 @@ public class SchboopPlugin extends Plugin
 			return;
 		}
 		if (player == client.getLocalPlayer() && config.Pops_Died()) {
-			playSound(WhaHappen);
+			playSound_Chaotic(WhaHappen);
 		}
 		if (player != client.getLocalPlayer()) {
 			return;
 		}
 
 	}
+
 
 
 	// sets volume using dB to linear conversion
@@ -521,7 +626,6 @@ public class SchboopPlugin extends Plugin
 		FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
 		gainControl.setValue(20.0f * (float) Math.log10(vol));
 	}
-
 
 	public class counter{
 		public int HPcounter = 0;
@@ -559,6 +663,146 @@ public class SchboopPlugin extends Plugin
 				stream.close();
 			}  catch (Exception e) {
 				log.debug(e + ": " + f);
+			}
+		}
+	}
+
+
+	// directly from meepspeak:
+	@Subscribe
+	private void onBeforeRender(BeforeRender event)
+	{
+		if (client.getGameState() != GameState.LOGGED_IN)
+			return;
+
+		for (Widget root : client.getWidgetRoots())
+			remapWidget(root);
+	}
+
+	private void remapWidget(Widget widget)
+	{
+		if (widget == null)
+			return;
+
+		int groupId = WidgetInfo.TO_GROUP(widget.getId());
+
+		// Skip chatbox/friends list
+		if (groupId == 162 || groupId == 163 || groupId == 429)
+			return;
+
+		Widget[] children;
+
+		children = widget.getStaticChildren();
+		if (children != null)
+			mapWidgetText(children);
+
+		children = widget.getDynamicChildren();
+		if (children != null)
+			mapWidgetText(children);
+
+		children = widget.getNestedChildren();
+		if (children != null)
+			mapWidgetText(children);
+	}
+
+	private void mapWidgetText(Widget[] children)
+	{
+		for (Widget w : children)
+		{
+			remapWidget(w);
+
+			String text = w.getText();
+			if (text == null || text.isEmpty())
+				continue;
+
+			RemapWidgetText(w, text, NPCNameRemap);
+			RemapWidgetText(w, text, ItemNameRemap);
+			RemapWidgetText(w, text, BullyRemap);
+		}
+	}
+
+	private void RemapWidgetText(Widget widget, String text, Map<String, String> map)
+	{
+		for (Map.Entry<String, String> entry : map.entrySet())
+		{
+			if (text.equalsIgnoreCase(entry.getKey()))
+			{
+				widget.setText(text.replace(entry.getKey(), entry.getValue()));
+				return;
+			}
+		}
+	}
+
+	@Subscribe
+	private void onMenuEntryAdded(MenuEntryAdded event)
+	{
+		MenuEntry entry = event.getMenuEntry();
+		if (config.all_hail_prime())
+		{
+			if (NPC_MENU_ACTIONS.contains(entry.getType()))
+			{
+				RemapMenuEntry(entry, NPCNameRemap);
+				//return;
+			}
+			else if (ITEM_MENU_ACTIONS.contains(entry.getType()))
+			{
+				RemapMenuEntry(entry, ItemNameRemap);
+				//return;
+			}
+		}
+		if (config.bullymode())
+		{
+			if (BULLY_MENU_ACTIONS.contains(entry.getType()))
+			{
+				RemapMenuEntry(entry, BullyRemap);
+				//return;
+			}
+		}
+	}
+
+	// chatgpt modification:
+	private void RemapMenuEntry(MenuEntry entry, Map<String, String> map)
+	{
+		String target = entry.getTarget();
+		if (target == null)
+			return;
+
+		NPC npc = entry.getNpc();
+		String cleanName = npc != null ? npc.getName() : Text.removeTags(target);
+
+		if (cleanName == null || cleanName.isEmpty())
+			return;
+
+		String cleanLower = cleanName.toLowerCase();
+
+		for (Map.Entry<String, String> e : map.entrySet())
+		{
+			String key = e.getKey();
+			String val = e.getValue();
+			String keyLower = key.toLowerCase();
+
+			// 1) Exact match: "Man"
+			if (cleanLower.equals(keyLower))
+			{
+				entry.setTarget(target.replace(cleanName, val));
+				return;
+			}
+
+			// 2) Prefix match with strict boundary:
+			// Accepts "Man" + space, "(" or end of string
+			if (cleanLower.startsWith(keyLower))
+			{
+				int keyLen = keyLower.length();
+				if (cleanLower.length() == keyLen ||
+						cleanLower.charAt(keyLen) == ' ' ||
+						cleanLower.charAt(keyLen) == '(')
+				{
+					String remainder = cleanName.substring(key.length());
+					String newName = val + remainder;
+
+					entry.setTarget(target.replace(cleanName, newName));
+					return;
+				}
 			}
 		}
 	}
