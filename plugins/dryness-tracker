@@ -1,2 +1,3 @@
 repository=https://github.com/mamboguy/RuneliteDrynessPlugin.git
 commit=65a764360be3bf07ca4ab69b949cc19e999f0dfd
+disabled=spams chatbox with debug spam
