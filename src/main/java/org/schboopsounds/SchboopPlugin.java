@@ -83,6 +83,7 @@ public class SchboopPlugin extends Plugin
 	private static final File laugh = new File(CUSTOM_SOUNDS_DIR, "Dad_Cackle.wav");
 	private static final File ew = new File(CUSTOM_SOUNDS_DIR, "ew.wav");
 	private static final File dragonhead = new File(CUSTOM_SOUNDS_DIR, "head.wav");
+	private static final File bricked = new File(CUSTOM_SOUNDS_DIR, "bricked.wav");
 	private static final File[] SOUND_FILES = new File[]{
 			SchboopMoo,
 			WhaHappen,
@@ -106,7 +107,8 @@ public class SchboopPlugin extends Plugin
 			piss_pool,
 			laugh,
 			ew,
-			dragonhead
+			dragonhead,
+			bricked
 	};
 
 	// runelite haves the what_happened.wav file... need to convert to something it can stand
@@ -279,6 +281,8 @@ public class SchboopPlugin extends Plugin
 	private static final Pattern BONES_REGEX10 = Pattern.compile(".*\\>Hydra bones\\<.*");
 	private static final Pattern BONES_REGEX11 = Pattern.compile(".*\\>Fayrg bones\\<.*");
 	private static final Pattern BONES_REGEX12 = Pattern.compile(".*\\>Drake bones\\<.*");
+	private static final Pattern BRICK_REGEX1 = Pattern.compile(".*\\>Limestone brick\\<.*");
+	private static final Pattern BRICK_REGEX2 = Pattern.compile(".*\\>Marble block\\<.*");
 	// private static final Pattern BONES_REGEX13 = Pattern.compile(".*\\>Babydragon bones\\<.*");
 	// private static final Pattern BONES_REGEX14 = Pattern.compile(".*\\>Bones\\<.*"); //F2P test
 	private static final Pattern[] BONES_LIST_REGEX = new Pattern[]{
@@ -287,6 +291,9 @@ public class SchboopPlugin extends Plugin
 			BONES_REGEX5, BONES_REGEX6, BONES_REGEX7, BONES_REGEX8,
 			BONES_REGEX10, BONES_REGEX11, BONES_REGEX12//, BONES_REGEX13//, BONES_REGEX14
 	};
+	private static final Pattern[] BRICK_LIST_REGEX = new Pattern[]{
+			BRICK_REGEX1, BRICK_REGEX2
+	};
 	// https://github.com/evaan/tedious-collection-log/blob/master/src/main/java/xyz/evaan/TediousCollectionLogPlugin.java
 	// collection log related example -- this functionality may not work as I can't test it
 
@@ -294,7 +301,7 @@ public class SchboopPlugin extends Plugin
 	protected void startUp() throws Exception
 	{
 		initSoundFiles();
-		// playSound_Chaotic(piss_pool); // for testing purposes
+		// playSound_Chaotic(bricked); // for testing purposes
 		for (int i = 0; i < Skill.values().length; i++) // this keeps track of stats:
 		{
 			previousStats[i] = client.getBoostedSkillLevel(Skill.values()[i]);
@@ -487,7 +494,14 @@ public class SchboopPlugin extends Plugin
 			 //Eva's idea :)
 			playSound_Chaotic(stroke);
 		}
-
+		if(config.roast() && ( "Value".equals(event.getMenuOption()) || "Buy 1".equals(event.getMenuOption()) || "Buy 5".equals(event.getMenuOption()) || "Buy 10".equals(event.getMenuOption()) || "Buy 50".equals(event.getMenuOption()) )){
+			for (Pattern pattern : BRICK_LIST_REGEX) {
+				if (pattern.matcher(event.getMenuTarget()).matches()) {
+					playSound_Chaotic(bricked);
+					break; // Stop checking further once a match is found
+				}
+			}
+		}
 		// this is too buggy as is...
 		//if("Drink".equals(event.getMenuOption()) && config.roast()){
 		//	String itemName = event.getMenuTarget().toLowerCase();
