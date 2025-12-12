@@ -1,3 +1,3 @@
 repository=https://github.com/findarian/pvp-leaderboard.git
-commit=f60d732babfea7b9353e558e961ca61d24f928cf
+commit=497e5c7fb1710c944c7424cbb3cac4646ac631d8
 warning=This plugin connects to external servers by default to fetch and submit PvP data. Your IP address and in-game username may be transmitted to the external service.
