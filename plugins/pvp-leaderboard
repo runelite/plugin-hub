@@ -1,3 +1,3 @@
 repository=https://github.com/findarian/pvp-leaderboard.git
-commit=497e5c7fb1710c944c7424cbb3cac4646ac631d8
-warning=This plugin connects to external servers by default to fetch and submit PvP data. Your IP address and in-game username may be transmitted to the external service.
+commit=1ab669b10dbf61a38a151b741a8e5a26dd8b7a9a
+warning=This submits your IP address, in-game username, and PvP fight statistics to a 3rd-party service not controlled or verified by RuneLite developers.
