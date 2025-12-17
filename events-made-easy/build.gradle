@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    maven { url = 'https://repo.runelite.net' }
+    mavenCentral()
+}
+
+def runeLiteVersion = 'latest.release'
+
+dependencies {
+    compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
+
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion
+}
+
+group = 'cc.nocturne.eventsmadeeasy'
+version = '1.0.0'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release.set(11)
+}
+
+tasks.register('shadowJar', Jar) {
+    manifest {
+        attributes(
+                'Main-Class': 'cc.nocturne.eventsmadeeasy.EventsPlugin',
+                'Multi-Release': true
+        )
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from sourceSets.main.output
+
+    exclude 'META-INF/INDEX.LIST'
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    exclude '**/module-info.class'
+
+    archiveClassifier.set('shadow')
+    archiveFileName.set("${rootProject.name}-${project.version}-all.jar")
+}
+
+tasks.build {
+    dependsOn tasks.shadowJar
+}

@@ -1,0 +1,33 @@
+# === Gradle ===
+.gradle/
+build/
+
+# === IntelliJ IDEA ===
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# === OS / Editor junk ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Logs ===
+*.log
+
+# === Local env / secrets ===
+.env
+.env.local
+
+# === Node (if backend lives nearby, but safe to ignore) ===
+node_modules/
+
+# === VS Code ===
+.vscode/
+
+# === Temporary / backup files ===
+*.tmp
+*.bak
+*.swp
