@@ -96,10 +96,10 @@ git remote add upstream https://github.com/runelite/plugin-hub.git
 
 git fetch upstream
 git checkout -B <your-plugin-name> upstream/master
-# update commit= in plugins/<your-plugin>
-git add plugins/<your-plugin>
-git commit -m "update <your-plugin>"
-git push
+# update commit= in plugins/<your-plugin-name>
+git add plugins/<your-plugin-name>
+git commit -m "update <your-plugin-name>"
+git push -f -u origin <your-plugin-name>
 ```
 
 Then create a pull request from within the GitHub UI, or using the GitHub CLI via `gh pr create -w`.
