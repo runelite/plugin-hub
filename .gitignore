@@ -7,18 +7,3 @@ build
 nbactions.xml
 nb-configuration.xml
 nbproject/
-# Gradle
-.gradle/
-build/
-
-# IntelliJ / IDEs
-.idea/
-*.iml
-out/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
