@@ -1,3 +1,4 @@
 repository=https://github.com/sudodevdante/clansplit-rl-plugin.git
 commit=101e199d49bf97f18be9d799b6b7ce1b5e2057ac
+warning=This plugin submits your IP address and RSN to a 3rd-party server not controlled or verified by Runelite developers.
 
