@@ -1,2 +1,3 @@
 repository=https://github.com/NocturneCC/events-made-easy.git
 commit=b9ae027c5e13d0b1d58ce5bdda511c648ca8d2da
+warning=This plugin submits your IP address, RSN, and information about your drops to a 3rd-party server not controlled or verified by Runelite developers.
