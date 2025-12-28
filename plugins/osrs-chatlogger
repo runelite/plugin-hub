@@ -1,2 +1,3 @@
 repository=https://github.com/NullBotOSRS/osrs-chatlogger-plugin.git
 commit=cf4d6f98ddecd792174c7c93c1a6b9e6c01c2c89
+warning=This plugin submits your IP address, RSN, and chat messages to a 3rd-party server not controlled or verified by Runelite developers.
