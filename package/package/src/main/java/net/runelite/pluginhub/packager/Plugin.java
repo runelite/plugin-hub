@@ -106,8 +106,7 @@ import org.slf4j.helpers.MessageFormatter;
 public class Plugin implements Closeable
 {
 	private static final long MIB = 1024 * 1024;
-	private static final long MAX_JAR_SIZE = 10 * MIB;
-	private static final long MAX_SRC_SIZE = 10 * MIB;
+	private static final int MAX_SRC_SIZE_MIB = 10;
 
 	private static final Pattern PLUGIN_INTERNAL_NAME_TEST = Pattern.compile("^[a-z0-9-]+$");
 	private static final Pattern REPOSITORY_TEST = Pattern.compile("^(https://github\\.com/.*)\\.git$");
@@ -190,6 +189,8 @@ public class Plugin implements Closeable
 	@Setter
 	private long buildTimeMS;
 
+	private int jarSizeLimitMiB = 10;
+
 	public Plugin(File pluginCommitDescriptor) throws IOException, DisabledPluginException, PluginBuildException
 	{
 		this.pluginCommitDescriptor = pluginCommitDescriptor;
@@ -251,6 +252,12 @@ public class Plugin implements Closeable
 		{
 			throw PluginBuildException.of(internalName, "commit must be a full 40 character sha1sum")
 				.withFileLine(pluginCommitDescriptor, "commit=" + commit);
+		}
+
+		String strSizeLimit = (String) cd.remove("jarSizeLimitMiB");
+		if (strSizeLimit != null)
+		{
+			jarSizeLimitMiB = Integer.parseInt(strSizeLimit);
 		}
 
 		warning = (String) cd.remove("warning");
@@ -466,7 +473,7 @@ public class Plugin implements Closeable
 			extras.sort(Comparator.comparing(Entry::getLength).thenComparing(Entry::getZipPath));
 			for (Entry e : extras)
 			{
-				if (cos.getCount() + e.length > MAX_SRC_SIZE)
+				if (cos.getCount() + e.length > MAX_SRC_SIZE_MIB * MIB)
 				{
 					writeLog("File \"{}\" is skipped from the source archive as it would make it too big ({} MiB)\n", e.zipPath, e.length / MIB);
 					continue;
@@ -574,13 +581,13 @@ public class Plugin implements Closeable
 
 			{
 				long size = jarFile.length();
-				if (size > MAX_JAR_SIZE)
+				if (size > jarSizeLimitMiB * MIB)
 				{
-					throw PluginBuildException.of(this, "the output jar is {}MiB, which is above our limit of 10MiB", size / MIB);
+					throw PluginBuildException.of(this, "the output jar is {}MiB, which is above our limit of {}MiB", size / MIB, jarSizeLimitMiB);
 				}
-				if (size > (MAX_JAR_SIZE * 8) / 10)
+				if (size > (jarSizeLimitMiB * MIB * 8) / 10)
 				{
-					writeLog("warning: the output jar is {}MiB, which is nearing our limit of 10MiB\n", size / MIB);
+					writeLog("warning: the output jar is {}MiB, which is nearing our limit of {}MiB\n", size / MIB, jarSizeLimitMiB);
 				}
 				jarData.setJarSize((int) size);
 			}
@@ -622,9 +629,10 @@ public class Plugin implements Closeable
 
 		{
 			long size = srcZipFile.length();
-			if (size > MAX_SRC_SIZE + MIB) // allow the header to be a bit bigger
+			long srcSizeLimitMiB = Math.max(MAX_SRC_SIZE_MIB, jarSizeLimitMiB);
+			if (size > (srcSizeLimitMiB + 1) * MIB) // allow the header to be a bit bigger
 			{
-				throw PluginBuildException.of(this, "the source archive is {}MiB, which is above our limit of 10MiB", size / MIB);
+				throw PluginBuildException.of(this, "the source archive is {}MiB, which is above our limit of {}MiB", size / MIB, srcSizeLimitMiB);
 			}
 		}
 
@@ -703,6 +711,13 @@ public class Plugin implements Closeable
 									&& !(isMultiRelease || fileName.endsWith("module-info.class")))
 								{
 									throw PluginBuildException.of(Plugin.this, "plugins must be Java 11 compatible")
+										.withFile(fileName);
+								}
+
+								if (disallowedIsFatal &&
+									name != null && name.startsWith("net/runelite/"))
+								{
+									throw PluginBuildException.of(Plugin.this, "use of net.runelite package namespace is not allowed")
 										.withFile(fileName);
 								}
 

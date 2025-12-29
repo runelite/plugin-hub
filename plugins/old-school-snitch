@@ -1,3 +1,3 @@
 repository=https://github.com/wkpatrick/old-school-snitch.git
-commit=0cd0650cc5f07f589293c0bd4a10e1307452acf3
-warning=This plugin submits your player name, account hash, xp data, drop data, in-game location, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
+commit=769fa7f35ace4baaff9fbb453cabf073a1591fdb
+warning=This plugin submits your player name, player model, account hash, xp data, drop data, in-game location, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
