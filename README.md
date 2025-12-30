@@ -28,6 +28,8 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  5. Run your plugin by running the `run` gradle task by opening `build.gradle` and clicking on the green triangle next to the run task. If you have a Jagex account, you need to follow [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts) to be able to login to the development client.
 
+ <img width="438" height="159" alt="image" src="https://github.com/user-attachments/assets/d3ce4087-d4e2-497b-89c0-c6879a38adb1" />
+
  6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
 
  7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc. Be sure to update the `pluginMainClass` in `build.gradle` too.
