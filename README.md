@@ -26,16 +26,11 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the provided test. If you don't have a run configuration yet for the test, attempt to run it by clicking `Run test`. This will create a run configuration and fail to run due to asserts being disabled. Add `-ea`
- to your VM options in the run configuration to enable assertions, which can be found under `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 5. Run your plugin by running the `run` gradle task by opening `build.gradle` and clicking on the green triangle next to the run task. If you have a Jagex account, you need to follow [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts) to be able to login to the development client.
 
- The client should now launch with your plugin enabled. If you have a Jagex account, you will be unable to login without first following [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts).
+ 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
 
- ![run-test](https://i.imgur.com/tKSQH5e.png)
-
- 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`. Make sure to also change the package name in src/test/resources/logback-test.xml in case IntelliJ misses it.
-
- 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
+ 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc. Be sure to update the `pluginMainClass` in `build.gradle` too.
  
  8. Go to your plugin file and set its name in the `PluginDescriptor`, this can have spaces.
 
@@ -53,7 +48,7 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  11. Write a nice README so your users can see the features of your plugin.
 
- 12. When you have your plugin working. Commit your changes and push them to your repository. 
+ 12. When you have your plugin working, commit your changes and push them to your repository.
 
 ### Licensing your repository
  1. Go to your repository on GitHub and select *Add file* (next to the green *Code* button), and choose *Create new file* from the drop-down.
