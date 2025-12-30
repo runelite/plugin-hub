@@ -139,6 +139,9 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs, friendly-guide"
 	}
+	thirdParty("org.netbeans.modules:org-netbeans-lib-profiler:RELEASE280") {
+		because "debug"
+	}
 }
 
 task verifyCore {
