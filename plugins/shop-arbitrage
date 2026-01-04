@@ -1,4 +1,4 @@
 repository=https://github.com/Margeon-OSRS/shop-arbitrage-plugin.git
-commit=a742710ddbabb1347e7a3ac216cc1182b777b437
+commit=dacd3bd264a7ade71f2ed83f8da231e4c7219831
 description=Calculates profit margins for shop arbitrage trades.
 tags=shop,flipping,money,trade
