@@ -1,4 +1,4 @@
-repository=https://github.com/yourname/your-plugin-repo.git
-commit=YOUR_COMMIT_HASH_HERE
-description=A plugin that helps identify shop arbitrage opportunities / flipping oppurtunities.
-tags=shop,flipping,money
+repository=https://github.com/Margeon-OSRS/shop-arbitrage-plugin.git
+commit=a742710ddbabb1347e7a3ac216cc1182b777b437
+description=Calculates profit margins for shop arbitrage trades.
+tags=shop,flipping,money,trade
