@@ -26,16 +26,13 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the provided test. If you don't have a run configuration yet for the test, attempt to run it by clicking `Run test`. This will create a run configuration and fail to run due to asserts being disabled. Add `-ea`
- to your VM options in the run configuration to enable assertions, which can be found under `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 5. Run your plugin by running the `run` gradle task by opening `build.gradle` and clicking on the green triangle next to the run task. If you have a Jagex account, you need to follow [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts) to be able to login to the development client.
 
- The client should now launch with your plugin enabled. If you have a Jagex account, you will be unable to login without first following [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts).
-
- ![run-test](https://i.imgur.com/tKSQH5e.png)
+ <img width="438" height="159" alt="image" src="https://github.com/user-attachments/assets/d3ce4087-d4e2-497b-89c0-c6879a38adb1" />
 
  6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
 
- 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
+ 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc. Be sure to update the `pluginMainClass` in `build.gradle` too.
  
  8. Go to your plugin file and set its name in the `PluginDescriptor`, this can have spaces.
 
@@ -53,7 +50,7 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  11. Write a nice README so your users can see the features of your plugin.
 
- 12. When you have your plugin working. Commit your changes and push them to your repository. 
+ 12. When you have your plugin working, commit your changes and push them to your repository.
 
 ### Licensing your repository
  1. Go to your repository on GitHub and select *Add file* (next to the green *Code* button), and choose *Create new file* from the drop-down.
@@ -96,10 +93,10 @@ git remote add upstream https://github.com/runelite/plugin-hub.git
 
 git fetch upstream
 git checkout -B <your-plugin-name> upstream/master
-# update commit= in plugins/<your-plugin>
-git add plugins/<your-plugin>
-git commit -m "update <your-plugin>"
-git push
+# update commit= in plugins/<your-plugin-name>
+git add plugins/<your-plugin-name>
+git commit -m "update <your-plugin-name>"
+git push -f -u origin <your-plugin-name>
 ```
 
 Then create a pull request from within the GitHub UI, or using the GitHub CLI via `gh pr create -w`.
@@ -117,7 +114,7 @@ Instead, prefer using https://docs.oracle.com/javase/8/docs/api/java/lang/Class.
 
 ## Third party dependencies
 We require any dependencies that are not a transitive dependency of runelite-client to
-be have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
+have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
 To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html).
 To add a new dependency, add it to the `thirdParty` configuration in [`package/verification-template/build.gradle`](https://github.com/runelite/plugin-hub/blob/master/package/verification-template/build.gradle),
 then run `../gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
