@@ -136,21 +136,6 @@ dependencies {
 		because "wikisync"
 		because "osrs-archipelago"
 	}
-	thirdParty("com.google.protobuf:protobuf-gradle-plugin:0.9.4") {
-		because "blert"
-	}
-	thirdParty("com.google.protobuf:com.google.protobuf.gradle.plugin:0.9.4") {
-		because "blert"
-	}
-	thirdParty("com.google.gradle:osdetector-gradle-plugin:1.7.3") {
-		because "blert"
-	}
-	thirdParty("com.google:google:1") {
-		because "blert"
-	}
-	thirdParty("com.google.protobuf:protoc:3.21.12") {
-		because "blert"
-	}
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs, friendly-guide"
 	}
