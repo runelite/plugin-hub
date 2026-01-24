@@ -1,4 +1,4 @@
 repository=https://github.com/EmbargoOSRS/Embargo-Plugin.git
-commit=5b5d7ee921d392146b892f132279b26e3b708312
+commit=2af65f97af0dc6abe93d9450d37a528ac9aa858a
 warning=This plugin sends player data (including IP address) to a 3rd party server not controlled by RuneLite or Jagex. To see the full list of data this plugin collects, check out project's README on Github
 authors=Sharpienero,cnyms,CMjones5,jacobDM
