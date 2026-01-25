@@ -1,3 +1,3 @@
 repository=https://github.com/dc-m/arceuuscc-plugin.git
-commit=b4442ae5e7037851cb1a732530ca91ed68543638
+commit=f1b01fffb98f6fd387bcc86aa0d2fc147d964170
 warning=This plugin submits your IP address and RSN to a 3rd-party server not controlled or verified by Runelite developers.
