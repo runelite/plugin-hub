@@ -1,2 +1,3 @@
 repository=https://github.com/jmccarey/crab-scouter.git
 commit=a1458dfcb0c944da86afb1d1c545a1fbe351ec19
+warning=This plugin submits your IP address and in-game location to a 3rd-party server not controlled or verified by Runelite developers.
