@@ -1,0 +1,3 @@
+repository=https://github.com/abristow3/Flux-Runelite-Plugin.git
+commit=b71da4cf0ee55fb529e389cbf88d56487c8bc5fa
+warning=This plugin submits your IP address to wiseoldman.net and a 3rd-party server not controlled or verified by Runelite developers.

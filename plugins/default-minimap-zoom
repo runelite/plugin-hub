@@ -1,3 +1,4 @@
 repository=https://github.com/YvesW/default-minimap-zoom.git
 commit=cf9d2c1e99fe479d78cd6a212ffd2e0c67e31f71
 authors=YvesW
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.

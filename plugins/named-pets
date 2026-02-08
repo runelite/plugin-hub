@@ -1,3 +1,4 @@
 repository=https://github.com/pappymint/named-pets-runelite.git
 commit=d3256238c60314e73f7b08b68e6bedc49c9556c6
 authors=pappymint
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
