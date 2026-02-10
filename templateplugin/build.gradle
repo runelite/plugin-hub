@@ -66,5 +66,5 @@ tasks.register('shadowJar', Jar) {
 
 	group = BasePlugin.BUILD_GROUP
 	archiveClassifier.set('shadow')
-	archiveFileName.set("$${rootProject.name}-$${project.version}-all.jar")
+	archiveFileName.set("${rootProject.name}-${project.version}-all.jar")
 }
