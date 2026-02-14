@@ -1,2 +1,5 @@
 repository=https://github.com/StephenMarkToms/lootbag-plugin.git
 commit=03d0e7eda5fb463256f178f1de2c0695958d7b6d
+warning=This plugin submits the names, locations, and gear of encou
+ntered Players, and your IP address to a 3rd party website not controlled or ver
+ified by the RuneLite Developers.
