@@ -1,2 +1,4 @@
 repository=https://github.com/Evamist/Bank-Highlighter.git
-commit=2e67e7db5284ab85610f1141419ab2868c03541a
+commit=2055915bf1b763a47f682ef3daa1a8a709b4da5a
+authors=Evamist,Nick2bad4u
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
