@@ -1,2 +1,3 @@
 repository=https://github.com/UserD40/Runelite07Flip.git
 commit=ca3f9deb76efc213a340d426867a113a2995ecb1
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers.
