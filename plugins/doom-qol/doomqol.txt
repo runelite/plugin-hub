@@ -1,0 +1,2 @@
+repository=https://github.com/Ideonomy-web/earthen-shield-path.git
+commit=eddc6dffe8717e8e7e7e44101f17f4772477c009
