@@ -1,3 +1,3 @@
 repository=https://github.com/RuneSocial/runesocial-plugin
-commit=f65c4dade517b12756cb1820edc9e1b0d6dda8a8
+commit=f3f6e2b8a8c960c038b654180f99772bf2845147
 authors=Lomecan
