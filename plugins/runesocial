@@ -1,4 +1,4 @@
-repository=https://github.com/RuneSocial/runesocial-plugin
+repository=https://github.com/RuneSocial/runesocial-plugin.git
 commit=284d5688b2401e65f221c06385013c8531a88f97
 authors=Lomecan
 warning=This plugin connects to an external server to sync player profiles (name effects, mood, and pet names) with nearby RuneSocial users.
