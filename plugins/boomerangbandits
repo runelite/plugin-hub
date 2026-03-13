@@ -1,2 +1,3 @@
 repository=https://github.com/ostechgit/boomerangbandits-plugin.git
 commit=266f1c7e6b7c1a3edb33487edb18e95cfaa1a54b
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers.
