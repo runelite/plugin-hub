@@ -1,0 +1,2 @@
+repository=https://github.com/Outlashed/granite-tracker.git
+commit=f3d7166a035eff23d63404d35821b116c9a2ace6
