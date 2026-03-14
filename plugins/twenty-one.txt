@@ -1,0 +1,2 @@
+repository=https://github.com/bwal96/twenty-one-plugin
+commit=7dc156dd146d98fa68c57fc2e02436b436d7228f
