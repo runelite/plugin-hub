@@ -1,0 +1,3 @@
+repository=https://github.com/KrazziR1/runetrader-plugin.git
+commit=0ca09c8ceaffd34089be109cefb5c0014f263375
+warning=This plugin submits your Grand Exchange offer data to RuneTrader.gg, a 3rd-party server not controlled or verified by RuneLite developers.
