@@ -1,0 +1,3 @@
+repository=https://github.com/Runescape-Tracking/RuneAlytics-Plugin.git
+commit=f4e2657ad857ac785eb4c79083133ebb4bfefb42
+warning=This plugin submits the names of you, your friends and members of your clan chat to Runealytics.com as well as displays achievements and XP gaints. This plugin also allows you to share your account wealth upon your approval to the world
