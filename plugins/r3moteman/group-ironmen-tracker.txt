@@ -1,2 +1,2 @@
-repository=https://github.com/r3moteman/group-ironmen-tracker
+repository=https://github.com/r3moteman/group-ironmen-tracker.git
 commit=14155aee18fea40c5f3b333bddc0aaf54d0aad54
