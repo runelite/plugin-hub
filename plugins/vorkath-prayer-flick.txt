@@ -1,0 +1,2 @@
+repository=https://github.com/MrWisz/vorkath-prayer-flick
+commit=2c707ed59126a516ea800a75f460dee870b0733c
