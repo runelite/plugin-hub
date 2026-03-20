@@ -1,0 +1,3 @@
+repository=https://github.com/megarares/ge-trade-tracker.git
+commit=86d92b21a066b8e1a2a9dfc6c9f2f135bf035dc6
+warning=This plugin submits your GE trade data and IP address to a server not controlled or verified by the RuneLite developers.
