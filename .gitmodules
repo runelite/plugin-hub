@@ -1,0 +1,4 @@
+[submodule "plugins/osrs-companion"]
+	path = plugins/osrs-companion
+	url = https://github.com/OsrsCompanion/osrs-companion.git
+	branch = release

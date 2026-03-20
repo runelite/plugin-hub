@@ -1,0 +1,6 @@
+{
+  "internalName": "osrs-companion",
+  "displayName": "OSRS Companion",
+  "description": "Movement guidance overlay for tile-based navigation",
+  "tags": ["movement", "tiles", "overlay", "sepulchre"]
+}
