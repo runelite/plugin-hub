@@ -1,3 +1,3 @@
 repository=https://github.com/dennisdevulder/osrs-tracker-plugin.git
-commit=f28805d19217ee7477efde859675926373fb643a
+commit=20087a5138fd49344290a31c1f1cb0a347038b4b
 warning=This plugin submits your IP address, RSN, and comprehensive records and screen recordings of your account activity to a 3rd-party server not controlled or verified by Runelite developers.
