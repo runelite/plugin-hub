@@ -1,14 +1,2 @@
-{
-  "id": "bossbank-sync",
-  "name": "BossBank Sync",
-  "author": "BossBank",
-  "support": "https://github.com/bornthiswayttv-cpu/bossbank-sync",
-  "description": "Sync your bank, inventory, equipment, and stats to BossBank for gear optimization",
-  "tags": ["bank", "gear", "boss", "optimizer", "sync"],
-  "plugins": [
-    {
-      "class": "com.bossbank.sync.BossBankSyncPlugin",
-      "jar": "https://github.com/bornthiswayttv-cpu/bossbank-sync/raw/main/bossbank-sync-1.0.0.jar"
-    }
-  ]
-}
+repository=https://github.com/bornthiswayttv-cpu/bossbank-sync.git
+commit=2ee31d5b25b3e497bfd9a8b8e9814a4130631c49
