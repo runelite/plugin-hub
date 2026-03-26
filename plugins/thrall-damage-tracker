@@ -1,5 +1,5 @@
 repository=https://github.com/Guvvv/thrall-damage-tracker.git
-commit=6a9cd8921491b77a7759dc38fd5a4728074b95c6
+commit=586f79d415e9f8b86a9d3ae127ed8650dce10fae
 displayName=Thrall Damage Tracker
 author=Guvvv
 description=Tracks cumulative damage and lifespan of summoned thralls.
