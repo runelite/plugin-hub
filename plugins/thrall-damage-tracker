@@ -1,1 +1,5 @@
-
+displayName=Thrall Damage Tracker
+author=Guvvv
+description=Tracks cumulative damage and lifespan of summoned thralls.
+tags=combat, thrall, tracker, arceuus
+repository=https://github.com
