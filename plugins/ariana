@@ -1,3 +1,3 @@
 repository=https://github.com/ariana-dot-trade/ariana.trade-plugin.git
-commit=f430b48bf1a0f5768e2d697825e6921211f5fde2
+commit=28746e9eab268d23367d5cb302785bedc4b9be34
 warning=This plugin sends your account name, bank contents, inventory, equipment, and Grand Exchange offer data to a 3rd party server (ariana.trade) that is not controlled or verified by the RuneLite developers.
