@@ -1,9 +1,7 @@
-{
-  "displayName": "Adventurer's Log",
-  "projectUrl": "https://github.com/runitebar/adventurers-log",
-  "repository": "https://github.com/runitebar/adventurers-log.git",
-  "author": "Runitebar",
-  "description": "A OSRS themed chronological history of your account milestones including levels, quests and boss kills",
-  "tags": ["history", "log", "milestones", "achievements", "boss"],
-  "lastRelease": "1.0.0"
-}
+displayName=Adventurer's Log
+projectUrl=https://github.com/runitebar/adventurers-log
+repository=https://github.com/runitebar/adventurers-log.git
+commit=66118df2619db6af51f09f17eb525667b1ec7253
+author=Runitebar
+description=An OSRS themed chronological history of your account milestones including levels, quests and boss kills
+tags=history, log, milestones, achievements, boss
