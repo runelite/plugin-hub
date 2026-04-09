@@ -45,10 +45,7 @@ dependencies {
 		because "discord-rare-drop-notifier, droptracker"
 	}
 	thirdParty("org.jsoup:jsoup:1.13.1") {
-		because "discord-rare-drop-notifier, drop-simulator, fire-beats, loot-table, loot-lookup, chance-man"
-	}
-	thirdParty("org.jsoup:jsoup:1.17.2") {
-		because "slayer-simplified"
+		because "discord-rare-drop-notifier, drop-simulator, fire-beats, loot-table, loot-lookup, chance-man, slayer-simplified"
 	}
 	thirdParty("com.miglayout:miglayout-swing:5.2") {
 		because "drop-simulator"
