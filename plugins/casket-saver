@@ -1,3 +1,4 @@
 repository=https://github.com/Notespeon/casket-saver.git
-commit=2d402fa397ed8b3c1f8e0f556d024f1a92c5181e
+commit=ff395d7747e56e5e02042059cc51d7afd9993c4a
 authors=Notespeon,TheLope
+warning=The features of this plugin and future development have migrated to the Clue Saver plugin.

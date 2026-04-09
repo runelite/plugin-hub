@@ -1,0 +1,4 @@
+repository=https://github.com/OSRS-Taskman/collection-log-master.git
+commit=456ad3bf3f6073ae1a796f543489e931eed90fe8
+authors=ImTedious,rmobis
+warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.
