@@ -1,2 +1,3 @@
 repository=https://github.com/DevMisery/number-go-up.git
-commit=746510edddc1616e618d1ea310e0cc96b8decee9
+commit=1794672f793b29198ce738d524d6218990336b10
+disabled=freezes the client
