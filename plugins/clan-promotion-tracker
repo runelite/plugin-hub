@@ -1,3 +1,3 @@
 repository=https://github.com/nlobdell/clan-promotion-tracker.git
-commit=0847777e67d414ba2bd2f6bb146f194858d95df2
+commit=6cb91afed48446118df43b154c78f5957bfe9a35
 warning=This plugin sends clan member usernames and join-date-based queries to the Wise Old Man API to calculate promotion recommendations.
