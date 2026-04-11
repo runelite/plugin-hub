@@ -17,6 +17,9 @@ Lcom/google/gson/GsonBuilder;.<init>()V:b
 /^Lnet/runelite/api/widgets/WidgetInfo;/
 /^Lnet/runelite/api/widgets/WidgetID/
 
+# Use the overloaded getItemStats(int itemId) method instead
+Lnet/runelite/client/game/ItemManager;.getItemStats(IZ)Lnet/runelite/http/api/item/ItemStats;:b
+
 #
 Lnet/runelite/client/account/AccountClient;.<clinit>()V:gs
 Lnet/runelite/client/account/AccountClient;.login(I)Lnet/runelite/http/api/account/OAuthResponse;:b
