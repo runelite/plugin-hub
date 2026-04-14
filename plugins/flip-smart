@@ -1,4 +1,4 @@
 repository=https://github.com/Flip-Smart/flip-smart-runelite-plugin.git
-commit=4454839044907948a837b5e35e8e0b0c3a6dd650
+commit=febf8ddd6ec10b1a44ff87642d6a3d6deb2fb60d
 authors=mablack01
 warning=This plugin submits your IP address, account name, grand exchange transactions, and information about your account wealth to a 3rd party server that is not controlled or verified by RuneLite developers.
