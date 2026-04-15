@@ -139,12 +139,6 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs, friendly-guide"
 	}
-	thirdParty("org.jcodec:jcodec:0.2.5") {
-		because "kill-clips"
-	}
-	thirdParty("org.jcodec:jcodec-javase:0.2.5") {
-		because "kill-clips"
-	}
 }
 
 task verifyCore {
