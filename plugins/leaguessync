@@ -1,3 +1,3 @@
-repository=https://github.com/RPBTwisted/leaguessync
+repository=https://github.com/RPBTwisted/leaguessync.git
 commit=dc68167252899f4fe4939b076e57d075365b38cd
 warning=This plugin submits your username and completed task IDs to a 3rd-party server (osrsleaguetracker.com) not controlled or verified by RuneLite developers.
