@@ -122,9 +122,6 @@ dependencies {
 		because "voicescape-communication"
 		exclude group: 'org.apache.commons', module: 'commons-pool2'
 	}
-	thirdParty("io.github.jaredmdobson:concentus:1.0.2") {
-		because "voicescape-packet-encoding"
-	}
 
 	thirdParty platform("org.lwjgl:lwjgl-bom:3.3.1") {
 		because "gpu-experimental"
