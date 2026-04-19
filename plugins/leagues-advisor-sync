@@ -1,0 +1,3 @@
+repository=https://github.com/laurenprete/leagues-advisor-sync.git
+commit=8a9e0ff86cc496c18b48dca10f52983c91bae539
+warning=This plugin syncs your league character data (skills, quests, tasks, collection log, owned items) to leagues-advisor.com.<br>Only activates on league (seasonal) worlds. No main game data is transmitted.
