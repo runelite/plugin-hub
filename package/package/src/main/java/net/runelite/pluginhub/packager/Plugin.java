@@ -455,7 +455,7 @@ public class Plugin implements Closeable
 				public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException
 				{
 					String zipPath = repositoryDirectory.toPath().relativize(path).toString().replace('\\', '/');
-					(zipPath.contains(".gradle") || zipPath.startsWith("src/main/") ? core : extras)
+					(zipPath.contains(".gradle") || zipPath.startsWith("src/main/") || zipPath.equals("runelite-plugin.properties") ? core : extras)
 						.add(new Entry(path, zipPath, path.toFile().length()));
 					return FileVisitResult.CONTINUE;
 				}
