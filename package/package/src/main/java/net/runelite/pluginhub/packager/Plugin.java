@@ -1060,6 +1060,7 @@ public class Plugin implements Closeable
 	{
 		Files.copy(jarFile.toPath(), new File(artifactDir, getInternalName() + ".jar").toPath());
 		Files.copy(logFile.toPath(), new File(artifactDir, getInternalName() + ".log").toPath());
+		Files.copy(srcZipFile.toPath(), new File(artifactDir, getInternalName() + ".zip").toPath());
 	}
 
 	public void writeLog(String format, Object... args) throws IOException
