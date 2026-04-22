@@ -90,6 +90,22 @@ public class PluginTest
 	}
 
 	@Test
+	public void testPropGarbage() throws DisabledPluginException, PluginBuildException, IOException, InterruptedException
+	{
+		try (Plugin p = createExamplePlugin("example"))
+		{
+			setProp(p, "bui1d", "gradle");
+			p.build(Util.readRLVersion(), true);
+			Assert.fail();
+		}
+		catch (PluginBuildException e)
+		{
+			log.info("ok: ", e);
+			assertContains(e.getHelpText(), "bui1d");
+		}
+	}
+
+	@Test
 	public void testMissingPlugin() throws DisabledPluginException, PluginBuildException, IOException, InterruptedException
 	{
 		try (Plugin p = createExamplePlugin("missing-plugin"))

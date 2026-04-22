@@ -941,7 +941,16 @@ public class Plugin implements Closeable
 
 			if (rlPluginProperties.size() != 0)
 			{
-				writeLog("warning: unused props in runelite-plugin.properties: {}\n", rlPluginProperties.keySet());
+				if (disallowedIsFatal)
+				{
+					var entry = rlPluginProperties.entrySet().iterator().next();
+					throw PluginBuildException.of(this, "unknown {} key(s) in runelite-plugin.properties", rlPluginProperties.keySet())
+						.withFileLine(propFile, entry.getKey() + "=" + entry.getValue());
+				}
+				else
+				{
+					writeLog("warning: unused props in runelite-plugin.properties: {}\n", rlPluginProperties.keySet());
+				}
 			}
 		}
 
