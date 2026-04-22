@@ -189,6 +189,14 @@ public class Plugin implements Closeable
 	@Setter
 	private long buildTimeMS;
 
+	@VisibleForTesting
+	final File propFile;
+
+	private Properties rlPluginProperties;
+
+	private BuildType buildType;
+	private boolean buildPropMissing;
+
 	private int jarSizeLimitMiB = 10;
 
 	public Plugin(File pluginCommitDescriptor) throws IOException, DisabledPluginException, PluginBuildException
@@ -281,6 +289,7 @@ public class Plugin implements Closeable
 		apiFile = new File(buildDirectory, "api");
 		srcZipFile = new File(buildDirectory, "source.zip");
 		iconFile = new File(repositoryDirectory, "icon.png");
+		propFile = new File(repositoryDirectory, "runelite-plugin.properties");
 	}
 
 	@SneakyThrows
@@ -396,31 +405,32 @@ public class Plugin implements Closeable
 
 	public void build(String runeliteVersion, boolean disallowedIsFatal) throws IOException, PluginBuildException
 	{
-		try (DirectoryStream<Path> ds = Files.newDirectoryStream(repositoryDirectory.toPath(), "**.{gradle,gradle.kts}"))
+		if (!propFile.exists())
 		{
-			for (Path path : ds)
+			throw PluginBuildException.of(this, "runelite-plugin.properties must exist in the root of your repo");
+		}
+		rlPluginProperties = loadProperties(propFile);
+
+		{
+			String buildTypeStr = (String) rlPluginProperties.remove("build");
+			if (Strings.isNullOrEmpty(buildTypeStr))
 			{
-				String badLine = MoreFiles.asCharSource(path, StandardCharsets.UTF_8)
-					.lines()
-					.filter(l -> l.codePoints().map(cp ->
-					{
-						if (cp == '\t')
-						{
-							return 8;
-						}
-						else if (cp > 127)
-						{
-							// any special char is counted as 4 because there are some very wide special characters
-							return 4;
-						}
-						return 1;
-					}).sum() > 120)
-					.findAny()
-					.orElse(null);
-				if (badLine != null)
+				buildPropMissing = true;
+				buildType = BuildType.GRADLE;
+			}
+			else
+			{
+				switch (buildTypeStr)
 				{
-					throw PluginBuildException.of(this, "All gradle files must wrap at 120 characters or less")
-						.withFileLine(path.toFile(), badLine);
+					case "gradle":
+						buildType = BuildType.GRADLE;
+						break;
+					case "standard":
+						buildType = BuildType.STANDARD;
+						break;
+					default:
+						throw PluginBuildException.of(this, "build must be one of [gradle, standard], not \"{}\"", buildTypeStr)
+							.withFileLine(propFile, "build=" + buildTypeStr);
 				}
 			}
 		}
@@ -483,6 +493,55 @@ public class Plugin implements Closeable
 				zos.putNextEntry(ze);
 				Files.copy(e.path, zos);
 				zos.closeEntry();
+			}
+		}
+
+		try (DirectoryStream<Path> ds = Files.newDirectoryStream(repositoryDirectory.toPath(), "**.{gradle,gradle.kts}"))
+		{
+			for (Path path : ds)
+			{
+				if (buildType == BuildType.GRADLE)
+				{
+					String badLine = MoreFiles.asCharSource(path, StandardCharsets.UTF_8)
+						.lines()
+						.filter(l -> l.codePoints().map(cp ->
+						{
+							if (cp == '\t')
+							{
+								return 8;
+							}
+							else if (cp > 127)
+							{
+								// any special char is counted as 4 because there are some very wide special characters
+								return 4;
+							}
+							return 1;
+						}).sum() > 120)
+						.findAny()
+						.orElse(null);
+					if (badLine != null)
+					{
+						throw PluginBuildException.of(this, "All gradle files must wrap at 120 characters or less")
+							.withFileLine(path.toFile(), badLine);
+					}
+				}
+				else
+				{
+					Files.delete(path);
+				}
+			}
+		}
+
+		if (buildType != BuildType.GRADLE)
+		{
+			try (InputStream is = Plugin.class.getResourceAsStream("standard-build.gradle"))
+			{
+				Files.copy(is, new File(repositoryDirectory, "build.gradle").toPath(), StandardCopyOption.REPLACE_EXISTING);
+			}
+
+			try (InputStream is = Plugin.class.getResourceAsStream("standard-settings.gradle"))
+			{
+				Files.copy(is, new File(repositoryDirectory, "settings.gradle").toPath(), StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
 
@@ -611,15 +670,16 @@ public class Plugin implements Closeable
 		displayData.setWarning(warning);
 
 		{
-			Properties chunk = loadProperties(new File(buildDirectory, "chunk.properties"));
+			String version = (String) rlPluginProperties.remove("version");
 
-			String version = chunk.getProperty("version");
-			if (Strings.isNullOrEmpty(version))
+			if (Strings.isNullOrEmpty(version) && buildType == BuildType.GRADLE)
 			{
-				throw new IllegalStateException("version in empty");
+				Properties chunk = loadProperties(new File(buildDirectory, "chunk.properties"));
+
+				version = chunk.getProperty("version");
 			}
 
-			if (version.endsWith("SNAPSHOT"))
+			if (Strings.isNullOrEmpty(version) || version.endsWith("SNAPSHOT"))
 			{
 				version = commit.substring(0, 8);
 			}
@@ -781,15 +841,8 @@ public class Plugin implements Closeable
 		}
 
 		{
-			File propFile = new File(repositoryDirectory, "runelite-plugin.properties");
-			if (!propFile.exists())
 			{
-				throw PluginBuildException.of(this, "runelite-plugin.properties must exist in the root of your repo");
-			}
-			Properties props = loadProperties(propFile);
-
-			{
-				String displayName = (String) props.remove("displayName");
+				String displayName = (String) rlPluginProperties.remove("displayName");
 				if (Strings.isNullOrEmpty(displayName) || disallowedIsFatal && "Example".equals(displayName))
 				{
 					throw PluginBuildException.of(this, "\"displayName\" must be set")
@@ -799,7 +852,7 @@ public class Plugin implements Closeable
 			}
 
 			{
-				String author = (String) props.remove("author");
+				String author = (String) rlPluginProperties.remove("author");
 				if (Strings.isNullOrEmpty(author) || disallowedIsFatal && "Nobody".equals(author))
 				{
 					throw PluginBuildException.of(this, "\"author\" must be set")
@@ -809,7 +862,7 @@ public class Plugin implements Closeable
 			}
 
 			{
-				String description = (String) props.remove("description");
+				String description = (String) rlPluginProperties.remove("description");
 				if (disallowedIsFatal && "An example greeter plugin".equals(description))
 				{
 					throw PluginBuildException.of(this, "\"description\" must be set")
@@ -819,7 +872,7 @@ public class Plugin implements Closeable
 			}
 
 			{
-				String tagsStr = (String) props.remove("tags");
+				String tagsStr = (String) rlPluginProperties.remove("tags");
 				if (!Strings.isNullOrEmpty(tagsStr))
 				{
 					displayData.setTags(Splitter.on(",")
@@ -831,7 +884,7 @@ public class Plugin implements Closeable
 			}
 
 			{
-				String pluginsStr = (String) props.remove("plugins");
+				String pluginsStr = (String) rlPluginProperties.remove("plugins");
 				if (pluginsStr == null)
 				{
 					throw PluginBuildException.of(this, "\"plugins\" must be set")
@@ -886,10 +939,19 @@ public class Plugin implements Closeable
 				}
 			}
 
-			if (props.size() != 0)
+			if (rlPluginProperties.size() != 0)
 			{
-				writeLog("warning: unused props in runelite-plugin.properties: {}\n", props.keySet());
+				writeLog("warning: unused props in runelite-plugin.properties: {}\n", rlPluginProperties.keySet());
 			}
+		}
+
+		if (disallowedIsFatal && buildPropMissing)
+		{
+			throw PluginBuildException.of(this, "\"build\" must be set")
+				.withHelp("You must add a build=standard or build=gradle entry.\n" +
+					"build=standard is recommended unless you have dependencies or other changes to your build.gradle.\n" +
+					"See https://github.com/runelite/plugin-hub#build-type for more info.")
+				.withFile(propFile);
 		}
 
 		realPluginChecks();

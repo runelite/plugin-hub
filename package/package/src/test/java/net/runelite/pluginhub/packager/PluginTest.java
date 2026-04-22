@@ -71,10 +71,20 @@ public class PluginTest
 	}
 
 	@Test
-	public void testExamplePluginCompiles() throws DisabledPluginException, PluginBuildException, IOException, InterruptedException
+	public void testExamplePluginCompilesStandard() throws DisabledPluginException, PluginBuildException, IOException, InterruptedException
 	{
 		try (Plugin p = createExamplePlugin("example"))
 		{
+			p.build(Util.readRLVersion(), true);
+		}
+	}
+
+	@Test
+	public void testExamplePluginCompilesGradle() throws DisabledPluginException, PluginBuildException, IOException, InterruptedException
+	{
+		try (Plugin p = createExamplePlugin("example"))
+		{
+			setProp(p, "build", "gradle");
 			p.build(Util.readRLVersion(), true);
 		}
 	}
@@ -84,10 +94,7 @@ public class PluginTest
 	{
 		try (Plugin p = createExamplePlugin("missing-plugin"))
 		{
-			File propFile = new File(p.repositoryDirectory, "runelite-plugin.properties");
-			Properties props = Plugin.loadProperties(propFile);
-			props.setProperty("plugins", "com.nonexistent");
-			writeProperties(props, propFile);
+			setProp(p, "plugins", "com.nonexistent");
 			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
@@ -103,10 +110,7 @@ public class PluginTest
 	{
 		try (Plugin p = createExamplePlugin("empty-plugins"))
 		{
-			File propFile = new File(p.repositoryDirectory, "runelite-plugin.properties");
-			Properties props = Plugin.loadProperties(propFile);
-			props.setProperty("plugins", "");
-			writeProperties(props, propFile);
+			setProp(p, "plugins", "");
 			p.build(Util.readRLVersion(), true);
 			Assert.fail();
 		}
@@ -122,6 +126,7 @@ public class PluginTest
 	{
 		try (Plugin p = createExamplePlugin("unverified-dependency"))
 		{
+			setProp(p, "build", "gradle");
 			File buildFile = new File(p.repositoryDirectory, "build.gradle");
 			String buildSrc = Files.asCharSource(buildFile, StandardCharsets.UTF_8).read();
 			buildSrc = buildSrc.replace("dependencies {", "dependencies {\n" +
@@ -219,5 +224,12 @@ public class PluginTest
 	private void assertContains(String haystack, String needle)
 	{
 		Assert.assertTrue(haystack, haystack.contains(needle));
+	}
+
+	private void setProp(Plugin p, String key, String value) throws IOException
+	{
+		var props = Plugin.loadProperties(p.propFile);
+		props.setProperty(key, value);
+		writeProperties(props, p.propFile);
 	}
 }
