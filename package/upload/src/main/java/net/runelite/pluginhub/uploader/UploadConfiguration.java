@@ -46,6 +46,8 @@ import okio.BufferedSource;
 @Accessors(chain = true)
 public class UploadConfiguration implements Closeable
 {
+	private static final int MAX_RETRY = 2;
+
 	public static final String DIR_JAR = "jar";
 	public static final String DIR_API = "api";
 	public static final String DIR_ICON = "icon";
@@ -102,9 +104,22 @@ public class UploadConfiguration implements Closeable
 					.build();
 
 				Response res = null;
-				for (int attempts = 0; attempts < 2; attempts++)
+				for (int attempts = 0; attempts < MAX_RETRY; attempts++)
 				{
-					res = chain.proceed(userAgentRequest);
+					try
+					{
+						res = chain.proceed(userAgentRequest);
+					}
+					catch (IOException e)
+					{
+						if (attempts == MAX_RETRY - 1)
+						{
+							throw e;
+						}
+
+						continue;
+					}
+
 					if (res.code() == 520)
 					{
 						res.close();
