@@ -1,3 +1,3 @@
 repository=https://github.com/YS-jack/RuneLingual-Plugin.git
-commit=cd3306273f8f8d66e731dd4a3656f6a4112af2f3
+commit=d20a3e7800432cdc5422c700dcd8c6609db99875
 warning = This plugin submits your/other's chat messages, item/npc/object names and possibly any words on screen to a third party service (DeepL) for translation, which is not maintained or verified by RuneLite.
