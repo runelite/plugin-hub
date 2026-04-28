@@ -72,6 +72,16 @@ This is the most common source of code-level rejections.
 - Clean up subscriptions, listeners, and overlays in `shutDown()`.
 - Do not mix code reformatting with feature changes in the same commit — it makes diffs unreadable for reviewers.
 
+## Testing
+
+You cannot verify plugin behavior yourself. Even if you have screen-capture or computer-use tools available, **do not use them to interact with RuneScape** — automating game input violates Jagex's third-party client guidelines and will get the user's account banned. Only the user can confirm a plugin works in-game.
+
+After completing a task, do not declare it done. Instead:
+
+1. Offer to launch RuneLite for the user by running `./gradlew run` from the plugin's root directory.
+2. Tell the user *what to test* — the specific behavior you changed, the golden path, and any edge cases worth exercising.
+3. Wait for the user to confirm the feature works in-game before considering the task complete. A clean JVM start is not a passing test.
+
 ---
 
 # Plugin Rules & Restrictions
