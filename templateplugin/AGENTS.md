@@ -30,7 +30,6 @@
 ## HTTP & JSON
 
 - Use OkHttp for all HTTP requests. `@Inject OkHttpClient` to get the HTTP client. Do not use `HttpURLConnection`, `java.net.http.HttpClient`, or Apache HttpClient.
-<!-- - **Use OkHttp for all HTTP requests** — `@Inject` an `OkHttpClient` instance. Do not use `HttpURLConnection`, `java.net.http.HttpClient`, or Apache HttpClient. -->
 - Use `@Inject Gson` to get a Gson instead, never create your own from scratch. You can use `.newBuilder()` to create one derived from the base `Gson.`
 - Do not add transitive dependencies from `runelite-client` directly to `build.gradle`, such as gson, guice, or okhttp.
 - Never execute okhttp calls on the client thread. Prefer using `enqueue()` which places the request on the okhttp threadpool.
@@ -93,9 +92,10 @@ Sourced from [Jagex's Third-Party Client Guidelines](https://secure.runescape.co
 - All code must be Java 11 compatible
 - No use of reflection
 - No use of JNI or JNA
-- No direct access tof native memory access via Unsafe or LWJGL
+- No direct access to native memory access via Unsafe or LWJGL
 - No executing external processes, including with Process or ProcessBuilder
 - No downloading or dynamic loading of code, including classloading
+- No runtime generation of code
 - No use of Java (de)serialization
 
 ## Boss & Combat Restrictions
@@ -114,7 +114,7 @@ Applies to all bosses, Raids sub-bosses, Slayer bosses, Demi-bosses, and wave-ba
 - No NPC focus identification (which player the NPC is targeting)
 - No content simulation (e.g. boss fight simulators)
 
-**New high-end PvM boss plugins are not accepted as a blanket policy.**
+New high-end PvM boss plugins are not accepted as a blanket policy.
 
 ## PvP Restrictions
 
