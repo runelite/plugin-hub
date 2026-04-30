@@ -1,0 +1,3 @@
+repository=https://github.com/Runescape-Tracking/RuneAlytics-Plugin.git
+commit=04707a5031dc19f266798494ffde3ba02244f8db
+warning=This plugin submits your IP address, in-game name, friends list, members of your clan chat, other player metrics, and optional bank contents, to Runealytics.com which is not maintained or reviewed by RuneLite.
