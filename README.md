@@ -43,8 +43,10 @@ You may contribute to existing plugins by selecting the plugin from https://rune
  description=Alerts you when you have nothing equipped in your head slot
  tags=hint,gear,head
  plugins=com.helmetcheck.HelmetCheckPlugin
+ version=
+ build=standard
  ```
- `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ `tags` will make it easier to find your plugin when searching for related words. `version` is optional, if missing the commit will be used. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  10. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
@@ -119,6 +121,11 @@ To do this we rely on [Gradle's dependency verification](https://docs.gradle.org
 To add a new dependency, add it to the `thirdParty` configuration in [`package/verification-template/build.gradle`](https://github.com/runelite/plugin-hub/blob/master/package/verification-template/build.gradle),
 then run `../gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
 the dependencies manually before your pull request will be merged. This process generally adds significantly to the amount of time it takes for a plugin submission or update to be reviewed, so we recommend avoiding adding any new dependencies unless absolutely necessary.
+
+## Build type
+`runelite-plugin.properties` contains a `build` property, which may be set to either `standard` or `gradle`. In `standard`
+mode, your`build.gradle` and `settings.gradle` get replaced when built during plugin submission. This allows for expedited review
+if you don't need to specify any dependencies or other custom build steps.
 
 ## My client version is outdated
 If your client version is outdated or your plugin suddenly stopped working after RuneLite has been updated, make sure that your `runeLiteVersion` is set to `'latest.release'` in `build.gradle`. If this is set correctly, refresh the Gradle dependencies by doing the following:

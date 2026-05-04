@@ -28,7 +28,6 @@ dependencies {
 }
 
 group = '${group_id}'
-version = '${version}'
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'

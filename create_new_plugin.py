@@ -86,7 +86,7 @@ subs = OrderedDict([
 	}),
 	("version", {
 		"desc": "The initial version number of the plugin",
-		"value": "1.0-SNAPSHOT",
+		"value": "",
 	}),
 	("plugin_prefix", {
 		"desc": "The name of the your plugin's main class, without the 'Plugin' suffix",
