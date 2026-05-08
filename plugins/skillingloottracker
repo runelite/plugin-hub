@@ -5,3 +5,5 @@ tags=skilling, loot, tracker, fishing, mining, woodcutting
 version=1.0.0
 plugins=com.skillingloot.ExamplePlugin
 build=standard
+repository=https://github.com/daviddavies9897-wq/skillingloottracker
+
