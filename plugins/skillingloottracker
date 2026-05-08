@@ -4,5 +4,5 @@
   "description": "A professional grid-style tracker for recording skilling progress in Fishing, Woodcutting, and Mining.",
   "tags": ["skilling", "loot", "fishing", "mining", "woodcutting"],
   "plugins": ["com.skillingloot.PluginLuncher"],
-  "repository": "https://github.com/daviddavies9897-wq/skillingloottracker11"
+  "repository": "https://github.com/daviddavies9897-wq/skill-loot-tracker"
 }
