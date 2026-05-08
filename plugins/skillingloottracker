@@ -1,0 +1,7 @@
+{
+  "displayName": "Skilling Loot Tracker",
+  "author": "daviddavies9897-wq",
+  "description": "A professional grid-style tracker for recording skilling progress in Fishing, Woodcutting, and Mining.",
+  "tags": ["skilling", "loot", "fishing", "mining", "woodcutting"],
+  "repository": "https://github.com/daviddavies9897-wq/skillingloottracker-plugin"
+}
