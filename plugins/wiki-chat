@@ -1,3 +1,3 @@
 repository=https://github.com/flowercodes/osrs-wiki-chat-plugin.git
-commit=3fe7bffc23fba0ef1a7e6946f38ed417d0ebe2af
+commit=798cbea9a7f3e071218162b50960f8010aadee69
 warning=This plugin submits your IP address and the text of your typed questions to a 3rd-party server not controlled or verified by RuneLite developers.
