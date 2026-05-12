@@ -1,0 +1,3 @@
+[submodule "plugins/kick-history"]
+	path = plugins/kick-history
+	url = https://github.com/itsdukey/Kick-History.git
