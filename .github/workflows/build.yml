@@ -78,7 +78,7 @@ jobs:
       with:
         name: jars
         path: /tmp/jars
-        retention-days: 1
+        retention-days: 4
   upload:
     if: (github.event_name != 'push' || github.repository_owner == 'runelite') && github.event_name != 'pull_request'
     needs: build
