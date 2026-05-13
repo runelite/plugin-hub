@@ -1,3 +1,3 @@
 repository=https://github.com/Samavajr/runepulse-plugin.git
-commit=7701b438b07bbd997e107bf08c4ea979afd000e4
+commit=6fa2f391af5f7c3871c6b37f2c509f447d84e305
 warning=This plugin submits your IP address, RSN, and details of your account progress to a 3rd-party server not controlled or verified by Runelite developers.
