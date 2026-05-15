@@ -1,2 +1,5 @@
 repository=https://github.com/FadedOSRS/terpinheimerccplugin.git
-commit=056a43ecc3f14e87240338d5b42caf0694620698
+commit=3da4b988e47a92b3fcace521d976072aaaf8d281
+warning=Terpinheimer can send data from your game client to third-party services you enable or configure. That may include Wise Old Man (player updates), your clan website (calendar API requests, live map position POSTs, optional collection log sync with slot varbits and recent chat lines), RuneLite party members (party loot sharing), and Discord webhooks (loot, clue rewards, pets, collection log, level-ups, deaths, quests, combat achievements, and similar notifications). Depending on those services and who can access them, some of that information could be visible to others.<br><br>We don't suggest using this if you are (for example) a PvP-locked hardcore ironman, where broadcasting your quest status, skills, location on a live map, or recent activity could be detrimental to your account by revealing what you are doing or where you are.
+authors=FadedOSRS
+
