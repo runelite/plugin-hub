@@ -1,5 +1,0 @@
-repository=https://github.com/CaptainPoko/moonoverlay.git
-commit=6160b068c0c8b30926736088ede74b15072d6275
-description=Displays an overlay depicting a moon, configurable by the user.
-tags=overlay, sky, moon, skybox, night, orbit
-plugins=poko.moon.MoonPlugin
