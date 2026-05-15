@@ -1,2 +1,3 @@
 repository=https://github.com/CalciumG/runediary-plugin.git
 commit=3ac67c5072de566a485111bf07ea89f6e112c8b7
+warning=This plugin submits your IP address, RSN, and numerous account data to a 3rd-party server not controlled or verified by Runelite developers.
