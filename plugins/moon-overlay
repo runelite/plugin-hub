@@ -2,4 +2,4 @@ repository=https://github.com/CaptainPoko/moon-overlay.git
 commit=85aac57ac36e014c66969898bda4343c21c17aca
 description=Displays an overlay depicting a moon, configurable by the user.
 tags=overlay, sky, moon, skybox, night, orbit
-plugins=net.runelite.client.plugins.yourpluginpackage.com.poko.MoonPlugin
+plugins=net.runelite.client.plugins.com.poko.MoonPlugin
