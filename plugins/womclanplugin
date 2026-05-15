@@ -1,2 +1,3 @@
 repository=https://github.com/ShakyPizza/womclanplugin.git
 commit=54f29ea1b3be877d7f6a1ff783ba6d40470caba1
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
