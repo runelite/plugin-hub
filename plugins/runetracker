@@ -1,2 +1,3 @@
 repository=https://github.com/jorenf/droptracker.git
 commit=4c7e8f51b2b35eca2fa937502f4c905100e212ca
+warning=This plugin submits your IP address, RSN, and drops to a 3rd-party server not controlled or verified by the Runelite developers.
