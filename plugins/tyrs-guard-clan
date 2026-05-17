@@ -1,2 +1,3 @@
 repository=https://github.com/torlokt/TyrsGuardClan-Plugin.git
-commit=492de35dacc1d6c70a16e15c8263c0b4b6368a0c
+commit=72d9a0e5fd6b64dc376a566d7f6e737af2eec2f3
+warning=This plugin submits your IP address, RSN, game screenshots, and clan chat messages to a 3rd-party server not controlled or verified by RuneLite developers.
