@@ -1,3 +1,3 @@
-repository=https://github.com/plugins/r3moteman-group-ironmen-tracker.git
+repository=https://github.com/r3moteman/group-ironmen-tracker.git
 commit=97ba4a62ab8e3472e5396645917bfe12dc5ee755
 warning=This plugin submits your IP address, RSN, chat messages, and comprehensive information about your account progress to a 3rd-party server not controlled or verified by Runelite developers.
