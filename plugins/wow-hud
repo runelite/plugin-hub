@@ -1,2 +1,4 @@
-repository=https://github.com/agreatdad/Wow-ui.git
-commit=57c93d58a438f89c15adff66b33413cdd6e99e46
+repository=https://github.com/agreatdad/Wow-ui
+commit=803f3ba2b7229f9d791c70cc6742543a084eb11d
+warning=
+build-standard=1.0
