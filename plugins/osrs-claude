@@ -1,0 +1,3 @@
+repository=https://github.com/Zodomo/osrs-claude.git
+commit=ad9581df8936c35bad277823de31bb088328f736
+warning=This plugin submits your IP address, RSN, and an overview of your account progress to a 3rd-party server not controlled or verified by Runelite developers.
