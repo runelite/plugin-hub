@@ -1,0 +1,4 @@
+repository=https://github.com/RuneSocial/runesocial-plugin.git
+commit=eaf830e7e898d355036b12ae99b0e77b2c2b1930
+authors=Lomecan
+warning=This plugin submits your IP address and RSN to a 3rd-party server not controlled or verified by Runelite developers.
