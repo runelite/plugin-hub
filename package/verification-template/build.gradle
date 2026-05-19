@@ -141,6 +141,7 @@ dependencies {
 	}
 	thirdParty("io.github.jaredmdobson:concentus:1.0.2") {
 		because "proximity-chat"
+	}
 }
 
 task verifyCore {
