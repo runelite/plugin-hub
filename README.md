@@ -119,7 +119,7 @@ We require any dependencies that are not a transitive dependency of runelite-cli
 have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
 To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html).
 To add a new dependency, add it to the `thirdParty` configuration in [`package/verification-template/build.gradle`](https://github.com/runelite/plugin-hub/blob/master/package/verification-template/build.gradle),
-then run `../gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
+then run `./gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
 the dependencies manually before your pull request will be merged. This process generally adds significantly to the amount of time it takes for a plugin submission or update to be reviewed, so we recommend avoiding adding any new dependencies unless absolutely necessary.
 
 ## Build type
