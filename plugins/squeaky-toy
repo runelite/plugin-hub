@@ -1,3 +1,2 @@
-repository=https://github.com/H-Mill/Squeaky-Toy.git
-commit=a97235a85c5ef49575a78861e66b021e9bbce9e5
-disabled=Renamed as "Custom Weapon SFX" (https://github.com/H-Mill/Custom-Weapon-SFX.git)
+repository=https://github.com/H-Mill/Custom-Weapon-SFX.git
+commit=e79fa1c854266c20843194c77a7aa8ae84d692ec
