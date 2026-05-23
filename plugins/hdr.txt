@@ -1,2 +1,0 @@
-repository=https://github.com/Endrit-alt/HDR.git
-commit=2bff97668ec26a897196b06b755bbd938080eff0
