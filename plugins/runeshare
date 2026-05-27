@@ -1,0 +1,3 @@
+repository=https://github.com/kcdragon/runeshare-plugin.git
+commit=94bc765e077b786f18730624727908819258f39e
+warning=This plugin submits your bank tag tab data and IP address to a server not controlled or verified by the RuneLite developers.

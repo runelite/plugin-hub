@@ -1,3 +1,4 @@
 repository=https://github.com/Rickboy26/Infernal.git
 commit=ff5e7b971c8591967b4bb05e72bd12a9c007adfa
 warning=This plugin submits your world, region, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
+disabled=unmaintained

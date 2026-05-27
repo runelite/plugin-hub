@@ -1,0 +1,3 @@
+repository=https://github.com/ETurnz/Clogger.git
+commit=319f50187f6209c168ffca8596e38eacf9954793
+warning=This plugin submits your IP address, RSN, and collection log data to a 3rd-party server not controlled or verified by RuneLite developers.

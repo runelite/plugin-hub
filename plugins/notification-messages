@@ -1,2 +1,3 @@
 repository=https://github.com/Broooklyn/runelite-external-plugins.git
 commit=1293d6b725b8a0833a88ab17d8b5d0415795c070
+disabled=unmaintained

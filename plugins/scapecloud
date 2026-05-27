@@ -1,3 +1,4 @@
 repository=https://github.com/scape-cloud/scape-cloud-runelite.git
 commit=beb99f951fee01135dc15f87d2dcbdc93907489e
 warning=This plugin captures and uploads screenshots/images, submits metadata (e.g. combat level, location, total level) about your player, surrounding players, and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
+disabled=unmaintained
