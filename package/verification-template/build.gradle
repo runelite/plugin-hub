@@ -149,9 +149,6 @@ dependencies {
 		because "runespeak"
 		exclude group: 'com.microsoft.onnxruntime'
 	}
-	thirdParty("ch.qos.logback:logback-classic:1.5.16") {
-		because "runespeak"
-	}
 }
 
 task verifyCore {
