@@ -152,9 +152,6 @@ dependencies {
 	thirdParty("ch.qos.logback:logback-classic:1.5.16") {
 		because "runespeak"
 	}
-	thirdParty("com.h2database:h2:2.1.212") {
-		because "runespeak"
-	}
 }
 
 task verifyCore {
