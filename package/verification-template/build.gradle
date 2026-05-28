@@ -149,6 +149,9 @@ dependencies {
 		because "runespeak"
 		exclude group: 'com.microsoft.onnxruntime'
 	}
+	thirdParty("org.projectlombok:lombok:1.18.46") {
+		because "runespeak"
+	}
 }
 
 task verifyCore {
