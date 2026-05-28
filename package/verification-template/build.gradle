@@ -142,6 +142,13 @@ dependencies {
 	thirdParty("io.github.jaredmdobson:concentus:1.0.2") {
 		because "proximity-chat"
 	}
+	thirdParty("com.microsoft.onnxruntime:onnxruntime:1.17.1") {
+		because "runespeak"
+	}
+	thirdParty("ai.djl.huggingface:tokenizers:0.36.0") {
+		because "runespeak"
+		exclude group: 'com.microsoft.onnxruntime'
+	}
 }
 
 task verifyCore {
