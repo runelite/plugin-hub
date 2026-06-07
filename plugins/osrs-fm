@@ -1,0 +1,3 @@
+repository=https://github.com/Astral-Studios/osrs-fm.git
+commit=5b2ad36ce714c0ba88a8eeb1895e3a822d56a6f1
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
