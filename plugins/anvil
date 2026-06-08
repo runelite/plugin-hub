@@ -1,0 +1,3 @@
+repository=https://github.com/AhmedFathy2001/anvil-plugin.git
+commit=35be150f61e4fafab97f81704591e0acb999ad2d
+warning=This plugin submits your IP address and bingo drop screenshots to a 3rd-party server (your configured Anvil site) not controlled or verified by RuneLite developers.
