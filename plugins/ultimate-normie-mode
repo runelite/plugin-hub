@@ -1,3 +1,2 @@
 repository=https://github.com/aaronslindner/28-of-808.git
-commit=49ba651c997763ed1e64b50e6b90d5a1e2276a11
-warning=This plugin submits your IP address, RSN, and in-game wealth to a 3rd-party server not controlled or verified by Runelite developers.
+commit=504eeab797d5668e8e9d14d721fa2804fadc72f3

@@ -1,0 +1,3 @@
+repository=https://github.com/birdandworm/TheBirdhouse.git
+commit=7ac1039f72b0dda9a92501d223d0baac6d12d7a5
+warning=This plugin submits your IP address, RSN, and in-game screenshots to a 3rd-party server not controlled or verified by Runelite developers.
