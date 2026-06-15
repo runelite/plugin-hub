@@ -1,0 +1,3 @@
+repository=https://github.com/BajanSDK/aio-bingo-plugin.git
+commit=d557eb05cca957c84b6dd4f26e7ae6cbc47fab59
+warning=This plugin submits your IP address, RSN, and drops to a 3rd-party server not controlled or verified by Runelite developers.
