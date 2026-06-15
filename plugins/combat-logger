@@ -1,2 +1,3 @@
 repository=https://github.com/SuperNerdEric/combat-logger.git
-commit=ef8dd1b79d68941806ee398ab41174c0d6f4ddf7
+commit=95714a3c383113b66ed5e74083f3fc98a245e7c3
+warning=When live logging is enabled, this plugin sends your IP address, RSN, and detailed combat log data to a third-party server not controlled or verified by RuneLite developers.
