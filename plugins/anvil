@@ -1,3 +1,3 @@
 repository=https://github.com/AhmedFathy2001/anvil-plugin.git
-commit=7fc4440eaf5d5ee3bf88118cc3b826fcadbf213f
+commit=83835785f6f1bac1368bc578d8896909f7b2aa6b
 warning=This plugin submits your IP address, RSN, and gameplay screenshots/clips (bingo drops, deaths, PvP kills, rare drops, combat achievements) to a 3rd-party server (your configured Anvil site) and to Discord webhooks you configure, and can control a local OBS instance to record and upload replay clips. These services are not controlled or verified by RuneLite developers.
