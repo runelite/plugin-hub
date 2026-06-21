@@ -1,3 +1,3 @@
 repository=https://github.com/staticvoid07/slayer-task-logger.git
-commit=93ae3996d0823d136c40531df0bfa1adfcbc05db
+commit=39f4e2cedfd9a2b9520dd33d09005a7c1596e3b7
 warning=This plugin can send slayer event data to an external webhook URL configured by the user. The webhook is disabled by default.
