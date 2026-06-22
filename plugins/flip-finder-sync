@@ -1,3 +1,3 @@
 repository=https://github.com/betmodejoe/osrsflipfinder.com.git
-commit=b275f7eeddff9e8e1f402eec486f08568b8889c0
+commit=66f361e2d9386c73fdb066c0a936a59ee85835de
 warning=This plugin sends your Grand Exchange transactions and IP address to OSRS Flip Finder, a 3rd-party server not controlled or verified by RuneLite developers.
