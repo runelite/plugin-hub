@@ -1,2 +1,3 @@
 repository=https://github.com/HonestlyGroovy/ophidia-venom-sounds.git
 commit=152cd0fef7f5263d56d7cbe359aa53f1745bd1ba
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
