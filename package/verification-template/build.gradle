@@ -132,6 +132,12 @@ dependencies {
 		thirdParty "org.lwjgl:lwjgl::natives-$platform"
 		thirdParty "org.lwjgl:lwjgl-opengl::natives-$platform"
 	}
+	thirdParty("org.lwjgl:lwjgl-vulkan:3.3.6") {
+		because "gpu-vulkan"
+	}
+	thirdParty("org.lwjgl:lwjgl-jawt:3.3.2") {
+		because "gpu-vulkan"
+	}
 	thirdParty("org.java-websocket:Java-WebSocket:1.5.6") {
 		because "wikisync"
 		because "osrs-archipelago"
