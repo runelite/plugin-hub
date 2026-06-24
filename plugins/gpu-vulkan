@@ -1,3 +1,3 @@
 repository=https://github.com/dennisdevulder/gpu-vulkan.git
-commit=d74a47abdeb02f858a4df2202f857dc7aace7d36
+commit=12f8db08c8bac0d0180f96738b1fd9b075215496
 warning=Experimental GPU port to the Vulkan engine. This plugin is not optimised. Use at your own discretion and do not use it on a HCIM.
