@@ -1,2 +1,6 @@
 repository=https://github.com/iiceJ/player-circles.git
+<<<<<<< iiceJ-patch-1
 commit=d26e573163c5640bc14c72760867405925be7a77
+=======
+commit=5f56534a4b9cf428be0972e1f4f7456ef9aebf19
+>>>>>>> master
