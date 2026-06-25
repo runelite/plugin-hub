@@ -1,2 +1,2 @@
-git add plugins/clanwars-countdownrepository=https://github.com/BloodGateRS/Clanwars-Countdown.git
+repository=https://github.com/BloodGateRS/Clanwars-Countdown.git
 commit=74dbdfca61d6401614d5b25059475162aa8ac274
