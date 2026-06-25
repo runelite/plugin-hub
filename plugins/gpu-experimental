@@ -1,2 +1,3 @@
 repository=https://github.com/Adam-/runelite-plugins.git
 commit=7003858cd3ae0d784e048f2c5290f9e68e53b8e8
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
