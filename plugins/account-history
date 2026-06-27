@@ -1,0 +1,3 @@
+repository=https://github.com/josephmr/account-history.git
+commit=8ad8a461ec6e5adc32508300db4a871ab748305d
+warning=This plugin submits your IP Address, RSN, and account progression events (level ups, collection logs, boss kc, diary completions, etc.) to a 3rd-party server not controlled or verified by Runelite developers.
