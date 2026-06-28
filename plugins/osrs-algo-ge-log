@@ -1,3 +1,3 @@
 repository=https://github.com/RichardLechko/osrs-algo-ge-log.git
-commit=00a95d21bbc0dfe1e78864cdd1af080c766c3a67
+commit=4588406160271d8f34fbd00301a33663e9162bcf
 warning=This plugin sends Grand Exchange offer events to a user-configured URL (default http://127.0.0.1:5000, localhost only). No data leaves your machine unless you change the URL.
