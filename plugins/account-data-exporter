@@ -1,3 +1,4 @@
 repository=https://github.com/A-Kimpton/account-data-exporter.git
-commit=1f10312ba54a9df8dc1ac101eef87279aeeb582e
+commit=38cbadb0275715fdeddf889227667447815b8b8b
+version=0.5.0
 authors=A-Kimpton
