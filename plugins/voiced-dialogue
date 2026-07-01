@@ -1,4 +1,4 @@
 repository=https://github.com/grabartley/runelite-voiced-dialogue.git
-commit=40ae7cd7d55f29e27e576777dca1cac49c3376da
+commit=1d716b68906583a851ae6a3b7e030b92f84defba
 authors=grabartley
-warning=With the Cloud (OpenRouter) voice backend selected, the dialogue text being spoken is sent to OpenRouter over HTTPS using your API key. The local backend stays fully offline and sends nothing off your machine.
+warning=This plugin sends the NPC and player dialogue text it voices to OpenRouter (a third-party service not controlled or verified by the RuneLite developers) over HTTPS, using your API key, to synthesize speech.
