@@ -1,3 +1,3 @@
 repository=https://github.com/JaredEzz/farming-profit-plugin.git
-commit=d267231a73deefdab234d645dc350c739b0adc34
+commit=460e44b2e6bd64038c8866a8cc338f006237b94a
 warning=This plugin can optionally (off by default) send a short status message over HTTPS to a user-configured ntfy notification URL, which may be a third-party server.
