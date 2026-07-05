@@ -1,0 +1,3 @@
+repository=https://github.com/OSRSClanFinder/clanfinder-runelite-plugin.git
+commit=4f271726da5c45ade43d311ae70cca5ad07e960a
+warning=This plugin makes JSON listing requests, banner image requests, and event data requests to osrsclanfinder.com. Listed member totals are site listing data from Wise Old Man group stats or manual counts, not live online status. These external requests expose your IP address to that service, which is not controlled or verified by the RuneLite Developers.
