@@ -1,4 +1,4 @@
 repository=https://github.com/Dmurph24/mystix-plugin.git
-commit=b72cccfd3178d0abc0f2c1f8d35b91f8f17c80ec
+commit=e196a17df25c9613fd31ddc9fea9b3e79ca31cfa
 authors=Dmurph24
-warning=This plugin submits your RSN, skills, bank, equipment, loadouts, farming timers, and loot data to a 3rd-party server (Mystix) not controlled or verified by Runelite developers.
+warning=This plugin submits your RSN and RuneLite-generated data to Mystix (mystix.app). You can turn off syncing for specific data types in the plugin settings.
