@@ -1,4 +1,3 @@
-repository=https://github.com/osparty/osparty.git
-commit=b772a83ae70f643130574a2a9546dfb18fcc645f
-authors=iodrareg
+repository=https://github.com/Marsbars/gilded-spade-sync.git
+commit=3e8625dc42c748066adebc3f75d8d0c064199afc
 warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
