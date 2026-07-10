@@ -1,3 +1,3 @@
 repository=https://github.com/laurensbs/scapestack-runelite-plugin.git
-commit=c7ff42816ad4ebedf04c0df6a24d110c07fc60b0
+commit=8d839d4e1cdfd9bad89f05e3286977086ba761a9
 warning=This plugin submits your IP address and comprehensive account data to a 3rd-party server not controlled or verified by Runelite developers.
