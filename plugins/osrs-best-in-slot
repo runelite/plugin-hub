@@ -1,4 +1,4 @@
 repository=https://github.com/osrsbis/account-connect.git
-commit=246e2b7f86b80aebf461aae9b6377040f0d2d473
+commit=9a4735ea7e97c75895373c1f99cd5b8d3301ed4c
 authors=osrsbis
-warning=This plugin submits your IP address and uploads your account data (skills, quests, achievement diaries, equipment, inventory and bank contents) to osrsbestinslot.com to auto-fill its calculators, keyed by a link token you paste. Only enable it if you are comfortable with that data being uploaded.
+warning=This plugin submits your IP address and uploads your account data (skills, quests, achievement diaries, equipment, inventory and bank contents) to osrsbestinslot.com to auto-fill its calculators, keyed by a link token you paste. If you opt in to trade screenshots (off by default), it also uploads screenshots of your trade confirmation and completion windows to osrsbestinslot.com. Only enable it if you are comfortable with that data being uploaded.
