@@ -1,3 +1,4 @@
 repository=https://github.com/Adam-/runelite-plugins.git
 commit=a83bf325068ffdc25b3726d982f5fd5f358c5d7a
 warning=This plugin will crash the client at high zoom levels on large displays.
+disabled=true
