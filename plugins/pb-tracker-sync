@@ -1,0 +1,3 @@
+repository=https://github.com/0xJeu/pb-tracker-sync.git
+commit=012c1400d5fb47016505ae0ce8528de93f1d742b
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
