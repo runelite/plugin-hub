@@ -1,2 +1,3 @@
 repository=https://github.com/georgeparamore/Runelite-Twitch-Chat-Side-Panel.git
 commit=72e9a6efb39ed61ff9d2ad15c469d5051bd36f19
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
