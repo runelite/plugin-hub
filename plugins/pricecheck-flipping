@@ -1,3 +1,3 @@
 repository=https://github.com/pricecheckgg/pricecheck-runelite-plugin.git
-commit=de2d723a2e4442c27d950e1998b3455589f30aff
+commit=10e9900a12109fe8abfdef3302d052bc88f45d53
 warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
