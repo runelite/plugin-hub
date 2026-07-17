@@ -1,0 +1,3 @@
+repository=https://github.com/Sqwiglyy/groupman-tcg.git
+commit=126f6990181c0afcdf4afe6fc8a4a099ebb0a7bf
+warning=Enabling group sync submits your IP address, RuneScape display name, OSRS TCG collection, pack events, and Top Trumps activity to a user-configured server not controlled or verified by the RuneLite developers. Enabling card artwork also exposes your IP address and requested image URLs to the OSRS Wiki.
