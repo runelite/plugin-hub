@@ -1,0 +1,4 @@
+repository=https://github.com/Orinite/ruthless-plugin.git
+commit=403b5de7c1d011b81c43d312445ab422cd69ea7a
+warning=This plugin submits your username and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
+authors=Orinite
