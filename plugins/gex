@@ -1,0 +1,3 @@
+repository=https://github.com/Hydepwns/gex-runelite.git
+commit=cc2330139444cad5d0f5591431701c6eea8703aa
+warning=This plugin submits your IP address and GE transactions to a 3rd-party server not controlled or verified by RuneLite developers.
