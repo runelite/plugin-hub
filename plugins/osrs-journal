@@ -1,2 +1,2 @@
-repository=https://github.com/KyleLandon/osrs-journal-plugin.git
-commit=5e31bfb14ebf6cd2984b5dc24438771959188f58
+﻿repository=https://github.com/KyleLandon/osrs-journal-plugin.git
+commit --trailer "Co-authored-by: Cursor <cursoragent@cursor.com>"=fabef1eee05d609b8f9bb769fd766841692047d1
