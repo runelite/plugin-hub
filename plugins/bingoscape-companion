@@ -1,4 +1,4 @@
 repository=https://github.com/bingoscape/bingoscape-companion.git
-commit=d9f805a6e5319a950bb57517922f4e8153d2be42
+commit=5bafc4ac07dc6dfe19c27f4fd2b1bcbb2637d1bc
 authors=kaffeed
 warning=This plugin sends player data, including usernames, screenshots, and IP address to a third-party server not controlled or verified by the RuneLite Developers, for tile verification.
