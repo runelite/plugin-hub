@@ -1,0 +1,4 @@
+repository=https://github.com/jonathanavis96/ospulse.git
+commit=4bc48faba420e4ad903c1c95f809d6a286c6c23b
+authors=jonathanavis96
+warning=The optional, off-by-default price-trend feature requests item price history from the OSRS Wiki price API (prices.runescape.wiki), sending only an item id. No account name or player data is sent.

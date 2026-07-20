@@ -1,2 +1,3 @@
 repository=https://github.com/arbeerby-pixel/prayer-time-infobox.git
-commit=7e45f4e3a35fd8089692905092b02f48e8f8229b
+commit=9d850e13a757655a6c270f35cac951e438e34962
+disabled=freezes client on login
