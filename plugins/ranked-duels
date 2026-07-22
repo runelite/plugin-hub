@@ -1,4 +1,3 @@
-repository=https://github.com/osparty/osparty.git
-commit=a5475346fcc891118bdd705fdb9cb55813c05d6c
-authors=iodrareg
+repository=https://github.com/martynasbutkus/ranked-duels.git
+commit=9be47ac47de8b6b5814aed0df8714dd3de9c4222
 warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
