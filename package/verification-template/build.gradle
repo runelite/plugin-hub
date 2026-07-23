@@ -70,11 +70,6 @@ dependencies {
 		because "gimptracker"
 	}
 
-	thirdParty("io.socket:socket.io-client:2.1.2") {
-		because "clan-bingo"
-		exclude group: 'com.squareup.okhttp3'
-	}
-
 	thirdParty("com.google.apis:google-api-services-sheets:v4-rev20240514-2.0.0") {
 		because "dude-wheres-my-stuff"
 		exclude group: 'com.google.guava'
