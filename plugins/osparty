@@ -1,4 +1,4 @@
 repository=https://github.com/osparty/osparty.git
-commit=0b7532122ecd9a7496ca0b27d5c9e5acebac3a53
+commit=417c78ce7b548203f2c314d5dcb08cb2512d594b
 authors=iodrareg
 warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
