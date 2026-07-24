@@ -33,7 +33,7 @@ jobs:
         java-version: 11
     - name: fetch packager
       env:
-        PACKAGER_URL: "https://github.com/runelite/plugin-hub-tooling/releases/download/v1/bundle.tar.zst"
+        PACKAGER_URL: "https://github.com/runelite/plugin-hub-tooling/releases/download/v2/bundle.tar.zst"
       run: |
         set -exu
         curl --location --fail --retry 4 --max-time 30 --output bundle.tar.zst "$PACKAGER_URL"
@@ -104,7 +104,7 @@ jobs:
         persist-credentials: false
     - name: fetch packager
       env:
-        PACKAGER_URL: "https://github.com/runelite/plugin-hub-tooling/releases/download/v1/bundle.tar.zst"
+        PACKAGER_URL: "https://github.com/runelite/plugin-hub-tooling/releases/download/v2/bundle.tar.zst"
       run: |
         set -exu
         curl --location --fail --retry 4 --max-time 30 --output bundle.tar.zst "$PACKAGER_URL"
