@@ -1,2 +1,3 @@
 repository=https://github.com/Kalsupes/RaidParty.git
 commit=ad059bc79c694b53770c8dfb572a0d7c36ba4ed8
+disabled=breaks the other party plugins
