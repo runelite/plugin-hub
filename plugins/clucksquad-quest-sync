@@ -1,5 +1,3 @@
 repository=https://github.com/daklatencoaten-lab/clucksquad.git
 commit=cbaef3a7857735249fd1cab6c52de18aab7e42b8
-authors=CluckSquad
-tags=clan,quest,sync
 warning=This plugin uploads your quest completion and skill levels to the CluckSquad website (clucksquad.com) so they show on the clan's Quest Calculator and highscores. Only enable it if you're OK with that.
