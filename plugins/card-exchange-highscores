@@ -1,3 +1,4 @@
 repository=https://github.com/CompilerOfDust/osrs-tcg-highscores-thecardexchange.git
-commit=abd6475b78a50d2ebe534b07e9da949be3fcbfa2
+commit=dbb4848560d58a71cced6ed43a7ca19082a2993d
 authors=CompilerOfDust
+warning=This plugin sends your RuneScape display name and OSRS TCG collection data to osrscardexchange.com, a third-party server not controlled or verified by the RuneLite developers, for public collection and highscores features.
