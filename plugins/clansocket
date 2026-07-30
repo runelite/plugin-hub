@@ -1,0 +1,4 @@
+repository=https://github.com/osrs-clansocket/clansocket-plugin.git
+commit=fefd534d9766f459e3329be1abd9dfc4938b77c3
+authors=Varietyz
+warning=This plugin submits your IP address, RSN, in-game location, and extensive account data to a 3rd-party server not controlled or verified by Runelite developers.
