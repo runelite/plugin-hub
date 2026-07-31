@@ -1,3 +1,3 @@
 repository=https://github.com/kbosch2000/ge-trends-portfolio.git
-commit=3511672a3b5389dd0808f74745d92a343ff2d753
+commit=e4420631282d0f7af89365b28e572662de3817c3
 warning=This plugin can submit your IP address, Grand Exchange offer data, and an optional aggregate GP value from inventory-plus-bank coins and platinum tokens to GE Trends, a 3rd-party server not controlled or verified by RuneLite developers.
