@@ -1,3 +1,4 @@
 repository=https://github.com/CompilerOfDust/osrs-tcg-highscores-thecardexchange.git
-commit=71371f8fe8951b4dcb3066200a22c6003e933ae3
+commit=abd6475b78a50d2ebe534b07e9da949be3fcbfa2
 authors=CompilerOfDust
+disabled=true
