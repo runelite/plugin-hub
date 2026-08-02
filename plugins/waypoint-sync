@@ -1,0 +1,3 @@
+repository=https://github.com/Xiodrade/waypoint-sync.git
+commit=1201759a31c98ef70d720253444d6801b3f4e6f3
+warning=This plugin submits your IP address, display name, quests, diaries, and combat achievements to a third party server not controlled or verified by Runelite developers.
