@@ -1,0 +1,3 @@
+repository=https://github.com/kbosch2000/ge-trends-portfolio.git
+commit=eefabff76c383c2e44d9f08df2b54f61a2723f59
+warning=This plugin submits your IP address and your Grand Exchange offer data to GE Trends, a 3rd-party server not controlled or verified by RuneLite developers.
