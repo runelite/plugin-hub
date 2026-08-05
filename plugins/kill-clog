@@ -1,3 +1,3 @@
 repository=https://github.com/420kc/kill-clog-plugin.git
-commit=f5663a3b419074fb0e8ec18e57bd2829c6a26537
-warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
+commit=54f63596fc56cfebe3b1bf8bffe8c2766e71606f
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers. If you enable "Sync Collection Log to Killclog.com" (off by default), your collection log and personal bests are published to your killclog.com profile.
