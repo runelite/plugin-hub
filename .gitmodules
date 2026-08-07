@@ -1,0 +1,3 @@
+[submodule "shrimp-lock"]
+	path = shrimp-lock
+	url = https://github.com/ErnestDongleheim/shrimp-lock
