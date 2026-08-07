@@ -1,0 +1,4 @@
+repository=https://github.com/whippahh/ProgressScape-plugin.git
+commit=ada1ce773676aff061617d2ec5b2e5fdba36d5f6
+warning=This plugin submits your IP address, RSN, and numerous account data to a 3rd-party server not controlled or verified by Runelite developers.
+ 
