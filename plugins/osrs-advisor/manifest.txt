@@ -1,0 +1,2 @@
+repository=https://github.com/benjihorne/osrs-advisor.git
+commit=6e75f0bb7258bb0d986d05227f3a5089a5bf7a58
