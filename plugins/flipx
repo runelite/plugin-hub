@@ -1,0 +1,3 @@
+repository=https://github.com/JoshiOS-VRY/osrs-flip-plugin.git
+commit=ddcf1b04911871e638b405f7bfd2293194da7319
+warning=This plugin submits your IP address and Grand Exchange activity to FlipX (https://www.flipx.gg) when you opt in to upload or market features. See https://www.flipx.gg/privacy.
