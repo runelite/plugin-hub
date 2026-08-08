@@ -1,0 +1,3 @@
+repository=https://github.com/Matelaa/aura-tracker.git
+commit=be79055ef6f1d02711235895038679fa8ffe509c
+warning=This plugin submits your RSN and Aura total to a server not controlled or verified by the RuneLite developers. If you click "Update 3D Model", your character's 3D model is also submitted.
