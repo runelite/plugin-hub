@@ -1,3 +1,3 @@
 repository=https://github.com/Tannhausr-Gate/runebot_plugin.git
-commit=5865db60ab61f016025cfe1c127a95c6949e8180
+commit=b36e5f43cdace70cce29b4ff754e9d1fb687cc65
 warning=Sends your clan chat messages, coffer transactions, and rank icons to RuneBot's server.
