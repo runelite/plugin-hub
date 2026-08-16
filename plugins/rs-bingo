@@ -1,4 +1,4 @@
-repository=https://github.com/Newrockku/bingo-plugin.git
-commit=14a2c84847c4ef4f162a67d7646271af33ec2ada
+repository=https://github.com/Newrockku/RS-Bingo.git
+commit=43a8d4e7bb713477c1cbeed3155e6b3f59ed7abe
 authors=Newrockku
 warning=This plugin sends your IP address and event code to rs-bingo.com, a third-party server not controlled or verified by the RuneLite developers, to load the event board. If you choose to submit a drop it also sends a screenshot of your client and your RSN for verification, and if you link your account it sends a token identifying you. Screenshots are only captured when you press the submit button.
