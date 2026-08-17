@@ -1,4 +1,4 @@
 repository=https://github.com/Fitzgerald-gg/fitzgerald-runelite.git
-commit=74d0716c3d9bf199be8be83889d5cc4438404ec9
+commit=c7a0b86021c4cf95f57c39d52c5b7066dc52c79c
 authors=Fitzgerald-gg
-warning=This plugin submits your gameplay data — loot, levels, deaths, quests, slayer kills, collection log, combat achievements, lifetime counters, screenshots — and your IP address to fitzgerald.gg, a server not controlled or verified by the RuneLite developers.
+warning=This plugin submits your gameplay data — loot, levels, deaths, quests, slayer kills, collection log, combat achievements, group-storage movements, lifetime counters, screenshots — and your IP address to fitzgerald.gg, a server not controlled or verified by the RuneLite developers.
