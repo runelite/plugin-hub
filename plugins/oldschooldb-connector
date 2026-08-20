@@ -1,4 +1,4 @@
 repository=https://github.com/ortegarod/oldschooldb-runelite-plugin.git
-commit=a7f579e1d959a4f33b1c34e3e40ded2269f11380
+commit=dc3c9fa10f9db3b56e58c9cda340ef2c4f069e74
 authors=ortegarod
 warning=This plugin submits your account data to api.oldschooldb.com, a server not controlled or verified by the RuneLite developers.
