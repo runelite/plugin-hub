@@ -1,2 +1,3 @@
 repository=https://github.com/Kbeeptest/card-locked.git
 commit=448364964ac7b3dfb13670eb944af79c163bdce3
+warning=This plugin downloads its artwork bundle from GitHub. Your IP address and standard HTTP request metadata are sent to GitHub, which is not controlled or verified by the RuneLite developers. No RuneScape account or gameplay data is sent.
