@@ -1,0 +1,3 @@
+repository=https://github.com/itohti/CARoadmap.git
+commit=0aca992d760b9b5391eb3e56c0d12ceffffd4fa0
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
