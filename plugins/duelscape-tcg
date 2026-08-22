@@ -1,0 +1,3 @@
+repository=https://github.com/randytkrx/osrs-tcg-battles.git
+commit=67e14db14d8d92222fa0a7d28fd00093affa8b3e
+warning=This plugin downloads card artwork from oldschool.runescape.wiki and osrs-tcg.net, which exposes your IP address and requested image URLs to third-party servers not controlled or verified by the RuneLite developers.
