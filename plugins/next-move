@@ -1,3 +1,3 @@
 repository=https://github.com/willcampbell433/next-move-runelite.git
 commit=af0d3b8a8602e097dc4d05fd8659d2d2c676d020
-warning=This plugin submits your IP address, RSN, quest progress, and locally completed recommendation IDs to a 3rd-party server not controlled or verified by RuneLite developers.
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
