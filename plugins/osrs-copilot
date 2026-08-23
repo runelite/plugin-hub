@@ -1,2 +1,3 @@
 repository=https://github.com/zerofata/osrs-copilot.git
-commit=defe9383d727e0739519a47fe4ada0e8f276d895
+commit=17b4debf4e13cdb828c5dce511199927829d59bc
+warning=This plugin submits your IP address and game state (skills, quests, inventory, equipment, bank) to a 3rd-party server not controlled or verified by the RuneLite Developers: the LLM endpoint you configure.
