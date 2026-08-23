@@ -1,2 +1,3 @@
 repository=https://github.com/Zezi-cmd/clan-turf.git
 commit=791d903fe1378f07ab0ae4eb6b5c49f8ea1da6da
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
