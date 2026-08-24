@@ -1,2 +1,3 @@
 repository=https://github.com/Ugikie/friendscape.git
 commit=d9bbdac3047bfcf314fb5257d1b7163ba934a62d
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
