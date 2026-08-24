@@ -1,2 +1,3 @@
 repository=https://github.com/tennisboyrens19-bot/nightlegion-live-xp.git
 commit=a88904e6025a2805863a328e899f58e71bbbb698
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
