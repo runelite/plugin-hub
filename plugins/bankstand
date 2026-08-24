@@ -1,0 +1,3 @@
+repository=https://github.com/CVE-078/bankstand-runelite.git
+commit=8a89076c08bd74a5510d33d1ee17a696e9cfe520
+warning=This plugin sends your account hash, display name and skill XP to Bankstand while you're paired. Turn on more of its toggles and it also sends quest progress, achievement diary tiers, collection log slots and new unlocks, combat achievement tier counts and completed tasks, your account type, notable drops and pet drops. Everything's private to your account by default; you can share it with your Bankstand groups or publicly from your privacy settings there. Data goes to whatever Server URL you set, the official Bankstand server by default over https. Change that URL and your data goes there instead.
