@@ -1,0 +1,3 @@
+repository=https://github.com/JeroenBreevoort/runeglass-runelite-plugin.git
+commit=45496e5f1bbe9d24832d5e15baed4f478e73fc6b
+warning=This plugin submits your IP address, RuneScape character name, account/profile type, skill levels, experience values, and plugin, RuneLite, and game revision metadata to RuneGlass, a third-party server not controlled or verified by RuneLite developers.
