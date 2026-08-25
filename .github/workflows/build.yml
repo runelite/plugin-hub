@@ -95,7 +95,9 @@ jobs:
   upload:
     if: (github.event_name != 'push' || github.repository_owner == 'runelite') && github.event_name != 'pull_request'
     needs: build
-    concurrency: upload
+    concurrency:
+      group: upload
+      queue: max
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v6
