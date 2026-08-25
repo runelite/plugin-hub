@@ -1,0 +1,3 @@
+repository=https://github.com/Sqwiglyy/groupman-tcg.git
+commit=4d32609df93cbd6e1959389434d6cb08fdfcda89
+warning=IMPORTANT MULTIPLAYER PRIVACY WARNING: Group TCG deliberately has no official public server; multiplayer uses only a private server chosen by your group. Only connect to servers run by friends you trust. The host controls the endpoint and may see or record your IP address and synced Group TCG data. Private servers are independently operated; the Group TCG creator does not operate, verify, endorse, or accept responsibility for servers hosted by others. Use a VPN if you need to hide your IP address. Solo play does not connect to a group server. Optional card artwork also sends your IP address and requested image URLs to the OSRS Wiki.
