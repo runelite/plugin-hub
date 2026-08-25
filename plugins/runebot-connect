@@ -1,3 +1,3 @@
-repository=https://github.com/Tannhausr-Gate/runebot_plugin.git
-commit=6b7383c9a8f95d8e19ba4bd96d7cfa011cf9057f
+repository=https://github.com/Tannhausr-Gate/runeconnect_plugin.git
+commit=3ba9c95f773afbdfa8bafad0feecb94dde69334e
 warning=warning=Sends clan chat messages, clan chat notifications, rank icons, and a screenshot of your game view (taken when a coffer transaction occurs) to the companion discord bot's server.
