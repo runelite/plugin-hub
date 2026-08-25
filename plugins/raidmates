@@ -1,3 +1,3 @@
 repository=https://github.com/JustMippie/raidmates.git
 commit=b53eedb656310791e481310ed3413eadf7a3960b
-warning=This plugin connects to an external third-party server and sends a random installation ID, the locally observed character name, submitted group data, lobby chat, reports, and technical connection data.
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
