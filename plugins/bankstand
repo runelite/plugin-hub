@@ -1,3 +1,3 @@
 repository=https://github.com/CVE-078/bankstand-runelite.git
 commit=9e24961e7046635f2d9902e443f7c982af478d9f
-warning=Sends your account hash, name and skill XP to Bankstand while paired.<br>Optional toggles add quest, diary and combat achievement progress,<br>collection log data, account type, and drops.<br>Private by default; sharing is opt-in in your Bankstand settings.<br>Goes to your configured Server URL (Bankstand's by default).
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
