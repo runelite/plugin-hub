@@ -1,3 +1,3 @@
 repository=https://github.com/ca-gray/Flipping-Masterminds.git
-commit=e1f1ac39cf65d4f74a7dce58f9d7956072591c90
+commit=44735d39c92b8949d8b6c4ea4b61b8f745e71f24
 warning=This plugin when used with a valid API Token, submits your grand exchange offers, grand exchange transactions, IP address, RSN and account hash to a 3rd party server not controlled or verified by the RuneLite Developers.
