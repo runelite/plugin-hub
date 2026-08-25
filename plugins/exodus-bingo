@@ -1,4 +1,4 @@
 repository=https://github.com/drewapalooza/exodus-bingo.git
-commit=f97ca356cf59115b9f8b2878a9b9d2464ec7d104
+commit=f9d428d4608b68700240f8f38d99e9da40e643dd
 authors=drewapalooza
 warning=This plugin submits your IP address, RSN, loot and pet event data, and matching game-view screenshots to a 3rd-party server not controlled or verified by RuneLite developers.
