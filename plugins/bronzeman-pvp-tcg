@@ -1,2 +1,3 @@
 repository=https://github.com/0xG3r4rD/bronzeman-pvp-tcg.git
-commit=6e835041984c6ffd318cf34adee2fc07109e4cf4
+commit=146965399d11038b8bfef80f73db39e75753c25f
+warning=Card artwork is downloaded from the OSRS Wiki, which receives your IP address and the requested image URLs. If you configure a Discord webhook for pull alerts, card pull data is sent to Discord. No collection or account data is sent anywhere else.
