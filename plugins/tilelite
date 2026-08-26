@@ -1,0 +1,3 @@
+repository=https://github.com/jackperry2015/tilelite-runelite-plugin.git
+commit=e33098febce2eb36d8a6220c7c3d0ab0e4d4cf27
+warning=This plugin submits your IP address, RSN, and various account data to a 3rd-party server not controlled or verified by Runelite developers.
