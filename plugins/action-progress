@@ -1,2 +1,2 @@
 repository=https://github.com/guillaume009/runelite-plugin-action-progress.git
-commit=28bcd965a3746a93164500e29e002e478eb6a38d
+commit=Fix single-log Forester's Campfire tending detection
