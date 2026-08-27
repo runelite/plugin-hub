@@ -1,0 +1,3 @@
+repository=https://github.com/Ramon0205/rs-flipper.git
+commit=e75d99d8ae9ce39d93768d5033c947587304becf
+warning=This plugin submits your IP address, Grand Exchange offers and trade history to a 3rd-party server (api.rs-flipper.com) not controlled or verified by RuneLite developers. An account is required.
