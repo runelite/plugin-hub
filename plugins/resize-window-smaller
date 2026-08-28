@@ -1,0 +1,4 @@
+repository=https://github.com/Jordan-Hn/RuneLite-Resize-Window-Smaller-Plugin.git
+commit=47da2a7cddf2ad8fa28b21f5a86a4f591291b065
+authors=Jordan-Hn
+warning=This plugin lets the client window be made smaller than RuneLite normally allows. Small enough sizes can make the game render incorrectly or become unstable.
