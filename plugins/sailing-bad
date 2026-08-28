@@ -1,3 +1,3 @@
 repository=https://github.com/YonwiPlugins/sailing-bad.git
-commit=cf507f3ce38b15e04211631c20965cd01f4cff4b
+commit=ff75275667230677a3a2be44ba18ef4129bdcaf9
 warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
