@@ -1,0 +1,3 @@
+repository=https://github.com/MayzrDev/groupscape-plugin.git
+commit=400a72fe2126ca5e3a17816f1091ba3d4ed59681
+warning=This plugin submits your IP address, and may submit various account information, to a 3rd-party server not controlled or verified by Runelite developers.
