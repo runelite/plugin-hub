@@ -1,0 +1,2 @@
+repository=https://github.com/Guge94/magic-imbue-necklace-reminder.git
+commit=c27fe11c0bf6a128f99324493e8c29187bdee525
