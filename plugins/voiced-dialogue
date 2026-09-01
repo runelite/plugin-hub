@@ -1,0 +1,4 @@
+repository=https://github.com/grabartley/runelite-voiced-dialogue.git
+commit=daabe5325140220e690fc6ead32eb492442b1036
+authors=grabartley
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.

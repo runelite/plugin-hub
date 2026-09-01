@@ -1,0 +1,3 @@
+repository=https://github.com/WoodyCode23/clan-management-plugin.git
+commit=73467a0569ebf5ad3ed07407436aee370f630175
+warning=This plugin submits your IP address, RSN, and various other account data to a 3rd-party server not controlled or verified by Runelite developers.

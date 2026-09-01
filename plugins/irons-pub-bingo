@@ -1,0 +1,4 @@
+repository=https://github.com/KaosRichie/irons-pub-bingo.git
+commit=b437a118ec815abbfb85f0bb433f21fe8e29819f
+authors=KaosRichie
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by RuneLite developers.
