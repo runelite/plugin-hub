@@ -1,0 +1,3 @@
+repository=https://github.com/jakebutler83/hcim-progression-companion.git
+commit=53631272b016ee59b84d5ecd3e6f4ac84dea329b
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
