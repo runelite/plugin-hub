@@ -1,2 +1,3 @@
 repository=https://github.com/Yomi-no-Kami/DryStreakTracker-Plugin.git
 commit=8873772e0de24311c566b59f59177d87af34d07a
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
