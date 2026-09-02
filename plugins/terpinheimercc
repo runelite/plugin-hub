@@ -1,0 +1,4 @@
+repository=https://github.com/FadedOSRS/terpinheimerccplugin.git
+commit=c9406e83a7385f1de8a4fba1a28269de6298533c
+authors=FadedOSRS
+warning=Terpinheimer can send your IP address and game client data to services you enable: Wise Old Man, TerpinheimerCC (calendar, live map, collection log, roster, attendance), party loot via RuneLite party, Discord webhooks, and GETs to terpinheimercc.com for clan settings (cached; no player data).<br>Some of that may be visible to others depending on those services. Not recommended for PvP-locked HCIM where sharing location or progress could hurt you.

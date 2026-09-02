@@ -1,0 +1,3 @@
+repository=https://github.com/PlayerCoder1/translation-plugin.git
+commit=7084191592c89454cde1b558c604c7c5283ab92f
+warning=This plugin submits all observed chat messages and your IP address to a server not controlled or verified by the RuneLite developers.

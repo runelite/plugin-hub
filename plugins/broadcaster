@@ -1,3 +1,4 @@
 repository=https://github.com/Zoinkwiz/broadcaster.git
 commit=488ac516b25789b560a247c6f670a4806e99eac9
 warning=This plugin submits your IP Address, in-game name, recieved pets and recent 99s to a server not controlled or verified by the RuneLite developers.
+disabled=broken

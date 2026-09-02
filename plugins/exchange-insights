@@ -1,0 +1,3 @@
+repository=https://github.com/TheSpryt/Exchange-Insights-Plugin.git
+commit=a7d61046f88895390c3cf849ed5981f6c1ccffc5
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.

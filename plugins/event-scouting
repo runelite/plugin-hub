@@ -1,0 +1,3 @@
+repository=https://github.com/peanubnutter/scoutingplugin.git
+commit=0f55788f486df4f8824f696aba938259a32130e3
+warning=This plugin submits the location and time of found events along with your IP address and username to a 3rd party server not controlled or verified by the RuneLite Developers.
