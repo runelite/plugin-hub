@@ -1,2 +1,3 @@
 repository=https://github.com/richardverheyen/raids-last.git
-commit=18f2ea6fbe6818ddce945bbdd42f3f95a24eab78
+commit=2f4ea810aff1212081c7351104ad1c94d0d085c8
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by RuneLite developers.
