@@ -1,0 +1,3 @@
+repository=https://github.com/kulcris/ParentsGuildPlugin.git
+commit=180311275bcc1655939669479157224cf6da2cae
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
