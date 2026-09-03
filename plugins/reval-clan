@@ -1,4 +1,4 @@
 repository=https://github.com/revalOSRS/reval-cc-plugin.git
-commit=050aca058f75a625b1e5faaac06120dcb51e100f
+commit=3700ec74617e39826202f57c15e00e84544b71cc
 authors=stenjansarv
 warning=This plugin submits your IP address and comprehensive records of your account activity and progress to a 3rd-party server not controlled or verified by the Runelite developers.
