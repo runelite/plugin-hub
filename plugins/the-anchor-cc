@@ -1,0 +1,3 @@
+repository=https://github.com/LogicalSoIutions/The-Anchor-CC-Plugin.git
+commit=5822028d4165bef9d2afbb50a27804b5527f1460
+warning=This feature will submit your RSN, Collection Logs, Combat Achievements, and IP address to a 3rd-party server not controlled or verified by Runelite developers.
