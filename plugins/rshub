@@ -1,4 +1,4 @@
 repository=https://github.com/Roflz/rshub-plugin.git
-commit=0a9014ee18b75d25e9412c7da733b9cbffe691d7
+commit=6b5846921c7fb74704f8729ce25a9594d22fbd50
 authors=Roflz
 warning=This plugin uploads account state (slayer, loot, bank, timers, quests, diaries, combat achievements, collection log, and online status) to the RSHub companion app API using an App Key you paste from the app. Do not use it if you do not want that data leaving your machine.
