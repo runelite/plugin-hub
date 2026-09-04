@@ -1,0 +1,4 @@
+repository=https://github.com/RuneAssist/runeassist.git
+commit=d7db6e7e829263eae48c612b524e2f8d83c89891
+warning=This plugin submits your coin stack size, grand exchange offers, grand exchange transactions, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
+authors=RuneAssist
