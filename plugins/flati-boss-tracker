@@ -1,0 +1,3 @@
+repository=https://github.com/Flati/Flati-Boss-Tracker.git
+commit=5e230ba56d71053ca706feeff5cd328ff3209e37
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
