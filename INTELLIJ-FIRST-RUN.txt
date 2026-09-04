@@ -1,0 +1,14 @@
+ONE BOSS AT A TIME v1.1.1 — FIRST RUN
+
+1. Open this FOLDER in IntelliJ (do not open build.gradle by itself).
+2. Gradle distribution: Wrapper
+3. Gradle JVM: Java 11 (Temurin 11 recommended)
+4. Run the Gradle 'help' task once. It should say Gradle 8.14.3 / BUILD SUCCESSFUL.
+5. Then either run the Gradle 'run' task in IntelliJ, or open PowerShell here and run:
+
+   .\gradlew.bat run
+
+WILDERNESS OPTION:
+RuneLite Settings -> One Boss At A Time -> Exclude Wilderness bosses
+- ON (default): 47 bosses, no Wilderness chapter
+- OFF: 58 bosses, includes the 11 Wilderness checkpoints after Dagannoth Kings
