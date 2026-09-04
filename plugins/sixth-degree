@@ -1,0 +1,4 @@
+repository=https://github.com/ZoltanPepper/sixth-degree-runelite-plugin.git
+commit=0bb201f4c8aaa6784c456946bef1bf2a6a2ae1d6
+authors=ZoltanPepper
+warning=This plugin submits your IP address, RuneScape display name, linked Discord user ID, clan-related gameplay data, loot/XP/event/LFG data, and screenshots when enabled by Sixth Degree clan settings to a third-party Sixth Degree server not controlled or verified by RuneLite developers.
