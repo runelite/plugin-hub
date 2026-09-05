@@ -1,0 +1,3 @@
+repository=https://github.com/JDrinkH2O/lennys-custom-clues.git
+commit=9d1a72a8605633f89539c7d062fecfd806c22e51
+warning=This plugin submits your IP address, RSN, inventory, equipment, and in-game location to a 3rd-party server not controlled or verified by the RuneLite developers.
