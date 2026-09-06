@@ -1,0 +1,4 @@
+repository=https://github.com/Ig0rFB/pathscape-sync.git
+commit=64d2fbde003a46a3a3097dac23a1f239df13d67e
+authors=Ig0rFB
+warning=This plugin submits your IP address and uploads your account data (skills, quests, achievement diaries, combat achievements, boss KC, and worn gear) to pathscape.vercel.app, keyed by a link token you paste. Only enable it if you are comfortable with that data being uploaded.
