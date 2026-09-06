@@ -1,0 +1,3 @@
+repository=https://github.com/codycrossley/rune-party.git
+commit=1128f4d2323a7677b71dc1feef1388e5b4adfc46
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
