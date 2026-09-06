@@ -1,0 +1,3 @@
+repository=https://github.com/jmwri/flipping-rs-runelite.git
+commit=d3473400e293e308385461eb289b7a87f40387ac
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
