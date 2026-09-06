@@ -1,0 +1,3 @@
+repository=https://github.com/JoshiOS-VRY/osrs-flip-plugin.git
+commit=d1af4b375c750098e3fceb44de35a14d06a3ae29
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
