@@ -1,0 +1,3 @@
+repository=https://github.com/tjessberger/quantscapers-runelite.git
+commit=602bfa18242660dc100779431d553115f27d59eb
+warning=This plugin can connect to the OSRS Wiki price API. When enabled, it submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers. No RuneScape account, player, Grand Exchange offer, or telemetry data is sent.
