@@ -1,0 +1,3 @@
+repository=https://github.com/CoreyUK/MeteorReporter.git
+commit=ce72bbd53641ed4b42c81eec079e28321b93bc9a
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers.
