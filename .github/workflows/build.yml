@@ -29,7 +29,7 @@ jobs:
         persist-credentials: false
     - uses: actions/setup-java@v5
       with:
-        distribution: adopt
+        distribution: temurin
         java-version: 11
     - name: fetch packager
       env:
