@@ -1,3 +1,3 @@
 repository=https://github.com/birdandworm/TheBirdhouse.git
-commit=f8fc3ebff49112c3740c98a092690ba3def0414d
+commit=80edf9713493d20d2b46d0bd2ab7c84e30b78b5b
 warning=This plugin submits your IP address, RSN, in-game screenshots, team chat messages you send, your online status and current world, and optionally loot/collection data for clan leaderboards to a 3rd-party server not controlled or verified by Runelite developers.
