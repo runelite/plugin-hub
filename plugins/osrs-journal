@@ -1,0 +1,3 @@
+repository=https://github.com/KyleLandon/osrs-journal-plugin.git
+commit=a95da18b1e725096e07c55ab1719c2231119d2f4
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.

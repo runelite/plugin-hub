@@ -1,0 +1,3 @@
+repository=https://github.com/btvp97/bingo-plugin.git
+commit=acba1a2398538573c6bf85ad67f0fb676360afbb
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
