@@ -1,4 +1,4 @@
 repository=https://github.com/IronSetFree/osrs-lifetime-sync.git
-commit=cd5b4fc6a7597f828a50056de82655ac1751534d
+commit=ef17797d162459ae8f0406f37ee63d9b8fd32bc3
 authors=IronSetFree
 warning=This plugin sends your RuneScape display name, playtime, account age, Discord link code, synchronization token, and IP address to a third-party server not controlled or verified by the RuneLite Developers.
