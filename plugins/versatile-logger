@@ -1,0 +1,3 @@
+repository=https://github.com/PeppieLangWaus/versatile-logger.git
+commit=116b1543691e7b15cbc5c918afbce1f82d1ae285
+warning=This plugin can be configured to send nearly all in-game messages, notifications, and your IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
