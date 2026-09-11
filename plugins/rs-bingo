@@ -1,0 +1,4 @@
+repository=https://github.com/Newrockku/RS-Bingo.git
+commit=f324d234ecb69b96d3706198f12d5dfb2fe94306
+authors=Newrockku
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.

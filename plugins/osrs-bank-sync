@@ -1,0 +1,4 @@
+repository=https://github.com/kyleamielke/osrs-bank-sync.git
+commit=36a8d489ae02b83f213257df69f5e84f6bc46dae
+warning=This plugin sends your full bank contents (item IDs and quantities), your display name, account hash, and account type to whatever server URL you configure. By default the URL is http://127.0.0.1:8484 (localhost only). If you change the URL to a remote server, your bank data will be sent there in plaintext unless the URL uses https://.
+authors=kyleamielke

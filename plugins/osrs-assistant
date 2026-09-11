@@ -1,0 +1,3 @@
+repository=https://github.com/antopilo/osrs-assistant-plugin.git
+commit=11266ae723d1ea8281d1b85ed6ebb5d592bc7aed
+warning=This plugin submits your IP address and account progress to a 3rd-party server not controlled or verified by Runelite developers.
