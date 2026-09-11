@@ -1,2 +1,3 @@
 repository=https://github.com/btwinnn/Chunkblazer.git
 commit=c28152243f1c3cd584581b72e81b38d7efa587ea
+warning=This plugin submits your IP address and account data to a 3rd-party server not controlled or verified by Runelite developers.
