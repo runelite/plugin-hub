@@ -1,0 +1,4 @@
+repository=https://github.com/nathangrooms/osrs-loadout-plugin.git
+commit=a9b1fbaf5db9bb7b82160d8f7d66e773c1769757
+authors=nathangrooms
+warning=This plugin submits your IP address and uploads your bank, worn equipment and inventory (item ids and quantities) to osrsloadout.com when you press Sync, so the site can work out the best gear you can field from what you own. Your display name is sent only if you separately opt in. Your data is stored against a random key this plugin generates, never against your character name, and the plugin makes no requests at all until you enable it. Only enable it if you are comfortable with that data being uploaded.
