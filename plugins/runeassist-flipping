@@ -1,0 +1,4 @@
+repository=https://github.com/RuneAssist/runeassist.git
+commit=15ba3c867d4100bfca037d87325dd7c94f4f98bb
+warning=This plugin submits your coin stack size, held Grand Exchange stock with cost basis, Grand Exchange offers and transactions, trading preferences, account/device identifiers, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers. Suggestion actions and offer timing, prices, quantities, partial fills, cancellations and completions are contributed for training by default; this contribution can be disabled in Configuration > Privacy. Optional bug reports submit your report text, RSN, and a screenshot only if selected.
+authors=RuneAssist
