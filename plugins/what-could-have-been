@@ -1,0 +1,3 @@
+repository=https://github.com/wchbdotnet/wchb-runelite.git
+commit=aa89d0e8f0bd513b8d6d8973be1589992b823776
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
