@@ -1,2 +1,3 @@
 repository=https://github.com/kingkj52/group-ironmen-tracker-ingame-companion.git
-commit=dd0d15488734ed7a92d75851e4277a4de595c5dd
+commit=bfb9d86e3a9f4a568cdcd195f6329573121eca38
+warning=This plugin submits your player data and IP address to a server not controlled or verified by the RuneLite developers.
