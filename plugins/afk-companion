@@ -1,3 +1,4 @@
 repository=https://github.com/K0KS13/afk-companion.git
 commit=34a7c2e7d19d099992d50b59d6658ea00ba71f70
 authors=K0KS13
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
