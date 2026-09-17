@@ -1,0 +1,4 @@
+repository=https://github.com/nathangrooms/osrs-loadout-plugin.git
+commit=c6829d38fb8fe0cf7ae9ff4e809dbf7e6ab27b61
+authors=nathangrooms
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers
