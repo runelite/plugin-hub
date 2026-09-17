@@ -1,0 +1,4 @@
+repository=https://github.com/Fitzgerald-gg/fitzgerald-runelite.git
+commit=929dfeffc8a1e7513844dd9f6533e1388f3164ab
+authors=Fitzgerald-gg
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.

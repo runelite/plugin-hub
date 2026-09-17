@@ -1,0 +1,3 @@
+repository=https://github.com/vxctra/competitive-clan-plugin.git
+commit=630b9cb977a36a7c3ba8fd33c0b19c29c945b7f6
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
