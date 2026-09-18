@@ -1,2 +1,3 @@
 repository=https://github.com/CompilerOfDust/OSRS-TCG-Online.git
 commit=fd5a157635b3b46bc826ac5c0d9c7d56f846729d
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
