@@ -1,3 +1,3 @@
 repository=https://github.com/Zezi-cmd/clan-turf.git
-commit=5e748c6f37b661e9c66ea6d8bb9e5c020f8821f6
-warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
+commit=a684e73f7a1475dc98ad4b07bd50602971a8441b
+warning=This plugin syncs with a community server so rival clans' turf shows in real time. It submits your clan name, the Grand Exchange tiles you claim, and your world number to a 3rd-party server not controlled or verified by RuneLite developers. As with any server connection, that server sees your IP address. Switching the plugin to Offline STOPS this turf syncing. Two OPTIONAL features submit a little more when you turn them on: Show player indicators adds your display name and alliance to a public roster, and Clan leaderboard adds your display name, clan, and daily/weekly tile counts. Both are opt-in, off by default, add no extra location tracking, and remove your name from the server when you turn them back off. The plugin never tracks where you are outside the Grand Exchange.
