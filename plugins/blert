@@ -1,4 +1,4 @@
 repository=https://github.com/blert-io/plugin.git
-commit=cbec0ee0deec9b25f2f7ac76011961813fc535be
+commit=3b7f046e2c300e18078e3ec11073b7ceab6b8e3c
 authors=frolv
 warning=This plugin submits your IP address, RSN, and data about your raids to a 3rd-party server not controlled or verified by Runelite developers.
