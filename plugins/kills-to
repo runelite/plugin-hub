@@ -1,0 +1,3 @@
+repository=https://github.com/xboxnuker-rgb/KC-to.git
+commit=b6fd6af8dcb509f850acbbcb0f4614c4a9dd330e
+warning=This plugin may send your RuneScape character name and the current activity's Collection Log page to api.runeprofile.com, a third-party server not controlled or verified by the RuneLite developers. The service also receives your IP address as part of the connection.
