@@ -1,3 +1,3 @@
 repository=https://github.com/Brettgod1355/RuneFolio-Plugin.git
-commit=3aa6873f35ee1828ef74030a4a7988d050781a77
+commit=fbf3c479ba51dd09adc02dd90d758289dff4e5da
 warning=This plugin submits your IP address, RSN, and account progression (skills, quests, diaries, combat achievements, collection log, loot and, if enabled, bank, PvP and screenshot data) to a 3rd-party server (runefolio.app) not controlled or verified by RuneLite developers.
