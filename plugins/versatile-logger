@@ -1,3 +1,3 @@
 repository=https://github.com/PeppieLangWaus/versatile-logger.git
 commit=f805fbaa37d1893f6cf1223962c99fe621e2209a
-warning=This plugin can be configured to submit data to a 3rd-party server not controlled or verified by Runelite developers including:\n    • IP address\n    • Username\n    • Chat messages\n    • Game messages
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
