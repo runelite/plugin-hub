@@ -1,0 +1,3 @@
+repository=https://github.com/DxewRS/Huntmaster.git
+commit=263e01cd0ebede893c64066b8cb194b41d07fbda
+warning=Huntmaster sends your RuneScape name, boss kill and encounter evidence, relevant account requirements, and IP address to a third-party Bosscape service not controlled or verified by RuneLite developers. Disable the plugin to stop communication.
