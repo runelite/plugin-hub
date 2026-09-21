@@ -1,4 +1,4 @@
 repository=https://github.com/Tilley661/runemargin-plugin.git
-commit=bc3e9d150d9de0ee0e4d24bcd0da89b78bd4ffe2
+commit=44ea25336b59eed2a7b9bb0113a9a22e3a4f8fab
 authors=Rune Margin
 warning=Connects to runemargin.co.uk to fetch live prices and flip suggestions. The item ids you view (and your access token, if you set one) are sent to that server; your RuneScape name, Grand Exchange offers and profit/loss are not.
