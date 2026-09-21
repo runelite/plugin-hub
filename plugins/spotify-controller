@@ -1,0 +1,3 @@
+repository=https://github.com/iIDezi/spotify-controller.git
+commit=e96aec96367a85e24e8c627a4e6215c543270954
+warning=This plugin can submit your IP address, Spotify authorization data, and playback-control requests to Spotify. Optional lyrics can also submit track details and your IP address to LRCLIB. These services are not controlled or verified by the RuneLite developers.
