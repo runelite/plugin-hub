@@ -1,3 +1,4 @@
-repository=https://github.com/kulcris/ParentsGuildPlugin.git
-commit=14485b302d45d2967436f579f705c46f387e087e
+repository=https://github.com/K0KS13/afk-companion.git
+commit=7e1d291176e75119dc3dd9935d14c461c91b3354
+authors=K0KS13
 warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
