@@ -1,7 +1,2 @@
-{
-  "name": "Skiller SafeGround",
-  "author": "DiceRollDev",
-  "description": "Visual 10-HP danger zones, threat perimeters, universal attack tick metronomes, and true-tile logout validation for F2P pures.",
-  "repo": "https://github.com/DiceRollDev/skiller-safeground",
-  "tags": ["skiller", "level3", "hcim", "danger", "safe", "overlay", "metronome"]
-}
+repository=https://github.com/DiceRollDev/skiller-safeground
+commit=e5c92ea025c4623852166ac130f6a30f9ef6f45e
