@@ -1,0 +1,4 @@
+repository=https://github.com/ilee2914/runelite_hit_stats.git
+commit=7bcdafb4b7f496c8e6e4008510d02c49a6719481
+authors=ilee2914
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
