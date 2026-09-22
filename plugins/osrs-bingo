@@ -1,0 +1,4 @@
+repository=https://github.com/OSRS-Bingo-Plugin/runelite-plugin.git
+commit=a211759cef2516929f8f33ac11b3b52a2a0a47ed
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
+authors=austin-baker2

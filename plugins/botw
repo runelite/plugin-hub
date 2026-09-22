@@ -1,0 +1,3 @@
+repository=https://github.com/marcushill13/botw.git
+commit=e5c68d4d5bb7c41b04fb660a40fb641a1845d858
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.

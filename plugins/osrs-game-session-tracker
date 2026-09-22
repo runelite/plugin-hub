@@ -1,0 +1,3 @@
+repository=https://github.com/Golddcaleb/osrs-game-session-tracker.git
+commit=b1e97fd91ac5f3f5528ad98db17fefdddb2770d7
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
