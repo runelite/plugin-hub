@@ -1,0 +1,4 @@
+repository=https://github.com/CompilerOfDust/OSRS-TCG-Exchange-TheCardExchange.git
+commit=a677e41426a93cd24e91f349cb3dd61dbcb31417
+authors=CompilerOfDust
+warning=This plugin opens pages on osrscardexchange.com, a third-party website not controlled or verified by the RuneLite developers. Those page addresses include your RuneScape display name and the display name of the player you choose to trade with.

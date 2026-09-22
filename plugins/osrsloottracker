@@ -1,0 +1,3 @@
+repository=https://github.com/kellygrillojr/OSRSLootTrackerPlugin.git
+commit=0f510f66937a828cea3f0b48960dc083c3c1ddca
+warning=This plugin submits your IP address, RSN, and screenshots of your drops to a 3rd-party server not controlled or verified by Runelite developers.

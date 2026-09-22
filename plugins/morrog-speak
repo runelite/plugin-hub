@@ -1,0 +1,3 @@
+repository=https://github.com/MGDproductions/morrog-speak.git
+commit=4b1690f9a6ab537473379b0f8fcc1f985497743c
+warning=This plugin fetches audio files from a server controlled by the author of this plugin. Your IP will be visible to the author, the server is not controlled or verified by the RuneLite developers.
