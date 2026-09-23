@@ -1,2 +1,3 @@
 repository=https://github.com/dangraagu/Gustav-s-helper.git
-commit=d7511433cbd0efb92bf64d207ffd78ee5ca6415f
+commit=23ed18db3b19b206816cb3149aa7f2cb32bc0543
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
