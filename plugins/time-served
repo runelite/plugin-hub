@@ -1,4 +1,4 @@
 repository=https://github.com/vandevkieboom/osrsclanplugin.git
-commit=46aa4770e70217d666a9432042faaff3996484e3
+commit=e343efd346399ba4a183866c0ec9ecea6482490f
 warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
 authors=vandevkieboom
