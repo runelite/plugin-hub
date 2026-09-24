@@ -1,2 +1,3 @@
 repository=https://github.com/AwesomeClan/AwesomeclanPlugin.git
-commit=40942ff495944dedff1e4c9f6dce4fa5c1994c26
+commit=77780d6893392d22e049642e2dca21b02b5fde96
+warning=This plugin submits your IP address, RSN, clan roster, XP gain, and boss kill data to a 3rd-party server not controlled or verified by Runelite developers.
