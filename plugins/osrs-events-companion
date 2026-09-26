@@ -1,4 +1,4 @@
 repository=https://github.com/Pondake/osrs-events-plugin.git
-commit=f421fcb26bce5d0bbeca061cac12e8e585e4f4ba
+commit=63dd46fc3ae70fc06e60e548121c0ca969a7d874
 authors=Pondake
 warning=This plugin sends your username, the drops and kills your event is watching for, and your IP address to a third-party server not controlled or verified by the RuneLite Developers, so it can claim tiles on your event board.
