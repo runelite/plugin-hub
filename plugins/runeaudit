@@ -1,2 +1,3 @@
 repository=https://github.com/aTrapDeer/RuneAudit.git
-commit=33116e010973e238100d50c8dda1024594fc4837
+commit=e47b84a97273d32b44bbf3658517166454d7bc69
+warning=This plugin submits your IP address, and may submit various account data to a 3rd-party server not controlled or verified by Runelite developers.
