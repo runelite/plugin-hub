@@ -1,3 +1,4 @@
 repository=https://github.com/Flipping-Utilities/rl-plugin.git
 commit=d64df46e4c8192d8eb9e2cdcfd3893ce228ad8a3
 authors=AntonyGarand
+jarSizeLimitMiB=15mb
