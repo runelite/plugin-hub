@@ -1,0 +1,3 @@
+repository=https://github.com/hessig/tears-of-guthix-optimizer.git
+commit=57f475c3697699c9f7733d69cfc5a2ce35452273
+warning=When "Look up worlds online" is turned on, this plugin reads data from a 3rd party website (togcrowdsourcing.com) not controlled or verified by the RuneLite Developers, which will see your IP address.
