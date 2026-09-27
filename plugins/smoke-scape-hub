@@ -1,4 +1,3 @@
 repository=https://github.com/kwushy/smoke-scape-hub.git
-commit=d3deb3669baf0c4810b2db4e2e056da76f73538d
+commit=d35f60b808c9c50c9ce4a878b00f4e1971b675c1
 warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.
-disabled=auto joins parties
