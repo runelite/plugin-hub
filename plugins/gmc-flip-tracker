@@ -1,0 +1,3 @@
+repository=https://github.com/Zentosplay/gmc_flip_tracker.git
+commit=daac946459539b10056bfc26738d95d227442ae1
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
