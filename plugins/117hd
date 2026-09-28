@@ -1,3 +1,4 @@
 repository=https://github.com/117HD/RLHD.git
 commit=35e89fffafa7b97136148f5b179834d523758441
 authors=aHooder
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
