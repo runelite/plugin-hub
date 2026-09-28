@@ -1,0 +1,3 @@
+repository=https://github.com/msig-prog/capstone-bingo.git
+commit=8058df2ed58495f49b7cad4d63107d16c561308b
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.

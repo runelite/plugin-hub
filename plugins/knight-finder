@@ -1,0 +1,3 @@
+repository=https://github.com/CoreyUK/KnightFinder.git
+commit=f5e13482099fa9b198c27788d6e7c0c4ab64b5b7
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.

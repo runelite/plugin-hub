@@ -1,0 +1,3 @@
+repository=https://github.com/zDezo/farming-discord-status-plugin.git
+commit=7fe07591cdb220dc2e9e605025dab5d382f5e112
+warning=This plugin submits your IP address and information about your farming patches to a 3rd-party server not controlled or verified by Runelite developers.

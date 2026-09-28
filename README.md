@@ -18,7 +18,7 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
 ## Creating new plugins
  1. Generate your own repository from the [plugin template](https://github.com/runelite/example-plugin/generate) link (you must be signed into GitHub first).
-    Alternatively, you may use the `create_new_plugin.py` script provided in this repository to generate a new plugin project.
+    Alternatively, you may use the `create_new_plugin.py` script provided in the [plugin-hub-tooling](https://github.com/runelite/plugin-hub-tooling) repository to generate a new plugin project.
  
  2. Name your repository something appropriate, in my case I will name it `helmet-check` with the description `You should always wear a helmet.` **Make sure that your repository is set to public**.
 
@@ -26,16 +26,13 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. In order to make sure everything works correctly, try to start the client with your external plugin enabled by running the provided test. If you don't have a run configuration yet for the test, attempt to run it by clicking `Run test`. This will create a run configuration and fail to run due to asserts being disabled. Add `-ea`
- to your VM options in the run configuration to enable assertions, which can be found under `Run/Debug Configurations` under `Modify options`, `Add VM options`, and then adding `-ea` into the input field which appears.
+ 5. Run your plugin by running the `run` gradle task by opening `build.gradle` and clicking on the green triangle next to the run task. If you have a Jagex account, you need to follow [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts) to be able to login to the development client.
 
- The client should now launch with your plugin enabled. If you have a Jagex account, you will be unable to login without first following [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts).
+ <img width="438" height="159" alt="image" src="https://github.com/user-attachments/assets/d3ce4087-d4e2-497b-89c0-c6879a38adb1" />
 
- ![run-test](https://i.imgur.com/tKSQH5e.png)
+ 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`.
 
- 6. Use the refactor tool to rename the package to what you want your plugin to be. Rightclick the package in the sidebar and choose *Refactor > Rename*. I choose to rename it to `com.helmetcheck`. Make sure to also change the package name in src/test/resources/logback-test.xml in case IntelliJ misses it.
-
- 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc.
+ 7. Use the same tool, *Refactor > Rename*, to rename `ExamplePlugin`, `ExampleConfig` and `ExamplePluginTest` to `HelmetCheckPlugin` etc. Be sure to update the `pluginMainClass` in `build.gradle` too.
  
  8. Go to your plugin file and set its name in the `PluginDescriptor`, this can have spaces.
 
@@ -46,14 +43,16 @@ You may contribute to existing plugins by selecting the plugin from https://rune
  description=Alerts you when you have nothing equipped in your head slot
  tags=hint,gear,head
  plugins=com.helmetcheck.HelmetCheckPlugin
+ version=
+ build=standard
  ```
- `tags` will make it easier to find your plugin when searching for related words. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
+ `tags` will make it easier to find your plugin when searching for related words. `version` is optional, if missing the commit will be used. If you want to add multiple plugin files, the `plugins` field allows for comma separated values, but this is not usually needed.
 
  10. Optionally, you can add an icon to be displayed alongside with your plugin. Place a file with the name `icon.png` no larger than 48x72 px at the root of the repository.
 
  11. Write a nice README so your users can see the features of your plugin.
 
- 12. When you have your plugin working. Commit your changes and push them to your repository. 
+ 12. When you have your plugin working, commit your changes and push them to your repository.
 
 ### Licensing your repository
  1. Go to your repository on GitHub and select *Add file* (next to the green *Code* button), and choose *Create new file* from the drop-down.
@@ -120,8 +119,13 @@ We require any dependencies that are not a transitive dependency of runelite-cli
 have their cryptographic hash verified during the build to prevent [supply chain attacks](https://en.wikipedia.org/wiki/Supply_chain_attack) and ensure build reproducability.
 To do this we rely on [Gradle's dependency verification](https://docs.gradle.org/nightly/userguide/dependency_verification.html).
 To add a new dependency, add it to the `thirdParty` configuration in [`package/verification-template/build.gradle`](https://github.com/runelite/plugin-hub/blob/master/package/verification-template/build.gradle),
-then run `../gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
+then run `./gradlew --write-verification-metadata sha256` to update the metadata file. A maintainer must then verify
 the dependencies manually before your pull request will be merged. This process generally adds significantly to the amount of time it takes for a plugin submission or update to be reviewed, so we recommend avoiding adding any new dependencies unless absolutely necessary.
+
+## Build type
+`runelite-plugin.properties` contains a `build` property, which may be set to either `standard` or `gradle`. In `standard`
+mode, your`build.gradle` and `settings.gradle` get replaced when built during plugin submission. This allows for expedited review
+if you don't need to specify any dependencies or other custom build steps.
 
 ## My client version is outdated
 If your client version is outdated or your plugin suddenly stopped working after RuneLite has been updated, make sure that your `runeLiteVersion` is set to `'latest.release'` in `build.gradle`. If this is set correctly, refresh the Gradle dependencies by doing the following:
