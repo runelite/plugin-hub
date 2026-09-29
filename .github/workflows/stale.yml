@@ -17,7 +17,7 @@ jobs:
           days-before-pr-stale: 7
           days-before-pr-close: 0
 
-          only-pr-labels: waiting-for-author
+          only-pr-labels: waiting for author
 
           stale-pr-message: >
             This pull request has been waiting for author action for one week.
