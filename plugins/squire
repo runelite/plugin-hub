@@ -1,0 +1,3 @@
+repository=https://github.com/austinmrobinson/squire-plugin.git
+commit=c46aacabb4cb0a032e0989aa086f5ac76496d321
+warning=This plugin submits your IP address, character name and account data (levels, quests, diaries, bank, inventory, equipment, loot, location) and your chat messages to a 3rd-party server not controlled or verified by the RuneLite Developers. Messages are answered by an AI model. Nothing is sent until you turn it on.
