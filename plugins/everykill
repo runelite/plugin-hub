@@ -1,0 +1,4 @@
+repository=https://github.com/everykill/everykill-plugin.git
+commit=496719bd9a222e5ed2a6c6534dba0356db6841f5
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
+authors=Delkyy

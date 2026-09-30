@@ -1,0 +1,3 @@
+repository=https://github.com/codycrossley/gnomeball.git
+commit=6bc94e6ce6be605bd1b29496d53c0a40b8673347
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
