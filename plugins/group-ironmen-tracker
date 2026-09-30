@@ -1,2 +1,3 @@
 repository=https://github.com/christoabrown/group-ironmen-tracker.git
-commit=74297a275eb17a627be1078dad7651d0eedba237
+commit=343af9597911a956a127ac4b3b1832d64b61ab1d
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
