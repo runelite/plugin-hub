@@ -1,0 +1,3 @@
+repository=https://github.com/landonstucki/discord-chat.git
+commit=8503a135faee9ab8fabf773f7825f39fb189210b
+warning=This plugin connects to Discord, a 3rd party not controlled or verified by the RuneLite Developers. It sends the chat messages you choose to send to Discord and exposes your IP address to Discord.
