@@ -1,4 +1,4 @@
 repository=https://github.com/xXD4rkDragonXx/runelite-homeassistant-data-exporter.git
-commit=9835dbe80ba10e7aef5a68bf7b2ad9a7a9d69c27
+commit=2a5b33a6d69c56df16744731f7a4ebbe240c789c
 authors=xXD4rkDragonXx,RedFireBreak
 warning=This plugin submits your IP address and various account data to a 3rd-party server not controlled or verified by RuneLite developers.
