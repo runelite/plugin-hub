@@ -18,7 +18,7 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
 ## Creating new plugins
  1. Generate your own repository from the [plugin template](https://github.com/runelite/example-plugin/generate) link (you must be signed into GitHub first).
-    Alternatively, you may use the `create_new_plugin.py` script provided in this repository to generate a new plugin project.
+    Alternatively, you may use the `create_new_plugin.py` script provided in the [plugin-hub-tooling](https://github.com/runelite/plugin-hub-tooling) repository to generate a new plugin project.
  
  2. Name your repository something appropriate, in my case I will name it `helmet-check` with the description `You should always wear a helmet.` **Make sure that your repository is set to public**.
 
