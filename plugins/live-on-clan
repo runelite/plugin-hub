@@ -1,3 +1,3 @@
 repository=https://github.com/MilicoOSRS/live-on-clan.git
-commit=572f6c944942114ce84ddb4c35314f71d26e2467
+commit=dcbe8e65d29e8e49ce394611ad081829cec3363d
 warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
