@@ -1,3 +1,4 @@
 repository=https://github.com/TheSpryt/Exchange-Insights-Capture.git
 commit=5e0fe48b27e5df5131763863c284af370c4f8d75
 warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
+disabled=The Exchange Insights service behind this plugin has been retired
