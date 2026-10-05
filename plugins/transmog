@@ -1,2 +1,3 @@
 repository=https://github.com/Enriath/external-plugins.git
-commit=179136d25d409b7aac5df05c4af6ba218984edf8
+commit=b0afe7783c844df1a9da0fafbb1cf3164b73af75
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
