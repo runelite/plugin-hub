@@ -1,3 +1,3 @@
 repository=https://github.com/MaximHermy/gp-machine-plugin.git
-commit=76d330b577a7e25b2d18f0554c51b314a1cd5421
+commit=36f27b3a17088429e45a181cb9332d8831d085b9
 warning=This plugin submits your Grand Exchange offers (item, price, quantity, status) and an anonymous account id to the GP MACHINE server, a 3rd party website not controlled or verified by the RuneLite Developers.
