@@ -1,3 +1,3 @@
 repository=https://github.com/AhmedFathy2001/anvil-plugin.git
-commit=5c14dc72ef589e81b6f0d63d67be32dc4ea4ac8f
+commit=6891fa535808a3ce75aa3d03dac5d6dad15844d1
 warning=This plugin submits your IP address and your account's gameplay data (RSN, drops, kill counts, XP and progress) to anvilosrs.com, a 3rd-party server not controlled or verified by the RuneLite developers.
