@@ -1,0 +1,4 @@
+repository=https://github.com/TheSimpleBlue/gimimprove.git
+commit=255e0aaf55143d604b9a2da0a76be6eea4e97b48
+warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.
+disabled=freezes client on map load

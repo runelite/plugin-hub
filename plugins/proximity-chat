@@ -1,0 +1,3 @@
+repository=https://github.com/DMoneigh/ProxiScape.git
+commit=51bc7e6d7dce61b36e2287cfa3bc64ee296e06f5
+warning=This plugin submits your IP address, RSN, account hash, in-game location, and live microphone audio to a 3rd-party server not controlled or verified by Runelite developers.

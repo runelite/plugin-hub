@@ -1,0 +1,3 @@
+repository=https://github.com/fatfingers23/trackscape-connector-plugin.git
+commit=6b2e61cd29d7fdef3756e11d12bd923fa2a226cf
+warning=This plugin submits clan chat messages and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.

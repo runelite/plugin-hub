@@ -1,0 +1,4 @@
+repository=https://github.com/Runemoro/better-renderer.git
+commit=ee38a26f48f25d4362304e4123dce27a0d096b61
+warning=This plugin is still in early beta and intended for testing only. Don't use in dangerous situations as it may still be unstable. Please report any bugs you find GitHub. It may take up to a few minutes for the plugin to work after installing since it needs to download a copy of the game cache.
+disabled=true

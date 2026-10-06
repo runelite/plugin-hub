@@ -1,0 +1,3 @@
+repository=https://github.com/skeldoor/snowplow.git
+commit=288d7c5947f6054e320d9e0c80a01e2fb188ce12
+disabled=prevents mousewheel zoom

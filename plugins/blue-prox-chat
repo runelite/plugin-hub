@@ -1,0 +1,3 @@
+repository=https://github.com/ThatGamerBlue/osrs-prox-chat.git
+commit=6b81f4b17dd1a259a0521dfb50502fcedba15489
+warning=This plugin submits your IP Address, world and player location to a server not controlled or verified by the RuneLite developers.

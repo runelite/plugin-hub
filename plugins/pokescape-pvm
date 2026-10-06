@@ -1,0 +1,4 @@
+repository=https://github.com/Quoded/PokeScape-PvM.git
+commit=482366be88196a05cf67d270db0c439fb41ea081
+warning=This plugin submits your IP address, RSN, world, loot, and screenshots to a 3rd party website not controlled or verified by the RuneLite Developers.
+disabled=true
