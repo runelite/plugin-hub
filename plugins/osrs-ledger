@@ -1,0 +1,3 @@
+repository=https://github.com/Chochu/osrs-ledger.git
+commit=e57d2848af6440235f204a588193053835843b85
+warning=This plugin submits your IP address, display name, Grand Exchange offers, and trade history to osrsledger.com, a 3rd-party server not controlled or verified by RuneLite developers.
