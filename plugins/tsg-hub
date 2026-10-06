@@ -1,3 +1,3 @@
 repository=https://github.com/tylerhammer/tsg-hub.git
-commit=d42650fca6e5e561427e46f18eccf1d7a8a8aa6d
+commit=1b868c423531e6228b1d9004cae1b18f923d367d
 warning=This plugin submits your IP address, RuneScape name, account hash, clan, clan rank and event progress to a 3rd-party server not controlled or verified by RuneLite developers.
