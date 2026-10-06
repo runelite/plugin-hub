@@ -1,0 +1,4 @@
+repository=https://github.com/BigDru/FlipgoblinPlugin.git
+commit=aefa3f12d4e0717639d591da8a93f3c697881017
+authors=BigDru
+warning=This plugin submits your IP address, character name, grand exchange transactions, and information about your account wealth to a 3rd party server that is not controlled or verified by RuneLite developers.
