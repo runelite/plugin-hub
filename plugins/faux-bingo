@@ -1,2 +1,3 @@
-repository=https://github.com/ThatOhio/faux-bingo.git
-commit=2292138861c30be0a0dc311d64a76eb39738f9e6
+repository=https://github.com/faux-bingo/faux-bingo-runelite-plugin.git
+commit=239cc0ca1fbd0ff8b34fc11d78eb06e261f4a70b
+authors=ThatOhio
