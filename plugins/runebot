@@ -1,3 +1,3 @@
 repository=https://github.com/ezequielmdev/runebot.git
-commit=08085efd362d65094b92e1c6724daa7e8c9875f7
+commit=0b4e20edb0c5174547d6e9008b921dd9843e6a06
 warning=This plugin sends your chat messages (and, if enabled, your skill levels) to Google's Gemini API and fetches data from third-party websites.
