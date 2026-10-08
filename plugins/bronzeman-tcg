@@ -1,2 +1,3 @@
 repository=https://github.com/Felmeme/bronzeman-tcg.git
-commit=f04109715f7a32ea23a3283d1fd0275de429817a
+commit=795e7e1523c91d642536e84e471063465048c0d7
+warning=This plugin connects to the public OSRS TCG catalogue API. The server receives your IP address as part of the connection. No RuneScape profile, account, or collection data is sent.
