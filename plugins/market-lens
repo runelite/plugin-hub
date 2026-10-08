@@ -1,2 +1,3 @@
 repository=https://github.com/elertan/market-lens.git
-commit=ad95c9f8ada9aa67cb0a181177abcfcd4e8f852c
+commit=174556d5bb2d94ac9ed67396b32a6d33a82595fb
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers.
