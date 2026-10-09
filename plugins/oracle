@@ -1,0 +1,3 @@
+repository=https://github.com/StamppG/osrs-oracle.git
+commit=a0d44e847124438670415590b2b87766deceaf16
+warning=This plugin exposes your IP address, and submits various account information, to a 3rd-party server not controlled or verified by Runelite developers.
