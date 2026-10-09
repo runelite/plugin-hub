@@ -1,0 +1,3 @@
+repository=https://github.com/OSRSPT/rspt-runelite-plugin.git
+commit=704e3bc5f67f0ee2dea921ad24951f35489e5b25
+warning=This plugin submits your username, IP address and a screenshot of event drops to a 3rd party server not controlled or verified by the RuneLite Developers.
