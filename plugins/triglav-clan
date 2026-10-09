@@ -1,3 +1,3 @@
 repository=https://github.com/K0KS13/triglav-clan.git
-commit=b22f452e2bf9d17984ef994a0b5be4a7a468b1b0
-warning=This plugin submits your IP address, RSN, account stats, drops, deaths, screenshots, gear and your clan's member list with ranks to a 3rd-party server (clan.kokalj.dev) not controlled or verified by RuneLite developers.
+commit=fd59307ec0dea47eb1182da41095ea6554db6aac
+warning=This plugin submits your IP address, RSN, account stats and level-ups, drops, kill counts, combat achievements, clue/quest/slayer progress, deaths, PvP kills (including the victim's name and worn gear), screenshots, gear and your clan's member list with ranks to a 3rd-party server (clan.kokalj.dev) not controlled or verified by RuneLite developers.
