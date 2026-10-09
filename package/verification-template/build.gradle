@@ -139,6 +139,9 @@ dependencies {
 	thirdParty("org.tomlj:tomlj:1.1.1") {
 		because "resource-packs, friendly-guide"
 	}
+	thirdParty("io.github.jaredmdobson:concentus:1.0.2") {
+		because "proximity-chat"
+	}
 }
 
 task verifyCore {
