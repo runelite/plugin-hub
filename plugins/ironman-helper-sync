@@ -1,2 +1,3 @@
 repository=https://github.com/NtenBrink/ironman-helper-sync.git
-commit=2db18ae6c099f89034c458db3377e9de918d424d
+commit=63ceb91ed4197f52654b6da43481288179308631
+warning=This plugin submits your IP address, and may submit other account data, to a 3rd party server not controlled or verified by the RuneLite developers.
