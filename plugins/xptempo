@@ -1,0 +1,4 @@
+repository=https://github.com/ashleye1995/xptempo-plugin.git
+commit=be45f920039d29d26e6678c8940dca438e7b40bf
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by the RuneLite developers.<br>Once you pair it with your XPTempo account, it sends your own characters' names, account IDs, account types and worlds,<br>skills and XP, activity, sessions, deaths, quest, diary and combat achievement progress, and (each can be switched off)<br>inventory and worn items, bank, Grand Exchange offers, drops and kill counts to api.xptempo.com. Privacy policy: xptempo.com/privacy
+authors=ashleye1995
