@@ -1,0 +1,4 @@
+repository=https://github.com/Jarmenkoski/afk-roulette-plugin.git
+commit=dbb74ed527474cc1b746d6ec1bfcfa94369a7636
+authors=Jarmenkoski
+warning=This plugin submits your IP address, and may submit your levels, quests and items, to a 3rd party server not controlled or verified by the RuneLite Developers.
