@@ -1,0 +1,4 @@
+repository=https://github.com/bdjong/osrs-companion-plugin.git
+commit=22c89289d1f1ea7020d91f15a929dbe3e0090183
+authors=bdjong
+warning=This plugin submits your RSN, skills, bank and other storage, collection log, quests, diaries, loot, slayer, farming and boss data to a 3rd-party server (OSRS Companion) not controlled or verified by the RuneLite developers, but only after you enter an App Key from your account on that website.
