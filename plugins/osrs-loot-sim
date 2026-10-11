@@ -1,0 +1,3 @@
+repository=https://github.com/DoipSter/osrs-loot-sim-runelite.git
+commit=0cd4d4e1f00e3c4779a84f0bcc7362755fa2dbd7
+warning=This plugin submits the boss, kill count and options you simulate and your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
