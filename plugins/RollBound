@@ -1,3 +1,0 @@
-repository=https://github.com/Pwnzaar/RollBound-Plugin.git
-commit=67ce7305a8fe88e5e49ab160ca1b30920fa6e709
-warning=This plugin submits your IP address, RuneScape display name, and RollBound group progression data to a 3rd-party server not controlled or verified by RuneLite developers. Optional web tracking may also submit account progression data.
