@@ -1,2 +1,3 @@
-repository=https://github.com/jtclowner/orb-clickthrough.git
-commit=5f290af7c7d0eda55a11d14481cf854676cd0c1c
+repository=https://github.com/jtclowner-plugins/orb-clickthrough.git
+commit=d4e0afadead6a3245f9a2f4ec10c0fb8a531a480
+authors=jtclowner

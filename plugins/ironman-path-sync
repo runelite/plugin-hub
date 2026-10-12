@@ -1,0 +1,3 @@
+repository=https://github.com/stuntedrabbit/ironman-path-sync.git
+commit=815cf8f09a66e1e52657eca0a8d3ae8e2d0df244
+warning=This plugin submits your IP address, RSN, skill levels, and bank/inventory/equipment contents to a 3rd-party server not controlled or verified by Runelite developers.

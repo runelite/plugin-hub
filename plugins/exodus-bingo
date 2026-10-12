@@ -1,0 +1,4 @@
+repository=https://github.com/drewapalooza/exodus-bingo.git
+commit=2db25c52ce851496a278acab561ec36add93abaa
+authors=drewapalooza
+warning=This plugin sends your IP address, RSN, loot and pet event data, and matching game-view screenshots to the Exodus Bingo service. When separately enabled, it also sends filtered drop or pet details and game-view screenshots to a user-configured Discord webhook. Neither third-party destination is controlled or verified by RuneLite developers.

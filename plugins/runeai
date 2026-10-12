@@ -1,0 +1,4 @@
+repository=https://github.com/lordbasilaiassistant-sudo/runeai.git
+commit=75ebdf519b0c88cb50735580a68909491a9dfd12
+authors=lordbasilaiassistant-sudo
+warning=This plugin has an opt-in "streamer mode", off by default, which submits your IP address and a text summary of your session to an LLM endpoint and text-to-speech service that you configure yourself, neither of which is controlled or verified by RuneLite developers.
