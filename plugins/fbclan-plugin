@@ -1,3 +1,3 @@
 repository=https://github.com/orgonag/fbclan-plugin.git
-commit=c9e96e6cb165bd76941ea45eebaa71686d034e5d
+commit=6fe77d405e46ef3d4a277c65e6b3773281a5cbf5
 warning=This plugin submits your IP address, RSN, drop data, and Party to a 3rd-party server not controlled or verified by Runelite developers.
