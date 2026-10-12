@@ -1,4 +1,4 @@
 repository=https://github.com/RasmonT/custom-stat-layout.git
-commit=49ae7ec89815e76f774952fbe29098d77b2ecb88
+commit=f71f3205a4e8c40cfa2245672ef402fc20a418eb
 authors=RasmonT
 warning=This plugin opens a small HTTP server on 127.0.0.1 so a stream overlay in OBS or a browser can read your hitpoints, prayer, run energy and special attack. Nothing is uploaded and no account is involved. Be aware that any other program on your own machine can read the same values.
