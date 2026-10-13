@@ -1,4 +1,4 @@
 repository=https://github.com/thesoloarmy/solo-army-runelite.git
-commit=b0f42eeeb2e83d456c28143e3362994249e3ad75
+commit=6a721572e8dad312eaa8fb6cbfbb2125433b6c2b
 authors=thesoloarmy
 warning=This plugin sends your RuneScape username and only loot matching the active Solo Army Bingo board (item ID, quantity, source/type, timestamp, plugin version, installation identifier) to soloarmy.info, a third-party server not controlled or verified by the RuneLite Developers, for clan Bingo tracking.
