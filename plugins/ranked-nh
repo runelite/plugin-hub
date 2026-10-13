@@ -1,4 +1,3 @@
 repository=https://github.com/ImBenHayward/ranked-nh.git
-commit=3ddcaf6f0150fbf2fb0bf41a6ce67916f782f0d9
-jarSizeLimitMiB=25
+commit=c3e850a91b8aa9d901c0780e789d695840eb0155
 warning=This plugin sends your IP address, in-game name, Arena loadout and fight observations to a third-party service not controlled or verified by RuneLite developers.
