@@ -1,3 +1,4 @@
 repository=https://github.com/StephenMarkToms/lootbag-plugin.git
 commit=b26d0108de993ecb1ee002ba669660fb9b32fa5f
 warning=This plugin submits your RSN, GE Trades, and IP address to a server not controlled or verified by the RuneLite developers.
+disabled=unmaintained
