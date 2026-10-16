@@ -1,2 +1,3 @@
 repository=https://github.com/JeroenBreevoort/runeglass-runelite-plugin.git
 commit=4c323cb2710ddd6455859885db7ec54baeacf61d
+warning=This plugin submits your IP address, RuneScape character name, account/profile type, skill levels, experience values, opted-in bird house and farming patch states and estimated ready times, opted-in equipment identifiers, body colours, gender presentation, character model geometry and render attributes (including texture identifiers), and plugin, RuneLite, and game revision metadata to RuneGlass, a third-party server not controlled or verified by RuneLite developers.
