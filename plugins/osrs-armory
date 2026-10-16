@@ -1,3 +1,3 @@
 repository=https://github.com/bkayosrs/osrs-armory-plugin.git
-commit=decf6989e1874583b89d5a0decedc29e0782b802
+commit=b00ef4ab442d65c83d17f56a8d9563cbb2e12185
 warning=This plugin submits your IP address, RuneScape name, equipped items, a picture of your character, skills, quests, achievement diaries and character summary to a 3rd-party server (osrsarmory.com) not controlled or verified by RuneLite developers.
