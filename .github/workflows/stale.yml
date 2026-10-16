@@ -1,0 +1,32 @@
+name: Close Stale PRs
+on:
+  schedule:
+    - cron: '8 17 * * *'
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/stale@v10
+        with:
+          days-before-pr-stale: 7
+          days-before-pr-close: 0
+
+          only-pr-labels: waiting for author
+
+          stale-pr-message: >
+            This pull request has been waiting for author action for one week.
+            It is being closed automatically. Feel free to open a new pull request
+            once you've addressed the requested changes.
+
+          close-pr-message: ''
+
+          stale-issue-message: ''
+          close-issue-message: ''
+
+          days-before-issue-stale: -1

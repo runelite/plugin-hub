@@ -1,3 +1,3 @@
-repository=https://github.com/abextm/runelite-plugins.git
-commit=d243e528ba99eebd8461f419b19db340f99b6e5a
-disabled=true
+repository=https://github.com/Adam-/runelite-plugins.git
+commit=08c784abc517f4b1f2e6fd9271a52142f9312542
+warning=This plugin isn't compatible with sailing and will cause boats to be invisible.
