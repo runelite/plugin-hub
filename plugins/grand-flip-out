@@ -1,2 +1,3 @@
 repository=https://github.com/Tunatroll/grand-flip-out.git
-commit=0a1e078002415d46aac7b7be682b43a9e88f59ba
+commit=21e8cba4cd6dc96e0fe6706b870304dbdc7c872d
+warning=This plugin submits your grand exchange offers and transactions, approximate coin total, and IP address to a 3rd party server that is not controlled or verified by the RuneLite Developers. Server features are opt-in and off by default.

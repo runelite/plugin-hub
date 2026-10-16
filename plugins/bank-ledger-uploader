@@ -1,0 +1,3 @@
+repository=https://github.com/devinsub029-star/bank-ledger-uploader.git
+commit=655c60b7d4427d5b32a70990240703a3c1dbcbc2
+warning=This plugin submits the item ids and quantities of your tracked storages, and optionally your display name and Grand Exchange offers, to a 3rd-party server not controlled or verified by RuneLite developers.

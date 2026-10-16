@@ -1,0 +1,3 @@
+repository=https://github.com/Squago/clanscape-bingo.git
+commit=ce04574074155041eed7835b4cf4a7e24ecbbaf9
+warning=This plugin submits matched bingo-board loot and collection-log activity, your linked RuneScape account name, and your IP address to a third-party server not controlled or verified by RuneLite developers.
