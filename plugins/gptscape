@@ -1,0 +1,3 @@
+repository=https://github.com/ezequielmdev/gptscape.git
+commit=7345510857aa61b334a7b55cdbc25fc9a260c0c7
+warning=This plugin sends your chat messages (and, if enabled, your skill levels) to Google's Gemini API and fetches data from third-party websites.
