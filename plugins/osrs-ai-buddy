@@ -1,0 +1,3 @@
+repository=https://github.com/D-AZ0617/osrs-ai-buddy.git
+commit=d0fe576c8c609d2afaecb8efeec6bb7585aba31a
+warning=This plugin submits your IP address, questions and chat history to OpenAI using your authorized paid ChatGPT plan. Optional Wiki searches send search terms to the OSRS Wiki; optional Wise Old Man lookups send your character name to Wise Old Man. Account data is shared with OpenAI only under separate opt-in settings. These third-party servers are not controlled or verified by RuneLite developers. ChatGPT sign-in is retained locally using Windows account encryption. A PAID ChatGPT subscription is required; the Free plan is not supported.
