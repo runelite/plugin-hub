@@ -1,2 +1,3 @@
 repository=https://github.com/dekvall/runelite-external-plugins.git
 commit=b712c124b06e791c73339ed21f7ab2ea87fa7ecf
+disabled=unmaintained
