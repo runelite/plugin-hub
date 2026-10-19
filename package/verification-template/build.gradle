@@ -13,8 +13,6 @@ repositories {
 configurations {
 	core
 	thirdParty.extendsFrom core
-	// Source-only build inputs must not upgrade binary dependencies in thirdParty.
-	thirdPartySources
 }
 
 dependencies {
@@ -45,9 +43,6 @@ dependencies {
 	}
 	thirdParty("org.json:json:20200518") {
 		because "discord-rare-drop-notifier, droptracker"
-	}
-	thirdPartySources("org.jsoup:jsoup:1.23.2:sources@jar") {
-		because "wikipane: build-time private parser subset"
 	}
 	thirdParty("org.jsoup:jsoup:1.13.1") {
 		because "discord-rare-drop-notifier, drop-simulator, fire-beats, loot-table, loot-lookup, chance-man"
@@ -160,7 +155,6 @@ task verifyAll {
 	doLast {
 		// This causes resolution (and therefore verification) of the configuration
 		configurations.thirdParty.asPath
-		configurations.thirdPartySources.asPath
 
 		if (file("build.gradle").text =~ /(?m)^ /) {
 			throw new RuntimeException("gradle files should be indented with tabs")
