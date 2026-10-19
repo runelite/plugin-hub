@@ -1,3 +1,3 @@
 repository=https://github.com/sololegends/runelite-friend-finder.git
-commit=c3bf304e49d50a8de7bb8eec50652e79bd5acebb
+commit=82abf7f92931927189f9cc40f4a840645b73ede3
 warning=This plugin submits your rsn, player location, health, prayer level, and your IP address to a server not controlled or verified by the RuneLite developers.
