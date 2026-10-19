@@ -1,2 +1,1 @@
-repository=https://github.com/erbzy/PoisonNotifier.git
-commit=8cd27455655a66be3445e59515508e2f0f5a33d8
+# Legacy duplicate entry. The canonical plugin file is plugins/poison-notifier.
