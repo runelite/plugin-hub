@@ -1,0 +1,4 @@
+repository=https://github.com/phishkatlabs/spooptool-runelite.git
+commit=1adf50ea464e24ddc9daf39143cad73a8c84b3b9
+warning=This plugin submits your IP address and your in-game name to SpoopTool's server, which is not controlled or verified by the RuneLite developers.
+authors=benlantaff
