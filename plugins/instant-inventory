@@ -1,2 +1,3 @@
 repository=https://github.com/elgbar/instant-inventory.git
-commit=7491f09377b82c6dee8abb0f048f0297ca84a5bd
+commit=2eac1ac26a9dd9763c0bcf945ca9747674213a30
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
