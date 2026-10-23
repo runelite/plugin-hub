@@ -1,0 +1,3 @@
+repository=https://github.com/bckpockets/droppy.git
+commit=2046f206e6bf5c220e6833c0831a4e15facb1592
+warning=This plugin submits your IP address and RSN to a 3rd-party server not controlled or verified by Runelite developers.
