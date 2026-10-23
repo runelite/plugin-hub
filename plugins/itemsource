@@ -1,0 +1,3 @@
+repository=https://github.com/legandaryme026/ItemSource.git
+commit=3bb1692f32abacc50e33a2a8ff76eea3573a38e7
+warning=This plugin submits your IP address and item search text to oldschool.runescape.wiki, a 3rd-party server not controlled or verified by RuneLite developers. It does not submit player or account data.
