@@ -1,2 +1,3 @@
 repository=https://github.com/stefanws0/Sol-Survivor-Plugin.git
-commit=a6c3d9d9aa8c56fe5eb759738eeff90bd4b0c4f0
+commit=5fcbcd060806840afa002b7ac0e983bb28464eda
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
