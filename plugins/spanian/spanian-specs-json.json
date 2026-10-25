@@ -1,0 +1,9 @@
+{
+  "id": 0,
+  "name": "Spanian Specs",
+  "description": "HOOD OOS LAD! Plays a Spanian sound effect when special attacks are used.",
+  "repository": "https://github.com/Slip101/spanian-specs",
+  "commit": "HEAD",
+  "authors": ["Slip101"],
+  "support": "https://github.com/Slip101/spanian-specs/issues",
+}
