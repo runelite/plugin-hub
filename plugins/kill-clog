@@ -1,0 +1,3 @@
+repository=https://github.com/420kc/kill-clog-plugin.git
+commit=f841590fb3f1ee0a7cc757f6f50358fc2d4ec160
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by Runelite developers.
