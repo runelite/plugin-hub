@@ -1,0 +1,3 @@
+repository=https://github.com/plbolduc/osrs-map-companion.git
+commit=867327e1c3987d55724bb59942f7c25af835d1ce
+warning=This plugin sends your IP address and selected character data, including your name, world, position and progress, to a third-party map server not controlled or verified by RuneLite developers.
