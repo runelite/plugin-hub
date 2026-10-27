@@ -1,2 +1,3 @@
 repository=https://github.com/Faaruz/ChaosMod.git
-commit=be1dafe420b56c579709254d5ab4ad22fedfaaca
+commit=365b2ffaf3626cfd09a9969dadc5c31a0afd80c7
+warning=This plugin introduces random events that can interfere with normal gameplay, including temporarily disabling movement, prayer activation, and inventory interactions. These events may result in character death, item loss, or loss of Hardcore Ironman status. Use at your own risk.
