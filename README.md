@@ -26,7 +26,7 @@ You may contribute to existing plugins by selecting the plugin from https://rune
 
  4. Open IntelliJ and choose *Get from Version Control*. Paste the link you just copied in the URL field and where you want to save it in the second field.
 
- 5. Run your plugin by running the `run` gradle task by opening `build.gradle` and clicking on the green triangle next to the run task. If you have a Jagex account, you need to follow [this guide](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts) to be able to login to the development client.
+ 5. Run your plugin by running the `run` gradle task by opening `build.gradle` and clicking on the green triangle next to the run task. Use the [Jagex Account plugin](https://github.com/runelite/runelite/wiki/Using-Jagex-Accounts) to login to your Jagex account
 
  <img width="438" height="159" alt="image" src="https://github.com/user-attachments/assets/d3ce4087-d4e2-497b-89c0-c6879a38adb1" />
 
