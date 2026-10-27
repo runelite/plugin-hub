@@ -1,3 +1,3 @@
 repository=https://github.com/trailsocial/Trailsocial.git
-commit=45ccfdba38d7aafcb57bb6bcc94c6619ec78135c
+commit=48013fc95fd09e995e4c917acbd8151d5b915ce7
 warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
