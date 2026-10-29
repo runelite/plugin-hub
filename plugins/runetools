@@ -1,4 +1,4 @@
 repository=https://github.com/maxcash2147/runetools-plugin.git
-commit=53e3075ccebcb635281485658fa1db3c6ba047fe
-warning=This plugin submits your character name, Grand Exchange offers and trades, coins, bank, inventory, worn gear, skill levels and XP, collection log, combat achievements, drops and other achievements, and your IP address to runetools.com, a 3rd party server not controlled or verified by the RuneLite Developers.
+commit=f886fd0091ff2b4068f905e74d831aab5732342c
+warning=This plugin submits your character name and account hash, Grand Exchange offers and trades, coins, bank, inventory, worn gear, gear setups, bank layouts, skill levels and XP, collection log, combat achievements, drops and other achievements, and your IP address to runetools.com, a 3rd party server not controlled or verified by the RuneLite Developers. Some of this data is shown on your public RuneTools profile.
 authors=maxcash2147
