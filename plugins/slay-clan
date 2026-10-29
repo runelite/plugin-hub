@@ -1,4 +1,4 @@
 repository=https://github.com/slay-clan/slay-clan.git
 commit=be32caff4040546481d06fab324a8eab16da95af
 warning=This plugin submits your IP address, in-game name and screenshots to your clan's server, a 3rd-party server not controlled or verified by the RuneLite Developers.
-authors=Amuze-dev
+authors=Amuze-dev,Slayclan
