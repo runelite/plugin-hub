@@ -1,0 +1,3 @@
+repository=https://github.com/Hegget34/veritas-events.git
+commit=7a61d8cffcb7adbb5f2cdbcd64ae90ecec3c6dd3
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
