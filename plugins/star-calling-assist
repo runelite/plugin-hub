@@ -1,3 +1,3 @@
 repository=https://github.com/zodaz/star-calling-assist.git
-commit=e4ce3883f3f1fff3c55e8b64539f9c946f01cfd2
-warning=This plugin submits your current world number along with your IP address to a 3rd party website not controlled or verified by the RuneLite Developers. If enabled in the config, your in-game name will also be sent (default off).
+commit=dd42ca20d1e0c97495b580439f9ac2b35dfbabd8
+warning=This plugin submits your current world number along with your IP address to a 3rd party website not controlled or verified by the RuneLite Developers. By installing this plugin you agree to the star miners privacy policy: https://public.starminers.site/privacypolicy

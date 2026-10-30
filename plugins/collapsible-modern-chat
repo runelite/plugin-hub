@@ -1,3 +1,4 @@
-repository=https://github.com/UNDEAD-B0T/collapsible-modern-chat.git
-commit=c55d69bc8ac223777b1a86268bcdaa2a27cc77b0
-authors=UNDEAD-B0T
+repository=https://github.com/Ruckwad/collapsible-modern-chat.git
+commit=1d8d0212dd1a85d9705ca3b32b38b304875a83db
+authors=Ruckwad
+disabled=causes fps issues and no longer maintenanced

@@ -1,3 +1,5 @@
-repository=https://github.com/remcowesterhoud/taskman-plugin.git
-commit=c335fff6291d23f05ca1eb58d25d9d88d73f7859
+repository=https://github.com/OSRS-Taskman/taskman-plugin.git
+commit=7202b8033975a787c5b1324059e9a26085e55e3a
+authors=ImTedious,rmobis
 warning=This plugin submits your ingame name, Taskman credentials, and your IP address to a server not controlled or verified by the RuneLite developers.
+disabled=This plugin was deprecated and removed from the plugin hub. Please install Collection Log Master instead to keep tasking.
