@@ -1,0 +1,3 @@
+repository=https://github.com/CVE-078/bankstand-runelite.git
+commit=3622752e52e61795c33b2143977f9f4d722cc6d2
+warning=This plugin submits your IP address, account hash, name, XP and any opt-in game data to a 3rd-party server not controlled or verified by Runelite developers.
