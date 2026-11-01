@@ -1,3 +1,3 @@
 repository=https://github.com/odje0118/zweetnekken-rl-plugin.git
-commit=93b286657df226289503415b7a199f9142db1bd7
-warning=This plugin sends your RuneScape name/account identifier, loot and event details, party/clan data, personal bests, skill levels/XP, and full-client evidence screenshots to an external Zweetnekken backend. Evidence screenshots may contain game UI/chat and may be forwarded to the Zweetnekken Discord for review.
+commit=9b149f4b91409ecf98b5b3e051390b23a20e719a
+warning=Sends your RuneScape name/account ID, loot/event and clan data, stats, and screenshots (which may include chat) to the Zweetnekken backend; evidence may be shared with clan Discord for review.
