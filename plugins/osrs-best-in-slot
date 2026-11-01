@@ -1,4 +1,4 @@
 repository=https://github.com/osrsbis/account-connect.git
-commit=d1646d463b9b72a6a036c87d6f5ffca6b7eeca3c
+commit=3de5e757108a9c1d1db4397358c949fb7e78a0ca
 authors=osrsbis
 warning=This plugin submits your IP address and uploads your account data (skills, quests, achievement diaries, equipment, inventory and bank contents) to osrsbestinslot.com to auto-fill its calculators, keyed by a link token you paste. Only enable it if you are comfortable with that data being uploaded.
