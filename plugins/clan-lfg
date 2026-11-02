@@ -1,0 +1,3 @@
+repository=https://github.com/Macko306/clan-lfg.git
+commit=7e61d768e96f69fe49ac8ca5d121a97929ec1abe
+warning=This plugin submits your IP address, player name, world and the content you pick to a 3rd-party server not controlled by the RuneLite developers.
