@@ -1,0 +1,3 @@
+repository=https://github.com/KihiraLove/clan-clog-client.git
+commit=118d1d6ea03083e30b2294074405b9bbd8f45e7d
+warning=This plugin may submit your IP address, and various account data, to a 3rd-party server not controlled or verified by Runelite developers.
