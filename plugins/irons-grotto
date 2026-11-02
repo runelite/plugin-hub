@@ -1,4 +1,4 @@
 repository=https://github.com/Irons-Grotto/IronsGrottoClanPlugin.git
-commit=33a67b17472e61122ff3efdd02abc4b39e40fc3b
+commit=3fab03d762fc3f535b42de20e727fe6c418a5864
 authors=mattlm0831
 warning=This plugin submits your IP address, RSN, account hash, levels and XP, collection log, quests, diaries, combat achievements, clue counts, loot, kill counts, and pets to the Irons Grotto clan server, a 3rd-party server not controlled or verified by the RuneLite developers.
