@@ -1,0 +1,4 @@
+repository=https://github.com/offerbook/offerbook-sync.git
+commit=aeda635aaa1ea8f5b0858f4f0666df7e97c36534
+authors=offerbook
+warning=This plugin submits your Grand Exchange offer events (item, price, quantity, offer state, timestamp, a hashed account ID) and your IP address to offerbook.gg, a 3rd party server not controlled or verified by the RuneLite Developers. Nothing is sent until you paste an Offerbook token.
