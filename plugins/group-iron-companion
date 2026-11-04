@@ -1,3 +1,3 @@
 repository=https://github.com/ArgenteumStudio/Group-Iron-Companion.git
-commit=06e34b6ed119bdcb3b8fc0017811734579f56995
+commit=b98ca24abb0f2a42596ae0a9189f4d373f9e8c45
 warning=This plugin requires a self-hosted third-party tool not controlled or verified by RuneLite<br>developers. Connecting exposes your IP address and submits your character token, display name, skill<br>levels and XP, and quest points. Depending on enabled sharing options, it also submits location and<br>world, bank and Group Ironman storage contents and item icons, live XP changes, your own Group<br>Ironman chat messages, boss kill/completion counts, loot drops, and quest and achievement diary<br>completion events.
