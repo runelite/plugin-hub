@@ -1,0 +1,4 @@
+repository=https://github.com/gamemargins/runelite-plugin.git
+commit=1fee6a0ee87b400e62b31062630601fc61d7452e
+authors=Blue-tech191
+warning=This plugin submits your Grand Exchange offers and IP address to gamemargins.com, a 3rd party server not controlled or verified by the RuneLite Developers.
