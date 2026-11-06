@@ -1,4 +1,4 @@
 repository=https://github.com/idyet/friendscape-plugin.git
-commit=cdb03e25c930166a0fed8490c2bf8fe98392a3f8
+commit=f5388967e45e1e37968acb0d3e8c5745e709e441
 warning=This plugin submits your username, account hash, drops, kill counts, XP and screenshots to a 3rd-party server (friendscape) not controlled or verified by the RuneLite Developers.
 authors=idyet
