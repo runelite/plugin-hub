@@ -1,0 +1,4 @@
+repository=https://github.com/CobraTrinity/runelite-irc-chat.git
+commit=5375b729b14672087a37b5adc7563cab3b74be31
+warning=This plugin submits your IP address and IRC messages to a third-party server not controlled by the RuneLite developers.
+authors=CobraTrinity
