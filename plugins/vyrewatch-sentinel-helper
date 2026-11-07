@@ -1,5 +1,5 @@
 displayName="Vyrewatch Sentinel Helper"
-description="Helpers for camping Vyrewatch Sentinels for Blood Shards, tracking kills, and providing automated alerts."
+description="Helps for camping Vyrewatch Sentinels for Blood Shards, tracking kills, and providing automated alerts."
 repository="https://github.com/rozzalini/vyrewatch-sentinel-helper"
 tags="combat, vyre, afk, blood shard, tracker"
 author="rozzalini"
