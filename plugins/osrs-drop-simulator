@@ -1,0 +1,3 @@
+repository=https://github.com/vangricky/osrs-drop-simulator-plugin.git
+commit=2ddb979a2494d60f80fe52e71d159b7b5b3f4bef
+warning=This plugin connects to osrsdropsimulation.com (the drop simulator's own server) when you link an account or view the leaderboards. It sends only game actions and its own revocable device key, never your RuneScape name, account or location.
