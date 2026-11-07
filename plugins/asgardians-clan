@@ -1,0 +1,3 @@
+repository=https://github.com/rozzleasgardians-max/Asgardians.git
+commit=7be42d84fb2a85c92e45da2d9abef113d51d0440
+warning=This plugin submits your IP address, RSN, account hash and gameplay data (drops, pets, collection log, deaths and personal bests, with screenshots) to a server not controlled or verified by the RuneLite developers.
