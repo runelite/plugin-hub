@@ -1,6 +1,2 @@
-displayName = "Vyrewatch Sentinel Helper"
-description = "Helps for camping Vyrewatch Sentinels for Blood Shards, tracking kills, and providing automated alerts"
-repository = "https://github.com/rozzalini/vyrewatch-sentinel-helper.git"
-tags = "combat, vyre, afk, blood shard, tracker"
-author = "rozzalini"
-version = "1.0.1"
+repository=https://github.com/rozzalini/vyrewatch-sentinel-helper.git
+commit=main
