@@ -1,4 +1,4 @@
 repository=https://github.com/Rossyboiz/wise-old-man-companion.git
-commit=1ab9ef834b41e8c236c1330331bb8b64cb3ed096
+commit=b315ddbd91b67d8de07a1d16f98d8e0a9595d7c1
 authors=Rossyboiz
 warning=This plugin writes your own account observations to local files. A separately configured bridge can forward them to your Companion dashboard.
