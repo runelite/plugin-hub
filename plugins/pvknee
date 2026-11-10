@@ -1,0 +1,4 @@
+repository=https://github.com/pvknee-clan/pvknee-plugin.git
+commit=223c4a4e65c7422ebb9bedeff7d1ec65fa4cc1ee
+authors=JackieHann
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers
