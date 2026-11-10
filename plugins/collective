@@ -1,4 +1,4 @@
 repository=https://github.com/aerrs/Collective.git
-commit=5bed0201cbafc07a2c9f1e2951b7f37f2c98bad7
+commit=8f1b80e3d8b5cc9ec032f1a28c713ccac9e19d2d
 authors=aerrs
-warning=This plugin submits your IP address, RSN, clan name, a one-way hash of your account, matching drops and progress, and optional screenshots to a 3rd-party server not controlled or verified by RuneLite developers.
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers.
