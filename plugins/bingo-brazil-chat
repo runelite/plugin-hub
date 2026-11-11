@@ -1,0 +1,4 @@
+repository=https://github.com/SFranciscoSouza/BingoBrazilChat.git
+commit=10f20f50f1e43a8e6755ec5d3bd2b8cb25998a6a
+authors=SFranciscoSouza
+warning=This plugin sends player data, including usernames, screenshots, and IP address to a third-party server not controlled or verified by the RuneLite Developers, to record clan drop broadcasts on an event scoreboard.
