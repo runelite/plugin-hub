@@ -1,3 +1,4 @@
 repository=https://github.com/polyphilz/scapegpt.git
 commit=64ed578d0370253b408634a1c03944e4425895d4
 warning=This plugin submits your IP address to a server not controlled or verified by the RuneLite developers.
+disabled=true
