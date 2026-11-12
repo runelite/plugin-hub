@@ -1,3 +1,3 @@
 repository=https://github.com/subtoodablock/forgebingo-runelite.git
-commit=d1f6708bfc6511a66370372fb84bc361d1317e04
+commit=a1ddccd7dc3537d2f31eb00bb6926c8ff2c99f3d
 warning=This plugin submits your IP address, RSN, account hash, drops, loot, collection log slots, pets, kill counts, level-ups and game screenshots (on by default, can be turned off) to ForgeBingo, a 3rd-party server not controlled or verified by the RuneLite Developers.
