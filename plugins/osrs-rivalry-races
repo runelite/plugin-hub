@@ -1,0 +1,3 @@
+repository=https://github.com/Vectryn/osrs-rivalry-races.git
+commit=f178f8df8bf51d483f62496942a4a94102ff54c8
+warning=Watching a race submits the race ID and your IP address to the OSRS Rivalry server, which is not controlled or verified by RuneLite developers.
