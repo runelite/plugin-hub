@@ -1,0 +1,4 @@
+repository=https://github.com/aerrs/Collective.git
+commit=8f1b80e3d8b5cc9ec032f1a28c713ccac9e19d2d
+authors=aerrs
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers.
