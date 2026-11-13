@@ -1,3 +1,3 @@
 repository=https://github.com/Dewdul/bis-bank-tabs.git
-commit=4e4cf585079c4b1b137561269687e3e6d0708ead
+commit=bff9383504bc3735278d7c850b4acf6a45b2b1b9
 warning=BiS Bank Tabs adds its own bank tag tabs. If you already have tabs, it asks whether to replace them or keep them, and it backs up any it removes so you can bring them back from its settings.

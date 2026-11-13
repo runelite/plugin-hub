@@ -1,3 +1,3 @@
-repository=https://github.com/rozzleasgardians-max/Asgardians.git
-commit=7be42d84fb2a85c92e45da2d9abef113d51d0440
-warning=This plugin submits your IP address, RSN, account hash and gameplay data (drops, pets, collection log, deaths and personal bests, with screenshots) to a server not controlled or verified by the RuneLite developers.
+repository=https://github.com/RozzleDev/Asgardians.git
+commit=4ee2ab159e0c084b1074509ee30f379c85fa368b
+warning=This plugin submits your IP address, RSN, account hash, gameplay data (drops, pets, collection log, deaths, personal bests, kill counts and kill times, skill XP, quest speedrun times and handegg throws, with screenshots), group finder activity and, with "Share my activity" on, what you're doing in game and your world, to a server not controlled or verified by the RuneLite developers.
