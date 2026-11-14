@@ -1,2 +1,3 @@
 repository=https://github.com/jdockerty/yama-reminder.git
 commit=682887c8b1bfc7441a5723f7137b12a8ecb67a9a
+disabled=unmaintained and superseded by many other plugins

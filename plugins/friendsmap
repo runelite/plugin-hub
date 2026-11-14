@@ -1,0 +1,3 @@
+repository=https://github.com/P2GR/friendsmap-plugin.git
+commit=a9421e101a7d24aebae236cc3bb60b6ab4bfb11a
+warning=This plugin submits your IP address, RSN, player location, and friends/clan data to a 3rd-party server not controlled or verified by Runelite developers.

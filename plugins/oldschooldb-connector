@@ -1,0 +1,4 @@
+repository=https://github.com/ortegarod/oldschooldb-runelite-plugin.git
+commit=dc3c9fa10f9db3b56e58c9cda340ef2c4f069e74
+authors=ortegarod
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
