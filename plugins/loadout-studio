@@ -1,3 +1,2 @@
 repository=https://github.com/Pa5cal1/runelite-loadout-studio.git
 commit=6549e29bcee70b6003d6e8a5bdbd98cb46a45ea6
-warning=This plugin sends your IP address, search queries and requested page titles to the OSRS Wiki. It does not upload your gear or saved setups.
