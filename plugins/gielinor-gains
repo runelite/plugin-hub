@@ -1,0 +1,4 @@
+repository=https://github.com/cameronspears/gielinor-gains-plugin.git
+commit=c5e67be143834bfa275b26d4d1a02c20b05007b2
+authors=cameronspears
+warning=This plugin sends your IP address to gielinorgains.com, a 3rd party server not controlled or verified by the RuneLite Developers. If you sign in to Trader, it also sends your Grand Exchange offers (item, price, quantity, state, time), your Trader plan, the GP it sees in your bank and inventory, and a random RuneLite account ID.
