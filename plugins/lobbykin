@@ -1,0 +1,3 @@
+repository=https://github.com/juskyg/lobbykin-runelite.git
+commit=cd199493d9f8a7a5c26aaea4b61d1483974550a9
+warning=This plugin connects to Lobbykin, a third-party service not controlled or verified by RuneLite developers. The service receives your IP address, pairing and Lobbykin account access credentials, group identifiers and responses (including Ready status), and, when raid reporting is enabled for a session, your OSRS character name, world, and raid activity data.
