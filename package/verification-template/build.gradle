@@ -20,9 +20,6 @@ dependencies {
 	core "org.projectlombok:lombok:1.18.30"
 	core "org.jetbrains:annotations:23.0.0"
 
-	thirdParty("com.google.re2j:re2j:1.8") {
-		because "last-rites"
-	}
 	thirdParty("org.xerial:sqlite-jdbc:3.46.0.0") {
 		because "quest-voiceover"
 	}
