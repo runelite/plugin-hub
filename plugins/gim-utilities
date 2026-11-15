@@ -1,2 +1,3 @@
 repository=https://github.com/VinnyVanGogh/group-ironman-plugin.git
-commit=821bf2ef97a030b457ed7d9b03f62075b5aeac8e
+commit=ab9063898b32555f178da14c909826706b8fc28b
+warning=This plugin can submit your group's events (drops, levels, deaths, group storage changes, screenshots) and your IP address to Discord webhooks you add, a 3rd-party service not controlled or verified by the RuneLite Developers.
