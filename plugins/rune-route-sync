@@ -1,0 +1,3 @@
+repository=https://github.com/iotaaa/runeroute-sync.git
+commit=ffcb820bbe8c357d2abc9ac2438f691c8376cc30
+warning=This plugin sends your account data, character model and location to runeroute.app, a website not controlled or verified by the RuneLite developers.
