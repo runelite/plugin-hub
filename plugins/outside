@@ -1,0 +1,3 @@
+repository=https://github.com/jhmcubed/outside-plugin.git
+commit=0b90619d2a45013494ee1f045b2ee1c78e0fd90a
+warning=This plugin submits your character's name and account hash when you make your page, your levels, kill counts, collection log slots, pets, clue counts, quests, diary tiers, combat and slayer tasks and valuable drops, and your equipment, inventory, looting bag, rune pouch, item charges, skills, vitals, quests, achievement diaries, combat achievements and slayer task, and your IP address, to the Outside relay, a server not controlled or verified by the RuneLite developers; your Outside page at outside.wiki shows them publicly.
