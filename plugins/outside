@@ -1,3 +1,3 @@
 repository=https://github.com/jhmcubed/outside-plugin.git
-commit=7868653cfbb10c613736e6fca62d8e6418aeca4e
+commit=e65e943254599e6d20ec17487840a347565afd66
 warning=This plugin submits your gear, stats, quests, diaries, slayer task, what you're doing (as Discord shows it), your account hash and your IP address to a 3rd-party server when you press Update my page, and hourly. Your Outside page shows them publicly.
