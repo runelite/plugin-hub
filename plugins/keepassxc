@@ -1,2 +1,3 @@
 repository=https://github.com/abextm/keepassxc-runelite.git
 commit=e24d40617d321aca40db90d6eb1320ec79897588
+disabled=Legacy logins are no longer used
