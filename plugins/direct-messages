@@ -1,0 +1,3 @@
+repository=https://github.com/iIDezi/direct-messages.git
+commit=7ad66707af9879e2afef80e9709234572e350e40
+warning=This plugin can submit your IP address and displayed player names to RuneProfile, a third-party server not controlled or verified by the RuneLite developers. RuneProfile portraits are optional and off by default.
