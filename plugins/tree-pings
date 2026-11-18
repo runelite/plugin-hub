@@ -1,0 +1,3 @@
+repository=https://github.com/drfino/osrs-tree-pings.git
+commit=a02d97243ae3c25741799248b89c9f8d3153d147
+warning=This plugin submits your IP address and your farming patch timers to a Google Apps Script you set up, which runs on a server not controlled or verified by the RuneLite developers.
