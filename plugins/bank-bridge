@@ -1,0 +1,4 @@
+repository=https://github.com/theshane0314/bank-bridge-plugin.git
+commit=c5392d7805483a91cccc8e15ae06478cbd4af06b
+warning=This plugin opens a WebSocket server on 127.0.0.1 so a gear-planning website can read your bank, inventory, worn equipment, levels, and which quests, achievement diaries and combat achievements you have completed. Nothing is uploaded and there is no server or account involved, and only allowlisted sites can connect.<br>Be aware that another program already running on your own machine could forge the origin check and read the same data. It cannot see your bank PIN or anything you type.
+authors=theshane0314
