@@ -1,0 +1,4 @@
+repository=https://github.com/Richardant/tiktok-live.git
+commit=3d69272ad0c1f421a51d07a10f911091bb44b466
+warning=This plugin submits your IP address and the TikTok username you enter to eulerstream.com in order to connect to TikTok LIVE.
+authors=Richardant
