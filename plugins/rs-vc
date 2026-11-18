@@ -1,0 +1,3 @@
+repository=https://github.com/trippy22/rs-vc.git
+commit=c29fba4598e62e21f6268bd8519d67935bf81294
+warning=This plugin submits your IP address, live microphone audio, and display name derived data to a 3rd-party server not controlled or verified by Runelite developers.
