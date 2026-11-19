@@ -1,2 +1,3 @@
 repository=https://github.com/SirArchLinux/runelite-polybar-integration.git
 commit=e96101ed5d2199773301da39082797d05a7bf251
+disabled=true

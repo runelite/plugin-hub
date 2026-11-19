@@ -1,0 +1,4 @@
+repository=https://github.com/AmeliaXT/disable-cancel.git
+commit=13a177a0d2852bcd8cd856e021ce686a6cfa6193
+authors=AmeliaXT,idyet
+disabled=violates 3pc guidelines

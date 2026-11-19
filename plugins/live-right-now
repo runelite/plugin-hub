@@ -1,0 +1,3 @@
+repository=https://github.com/tcurrent/live-right-now.git
+commit=937e7120e5d0142f58da45a6351d30f59467c47e
+warning=This plugin submits your IP address to a 3rd-party server not controlled or verified by RuneLite developers.

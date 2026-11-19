@@ -1,4 +1,4 @@
 repository=https://github.com/MarbleTurtle/ClanChatWarnings.git
-commit=00fea8d413c8a1d7ae5dfad75cd8da828d22093d
+commit=76d1f173f21d6961807e0e469db097285272003b
 authors=MarbleTurtle,JorVaCoding
 warning=This plugin can fetch and post text to 3rd party websites not controlled or verified by the RuneLite Developers. This setting is optional, and only accesses the user-inputed site.
