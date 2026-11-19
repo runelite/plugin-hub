@@ -1,0 +1,4 @@
+repository=https://github.com/enemyrpg/fireside-plugin.git
+commit=5192eb2c194f6db18b2270fdbc129e8662af49c4
+authors=enemyrpg
+warning=This plugin submits your IP address, and may submit various account data, to a 3rd-party server not controlled or verified by Runelite developers.
