@@ -1,0 +1,3 @@
+repository=https://github.com/jorisstander/trade-finder.git
+commit=e09944c08b573d250026abee767d2418d630a2ef
+warning=This plugin submits your account hash, player name, world, the orders and trades you make through it, and your IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
