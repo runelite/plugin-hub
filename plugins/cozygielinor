@@ -1,3 +1,3 @@
 repository=https://github.com/Dogelord96/cozygielinor-runelite.git
-commit=ee51004d51d96cacf688faf23ac0dc3fa98a548d
+commit=e537ebcd9f8e819ceec7e440d7216409b1d733ba
 warning=This plugin sends your IP address, character name and your own clan chat messages to CozyGielinor services and Discord automatically. Pairing also shares account progress and enables private leadership features. These services are not controlled or verified by RuneLite developers.
