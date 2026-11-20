@@ -1,4 +1,4 @@
 repository=https://github.com/iron-hope-shop/runetick-runelite.git
-commit=da7104579c48728fdee3d3f9cbba8418b0a18ded
+commit=fb5668a552b373d74234c638393a6b945373e22a
 authors=iron-hope-shop
 warning=This plugin submits your grand exchange offers, grand exchange transactions, and IP address to a 3rd party server not controlled or verified by the RuneLite Developers.
