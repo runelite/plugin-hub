@@ -1,0 +1,4 @@
+repository=https://github.com/maxcash2147/runetools-plugin.git
+commit=2dcffd71f14aa93d1f6c8b9bd4bb69c08cea1b1e
+warning=This plugin submits your IP address, and may submit various account information, to a 3rd-party server not controlled or verified by Runelite developers. Some of it is shown on your public RuneTools profile.
+authors=maxcash2147
