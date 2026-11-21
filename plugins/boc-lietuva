@@ -1,0 +1,4 @@
+repository=https://github.com/AndriusButas/boc-lietuva.git
+commit=c3103d05df19ea1ac783533c4aa0ae5f2792a7e3
+warning=This plugin submits your IP address to youtube.com, wiseoldman.net and raw.githubusercontent.com to check clan streams, competitions and clan info.
+authors=AndriusButas
