@@ -1,0 +1,3 @@
+repository=https://github.com/Brendanovic/clan-dex-plugin.git
+commit=d43cea03bdd09537a77f076dc1f58b269ee7f244
+warning=This plugin downloads your clan's data file and the pictures it links to from GitHub, which can see your IP address. These are not controlled or verified by the RuneLite developers.
