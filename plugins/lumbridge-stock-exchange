@@ -1,0 +1,4 @@
+repository=https://github.com/emacsified/lsx-runelite-plugin.git
+commit=3ac2524985d117e09163b33eb01c4b509430a027
+authors=emacsified
+warning=This plugin submits your IP address to a 3rd party website (lsx.ge) not controlled or verified by the RuneLite Developers. If you add an LSX API token, it also submits your account name and type, and, if you enable trade reporting, your Grand Exchange offers.
