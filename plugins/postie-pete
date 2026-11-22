@@ -1,0 +1,3 @@
+repository=https://github.com/osynkad/postie-pete.git
+commit=b86d010a18394206badd80479b2cef0125e732c8
+warning=This plugin submits your IP address, and may submit various account information to a 3rd-party server not controlled or verified by RuneLite developers.
