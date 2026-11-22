@@ -1,3 +1,3 @@
 repository=https://github.com/PhyrWall/Renatus-PVM-Plugin.git
-commit=0b9905978726a94b20808a0d619b606dbf03c5e4
+commit=4ecb96e9f03b8ab74dea8e24b2e0db3c19691cc2
 warning=This plugin submits your IP address and Renatus API key to the Renatus clan server, a 3rd-party server not controlled or verified by RuneLite developers.
