@@ -1,4 +1,4 @@
 repository=https://github.com/Edison0x7/pb-exporter.git
-commit=b9b53c72cee53278cb5e7fd3ae37b148dd905868
+commit=0d13c00a2b50532f1a5246e5c2590aa5b6a60b3a
 authors=Edison0x7
 warning=This plugin submits your RuneScape name and Personal Best times to a third-party server not controlled or verified by RuneLite developers.
