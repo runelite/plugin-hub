@@ -1,4 +1,4 @@
 repository=https://github.com/6inq/flippr-runelite.git
-commit=db86ee60ea2047c2f7ccaf2b88b3192d3c459cb9
+commit=93ff82764a620359227bfafea75802bcee00892d
 authors=6inq
 warning=This plugin submits your IP address, character name, Grand Exchange offers and completed flips to flippr.exchange, a third-party website not controlled or verified by the RuneLite Developers, if you pair it with a Flippr account.
