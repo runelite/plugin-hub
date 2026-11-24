@@ -1,0 +1,4 @@
+repository=https://github.com/oldviciosOSRS/OldVicios.git
+commit=608f4c9946d522eb70700bac60c9dec9a6b6fa2e
+warning=This plugin submits your IP address, account name and an anonymous account identifier to a 3rd party server (api.oldvicios.com.br) not controlled or verified by the RuneLite Developers.
+authors=lxcvz
