@@ -1,3 +1,3 @@
 repository=https://github.com/KingKj52/world-map-plus.git
-commit=96e6b158b0f75f08f7c0d1553f09978eae77af8d
+commit=8f56d5be2ac8138cb553af5957ee8d530f12efa7
 warning=This plugin downloads map pictures from GitHub the first time you view an area and keeps them on your computer. GitHub sees your IP address. Nothing about you or your account is sent. The setting Download map pictures turns it off.
