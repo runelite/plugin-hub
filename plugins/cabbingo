@@ -1,0 +1,3 @@
+repository=https://github.com/tehnumberone/cabbingo-plugin.git
+commit=8fbfdeafa2319cc8585fe37d6139a3e42a3de366
+warning=This plugin submits your IP address, your RuneScape name and your loot to a 3rd-party server not controlled or verified by the RuneLite Developers, and asks TempleOSRS to update your name when you log out during a bingo.

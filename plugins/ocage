@@ -1,0 +1,3 @@
+repository=https://github.com/KibethsBark/ocage-runelite-plugin.git
+commit=7cfcb55500881770b6091d7d9b85a73a0978d89c
+warning=This plugin submits your IP address, and may submit various account information and screenshots, to a 3rd-party server not controlled or verified by RuneLite developers.

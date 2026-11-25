@@ -1,2 +1,3 @@
 repository=https://github.com/anonyser/runelite-regear.git
 commit=71f6263e5a367e59d0829f356532283fdde33f03
+unavailable=This plugin is incompatible with the latest RuneLite version, and requires its author to update it.
