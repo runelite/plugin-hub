@@ -1,3 +1,3 @@
 repository=https://github.com/jhmcubed/outside-plugin.git
-commit=8ae70c9276519af6c1e3abc48ceebd1889df9be4
+commit=12deb7a6995ec895837562cc498527402a83dad3
 warning=This plugin submits your IP address, and may submit various account information, to a 3rd-party server not controlled or verified by Runelite developers. Your Outside page shows them publicly.
