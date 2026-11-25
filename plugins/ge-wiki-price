@@ -1,0 +1,3 @@
+repository=https://github.com/nabeelramzeen/ge-wiki-price.git
+commit=c9ac1deed27faede563965e33b40c3d344d6b6b1
+warning=This plugin submits your IP address to prices.runescape.wiki, a 3rd party server not controlled or verified by the RuneLite Developers.
