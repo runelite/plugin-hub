@@ -1,0 +1,3 @@
+repository=https://github.com/ryanrica/nib-tracker-plugin.git
+commit=9bfc81a0a4860df401abdeac6a6ffb9e12548f6f
+warning=This plugin submits your IP address to a 3rd party website not controlled or verified by the RuneLite Developers.
