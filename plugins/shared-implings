@@ -1,4 +1,0 @@
-repository=https://github.com/peterpanneke3/sharedImplings.git
-commit=9baf1769c2f2f2be064b3dae5caa0b755ac3f9b3
-warning=This plugin communicates the location of implings to a 3rd party server not controlled or verified by the RuneLite Developers.
-disabled=true

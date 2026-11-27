@@ -1,3 +1,0 @@
-repository=https://github.com/Knovek/runelite-one-shot.git
-commit=4e172f253c0280538de952cdeaf60be4e9b4ac54
-warning=This plugin submits your IP address and comprehensive records of your account activity and progress to a 3rd-party server not controlled or verified by the Runelite developers.<br>This plugin will share screenshots to a discord server unless disabled in configs.
