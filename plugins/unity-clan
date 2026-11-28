@@ -1,0 +1,3 @@
+repository=https://github.com/ZedAfterliferp/unity-clan-runelite.git
+commit=22b010c6ad65f631d2b842c18f4aa32fbac85139
+warning=This plugin sends player names to Wise Old Man and TempleOSRS for statistics, and sends your character name, rank when starting trivia, and trivia answers to the Unity Clan backend when participating.
