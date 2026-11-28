@@ -1,0 +1,4 @@
+repository=https://github.com/unclebillson/rune-ledger-sync.git
+commit=b090c569e4ae574f4d221e70aa24270bb6509cf2
+authors=unclebillson
+warning=This plugin sends your IP address, RuneScape display name, skill levels, and exact XP, plus bank contents and current Slayer task data if enabled, to the configured Rune Ledger server. That server is not controlled or verified by RuneLite developers.
