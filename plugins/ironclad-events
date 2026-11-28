@@ -1,3 +1,4 @@
 repository=https://github.com/Ironcladrs/Ironclad-Events.git
 commit=f25f39ab7c0787c677bceed94295b306d6f1abb2
 warning=This plugin submits your IP address, RSN, account id and the drops, prechecks, progress and other data you choose to turn on to ironcladrs.com, a 3rd-party server not controlled or verified by RuneLite developers.
+authors=cjlund9
