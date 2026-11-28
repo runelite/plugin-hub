@@ -1,0 +1,4 @@
+repository=https://github.com/AndrewMarks/osrs-goals.git
+commit=0548209d5d5e76b0786bc14d5008dfbc664ee02a
+warning=This plugin submits your IP address, your OSRS Goals link and your own account data to a 3rd-party server not controlled or verified by RuneLite developers: levels, quests, diaries and tasks; bank, storages and gear; collection log; kill counts and drops; news as it happens (level-ups, drops worth 1m or more, quests, diaries, pets and new collection log items); if you turn them on, deaths, trades and Grand Exchange offers; and may submit other account information. It never sends anything about other players.
+authors=AndrewMarks
