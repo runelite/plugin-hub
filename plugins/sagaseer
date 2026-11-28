@@ -1,0 +1,3 @@
+repository=https://github.com/StamppG/sagaseer.git
+commit=b989b5898149d60294cbad9aaca413245d375c78
+warning=This plugin exposes your IP address, and submits various account information, to a 3rd-party server not controlled or verified by Runelite developers.
