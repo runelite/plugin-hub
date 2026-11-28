@@ -1,0 +1,3 @@
+repository=https://github.com/iLorne/free-chat-translator.git
+commit=05713b3bafa398fa174d91d81a3d3974be37f71b
+warning=This plugin sends manually selected player-chat text and the user's IP address to MyMemory, a third-party server not controlled or verified by RuneLite developers. Private/group chat translation requires an additional opt-in.
