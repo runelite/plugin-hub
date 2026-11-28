@@ -1,0 +1,4 @@
+repository=https://github.com/Rossyboiz/rossy-companion-updated.git
+commit=d362e72c5260fa7c464461edca080f888c1c7240
+authors=Rossyboiz
+warning=This plugin writes your own account observations to local files. A separately configured bridge can forward them to your Companion dashboard.
