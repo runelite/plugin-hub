@@ -1,0 +1,3 @@
+repository=https://github.com/Dextiz/hc-calcs.git
+commit=f50b1cb42d581e975c3f8fe99c5c1336300d4c59
+warning=This plugin sends price requests to the OSRS Wiki, which receives your IP address and the plugin's User-Agent. Character levels, XP, and equipment stay on your device.
