@@ -1,0 +1,3 @@
+repository=https://github.com/nikoleinonen/nylocas-runelite-plugin.git
+commit=1b256111210adef17603a34efa62e21da6efccd7
+warning=This plugin submits your IP address, event player id, drop details (tile, item, and source), kill count, and screenshots of event drops to a 3rd party server (api.nylocas.com) not controlled or verified by the RuneLite Developers. Those screenshots can show your username, chat, and other players. A screenshot and your player name can also be sent to a Discord webhook set by the event organizer.
